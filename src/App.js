@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import './App.css'
+
 import CAL from "chainabstractionlayer"
 import liqUI from "liquality-ui"
 
