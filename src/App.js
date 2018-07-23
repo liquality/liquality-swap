@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 
 import './App.css'
 
-import CAL from "chainabstractionlayer"
-import liqUI from "liquality-ui"
+import CAL from 'chainabstractionlayer'
+import liqUI from 'liquality-ui'
 
 class App extends Component {
   render() {
