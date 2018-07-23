@@ -5,16 +5,19 @@ import './App.css'
 import CAL from 'chainabstractionlayer'
 import liqUI from 'liquality-ui'
 
+console.log(CAL)
+console.log(liqUI)
+
 class App extends Component {
-  render() {
+  render () {
     return (
       <div>
         <header>
           <h1>Liquality Atomic Swap</h1>
         </header>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App
