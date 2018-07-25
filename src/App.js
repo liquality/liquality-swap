@@ -5,9 +5,6 @@ import './App.css'
 import CAL from 'chainabstractionlayer'
 import liqUI from 'liquality-ui'
 
-console.log(CAL)
-console.log(liqUI)
-
 class App extends Component {
   render () {
     return (

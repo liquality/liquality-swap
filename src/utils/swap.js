@@ -1,4 +1,4 @@
-const getEthSwapCreationData = (recipientAddress, refundAddress, secretHash, expiration) => {
+const getEthHTLCData = (recipientAddress, refundAddress, secretHash, expiration) => {
   const dataSizeBase = 112
   const redeemDestinationBase = 66
   const refundDestinationBase = 89
@@ -18,4 +18,48 @@ ${expirationPushOpcode}${expirationEncoded}421160${refundDestinationEncoded}\
 57005b73${recipientAddressEncoded}ff5b73${refundAddressEncoded}ff`
 }
 
-export {getEthSwapCreationData}
+const getBtcHTLCScript = (recipientAddress, refundAddress, secretHash, timeLock) => {
+  //         # Prep inputed PK for PKH check
+  // [2]     OP_DUP OP_HASH160
+  //         # Swap for boolean
+  // [3]     OP_2SWAP
+  // [4]     OP_IF
+  //             # Check secret
+  // [5]         OP_HASH160
+  // [26]        (20)(0x14) secretHash[20]
+  // [27]        OP_EQUALVERIFY
+  //             # Prep PKH check
+  // [48]        (20)(0x14) redeemPKH[20]
+  // [49]    OP_ELSE
+  //             # Check timelock
+  // [51]        (2)(0x02) timeLock[2]
+  // [52]        OP_CHECKSEQUENCEVERIFY
+  // [53]        OP_2DROP
+  //             # Prep PKH check
+  // [74]        (20)(0x14) refundPKH[20]
+  // [75]    OP_ENDIF
+  //         # Check PKH and sig
+  // [77]    OP_EQUALVERIFY OP_CHECKSIG
+
+  return `76a97263a9${push(secretHash)}88${push(to)}67${push('9000')}b26d${push(from)}6888ac`
+}
+
+const push = (num) => {
+  let len = num.length
+  len += len % 2
+  len /= 2
+
+  let prefix = ''
+  if (len < 0x4b) {
+  } else if (len <= 0xff) {
+    prefix = '4c'
+  } else if (len <= 0xffff) {
+    prefix = '4d'
+  } else {
+    prefix = '4e'
+  }
+
+  return prefix + toHex(len) + num
+}
+
+export {getEthHTLCData, getBtcHTLCScript}
