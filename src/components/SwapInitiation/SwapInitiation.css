@@ -1,0 +1,21 @@
+.placeholder {
+  background: #d3d3d3;
+  color: #8a8a8a;
+  padding: 2rem;
+  text-align: center;
+}
+
+.walletContainer {
+  width: 400px;
+}
+
+.main {
+  padding: 2rem 1rem;
+}
+
+.counterparty {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #e3e3e3;
+  text-align: center;
+}
