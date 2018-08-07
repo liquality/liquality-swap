@@ -2,8 +2,11 @@ import React, {Component} from 'react'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
+import liqUI from 'liquality-ui'
 
 import './SwapInitiation.css'
+
+const { WalletDisplay } = liqUI
 
 class SwapInitiation extends Component {
   constructor (props) {
@@ -35,11 +38,23 @@ class SwapInitiation extends Component {
 
   render (props) {
     return <Grid container spacing={0}>
-      <Grid item xs={12} sm={6}>
-        <div className='placeholder'>Wallet 1</div>
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <div className='placeholder'>Wallet 2</div>
+      <Grid item xs={12} container className='header'>
+        <Grid item xs={12} sm={6} className='leftBalance'>
+          <WalletDisplay
+            title='Wallet 1'
+            type='disconnected'
+            description='Connect your wallet'
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} className='rightBalance'>
+          <WalletDisplay
+            title='Wallet 2'
+            type='Ledger'
+            description='BALANCE'
+            amount='4203.141592653589793238'
+            currency='XRP'
+          />
+        </Grid>
       </Grid>
       <Grid container className='main'>
         <Grid container xs={12} sm={6} justify='space-evenly'>
