@@ -9,6 +9,33 @@
   width: 400px;
 }
 
+.header {
+  padding: .5rem 1rem;
+  background: #d8d8d8;
+}
+
+.header .leftBalance {
+  border-color: #a7a7a7 !important;
+  border-bottom: 1px solid;
+  padding: 0 0 .5rem;
+}
+
+.header .rightBalance {
+  padding: .5rem 0 0;
+}
+
+@media (min-width: 600px) {
+  .header .leftBalance {
+    border: 0;
+    border-right: 1px solid;
+    padding: 0;
+  }
+
+  .header .rightBalance {
+      padding: 0
+  }
+}
+
 .main {
   padding: 2rem 1rem;
 }
