@@ -1,9 +1,11 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-
+import liqualityUI from 'liquality-ui'
 import './SwapInitiation.css'
+
+const { CurrencyInput } = liqualityUI
 
 class SwapInitiation extends Component {
   constructor (props) {
@@ -11,11 +13,11 @@ class SwapInitiation extends Component {
     this.state = {
       assetA: {
         amount: 30,
-        type: 'ethereum'
+        currency: 'eth'
       },
       assetB: {
         amount: 2.2,
-        type: 'bitcoin'
+        currency: 'btc'
       },
       walletA: {
         balance: 100,
@@ -33,6 +35,14 @@ class SwapInitiation extends Component {
     }
   }
 
+  handleAmountChange (party, newValue) {
+    this.setState({
+      ['asset' + party]: {
+        amount: newValue
+      }
+    })
+  }
+
   render (props) {
     return <Grid container spacing={0}>
       <Grid item xs={12} sm={6}>
@@ -43,10 +53,20 @@ class SwapInitiation extends Component {
       </Grid>
       <Grid container className='main'>
         <Grid container xs={12} sm={6} justify='space-evenly'>
-          <div className='placeholder walletContainer'>ETH</div>
+          <div className='placeholder walletContainer'>
+            <Typography variant='display1' gutterBottom>HAVE</Typography>
+            <CurrencyInput currency={this.state.assetA.currency}
+              value={this.state.assetA.amount}
+              onChange={(newValue) => this.handleAmountChange('A', newValue)} />
+          </div>
         </Grid>
         <Grid container xs={12} sm={6} justify='space-evenly'>
-          <div className='placeholder walletContainer'>BTC</div>
+          <div className='placeholder walletContainer'>
+            <Typography variant='display1' gutterBottom>WANT</Typography>
+            <CurrencyInput currency={this.state.assetB.currency}
+              value={this.state.assetB.amount}
+              onChange={(newValue) => this.handleAmountChange('B', newValue)} />
+          </div>
         </Grid>
         <Grid container xs={12} className='counterparty'>
           <Typography variant='title' gutterBottom>COUNTER PARTY WALLETS</Typography>
