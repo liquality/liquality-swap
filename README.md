@@ -6,9 +6,11 @@ Trustless swaps application
 
 ### Run locally
 
+> U2F (`@ledgerhq/hw-transport-u2f`) requires HTTPS.
+
 ```bash
 npm install
-npm start
+HTTPS=true npm start
 ```
 
 If you get errors about missing libraries `liquality-ui` or `chainabstractionlayer`, pull these and link them:
