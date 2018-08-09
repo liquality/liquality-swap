@@ -36,7 +36,7 @@ class SwapInitiation extends Component {
         }
       },
       counterPartyWalletA: '6d486d8a3e880c6b8a9478b3c78d68e731b87156',
-      counterPartyWalletB: '1BFFoqyFUdAsCFQsgCHvzkPbbKBvUUMfj6',
+      counterPartyWalletB: '994aBCE56EE8Dc94AE8438543c7BD1Dd2B802b06',
       expiration: 12, // hours
       secret: 'this is a secret',
       secretHash: 'EDC64C6523778961FE9BA03AB7D624B27CA1DD5B01E7734CC6C891D50DB04269'
@@ -50,23 +50,32 @@ class SwapInitiation extends Component {
     const assetAName = _.upperFirst(assetA.type)
     const AssetARpcProvider = providers[assetA.type][`${assetAName}RPCProvider`]
     const AssetAWalletProvider = providers[assetA.type][`${assetAName}${assetA.wallet.type}Provider`]
+    const AssetASwapProvider = providers[assetA.type][`${assetAName}SwapProvider`]
 
     const assetB = this.state.assetB
     const assetBName = _.upperFirst(assetB.type)
     const AssetBRpcProvider = providers[assetB.type][`${assetBName}RPCProvider`]
     const AssetBWalletProvider = providers[assetB.type][`${assetBName}${assetB.wallet.type}Provider`]
+    const AssetBSwapProvider = providers[assetB.type][`${assetBName}SwapProvider`]
 
     this.clientA = new Client()
     this.clientA.addProvider(new AssetARpcProvider(...assetA.rpc))
     this.clientA.addProvider(new AssetAWalletProvider(...assetA.wallet.args))
+    this.clientA.addProvider(new AssetASwapProvider(...assetA.wallet.args))
 
     this.clientB = new Client()
     this.clientB.addProvider(new AssetBRpcProvider(...assetB.rpc))
     this.clientB.addProvider(new AssetBWalletProvider(...assetA.wallet.args))
+    this.clientB.addProvider(new AssetBSwapProvider(...assetA.wallet.args))
   }
 
   initiateSwap () {
-    window.alert('Initiating the swap')
+    this.clientA.generateSwap(
+      this.state.counterPartyWalletB,
+      this.state.assetA.wallet.addr,
+      this.state.secretHash,
+      this.state.expiration
+    ).then(bytecode => console.log(bytecode))
   }
 
   updateAddresses () {
