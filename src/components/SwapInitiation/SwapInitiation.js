@@ -77,7 +77,7 @@ class SwapInitiation extends Component {
       })
     }).catch(e => {
       console.error(e)
-      window.alert(`Error connecting to ${this.assetA.wallet.type}`)
+      window.alert(`Error connecting to ${this.state.assetA.wallet.type}`)
     })
 
     this.clientB.getAddresses().then(([ addr ]) => {
@@ -89,7 +89,7 @@ class SwapInitiation extends Component {
       })
     }).catch(e => {
       console.error(e)
-      window.alert(`Error connecting to ${this.assetB.wallet.type}`)
+      window.alert(`Error connecting to ${this.state.assetB.wallet.type}`)
     })
   }
 
