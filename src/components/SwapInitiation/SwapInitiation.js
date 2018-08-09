@@ -17,7 +17,7 @@ class SwapInitiation extends Component {
     this.state = {
       assetA: {
         type: 'ethereum',
-        symbol: 'ETH',
+        code: 'ETH',
         rpc: [ 'http://localhost:8545' ],
         wallet: {
           type: 'MetaMask',
@@ -27,7 +27,7 @@ class SwapInitiation extends Component {
       },
       assetB: {
         type: 'bitcoin',
-        symbol: 'BTC',
+        code: 'BTC',
         rpc: [ 'http://localhost:8080', 'bitcoin', 'local321' ],
         wallet: {
           type: 'Ledger',
@@ -114,10 +114,10 @@ class SwapInitiation extends Component {
         </Grid>
         <Grid container className='main'>
           <Grid container xs={12} sm={6} justify='space-evenly'>
-            <div className='placeholder walletContainer'>{this.state.assetA.symbol}</div>
+            <div className='placeholder walletContainer'>{this.state.assetA.code}</div>
           </Grid>
           <Grid container xs={12} sm={6} justify='space-evenly'>
-            <div className='placeholder walletContainer'>{this.state.assetB.symbol}</div>
+            <div className='placeholder walletContainer'>{this.state.assetB.code}</div>
           </Grid>
         </Grid>
         <Grid container className='main'>
