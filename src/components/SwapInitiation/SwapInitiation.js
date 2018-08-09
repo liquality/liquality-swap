@@ -42,6 +42,10 @@ class SwapInitiation extends Component {
       secretHash: 'EDC64C6523778961FE9BA03AB7D624B27CA1DD5B01E7734CC6C891D50DB04269'
     }
 
+    this.initiateSwap = this.initiateSwap.bind(this)
+  }
+
+  initiateClients () {
     const assetA = this.state.assetA
     const assetAName = _.upperFirst(assetA.type)
     const AssetARpcProvider = providers[assetA.type][`${assetAName}RPCProvider`]
@@ -59,21 +63,22 @@ class SwapInitiation extends Component {
     this.clientB = new Client()
     this.clientB.addProvider(new AssetBRpcProvider(...assetB.rpc))
     this.clientB.addProvider(new AssetBWalletProvider(...assetA.wallet.args))
-
-    this.initiateSwap = this.initiateSwap.bind(this)
   }
 
   initiateSwap () {
     window.alert('Initiating the swap')
   }
 
-  async componentDidMount () {
+  updateAddresses () {
     this.clientA.getAddresses().then(([ addr ]) => {
-      const { assetA } = this.state
-
-      this.setState((prevState, props) => {
-        assetA.wallet.addr = addr
-        return assetA
+      this.setState({
+        assetA: {
+          ...this.state.assetA,
+          wallet: {
+            ...this.state.assetA.wallet,
+            addr
+          }
+        }
       })
     }).catch(e => {
       console.error(e)
@@ -91,6 +96,11 @@ class SwapInitiation extends Component {
       console.error(e)
       window.alert(`Error connecting to ${this.state.assetB.wallet.type}`)
     })
+  }
+
+  componentDidMount () {
+    this.initiateClients()
+    this.updateAddresses()
   }
 
   render (props) {
