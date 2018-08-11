@@ -4,7 +4,7 @@ import React, {Component} from 'react'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 // import Typography from '@material-ui/core/Typography'
-import _ from 'lodash'
+// import _ from 'lodash'
 
 import { Client, providers } from 'chainabstractionlayer'
 
@@ -46,27 +46,19 @@ class SwapInitiation extends Component {
   }
 
   initiateClients () {
-    const assetA = this.state.assetA
-    const assetAName = _.upperFirst(assetA.type)
-    const AssetARpcProvider = providers[assetA.type][`${assetAName}RPCProvider`]
-    const AssetAWalletProvider = providers[assetA.type][`${assetAName}${assetA.wallet.type}Provider`]
-    const AssetASwapProvider = providers[assetA.type][`${assetAName}SwapProvider`]
+    this.ethClient = new Client()
+    this.ethClient.addProvider(new providers.ethereum.EthereumRPCProvider('http://localhost:8545'))
+    this.ethClient.addProvider(new providers.ethereum.EthereumMetaMaskProvider(web3.currentProvider))
+    this.ethClient.addProvider(new providers.ethereum.EthereumSwapProvider())
 
-    const assetB = this.state.assetB
-    const assetBName = _.upperFirst(assetB.type)
-    const AssetBRpcProvider = providers[assetB.type][`${assetBName}RPCProvider`]
-    const AssetBWalletProvider = providers[assetB.type][`${assetBName}${assetB.wallet.type}Provider`]
-    const AssetBSwapProvider = providers[assetB.type][`${assetBName}SwapProvider`]
+    this.btcClient = new Client()
+    this.btcClient.addProvider(new providers.bitcoin.BitcoinRPCProvider('http://localhost:8545'))
+    this.btcClient.addProvider(new providers.bitcoin.BitcoinLedgerProvider(web3.currentProvider))
+    this.btcClient.addProvider(new providers.bitcoin.BitcoinSwapProvider())
+  }
 
-    this.clientA = new Client()
-    this.clientA.addProvider(new AssetARpcProvider(...assetA.rpc))
-    this.clientA.addProvider(new AssetAWalletProvider(...assetA.wallet.args))
-    this.clientA.addProvider(new AssetASwapProvider(...assetA.wallet.args))
-
-    this.clientB = new Client()
-    this.clientB.addProvider(new AssetBRpcProvider(...assetB.rpc))
-    this.clientB.addProvider(new AssetBWalletProvider(...assetA.wallet.args))
-    this.clientB.addProvider(new AssetBSwapProvider(...assetA.wallet.args))
+  getClient (code) {
+    return this[`${code}Client`]
   }
 
   initiateSwap () {
