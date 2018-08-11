@@ -15,29 +15,20 @@ class SwapInitiation extends Component {
     super(props)
 
     this.state = {
-      assetA: {
-        type: 'ethereum',
-        code: 'ETH',
-        rpc: [ 'http://localhost:8545' ],
-        wallet: {
-          type: 'MetaMask',
-          args: [ web3.currentProvider ],
-          addr: '...'
-        }
+      eth: {
+        name: 'ethereum',
+        addr: '...',
+        value: 1e18
       },
-      assetB: {
-        type: 'bitcoin',
-        code: 'BTC',
-        rpc: [ 'http://localhost:8080', 'bitcoin', 'local321' ],
-        wallet: {
-          type: 'Ledger',
-          args: [],
-          addr: '...'
-        }
+      btc: {
+        name: 'Bitcoin',
+        addr: '...'
       },
-      counterPartyWalletA: '6d486d8a3e880c6b8a9478b3c78d68e731b87156',
-      counterPartyWalletB: '994aBCE56EE8Dc94AE8438543c7BD1Dd2B802b06',
-      expiration: 12, // hours
+      counterParty: {
+        eth: '994aBCE56EE8Dc94AE8438543c7BD1Dd2B802b06',
+        btc: '14QHd4qpUTmMHx5BchEREySsqxtnUHcX6a'
+      },
+      expiration: 12,
       secret: 'this is a secret',
       secretHash: 'EDC64C6523778961FE9BA03AB7D624B27CA1DD5B01E7734CC6C891D50DB04269'
     }
@@ -62,40 +53,42 @@ class SwapInitiation extends Component {
   }
 
   initiateSwap () {
-    this.clientA.generateSwap(
-      this.state.counterPartyWalletB,
-      this.state.assetA.wallet.addr,
+    this.getClient('eth').generateSwap(
+      this.state.counterParty.eth,
+      this.state.eth.addr,
       this.state.secretHash,
       this.state.expiration
-    ).then(bytecode => console.log(bytecode))
+    ).then(bytecode => {
+      console.log(bytecode)
+
+      this.getClient('eth').sendTransaction(this.state.eth.addr, null, String(this.state.eth.value), bytecode).then(console.log)
+    })
   }
 
   updateAddresses () {
-    this.clientA.getAddresses().then(([ addr ]) => {
+    this.getClient('eth').getAddresses().then(([ addr ]) => {
+      console.log(addr)
       this.setState({
-        assetA: {
-          ...this.state.assetA,
-          wallet: {
-            ...this.state.assetA.wallet,
-            addr
-          }
+        eth: {
+          ...this.state.eth,
+          addr
         }
       })
     }).catch(e => {
       console.error(e)
-      window.alert(`Error connecting to ${this.state.assetA.wallet.type}`)
+      window.alert(`Error connecting to MetaMask`)
     })
 
-    this.clientB.getAddresses().then(([ addr ]) => {
-      const { assetB } = this.state
-
-      this.setState((prevState, props) => {
-        assetB.wallet.addr = addr
-        return assetB
+    this.getClient('btc').getAddresses().then(([ addr ]) => {
+      this.setState({
+        btc: {
+          ...this.state.btc,
+          addr
+        }
       })
     }).catch(e => {
       console.error(e)
-      window.alert(`Error connecting to ${this.state.assetB.wallet.type}`)
+      window.alert(`Error connecting to Ledger`)
     })
   }
 
@@ -108,25 +101,25 @@ class SwapInitiation extends Component {
     return (
       <Grid container spacing={0}>
         <Grid item xs={12} sm={6}>
-          <div className='placeholder'>{this.state.assetA.wallet.type}</div>
+          <div className='placeholder'>MetaMask</div>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <div className='placeholder'>{this.state.assetB.wallet.type}</div>
+          <div className='placeholder'>Ledger</div>
         </Grid>
         <Grid container className='main'>
           <Grid container xs={12} sm={6} justify='space-evenly'>
-            <div className='placeholder walletContainer'>{this.state.assetA.code}</div>
+            <div className='placeholder walletContainer'>ETH</div>
           </Grid>
           <Grid container xs={12} sm={6} justify='space-evenly'>
-            <div className='placeholder walletContainer'>{this.state.assetB.code}</div>
+            <div className='placeholder walletContainer'>BTC</div>
           </Grid>
         </Grid>
         <Grid container className='main'>
           <Grid container xs={12} sm={6} justify='space-evenly'>
-            <div className='placeholder walletContainer'>{this.state.assetA.wallet.addr}</div>
+            <div className='placeholder walletContainer'>{this.state.eth.addr}</div>
           </Grid>
           <Grid container xs={12} sm={6} justify='space-evenly'>
-            <div className='placeholder walletContainer'>{this.state.assetB.wallet.addr}</div>
+            <div className='placeholder walletContainer'>{this.state.btc.addr}</div>
           </Grid>
         </Grid>
         <Grid container xs={12} justify='center'>
