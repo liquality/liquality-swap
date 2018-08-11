@@ -53,7 +53,7 @@ class SwapInitiation extends Component {
 
     this.btcClient = new Client()
     this.btcClient.addProvider(new providers.bitcoin.BitcoinRPCProvider('http://localhost:8545'))
-    this.btcClient.addProvider(new providers.bitcoin.BitcoinLedgerProvider(web3.currentProvider))
+    this.btcClient.addProvider(new providers.bitcoin.BitcoinLedgerProvider())
     this.btcClient.addProvider(new providers.bitcoin.BitcoinSwapProvider())
   }
 
