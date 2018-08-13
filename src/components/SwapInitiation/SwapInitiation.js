@@ -117,12 +117,10 @@ class SwapInitiation extends Component {
   switchSide () {
     this.setState(prevState => ({
       assetA: {
-        ...prevState.assetA,
-        currency: this.state.assetA.currency === 'btc' ? 'eth' : 'btc'
+        ...prevState.assetB
       },
       assetB: {
-        ...prevState.assetB,
-        currency: this.state.assetB.currency === 'btc' ? 'eth' : 'btc'
+        ...prevState.assetA
       }
     }))
   }
