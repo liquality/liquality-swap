@@ -14,7 +14,7 @@ import './SwapInitiation.css'
 const { CurrencyInput } = liqualityUI
 
 class SwapInitiation extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -41,7 +41,7 @@ class SwapInitiation extends Component {
     this.initiateSwap = this.initiateSwap.bind(this)
   }
 
-  initiateClients() {
+  initiateClients () {
     this.ethClient = new Client()
     this.ethClient.addProvider(new providers.ethereum.EthereumRPCProvider('http://localhost:8545'))
     this.ethClient.addProvider(new providers.ethereum.EthereumMetaMaskProvider(web3.currentProvider))
@@ -53,11 +53,11 @@ class SwapInitiation extends Component {
     this.btcClient.addProvider(new providers.bitcoin.BitcoinSwapProvider())
   }
 
-  getClient(code) {
+  getClient (code) {
     return this[`${code}Client`]
   }
 
-  initiateSwap() {
+  initiateSwap () {
     this.getClient('eth').generateSwap(
       this.state.counterParty.eth,
       this.state.eth.addr,
@@ -72,7 +72,7 @@ class SwapInitiation extends Component {
   }
 
   // TODO: This should be done for each side based on the currency of that side
-  updateAddresses() {
+  updateAddresses () {
     this.getClient('eth').getAddresses().then(([addr]) => {
       console.log(addr)
       this.setState({
@@ -99,12 +99,12 @@ class SwapInitiation extends Component {
     })
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.initiateClients()
     this.updateAddresses()
   }
 
-  handleAmountChange(party, newValue) {
+  handleAmountChange (party, newValue) {
     this.setState(prevState => ({
       ['asset' + party]: {
         ...prevState['asset' + party],
@@ -113,7 +113,7 @@ class SwapInitiation extends Component {
     }))
   }
 
-  switchSide() {
+  switchSide () {
     this.setState(prevState => ({
       assetA: {
         ...prevState.assetA,
@@ -126,7 +126,7 @@ class SwapInitiation extends Component {
     }))
   }
 
-  render(props) {
+  render (props) {
     return <Grid container spacing={0}>
       <Grid item xs={12} sm={6}>
         <div className='placeholder'>MetaMask</div>
