@@ -27,7 +27,8 @@ class SwapInitiation extends Component {
       assetB: {
         currency: 'btc',
         name: 'Bitcoin',
-        addr: '...'
+        addr: '...',
+        value: 10
       },
       counterParty: {
         eth: '994aBCE56EE8Dc94AE8438543c7BD1Dd2B802b06',
@@ -108,7 +109,7 @@ class SwapInitiation extends Component {
     this.setState(prevState => ({
       ['asset' + party]: {
         ...prevState['asset' + party],
-        amount: newValue
+        value: newValue
       }
     }))
   }
@@ -139,7 +140,7 @@ class SwapInitiation extends Component {
           <div className='placeholder walletContainer'>
             <Typography variant='display1' gutterBottom>HAVE</Typography>
             <CurrencyInput currency={this.state.assetA.currency}
-              value={this.state.assetA.amount}
+              value={this.state.assetA.value}
               onChange={(newValue) => this.handleAmountChange('A', newValue)} />
           </div>
         </Grid>
@@ -150,7 +151,7 @@ class SwapInitiation extends Component {
           <div className='placeholder walletContainer'>
             <Typography variant='display1' gutterBottom>WANT</Typography>
             <CurrencyInput currency={this.state.assetB.currency}
-              value={this.state.assetB.amount}
+              value={this.state.assetB.value}
               onChange={(newValue) => this.handleAmountChange('B', newValue)} />
           </div>
         </Grid>
