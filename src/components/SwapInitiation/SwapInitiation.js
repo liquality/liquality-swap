@@ -133,6 +133,7 @@ class SwapInitiation extends Component {
   }
 
   render (props) {
+    const { assetA, assetB, counterParty } = this.state
     return <Grid container spacing={0}>
       <Grid item xs={12} sm={6}>
         <div className='placeholder'>MetaMask</div>
@@ -144,8 +145,8 @@ class SwapInitiation extends Component {
         <Grid container xs={12} sm={5} justify='flex-end'>
           <div className='placeholder walletContainer'>
             <Typography variant='display1' gutterBottom>HAVE</Typography>
-            <CurrencyInput currency={this.state.assetA.currency}
-              value={this.state.assetA.value}
+            <CurrencyInput currency={assetA.currency}
+              value={assetA.value}
               onChange={newValue => this.handleAmountChange('A', newValue)} />
           </div>
         </Grid>
@@ -155,8 +156,8 @@ class SwapInitiation extends Component {
         <Grid container xs={12} sm={5} justify='flex-start'>
           <div className='placeholder walletContainer'>
             <Typography variant='display1' gutterBottom>WANT</Typography>
-            <CurrencyInput currency={this.state.assetB.currency}
-              value={this.state.assetB.value}
+            <CurrencyInput currency={assetB.currency}
+              value={assetB.value}
               onChange={newValue => this.handleAmountChange('B', newValue)} />
           </div>
         </Grid>
@@ -169,9 +170,9 @@ class SwapInitiation extends Component {
             <Grid item xs={12}>
               <div className='placeholder'>
                 <AddressInput
-                  currency={this.state.assetB.currency}
-                  value={this.state.counterParty[this.state.assetB.currency]}
-                  onChange={newValue => this.handleCounterPartyAddressChange(this.state.assetB.currency, newValue)}
+                  currency={assetB.currency}
+                  value={counterParty[assetB.currency]}
+                  onChange={newValue => this.handleCounterPartyAddressChange(assetB.currency, newValue)}
                 />
               </div>
             </Grid>
@@ -181,9 +182,9 @@ class SwapInitiation extends Component {
             <Grid item xs={12}>
               <div className='placeholder'>
                 <AddressInput
-                  currency={this.state.assetA.currency}
-                  value={this.state.counterParty[this.state.assetA.currency]}
-                  onChange={newValue => this.handleCounterPartyAddressChange(this.state.assetA.currency, newValue)}
+                  currency={assetA.currency}
+                  value={counterParty[assetA.currency]}
+                  onChange={newValue => this.handleCounterPartyAddressChange(assetA.currency, newValue)}
                 />
               </div>
             </Grid>
