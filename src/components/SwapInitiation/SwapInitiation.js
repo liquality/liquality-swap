@@ -12,7 +12,7 @@ import { Client, providers } from 'chainabstractionlayer'
 
 import './SwapInitiation.css'
 
-const { CurrencyInput, AddressInput } = liqualityUI
+const { CurrencyInput, AddressInput, WalletDisplay } = liqualityUI
 
 class SwapInitiation extends Component {
   constructor (props) {
@@ -22,14 +22,22 @@ class SwapInitiation extends Component {
       assetA: {
         currency: 'eth',
         name: 'ethereum',
-        addr: '...',
-        value: 50
+        value: 50,
+        wallet: {
+          addr: '',
+          balance: 1000,
+          type: 'metamask'
+        }
       },
       assetB: {
         currency: 'btc',
         name: 'Bitcoin',
-        addr: '...',
-        value: 10
+        value: 10,
+        wallet: {
+          addr: '',
+          balance: 5,
+          type: 'ledger'
+        }
       },
       counterParty: {
         eth: '',
@@ -69,7 +77,7 @@ class SwapInitiation extends Component {
       console.log(bytecode)
 
       // TODO: this should be based on which asset is asset A
-      this.getClient('eth').sendTransaction(this.state.assetA.addr, null, String(this.state.assetA.value), bytecode).then(console.log)
+      this.getClient('eth').sendTransaction(this.state.assetA.wallet.addr, null, String(this.state.assetA.value), bytecode).then(console.log)
     })
   }
 
@@ -78,7 +86,7 @@ class SwapInitiation extends Component {
     this.getClient('eth').getAddresses().then(([addr]) => {
       console.log(addr)
       this.setState(update(this.state, {
-        assetA: { addr: { $set: addr } }
+        assetA: { wallet: { addr: { $set: addr } } }
       }))
     }).catch(e => {
       console.error('Error connecting to MetaMask', e)
@@ -86,7 +94,7 @@ class SwapInitiation extends Component {
 
     this.getClient('btc').getAddresses().then(([addr]) => {
       this.setState(update(this.state, {
-        assetB: { addr: { $set: addr } }
+        assetB: { wallet: { addr: { $set: addr } } }
       }))
     }).catch(e => {
       console.error('Error connecting to Ledger', e)
@@ -121,10 +129,22 @@ class SwapInitiation extends Component {
     const { assetA, assetB, counterParty } = this.state
     return <Grid container spacing={0}>
       <Grid item xs={12} sm={6}>
-        <div className='placeholder'>MetaMask</div>
+        <div className='placeholder'>
+          <WalletDisplay
+            currency={assetA.currency}
+            type={assetA.wallet.type}
+            balance={assetA.wallet.balance}
+            title='Wallet 1' />
+        </div>
       </Grid>
       <Grid item xs={12} sm={6}>
-        <div className='placeholder'>Ledger</div>
+        <div className='placeholder'>
+          <WalletDisplay
+            currency={assetB.currency}
+            type={assetB.wallet.type}
+            balance={assetB.wallet.balance}
+            title='Wallet 2' />
+        </div>
       </Grid>
       <Grid container className='main'>
         <Grid container xs={12} sm={5} justify='flex-end'>
