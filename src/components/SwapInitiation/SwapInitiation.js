@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import SwapIcon from '@material-ui/icons/SwapHorizontalCircle'
 import liqualityUI from 'liquality-ui'
+import update from 'immutability-helper'
 
 import { Client, providers } from 'chainabstractionlayer'
 
@@ -76,23 +77,17 @@ class SwapInitiation extends Component {
   updateAddresses () {
     this.getClient('eth').getAddresses().then(([addr]) => {
       console.log(addr)
-      this.setState({
-        assetA: {
-          ...this.state.assetA,
-          addr
-        }
-      })
+      this.setState(update(this.state, {
+        assetA: { addr: { $set: addr } }
+      }))
     }).catch(e => {
       console.error('Error connecting to MetaMask', e)
     })
 
     this.getClient('btc').getAddresses().then(([addr]) => {
-      this.setState({
-        assetB: {
-          ...this.state.assetB,
-          addr
-        }
-      })
+      this.setState(update(this.state, {
+        assetB: { addr: { $set: addr } }
+      }))
     }).catch(e => {
       console.error('Error connecting to Ledger', e)
     })
@@ -104,31 +99,21 @@ class SwapInitiation extends Component {
   }
 
   handleAmountChange (party, newValue) {
-    this.setState(prevState => ({
-      ['asset' + party]: {
-        ...prevState['asset' + party],
-        value: newValue
-      }
+    this.setState(update(this.state, {
+      ['asset' + party]: { value: { $set: newValue } }
     }))
   }
 
   switchSide () {
-    this.setState(prevState => ({
-      assetA: {
-        ...prevState.assetB
-      },
-      assetB: {
-        ...prevState.assetA
-      }
+    this.setState(update(this.state, {
+      assetA: { $set: this.state.assetB },
+      assetB: { $set: this.state.assetA }
     }))
   }
 
   handleCounterPartyAddressChange (currency, newValue) {
-    this.setState(prevState => ({
-      counterParty: {
-        ...prevState.counterParty,
-        [currency]: newValue
-      }
+    this.setState(update(this.state, {
+      counterParty: { [currency]: { $set: newValue } }
     }))
   }
 
