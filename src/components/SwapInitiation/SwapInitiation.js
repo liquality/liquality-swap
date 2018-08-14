@@ -10,7 +10,9 @@ import update from 'immutability-helper'
 
 import { Client, providers } from 'chainabstractionlayer'
 
-import WalletConnectPop from '../WalletConnectPopup/WalletConnectPop'
+import WalletConnectPopup from '../WalletConnectPopup/WalletConnectPopup'
+
+import wallets from '../../Wallets'
 
 import './SwapInitiation.css'
 
@@ -26,7 +28,7 @@ class SwapInitiation extends Component {
         name: 'ethereum',
         value: 50,
         wallet: {
-          addr: '',
+          addr: null,
           balance: 1000,
           type: 'metamask'
         },
@@ -41,7 +43,7 @@ class SwapInitiation extends Component {
         name: 'Bitcoin',
         value: 10,
         wallet: {
-          addr: '',
+          addr: null,
           balance: 5,
           type: 'ledger'
         },
@@ -61,6 +63,9 @@ class SwapInitiation extends Component {
     }
 
     this.initiateSwap = this.initiateSwap.bind(this)
+    this.toggleWalletConnect = this.toggleWalletConnect.bind(this)
+    this.chooseWallet = this.chooseWallet.bind(this)
+    this.disconnectWallet = this.disconnectWallet.bind(this)
   }
 
   initiateClients () {
@@ -148,6 +153,57 @@ class SwapInitiation extends Component {
     }))
   }
 
+
+  async chooseWallet (party, currency, wallet) {
+    const cal = await wallets[currency][wallet].initialize()
+    this.setState(prevState => ({
+      [party]: {
+        ...prevState[party],
+        walletType: wallet,
+        cal: cal
+      }
+    }))
+    setTimeout(() => { this.checkWalletConnected(party, currency, wallet) }, 3000) // TODO
+    // let intervalId = setInterval(this.checkWalletConnected(party, currency, wallet), 1000)
+    // this.setState(prevState => ({
+    //   [party]: {
+    //     ...prevState[party],
+    //     walletType: wallet,
+    //     timer: intervalId,
+    //     cal: cal
+    //   }
+    // }))
+  }
+
+  async checkWalletConnected (party, currency, wallet) {
+    if (this.state[party].cal) {
+      debugger
+      let addresses = await this.state[party].cal.getAddresses()
+      debugger
+      if (addresses.length > 0) {
+        debugger
+        this.setState(prevState => ({
+          [party]: {
+            ...prevState[party],
+            walletConnected: true,
+            addresses: addresses
+          }
+        }))
+      }
+    }
+  }
+
+  disconnectWallet (party) {
+    this.setState(prevState => ({
+      [party]: {
+        ...prevState[party],
+        walletType: null,
+        walletConnected: false,
+        walletChosen: false
+      }
+    }))
+  }
+
   render (props) {
     const { assetA, assetB, counterParty } = this.state
     return <Grid container spacing={0}>
@@ -157,7 +213,8 @@ class SwapInitiation extends Component {
             currency={assetA.currency}
             type={assetA.wallet.type}
             balance={assetA.wallet.balance}
-            title='Wallet 1' />
+            title='Wallet 1'
+            onClick={() => this.toggleWalletConnect('assetA')} />
         </div>
       </Grid>
       <Grid item xs={12} sm={6}>
@@ -166,7 +223,8 @@ class SwapInitiation extends Component {
             currency={assetB.currency}
             type={assetB.wallet.type}
             balance={assetB.wallet.balance}
-            title='Wallet 2' />
+            title='Wallet 2'
+            onClick={() => this.toggleWalletConnect('assetB')} />
         </div>
       </Grid>
       <Grid container className='main'>
@@ -222,6 +280,31 @@ class SwapInitiation extends Component {
       <Grid container xs={12} justify='center'>
         <Button variant='contained' color='primary' onClick={this.initiateSwap}>Initiate Swap</Button>
       </Grid>
+      <WalletConnectPopup
+        open={assetA.walletConnectOpen}
+        currency={assetA.currencyType}
+        wallets={[{name: 'ledger', multiAddress: true}, {name: 'metamask', multiAddress: false}]}
+        id='assetA'
+        walletChosen={assetA.walletType}
+        chooseWallet={this.chooseWallet}
+        disconnectWallet={this.disconnectWallet}
+        anchorEl={assetA.anchorEl}
+        addresses={assetA.wallet.addr}
+        walletConnected={assetA.walletConnected}
+      />
+
+      <WalletConnectPopup
+        open={assetB.walletConnectOpen}
+        currency={assetB.currencyType}
+        wallets={[{name: 'ledger', multiAddress: true}, {name: 'metamask', multiAddress: false}]}
+        id='assetB'
+        walletChosen={assetB.walletType}
+        chooseWallet={this.chooseWallet}
+        disconnectWallet={this.disconnectWallet}
+        anchorEl={assetB.anchorEl}
+        addresses={assetB.wallet.addr}
+        walletConnected={assetB.walletConnected}
+      />
     </Grid>
   }
 }

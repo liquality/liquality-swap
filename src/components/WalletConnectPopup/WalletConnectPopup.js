@@ -7,18 +7,19 @@ import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
 import liqualityUI from 'liquality-ui'
 
-import './WalletConnectPop.css'
+import './WalletConnectPopup.css'
 
 const { WalletChoose, WalletConnecting, WalletConnected } = liqualityUI
 
-class WalletConnectPop extends Component {
+class WalletConnectPopup extends Component {
   constructor (props) {
     super(props)
     this.state = {
     }
   }
 
-  render (props) {
+  render () {
+    const props = this.props
     let walletConnectBody
     let addressView
     if (props.addresses) {
@@ -59,4 +60,4 @@ class WalletConnectPop extends Component {
   }
 }
 
-export default WalletConnectPop
+export default WalletConnectPopup
