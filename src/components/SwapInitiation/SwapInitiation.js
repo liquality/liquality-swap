@@ -1,28 +1,34 @@
 /* global web3 */
 
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
-// import Typography from '@material-ui/core/Typography'
-// import _ from 'lodash'
+import Typography from '@material-ui/core/Typography'
+import SwapIcon from '@material-ui/icons/SwapHorizontalCircle'
+import liqualityUI from 'liquality-ui'
 
 import { Client, providers } from 'chainabstractionlayer'
 
 import './SwapInitiation.css'
+
+const { CurrencyInput } = liqualityUI
 
 class SwapInitiation extends Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      eth: {
+      assetA: {
+        currency: 'eth',
         name: 'ethereum',
         addr: '...',
-        value: 1e18
+        value: 50
       },
-      btc: {
+      assetB: {
+        currency: 'btc',
         name: 'Bitcoin',
-        addr: '...'
+        addr: '...',
+        value: 10
       },
       counterParty: {
         eth: '994aBCE56EE8Dc94AE8438543c7BD1Dd2B802b06',
@@ -61,16 +67,18 @@ class SwapInitiation extends Component {
     ).then(bytecode => {
       console.log(bytecode)
 
-      this.getClient('eth').sendTransaction(this.state.eth.addr, null, String(this.state.eth.value), bytecode).then(console.log)
+      // TODO: this should be based on which asset is asset A
+      this.getClient('eth').sendTransaction(this.state.assetA.addr, null, String(this.state.assetA.value), bytecode).then(console.log)
     })
   }
 
+  // TODO: This should be done for each side based on the currency of that side
   updateAddresses () {
-    this.getClient('eth').getAddresses().then(([ addr ]) => {
+    this.getClient('eth').getAddresses().then(([addr]) => {
       console.log(addr)
       this.setState({
-        eth: {
-          ...this.state.eth,
+        assetA: {
+          ...this.state.assetA,
           addr
         }
       })
@@ -79,10 +87,10 @@ class SwapInitiation extends Component {
       window.alert(`Error connecting to MetaMask`)
     })
 
-    this.getClient('btc').getAddresses().then(([ addr ]) => {
+    this.getClient('btc').getAddresses().then(([addr]) => {
       this.setState({
-        btc: {
-          ...this.state.btc,
+        assetB: {
+          ...this.state.assetB,
           addr
         }
       })
@@ -97,36 +105,76 @@ class SwapInitiation extends Component {
     this.updateAddresses()
   }
 
+  handleAmountChange (party, newValue) {
+    this.setState(prevState => ({
+      ['asset' + party]: {
+        ...prevState['asset' + party],
+        value: newValue
+      }
+    }))
+  }
+
+  switchSide () {
+    this.setState(prevState => ({
+      assetA: {
+        ...prevState.assetB
+      },
+      assetB: {
+        ...prevState.assetA
+      }
+    }))
+  }
+
   render (props) {
-    return (
-      <Grid container spacing={0}>
-        <Grid item xs={12} sm={6}>
-          <div className='placeholder'>MetaMask</div>
+    return <Grid container spacing={0}>
+      <Grid item xs={12} sm={6}>
+        <div className='placeholder'>MetaMask</div>
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <div className='placeholder'>Ledger</div>
+      </Grid>
+      <Grid container className='main'>
+        <Grid container xs={12} sm={5} justify='flex-end'>
+          <div className='placeholder walletContainer'>
+            <Typography variant='display1' gutterBottom>HAVE</Typography>
+            <CurrencyInput currency={this.state.assetA.currency}
+              value={this.state.assetA.value}
+              onChange={newValue => this.handleAmountChange('A', newValue)} />
+          </div>
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <div className='placeholder'>Ledger</div>
+        <Grid container xs={12} sm={2} justify='space-around' alignItems='center'>
+          <SwapIcon onClick={() => this.switchSide()} color='primary' style={{ fontSize: 50 }} />
         </Grid>
-        <Grid container className='main'>
-          <Grid container xs={12} sm={6} justify='space-evenly'>
-            <div className='placeholder walletContainer'>ETH</div>
-          </Grid>
-          <Grid container xs={12} sm={6} justify='space-evenly'>
-            <div className='placeholder walletContainer'>BTC</div>
-          </Grid>
+        <Grid container xs={12} sm={5} justify='flex-start'>
+          <div className='placeholder walletContainer'>
+            <Typography variant='display1' gutterBottom>WANT</Typography>
+            <CurrencyInput currency={this.state.assetB.currency}
+              value={this.state.assetB.value}
+              onChange={newValue => this.handleAmountChange('B', newValue)} />
+          </div>
         </Grid>
-        <Grid container className='main'>
-          <Grid container xs={12} sm={6} justify='space-evenly'>
-            <div className='placeholder walletContainer'>{this.state.eth.addr}</div>
+        <Grid container xs={12} className='counterparty'>
+          <Typography variant='title' gutterBottom>COUNTER PARTY WALLETS</Typography>
+          <Grid container>
+            <Grid item xs={12}>
+              <Typography variant='title' gutterBottom>Receive From</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <div className='placeholder'>Address 1</div>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant='title' gutterBottom>Send To</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <div className='placeholder'>Address 2</div>
+            </Grid>
           </Grid>
-          <Grid container xs={12} sm={6} justify='space-evenly'>
-            <div className='placeholder walletContainer'>{this.state.btc.addr}</div>
-          </Grid>
-        </Grid>
-        <Grid container xs={12} justify='center'>
-          <Button variant='contained' color='primary' onClick={this.initiateSwap}>Initiate Swap</Button>
         </Grid>
       </Grid>
-    )
+      <Grid container xs={12} justify='center'>
+        <Button variant='contained' color='primary' onClick={this.initiateSwap}>Initiate Swap</Button>
+      </Grid>
+    </Grid>
   }
 }
 
