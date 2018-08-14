@@ -11,7 +11,7 @@ import { Client, providers } from 'chainabstractionlayer'
 
 import './SwapInitiation.css'
 
-const { CurrencyInput } = liqualityUI
+const { CurrencyInput, AddressInput } = liqualityUI
 
 class SwapInitiation extends Component {
   constructor (props) {
@@ -31,8 +31,8 @@ class SwapInitiation extends Component {
         value: 10
       },
       counterParty: {
-        eth: '994aBCE56EE8Dc94AE8438543c7BD1Dd2B802b06',
-        btc: '14QHd4qpUTmMHx5BchEREySsqxtnUHcX6a'
+        eth: '',
+        btc: ''
       },
       expiration: 12,
       secret: 'this is a secret',
@@ -83,8 +83,7 @@ class SwapInitiation extends Component {
         }
       })
     }).catch(e => {
-      console.error(e)
-      window.alert(`Error connecting to MetaMask`)
+      console.error('Error connecting to MetaMask', e)
     })
 
     this.getClient('btc').getAddresses().then(([addr]) => {
@@ -95,8 +94,7 @@ class SwapInitiation extends Component {
         }
       })
     }).catch(e => {
-      console.error(e)
-      window.alert(`Error connecting to Ledger`)
+      console.error('Error connecting to Ledger', e)
     })
   }
 
@@ -125,7 +123,17 @@ class SwapInitiation extends Component {
     }))
   }
 
+  handleCounterPartyAddressChange (currency, newValue) {
+    this.setState(prevState => ({
+      counterParty: {
+        ...prevState.counterParty,
+        [currency]: newValue
+      }
+    }))
+  }
+
   render (props) {
+    const { assetA, assetB, counterParty } = this.state
     return <Grid container spacing={0}>
       <Grid item xs={12} sm={6}>
         <div className='placeholder'>MetaMask</div>
@@ -137,8 +145,8 @@ class SwapInitiation extends Component {
         <Grid container xs={12} sm={5} justify='flex-end'>
           <div className='placeholder walletContainer'>
             <Typography variant='display1' gutterBottom>HAVE</Typography>
-            <CurrencyInput currency={this.state.assetA.currency}
-              value={this.state.assetA.value}
+            <CurrencyInput currency={assetA.currency}
+              value={assetA.value}
               onChange={newValue => this.handleAmountChange('A', newValue)} />
           </div>
         </Grid>
@@ -148,8 +156,8 @@ class SwapInitiation extends Component {
         <Grid container xs={12} sm={5} justify='flex-start'>
           <div className='placeholder walletContainer'>
             <Typography variant='display1' gutterBottom>WANT</Typography>
-            <CurrencyInput currency={this.state.assetB.currency}
-              value={this.state.assetB.value}
+            <CurrencyInput currency={assetB.currency}
+              value={assetB.value}
               onChange={newValue => this.handleAmountChange('B', newValue)} />
           </div>
         </Grid>
@@ -160,13 +168,25 @@ class SwapInitiation extends Component {
               <Typography variant='title' gutterBottom>Receive From</Typography>
             </Grid>
             <Grid item xs={12}>
-              <div className='placeholder'>Address 1</div>
+              <div className='placeholder'>
+                <AddressInput
+                  currency={assetB.currency}
+                  value={counterParty[assetB.currency]}
+                  onChange={newValue => this.handleCounterPartyAddressChange(assetB.currency, newValue)}
+                />
+              </div>
             </Grid>
             <Grid item xs={12}>
               <Typography variant='title' gutterBottom>Send To</Typography>
             </Grid>
             <Grid item xs={12}>
-              <div className='placeholder'>Address 2</div>
+              <div className='placeholder'>
+                <AddressInput
+                  currency={assetA.currency}
+                  value={counterParty[assetA.currency]}
+                  onChange={newValue => this.handleCounterPartyAddressChange(assetA.currency, newValue)}
+                />
+              </div>
             </Grid>
           </Grid>
         </Grid>
