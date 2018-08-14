@@ -10,6 +10,8 @@ import update from 'immutability-helper'
 
 import { Client, providers } from 'chainabstractionlayer'
 
+import WalletConnectPop from '../WalletConnectPopup/WalletConnectPop'
+
 import './SwapInitiation.css'
 
 const { CurrencyInput, AddressInput, WalletDisplay } = liqualityUI
@@ -27,7 +29,12 @@ class SwapInitiation extends Component {
           addr: '',
           balance: 1000,
           type: 'metamask'
-        }
+        },
+        addr: '...',
+        value: 50,
+        walletConnectOpen: false,
+        walletConnected: false,
+        walletChosen: false
       },
       assetB: {
         currency: 'btc',
@@ -37,7 +44,12 @@ class SwapInitiation extends Component {
           addr: '',
           balance: 5,
           type: 'ledger'
-        }
+        },
+        addr: '...',
+        value: 10,
+        walletConnectOpen: false,
+        walletConnected: false,
+        walletChosen: false
       },
       counterParty: {
         eth: '',
@@ -122,6 +134,17 @@ class SwapInitiation extends Component {
   handleCounterPartyAddressChange (currency, newValue) {
     this.setState(update(this.state, {
       counterParty: { [currency]: { $set: newValue } }
+    }))
+  }
+
+  toggleWalletConnect (e, party) {
+    const { currentTarget } = e;
+    this.setState(prevState => ({
+      [party]: {
+        ...prevState[party],
+        walletConnectOpen: !prevState[party].walletConnectOpen,
+        anchorEl: currentTarget
+      }
     }))
   }
 
