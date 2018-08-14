@@ -139,7 +139,7 @@ class SwapInitiation extends Component {
             <Typography variant='display1' gutterBottom>HAVE</Typography>
             <CurrencyInput currency={this.state.assetA.currency}
               value={this.state.assetA.value}
-              onChange={(newValue) => this.handleAmountChange('A', newValue)} />
+              onChange={newValue => this.handleAmountChange('A', newValue)} />
           </div>
         </Grid>
         <Grid container xs={12} sm={2} justify='space-around' alignItems='center'>
@@ -150,7 +150,7 @@ class SwapInitiation extends Component {
             <Typography variant='display1' gutterBottom>WANT</Typography>
             <CurrencyInput currency={this.state.assetB.currency}
               value={this.state.assetB.value}
-              onChange={(newValue) => this.handleAmountChange('B', newValue)} />
+              onChange={newValue => this.handleAmountChange('B', newValue)} />
           </div>
         </Grid>
         <Grid container xs={12} className='counterparty'>
