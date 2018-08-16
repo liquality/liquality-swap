@@ -12,8 +12,6 @@ import { Client, providers } from 'chainabstractionlayer'
 
 import WalletConnectPopup from '../WalletConnectPopup/WalletConnectPopup'
 
-import wallets from '../../Wallets'
-
 import './SwapInitiation.css'
 
 const { CurrencyInput, AddressInput, WalletDisplay } = liqualityUI
@@ -34,7 +32,7 @@ class SwapInitiation extends Component {
           connected: false,
           chosen: false,
           type: ''
-        },
+        }
       },
       assetB: {
         currency: 'btc',
@@ -47,7 +45,7 @@ class SwapInitiation extends Component {
           connected: false,
           chosen: false,
           type: ''
-        },
+        }
       },
       counterParty: {
         eth: '',
@@ -118,7 +116,7 @@ class SwapInitiation extends Component {
   }
 
   toggleWalletConnect (e, party) {
-    const { currentTarget } = e;
+    const { currentTarget } = e
     this.setState(prevState => ({
       [party]: {
         ...prevState[party],
@@ -130,7 +128,6 @@ class SwapInitiation extends Component {
       }
     }))
   }
-
 
   async chooseWallet (party, currency, wallet) {
     this.setState(prevState => ({
@@ -148,7 +145,6 @@ class SwapInitiation extends Component {
 
   async checkWalletConnected (party) {
     const currency = this.state[party].currency
-    const wallet = this.state[party].wallet.type
     this.getClient(currency).getAddresses().then((addresses) => {
       if (addresses.length > 0) {
         this.setState(prevState => ({
@@ -192,8 +188,7 @@ class SwapInitiation extends Component {
             currency={assetA.currency}
             type={assetA.wallet.type}
             balance={assetA.wallet.balance}
-            title={assetA.walletConnected ? assetA.addresses[0] : 'Wallet Not Connected'}
-             />
+            title={assetA.wallet.connected ? assetA.wallet.addresses[0] : 'Wallet Not Connected'} />
         </div>
       </Grid>
       <Grid item xs={12} sm={6}>
@@ -202,7 +197,7 @@ class SwapInitiation extends Component {
             currency={assetB.currency}
             type={assetB.wallet.type}
             balance={assetB.wallet.balance}
-            title={assetB.walletConnected ? assetB.addresses[0] : 'Wallet Not Connected'} />
+            title={assetB.wallet.connected ? assetB.wallet.addresses[0] : 'Wallet Not Connected'} />
         </div>
       </Grid>
       <Grid container className='main'>

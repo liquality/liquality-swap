@@ -1,10 +1,7 @@
 import React, {Component} from 'react'
-import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
 import Popper from '@material-ui/core/Popper'
 import Fade from '@material-ui/core/Fade'
 import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
 import liqualityUI from 'liquality-ui'
 
 import './WalletConnectPopup.css'
@@ -34,14 +31,6 @@ class WalletConnectPopup extends Component {
   render () {
     const props = this.props
     let walletConnectBody
-    let addressView
-    if (props.addresses) {
-      if (props.addresses.length > 1) {
-        addressView = props.addresses.map((address) => <p>{ address }</p> )
-      } else if (props.addresses.length === 1) {
-        addressView = props.addresses[0]
-      }
-    }
 
     if (props.walletConnected) {
       walletConnectBody = (
