@@ -9,13 +9,26 @@ import liqualityUI from 'liquality-ui'
 
 import './WalletConnectPopup.css'
 
+import wallets from '../../Wallets'
+
 const { WalletChoose, WalletConnecting, WalletConnected } = liqualityUI
 
 class WalletConnectPopup extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-    }
+
+    this.chooseWallet = this.chooseWallet.bind(this)
+    this.disconnectWallet = this.disconnectWallet.bind(this)
+  }
+
+  chooseWallet (wallet) {
+    const { id, currency } = this.props
+    this.props.chooseWallet(id, currency, wallet)
+  }
+
+  disconnectWallet () {
+    const { id } = this.props
+    this.props.disconnectWallet(id)
   }
 
   render () {
@@ -32,15 +45,33 @@ class WalletConnectPopup extends Component {
 
     if (props.walletConnected) {
       walletConnectBody = (
-        <WalletConnected />
+        <WalletConnected
+          addresses={props.addresses}
+          currency={props.currency}
+          disconnectText='Disconnect'
+          disconnectWallet={this.disconnectWallet}
+          wallet={props.wallet}
+        />
+
       )
     } else if (props.walletChosen) {
       walletConnectBody = (
-        <WalletConnecting />
+        <WalletConnecting
+          title={wallets[props.currency][props.wallet].connectTitle}
+          subtitle={wallets[props.currency][props.wallet].connectSubtitle}
+          cancelText='Cancel'
+          cancelWallet={this.disconnectWallet}
+          currency={props.currency}
+          wallet={props.wallet} />
       )
     } else {
       walletConnectBody = (
-        <WalletChoose />
+        <WalletChoose
+          title='Liquality'
+          subTitle='By connecting you understand that you are on your own trust a cutting-edge technology without need to trust your trading partner'
+          wallets={props.currency === 'eth' ? ['ledger', 'metamask'] : ['ledger']}
+          chooseWallet={this.chooseWallet}
+          currency={props.currency} />
       )
     }
 
@@ -49,7 +80,7 @@ class WalletConnectPopup extends Component {
         <Popper id={props.id} open={props.open} anchorEl={props.anchorEl} transition>
           {({ TransitionProps }) => (
             <Fade {...TransitionProps} timeout={350}>
-              <Paper>
+              <Paper style={{width: 350}}>
                 { walletConnectBody }
               </Paper>
             </Fade>

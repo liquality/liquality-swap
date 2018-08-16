@@ -1,7 +1,8 @@
 import { Client, providers, networks } from 'chainabstractionlayer'
- const { BitcoinRPCProvider, BitcoinLedgerProvider } = providers.bitcoin
-const { EthereumRPCProvider, EthereumLedgerProvider, EthereumMetamaskProvider } = providers.ethereum
- const rpc = {
+
+const { BitcoinRPCProvider, BitcoinLedgerProvider } = providers.bitcoin
+const { EthereumRPCProvider, EthereumLedgerProvider, EthereumMetaMaskProvider } = providers.ethereum
+const rpc = {
   bitcoin: {
     url: 'http://localhost:8000',
     user: 'bitcoin',
@@ -13,37 +14,28 @@ const { EthereumRPCProvider, EthereumLedgerProvider, EthereumMetamaskProvider } 
     pass: 'local321'
   }
 }
- const web3  = window.web3
- const wallets = {
+
+const web3  = window.web3
+const wallets = {
   btc: {
     ledger: {
       multiAddress: true,
-      async initialize () {
-        const cal = new Client()
-        cal.addProvider(new BitcoinRPCProvider(rpc.bitcoin.url, rpc.bitcoin.user, rpc.bitcoin.pass))
-        cal.addProvider(new BitcoinLedgerProvider({ network: networks.bitcoin }))
-        return cal
-      },
+      connectTitle: 'Plug in and enter',
+      connectSubtitle: ''
     }
   },
   eth: {
     metamask: {
       multiAddress: false,
-      initialize () {
-        const cal = new Client()
-        cal.addProvider(new EthereumMetamaskProvider(web3.currentProvider))
-        return cal
-      }
+      connectTitle: 'Login to MetaMask',
+      connectSubtitle: ''
     },
     ledger: {
       multiAddress: true,
-      initialize () {
-        const cal = new Client()
-        cal.addProvider(new EthereumRPCProvider(rpc.ethereum.url, rpc.ethereum.user, rpc.ethereum.pass))
-        cal.addProvider(new EthereumLedgerProvider({ network: networks.ethereum }))
-        return cal
-      }
+      connectTitle: 'Plug in and enter',
+      connectSubtitle: 'Choose ethereum application and enable smart contract support'
     }
   }
 }
- export default wallets
+
+export default wallets
