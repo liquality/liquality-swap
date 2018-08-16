@@ -10,6 +10,8 @@ import update from 'immutability-helper'
 
 import { Client, providers } from 'chainabstractionlayer'
 
+import WalletConnectPopup from '../WalletConnectPopup/WalletConnectPopup'
+
 import './SwapInitiation.css'
 
 const { CurrencyInput, AddressInput, WalletDisplay } = liqualityUI
@@ -21,12 +23,15 @@ class SwapInitiation extends Component {
     this.state = {
       assetA: {
         currency: 'eth',
-        name: 'ethereum',
+        name: 'Ethereum',
         value: 50,
         wallet: {
-          addr: '',
+          addresses: null,
           balance: 1000,
-          type: 'metamask'
+          connectOpen: false,
+          connected: false,
+          chosen: false,
+          type: ''
         }
       },
       assetB: {
@@ -34,9 +39,12 @@ class SwapInitiation extends Component {
         name: 'Bitcoin',
         value: 10,
         wallet: {
-          addr: '',
+          addresses: null,
           balance: 5,
-          type: 'ledger'
+          connectOpen: false,
+          connected: false,
+          chosen: false,
+          type: ''
         }
       },
       counterParty: {
@@ -49,6 +57,9 @@ class SwapInitiation extends Component {
     }
 
     this.initiateSwap = this.initiateSwap.bind(this)
+    this.toggleWalletConnect = this.toggleWalletConnect.bind(this)
+    this.chooseWallet = this.chooseWallet.bind(this)
+    this.disconnectWallet = this.disconnectWallet.bind(this)
   }
 
   initiateClients () {
@@ -70,40 +81,19 @@ class SwapInitiation extends Component {
   initiateSwap () {
     this.getClient('eth').generateSwap(
       this.state.counterParty.eth,
-      this.state.eth.addr,
+      this.state.eth.addresses[0],
       this.state.secretHash,
       this.state.expiration
     ).then(bytecode => {
       console.log(bytecode)
 
       // TODO: this should be based on which asset is asset A
-      this.getClient('eth').sendTransaction(this.state.assetA.wallet.addr, null, String(this.state.assetA.value), bytecode).then(console.log)
-    })
-  }
-
-  // TODO: This should be done for each side based on the currency of that side
-  updateAddresses () {
-    this.getClient('eth').getAddresses().then(([addr]) => {
-      console.log(addr)
-      this.setState(update(this.state, {
-        assetA: { wallet: { addr: { $set: addr } } }
-      }))
-    }).catch(e => {
-      console.error('Error connecting to MetaMask', e)
-    })
-
-    this.getClient('btc').getAddresses().then(([addr]) => {
-      this.setState(update(this.state, {
-        assetB: { wallet: { addr: { $set: addr } } }
-      }))
-    }).catch(e => {
-      console.error('Error connecting to Ledger', e)
+      this.getClient('eth').sendTransaction(this.state.assetA.wallet.addresses[0], null, String(this.state.assetA.value), bytecode).then(console.log)
     })
   }
 
   componentDidMount () {
     this.initiateClients()
-    this.updateAddresses()
   }
 
   handleAmountChange (party, newValue) {
@@ -125,25 +115,79 @@ class SwapInitiation extends Component {
     }))
   }
 
+  toggleWalletConnect (e, party) {
+    const { currentTarget } = e
+    this.setState(update(this.state, {
+      [party]: {
+        wallet: { connectOpen: { $set: !this.state[party].wallet.connectOpen } },
+        anchorEl: { $set: currentTarget }
+      }
+    }))
+  }
+
+  async chooseWallet (party, currency, wallet) {
+    this.setState(update(this.state, {
+      [party]: {
+        wallet: {
+          chosen: { $set: true },
+          type: { $set: wallet }
+        }
+      }
+    }))
+    this.checkWalletConnected(party)
+  }
+
+  async checkWalletConnected (party) {
+    const currency = this.state[party].currency
+    this.getClient(currency).getAddresses().then((addresses) => {
+      if (addresses.length > 0) {
+        this.setState(update(this.state, {
+          [party]: {
+            wallet: {
+              addresses: { $set: addresses },
+              connected: { $set: true }
+            }
+          }
+        }))
+      } else {
+        if (this.state[party].wallet.chosen) {
+          setTimeout(this.checkWalletConnected(party), 1000)
+        }
+      }
+    })
+  }
+
+  disconnectWallet (party) {
+    this.setState(update(this.state, {
+      [party]: {
+        wallet: {
+          connected: { $set: false },
+          chosen: { $set: false },
+          type: { $set: '' }
+        }
+      }
+    }))
+  }
+
   render (props) {
     const { assetA, assetB, counterParty } = this.state
     return <Grid container spacing={0}>
       <Grid item xs={12} sm={6}>
-        <div className='placeholder'>
+        <div className='placeholder' onClick={(e) => this.toggleWalletConnect(e, 'assetA')}>
           <WalletDisplay
             currency={assetA.currency}
             type={assetA.wallet.type}
             balance={assetA.wallet.balance}
-            title='Wallet 1' />
+            title={assetA.wallet.connected ? assetA.wallet.addresses[0] : 'Wallet Not Connected'} />
         </div>
       </Grid>
       <Grid item xs={12} sm={6}>
-        <div className='placeholder'>
+        <div className='placeholder' onClick={(e) => this.toggleWalletConnect(e, 'assetB')}>
           <WalletDisplay
             currency={assetB.currency}
             type={assetB.wallet.type}
             balance={assetB.wallet.balance}
-            title='Wallet 2' />
+            title={assetB.wallet.connected ? assetB.wallet.addresses[0] : 'Wallet Not Connected'} />
         </div>
       </Grid>
       <Grid container className='main'>
@@ -199,6 +243,31 @@ class SwapInitiation extends Component {
       <Grid container xs={12} justify='center'>
         <Button variant='contained' color='primary' onClick={this.initiateSwap}>Initiate Swap</Button>
       </Grid>
+      <WalletConnectPopup
+        open={assetA.wallet.connectOpen}
+        currency={assetA.currency}
+        id='assetA'
+        walletChosen={assetA.wallet.chosen}
+        wallet={assetA.wallet.type}
+        chooseWallet={this.chooseWallet}
+        disconnectWallet={this.disconnectWallet}
+        anchorEl={assetA.anchorEl}
+        addresses={assetA.wallet.addresses}
+        walletConnected={assetA.wallet.connected}
+      />
+
+      <WalletConnectPopup
+        open={assetB.wallet.connectOpen}
+        currency={assetB.currency}
+        id='assetB'
+        walletChosen={assetB.wallet.chosen}
+        wallet={assetB.wallet.type}
+        chooseWallet={this.chooseWallet}
+        disconnectWallet={this.disconnectWallet}
+        anchorEl={assetB.anchorEl}
+        addresses={assetB.wallet.addresses}
+        walletConnected={assetB.wallet.connected}
+      />
     </Grid>
   }
 }
