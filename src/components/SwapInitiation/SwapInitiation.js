@@ -117,26 +117,20 @@ class SwapInitiation extends Component {
 
   toggleWalletConnect (e, party) {
     const { currentTarget } = e
-    this.setState(prevState => ({
+    this.setState(update(this.state, {
       [party]: {
-        ...prevState[party],
-        wallet: {
-          ...prevState[party].wallet,
-          connectOpen: !prevState[party].wallet.connectOpen
-        },
-        anchorEl: currentTarget
+        wallet: { connectOpen: { $set: !this.state[party].wallet.connectOpen } },
+        anchorEl: { $set: currentTarget }
       }
     }))
   }
 
   async chooseWallet (party, currency, wallet) {
-    this.setState(prevState => ({
+    this.setState(update(this.state, {
       [party]: {
-        ...prevState[party],
         wallet: {
-          ...prevState[party].wallet,
-          chosen: true,
-          type: wallet
+          chosen: { $set: true },
+          type: { $set: wallet }
         }
       }
     }))
@@ -147,13 +141,11 @@ class SwapInitiation extends Component {
     const currency = this.state[party].currency
     this.getClient(currency).getAddresses().then((addresses) => {
       if (addresses.length > 0) {
-        this.setState(prevState => ({
+        this.setState(update(this.state, {
           [party]: {
-            ...prevState[party],
             wallet: {
-              ...prevState[party].wallet,
-              addresses: addresses,
-              connected: true
+              addresses: { $set: addresses },
+              connected: { $set: true }
             }
           }
         }))
@@ -166,14 +158,12 @@ class SwapInitiation extends Component {
   }
 
   disconnectWallet (party) {
-    this.setState(prevState => ({
+    this.setState(update(this.state, {
       [party]: {
-        ...prevState[party],
         wallet: {
-          ...prevState[party].wallet,
-          connected: false,
-          chosen: false,
-          type: ''
+          connected: { $set: false },
+          chosen: { $set: false },
+          type: { $set: '' }
         }
       }
     }))

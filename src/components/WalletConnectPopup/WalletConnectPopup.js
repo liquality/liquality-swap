@@ -58,7 +58,7 @@ class WalletConnectPopup extends Component {
         <WalletChoose
           title='Liquality'
           subTitle='By connecting you understand that you are on your own trust a cutting-edge technology without need to trust your trading partner'
-          wallets={props.currency === 'eth' ? ['ledger', 'metamask'] : ['ledger']}
+          wallets={props.currency === 'eth' ? ['metamask'] : ['ledger']}
           chooseWallet={this.chooseWallet}
           currency={props.currency} />
       )
