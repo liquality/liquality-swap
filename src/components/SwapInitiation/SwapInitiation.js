@@ -79,16 +79,18 @@ class SwapInitiation extends Component {
   }
 
   initiateSwap () {
-    this.getClient('eth').generateSwap(
-      this.state.counterParty.eth,
-      this.state.eth.addresses[0],
+    const { currency, wallet: { addresses } } = this.state.assetA
+
+    this.getClient(currency).generateSwap(
+      this.state.counterParty[currency],
+      addresses[0],
       this.state.secretHash,
       this.state.expiration
     ).then(bytecode => {
       console.log(bytecode)
 
       // TODO: this should be based on which asset is asset A
-      this.getClient('eth').sendTransaction(this.state.assetA.wallet.addresses[0], null, String(this.state.assetA.value), bytecode).then(console.log)
+      this.getClient(currency).sendTransaction(addresses[0], null, String(this.state.assetA.value), bytecode).then(console.log)
     })
   }
 
