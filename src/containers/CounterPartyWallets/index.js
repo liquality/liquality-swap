@@ -1,19 +1,21 @@
 import { connect } from 'react-redux'
-import SwapInitiation from './SwapInitiation'
+import actions from '../../actions'
+import CounterPartyWallets from './CounterPartyWallets'
 
 const mapStateToProps = state => {
   return {
     assets: state.swap.assets,
-    wallets: state.swap.wallets,
     counterParty: state.swap.counterParty
   }
 }
 
 const mapDispatchToProps = dispatch => {
-  return {}
+  return {
+    onCounterPartyAddressChange: (currency, newValue) => dispatch({ type: actions.CHANGE_COUNTER_PARTY_ADDRESS, currency, newValue })
+  }
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SwapInitiation)
+)(CounterPartyWallets)
