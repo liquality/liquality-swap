@@ -24,16 +24,22 @@ class SwapInitiation extends Component {
   }
 
   initiateSwap () {
-    getClient('eth').generateSwap(
-      this.props.counterParty.eth,
-      this.props.wallets.a.addresses[0],
+    const {
+      assets: { a: { currency, value } },
+      wallets: { a: { addresses } },
+      counterParty
+    } = this.props
+
+    getClient(currency).generateSwap(
+      counterParty[currency],
+      addresses[0],
       SECRET_HASH,
       SWAP_EXPIRATION
     ).then(bytecode => {
       console.log(bytecode)
 
       // TODO: this should be based on which asset is asset A
-      getClient('eth').sendTransaction(this.props.wallets.a.addresses[0], null, String(this.assets.a.value), bytecode).then(console.log)
+      getClient(currency).sendTransaction(addresses[0], null, String(value), bytecode).then(console.log)
     })
   }
 
