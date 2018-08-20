@@ -1,5 +1,6 @@
 import update from 'immutability-helper'
-import { getActionTypes, getReducerFunction } from './helpers'
+import actions from '../actions'
+import { getReducerFunction } from './helpers'
 
 const initialState = {
   a: {
@@ -14,6 +15,13 @@ const initialState = {
   }
 }
 
+function switchSides (state, action) {
+  return update(state, {
+    a: { $set: state.b },
+    b: { $set: state.a }
+  })
+}
+
 function changeAmount (state, action) {
   return update(state, {
     [action.party]: { value: { $set: action.newValue } }
@@ -21,10 +29,10 @@ function changeAmount (state, action) {
 }
 
 const reducers = {
-  CHANGE_AMOUNT: changeAmount
+  [actions.SWITCH_SIDES]: switchSides,
+  [actions.CHANGE_AMOUNT]: changeAmount
 }
 
-const actionTypes = getActionTypes(reducers)
 const assets = getReducerFunction(reducers, initialState)
 
-export { actionTypes, assets }
+export default assets

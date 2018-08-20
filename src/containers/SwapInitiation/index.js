@@ -1,7 +1,5 @@
 import { connect } from 'react-redux'
-import { actionTypes as assetActions } from '../../reducers/assets'
-import { actionTypes as counterPartyActions } from '../../reducers/counterparty'
-import { actionTypes as swapActions } from '../../reducers/swap'
+import actions from '../../actions'
 import SwapInitiation from './SwapInitiation'
 
 const mapStateToProps = state => {
@@ -14,9 +12,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onSwitchSides: () => dispatch({ type: swapActions.SWITCH_SIDES }),
-    onAmountChange: (party, newValue) => dispatch({ type: assetActions.CHANGE_AMOUNT, party, newValue }),
-    onCounterPartyAddressChange: (currency, newValue) => dispatch({ type: counterPartyActions.CHANGE_COUNTER_PARTY_ADDRESS, currency, newValue })
+    onSwitchSides: () => dispatch({ type: actions.SWITCH_SIDES }),
+    onAmountChange: (party, newValue) => dispatch({ type: actions.CHANGE_AMOUNT, party, newValue }),
+    onCounterPartyAddressChange: (currency, newValue) => dispatch({ type: actions.CHANGE_COUNTER_PARTY_ADDRESS, currency, newValue })
   }
 }
 

@@ -1,5 +1,6 @@
 import update from 'immutability-helper'
-import { getActionTypes, getReducerFunction } from './helpers'
+import actions from '../actions'
+import { getReducerFunction } from './helpers'
 
 const initialState = {
   a: {
@@ -18,6 +19,13 @@ const initialState = {
     chosen: false,
     type: ''
   }
+}
+
+function switchSides (state, action) {
+  return update(state, {
+    a: { $set: state.b },
+    b: { $set: state.a }
+  })
 }
 
 function toggleWalletConnect (state, action) {
@@ -58,13 +66,13 @@ function disconnectWallet (state, action) {
 }
 
 const reducers = {
-  TOGGLE_WALLET_CONNECT: toggleWalletConnect,
-  CHOOSE_WALLET: chooseWallet,
-  CONNECT_WALLET: connectWallet,
-  DISCONNECT_WALLET: disconnectWallet
+  [actions.SWITCH_SIDES]: switchSides,
+  [actions.TOGGLE_WALLET_CONNECT]: toggleWalletConnect,
+  [actions.CHOOSE_WALLET]: chooseWallet,
+  [actions.CONNECT_WALLET]: connectWallet,
+  [actions.DISCONNECT_WALLET]: disconnectWallet
 }
 
 const wallets = getReducerFunction(reducers, initialState)
-const actionTypes = getActionTypes(reducers)
 
-export { actionTypes, wallets }
+export default wallets

@@ -1,12 +1,3 @@
-import _ from 'lodash'
-
-/**
- * Takes a map of actionType -> actionHandler and returns a map of actionType -> actionType
- */
-function getActionTypes (reducerMap) {
-  return _.zipObject(Object.keys(reducerMap), Object.keys(reducerMap))
-}
-
 /**
  * Generate a reducer function
  * @param {object} reducerMap Map of actionType -> actionHandler function
@@ -25,4 +16,4 @@ function getReducerFunction (reducerMap, initialState, fallbackFunction) {
   }
 }
 
-export { getActionTypes, getReducerFunction }
+export { getReducerFunction }
