@@ -1,5 +1,3 @@
-/* global web3 */
-
 import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
@@ -7,9 +5,9 @@ import Typography from '@material-ui/core/Typography'
 import SwapIcon from '@material-ui/icons/SwapHorizontalCircle'
 import liqualityUI from 'liquality-ui'
 
-import { Client, providers } from 'chainabstractionlayer'
+import { getClient } from '../../services/chainClient'
 
-import WalletConnectPopup from '../../components/WalletConnectPopup/WalletConnectPopup'
+import WalletPanel from '../WalletPanel'
 
 import './SwapInitiation.css'
 
@@ -17,34 +15,16 @@ const SWAP_EXPIRATION = 12
 const SECRET = 'this is a secret'
 const SECRET_HASH = 'EDC64C6523778961FE9BA03AB7D624B27CA1DD5B01E7734CC6C891D50DB04269'
 
-const { CurrencyInput, AddressInput, WalletDisplay } = liqualityUI
+const { CurrencyInput, AddressInput } = liqualityUI
 
 class SwapInitiation extends Component {
   constructor (props) {
     super(props)
-
     this.initiateSwap = this.initiateSwap.bind(this)
-    this.chooseWallet = this.chooseWallet.bind(this)
-  }
-
-  initiateClients () {
-    this.ethClient = new Client()
-    this.ethClient.addProvider(new providers.ethereum.EthereumRPCProvider('http://localhost:8545'))
-    this.ethClient.addProvider(new providers.ethereum.EthereumMetaMaskProvider(web3.currentProvider))
-    this.ethClient.addProvider(new providers.ethereum.EthereumSwapProvider())
-
-    this.btcClient = new Client()
-    this.btcClient.addProvider(new providers.bitcoin.BitcoinRPCProvider('http://localhost:8545'))
-    this.btcClient.addProvider(new providers.bitcoin.BitcoinLedgerProvider())
-    this.btcClient.addProvider(new providers.bitcoin.BitcoinSwapProvider())
-  }
-
-  getClient (code) {
-    return this[`${code}Client`]
   }
 
   initiateSwap () {
-    this.getClient('eth').generateSwap(
+    getClient('eth').generateSwap(
       this.props.counterParty.eth,
       this.props.wallets.a.addresses[0],
       SECRET_HASH,
@@ -53,55 +33,15 @@ class SwapInitiation extends Component {
       console.log(bytecode)
 
       // TODO: this should be based on which asset is asset A
-      this.getClient('eth').sendTransaction(this.props.wallets.a.addresses[0], null, String(this.assets.a.value), bytecode).then(console.log)
-    })
-  }
-
-  componentDidMount () {
-    this.initiateClients()
-  }
-
-  async chooseWallet (party, currency, wallet) {
-    this.props.onChooseWallet(party, wallet)
-    this.checkWalletConnected(party)
-  }
-
-  async checkWalletConnected (party) {
-    const currency = this.props.assets[party].currency
-    this.getClient(currency).getAddresses().then((addresses) => {
-      if (addresses.length > 0) {
-        this.props.onWalletConnected(party, addresses)
-      } else {
-        if (this.props.assets[party].wallet.chosen) {
-          setTimeout(this.checkWalletConnected(party), 1000)
-        }
-      }
+      getClient('eth').sendTransaction(this.props.wallets.a.addresses[0], null, String(this.assets.a.value), bytecode).then(console.log)
     })
   }
 
   render () {
     const { a: assetA, b: assetB } = this.props.assets
-    const { a: walletA, b: walletB } = this.props.wallets
     const counterParty = this.props.counterParty
     return <Grid container spacing={0}>
-      <Grid item xs={12} sm={6}>
-        <div className='placeholder' onClick={(e) => this.props.onToggleWalletConnect('a', e.currentTarget)}>
-          <WalletDisplay
-            currency={assetA.currency}
-            type={walletA.type}
-            balance={walletA.balance}
-            title={walletA.connected ? walletA.addresses[0] : 'Wallet Not Connected'} />
-        </div>
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <div className='placeholder' onClick={(e) => this.props.onToggleWalletConnect('b', e.currentTarget)}>
-          <WalletDisplay
-            currency={assetB.currency}
-            type={walletB.type}
-            balance={walletB.balance}
-            title={walletB.connected ? walletB.addresses[0] : 'Wallet Not Connected'} />
-        </div>
-      </Grid>
+      <WalletPanel />
       <Grid container className='main'>
         <Grid container xs={12} sm={5} justify='flex-end'>
           <div className='placeholder walletContainer'>
@@ -155,31 +95,6 @@ class SwapInitiation extends Component {
       <Grid container xs={12} justify='center'>
         <Button variant='contained' color='primary' onClick={this.initiateSwap}>Initiate Swap</Button>
       </Grid>
-      <WalletConnectPopup
-        open={walletA.connectOpen}
-        currency={assetA.currency}
-        id='a'
-        walletChosen={walletA.chosen}
-        wallet={walletA.type}
-        chooseWallet={this.chooseWallet}
-        disconnectWallet={this.props.onWalletDisconnected}
-        anchorEl={walletA.anchorEl}
-        addresses={walletA.addresses}
-        walletConnected={walletA.connected}
-      />
-
-      <WalletConnectPopup
-        open={walletB.connectOpen}
-        currency={assetB.currency}
-        id='b'
-        walletChosen={walletB.chosen}
-        wallet={walletB.type}
-        chooseWallet={this.chooseWallet}
-        disconnectWallet={this.props.onWalletDisconnected}
-        anchorEl={walletB.anchorEl}
-        addresses={walletB.addresses}
-        walletConnected={walletB.connected}
-      />
     </Grid>
   }
 }
