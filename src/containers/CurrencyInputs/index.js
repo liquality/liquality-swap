@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
-import actions from '../../actions'
+import { actions as swapActions } from '../../actions/swap'
+import { actions as assetActions } from '../../actions/assets'
 import CurrencyInputs from './CurrencyInputs'
 
 const mapStateToProps = state => {
@@ -8,14 +9,10 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onSwitchSides: () => dispatch({ type: actions.SWITCH_SIDES }),
-    onAmountChange: (party, newValue) => dispatch({ type: actions.CHANGE_AMOUNT, party, newValue })
-  }
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    onSwitchSides: swapActions.switchSides,
+    onAmountChange: assetActions.changeAmount
+  }
 )(CurrencyInputs)

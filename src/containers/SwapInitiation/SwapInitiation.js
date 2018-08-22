@@ -9,7 +9,7 @@ import CurrencyInputs from '../CurrencyInputs'
 import CounterPartyWallets from '../CounterPartyWallets'
 
 import './SwapInitiation.css'
-import { Paper } from '../../../node_modules/@material-ui/core';
+import { Paper } from '../../../node_modules/@material-ui/core'
 
 const SWAP_EXPIRATION = 12
 const SECRET = 'this is a secret'

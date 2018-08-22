@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import actions from '../../actions'
+import { actions } from '../../actions/wallets'
 import WalletPanel from './WalletPanel'
 
 const mapStateToProps = state => {
@@ -9,16 +9,12 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onToggleWalletConnect: (party, target) => dispatch({ type: actions.TOGGLE_WALLET_CONNECT, party, target }),
-    onChooseWallet: (party, wallet) => dispatch({ type: actions.CHOOSE_WALLET, party, wallet }),
-    onWalletConnected: (party, addresses) => dispatch({ type: actions.CONNECT_WALLET, party, addresses }),
-    onWalletDisconnected: (party) => dispatch({ type: actions.DISCONNECT_WALLET, party })
-  }
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    onToggleWalletConnect: actions.toggleWalletConnect,
+    onChooseWallet: actions.chooseWallet,
+    onWalletConnected: actions.connectWallet,
+    onWalletDisconnected: actions.disconnectWallet
+  }
 )(WalletPanel)

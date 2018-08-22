@@ -1,5 +1,6 @@
 import update from 'immutability-helper'
-import actions from '../actions'
+import { types as assetTypes } from '../actions/assets'
+import { types as swapTypes } from '../actions/swap'
 import { getReducerFunction } from './helpers'
 
 const initialState = {
@@ -29,8 +30,8 @@ function changeAmount (state, action) {
 }
 
 const reducers = {
-  [actions.SWITCH_SIDES]: switchSides,
-  [actions.CHANGE_AMOUNT]: changeAmount
+  [swapTypes.SWITCH_SIDES]: switchSides,
+  [assetTypes.CHANGE_AMOUNT]: changeAmount
 }
 
 const assets = getReducerFunction(reducers, initialState)
