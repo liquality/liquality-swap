@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { actions } from '../../actions/swap'
 import SwapInitiation from './SwapInitiation'
 
 const mapStateToProps = state => {
@@ -9,11 +10,9 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {}
-}
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  {
+    initiateSwap: actions.initiateSwap
+  }
 )(SwapInitiation)

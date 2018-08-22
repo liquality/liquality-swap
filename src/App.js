@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 
@@ -10,7 +11,7 @@ import reducers from './reducers'
 import theme from './theme'
 import './App.css'
 
-const store = createStore(reducers)
+const store = createStore(reducers, applyMiddleware(thunk))
 
 class App extends Component {
   render () {
