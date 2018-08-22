@@ -1,5 +1,5 @@
 import update from 'immutability-helper'
-import actions from '../actions'
+import { types } from '../actions/counterparty'
 import { getReducerFunction } from './helpers'
 
 const initialState = {
@@ -14,7 +14,7 @@ function changeCounterPartyAddress (state, action) {
 }
 
 const reducers = {
-  [actions.CHANGE_COUNTER_PARTY_ADDRESS]: changeCounterPartyAddress
+  [types.CHANGE_COUNTER_PARTY_ADDRESS]: changeCounterPartyAddress
 }
 
 const counterParty = getReducerFunction(reducers, initialState)
