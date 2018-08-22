@@ -9,6 +9,7 @@ import CurrencyInputs from '../CurrencyInputs'
 import CounterPartyWallets from '../CounterPartyWallets'
 
 import './SwapInitiation.css'
+import { Paper } from '../../../node_modules/@material-ui/core';
 
 const SWAP_EXPIRATION = 12
 const SECRET = 'this is a secret'
@@ -41,16 +42,18 @@ class SwapInitiation extends Component {
   }
 
   render () {
-    return <Grid container spacing={0}>
-      <WalletPanel />
-      <Grid container className='main'>
-        <CurrencyInputs />
-        <CounterPartyWallets />
+    return <Paper style={{padding: '1rem'}}>
+      <Grid container spacing={0}>
+        <WalletPanel />
+        <Grid container className='main'>
+          <CurrencyInputs />
+          <CounterPartyWallets />
+        </Grid>
+        <Grid container xs={12} justify='center'>
+          <Button variant='contained' color='primary' onClick={this.initiateSwap}>Initiate Swap</Button>
+        </Grid>
       </Grid>
-      <Grid container xs={12} justify='center'>
-        <Button variant='contained' color='primary' onClick={this.initiateSwap}>Initiate Swap</Button>
-      </Grid>
-    </Grid>
+    </Paper>
   }
 }
 
