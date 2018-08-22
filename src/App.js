@@ -3,22 +3,12 @@ import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import { BrowserRouter as Router } from 'react-router-dom'
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
-import pink from '@material-ui/core/colors/pink'
+import { MuiThemeProvider } from '@material-ui/core/styles'
 
 import LiqualitySwap from './containers/LiqualitySwap/LiqualitySwap'
 import reducers from './reducers'
-
+import theme from './theme'
 import './App.css'
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#0a2647'
-    },
-    secondary: pink
-  }
-})
 
 const store = createStore(reducers)
 
