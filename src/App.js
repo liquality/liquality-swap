@@ -7,7 +7,7 @@ import { createBrowserHistory } from 'history'
 import { ConnectedRouter, connectRouter, routerMiddleware } from 'connected-react-router'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 
-import LiqualitySwap from './containers/LiqualitySwap/LiqualitySwap'
+import LiqualitySwap from './containers/LiqualitySwap'
 import reducers from './reducers'
 import theme from './theme'
 import './App.css'

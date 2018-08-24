@@ -6,12 +6,27 @@ import SwapInitiation from '../SwapInitiation'
 import SwapLinkCard from '../../components/SwapLinkCard/SwapLinkCard'
 import SwapProgressStepper from '../../components/SwapProgressStepper/SwapProgressStepper'
 import { steps } from '../../components/SwapProgressStepper/steps'
+import { generateCounterPartyLink } from '../../utils/app-links'
+import { transactionPaths as blockExplorerTxUrl } from '../../utils/block-explorers'
 
 import LiqualityLogo from '../../logo.png'
 import LiqualityText from '../../logo-text.png'
 import './LiqualitySwap.css'
 
 class LiqualitySwap extends Component {
+  constructor (props) {
+    super(props)
+    this.getSwapLinkCard = this.getSwapLinkCard.bind(this)
+  }
+
+  getSwapLinkCard () {
+    const currency = this.props.swap.assets.a.currency
+    const initiationHash = this.props.swap.transactions.ours.fund.hash
+    const txLink = `${blockExplorerTxUrl[currency]}/${initiationHash}`
+    const link = generateCounterPartyLink(this.props.swap)
+    return <SwapLinkCard link={link} transactionLink={txLink} />
+  }
+
   render () {
     return <div className='LiqualitySwap'>
       <AppBar position='static'>
@@ -23,7 +38,7 @@ class LiqualitySwap extends Component {
         <div className='LiqualitySwap_main'>
           <SwapProgressStepper state={steps.INITATION} />
           <Route exact path='/' component={SwapInitiation} />
-          <Route path='/link' component={SwapLinkCard} />
+          <Route path='/link' render={this.getSwapLinkCard} />
         </div>
       </Route>
     </div>
