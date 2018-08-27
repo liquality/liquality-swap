@@ -5,12 +5,14 @@ import assets from './assets'
 import wallets from './wallets'
 import counterParty from './counterparty'
 import transactions from './transactions'
+import step from './step'
 
 const childReducers = combineReducers({
   assets,
   wallets,
   counterParty,
-  transactions
+  transactions,
+  step
 })
 
 const reducers = {}
