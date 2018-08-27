@@ -2,9 +2,7 @@ import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import SwapIcon from '@material-ui/icons/SwapHorizontalCircle'
-import liqualityUI from 'liquality-ui'
-
-const { CurrencyInput } = liqualityUI
+import CurrencyInput from '../../components/CurrencyInput/CurrencyInput'
 
 class CurrencyInputs extends Component {
   render () {

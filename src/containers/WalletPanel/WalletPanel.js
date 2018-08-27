@@ -1,12 +1,8 @@
 import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid'
-import liqualityUI from 'liquality-ui'
-
 import { getClient } from '../../services/chainClient'
-
+import WalletDisplay from '../../components/WalletDisplay/WalletDisplay'
 import WalletConnectPopup from '../../components/WalletConnectPopup/WalletConnectPopup'
-
-const { WalletDisplay } = liqualityUI
 
 class WalletPanel extends Component {
   constructor (props) {
