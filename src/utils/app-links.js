@@ -1,6 +1,6 @@
 import queryString from 'query-string'
 
-const APP_BASE_URL = 'https://localhost:3000' // TODO: derive this based on host
+const APP_BASE_URL = `${window.location.protocol}//${window.location.host}`
 
 function generateCounterPartyLink (swap) {
   // Switch around sides as this will be the state of the counter party
