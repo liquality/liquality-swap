@@ -1,4 +1,6 @@
+import { push } from 'connected-react-router'
 import { getClient } from '../services/chainClient'
+import { actions as transactionActions } from './transactions'
 
 const types = {
   SWITCH_SIDES: 'SWITCH_SIDES'
@@ -27,7 +29,8 @@ function initiateSwap () {
       SWAP_EXPIRATION
     )
     const txHash = await client.sendTransaction(addresses[0], null, String(value), bytecode)
-    console.log(txHash)
+    dispatch(transactionActions.setTransaction('ours', 'fund', { hash: txHash }))
+    dispatch(push('/link'))
   }
 }
 

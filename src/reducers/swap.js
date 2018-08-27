@@ -4,11 +4,13 @@ import { getReducerFunction } from './helpers'
 import assets from './assets'
 import wallets from './wallets'
 import counterParty from './counterparty'
+import transactions from './transactions'
 
 const childReducers = combineReducers({
   assets,
   wallets,
-  counterParty
+  counterParty,
+  transactions
 })
 
 const reducers = {}
