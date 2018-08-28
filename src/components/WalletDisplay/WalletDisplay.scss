@@ -1,0 +1,12 @@
+.WalletDisplay {
+  text-align: left;
+
+  .WalletIcon {
+    object-fit: cover;
+    height: 100%;
+  }
+
+  .WalletInfo .WalletBalance:hover {
+    overflow: visible;
+  }
+}

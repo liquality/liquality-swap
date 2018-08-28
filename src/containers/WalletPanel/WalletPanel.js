@@ -1,12 +1,8 @@
 import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid'
-import liqualityUI from 'liquality-ui'
-
 import { getClient } from '../../services/chainClient'
-
+import WalletDisplay from '../../components/WalletDisplay/WalletDisplay'
 import WalletConnectPopup from '../../components/WalletConnectPopup/WalletConnectPopup'
-
-const { WalletDisplay } = liqualityUI
 
 class WalletPanel extends Component {
   constructor (props) {
@@ -43,7 +39,8 @@ class WalletPanel extends Component {
             currency={assetA.currency}
             type={walletA.type}
             balance={walletA.balance}
-            title={walletA.connected ? walletA.addresses[0] : 'Wallet Not Connected'} />
+            address={walletA.addresses[0]}
+            connected={walletA.connected} />
         </div>
       </Grid>
       <Grid item xs={12} sm={6}>
@@ -52,7 +49,8 @@ class WalletPanel extends Component {
             currency={assetB.currency}
             type={walletB.type}
             balance={walletB.balance}
-            title={walletB.connected ? walletB.addresses[0] : 'Wallet Not Connected'} />
+            address={walletB.addresses[0]}
+            connected={walletB.connected} />
         </div>
       </Grid>
       <WalletConnectPopup

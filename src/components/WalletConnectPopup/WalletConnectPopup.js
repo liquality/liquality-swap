@@ -2,13 +2,12 @@ import React, {Component} from 'react'
 import Popper from '@material-ui/core/Popper'
 import Fade from '@material-ui/core/Fade'
 import Paper from '@material-ui/core/Paper'
-import liqualityUI from 'liquality-ui'
-
-import './WalletConnectPopup.css'
-
+import WalletChoose from '../WalletChoose/WalletChoose'
+import WalletConnecting from '../WalletConnecting/WalletConnecting'
+import WalletConnected from '../WalletConnected/WalletConnected'
 import wallets from '../../Wallets'
 
-const { WalletChoose, WalletConnecting, WalletConnected } = liqualityUI
+import './WalletConnectPopup.css'
 
 class WalletConnectPopup extends Component {
   constructor (props) {

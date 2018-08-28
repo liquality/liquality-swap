@@ -13,7 +13,7 @@ npm install
 HTTPS=true npm start
 ```
 
-If you get errors about missing libraries `liquality-ui` or `chainabstractionlayer`, pull these and link them:
+If you get errors about missing library `chainabstractionlayer`, pull it and link it:
 
 ```bash
 git clone git@github.com:ConsenSys/chainabstractionlayer.git
@@ -21,13 +21,7 @@ cd chainabstractionlayer
 npm link
 ```
 
-```bash
-git clone git@github.com:ConsenSys/liquality-ui.git
-cd liquality-ui
-npm link
-```
-
-Back in the `liquality-atomic-swap` project, do `npm link liquality-ui chainabstractionlayer`
+Back in the `liquality-atomic-swap` project, do `npm link chainabstractionlayer`
 
 ### Build for production
 

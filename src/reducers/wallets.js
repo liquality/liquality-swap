@@ -59,6 +59,7 @@ function connectWallet (state, action) {
 function disconnectWallet (state, action) {
   return update(state, {
     [action.party]: {
+      addresses: { $set: [] },
       connected: { $set: false },
       chosen: { $set: false },
       type: { $set: '' }

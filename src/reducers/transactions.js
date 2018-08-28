@@ -3,11 +3,11 @@ import { types } from '../actions/transactions'
 import { getReducerFunction } from './helpers'
 
 const initialState = {
-  ours: {
+  a: {
     fund: {},
     claim: {}
   },
-  theirs: {
+  b: {
     fund: {},
     claim: {}
   }
@@ -15,7 +15,7 @@ const initialState = {
 
 function setTransaction (state, action) {
   return update(state, {
-    [action.side]: { [action.kind]: { $set: action.tx } }
+    [action.party]: { [action.kind]: { $set: action.tx } }
   })
 }
 

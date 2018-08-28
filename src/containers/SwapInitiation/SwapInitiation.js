@@ -14,10 +14,10 @@ class SwapInitiation extends Component {
         <WalletPanel />
         <Grid container className='main'>
           <CurrencyInputs />
-          <CounterPartyWallets />
+          { this.props.isPartyB || <CounterPartyWallets /> }
         </Grid>
         <Grid container xs={12} justify='center'>
-          <Button variant='contained' color='primary' onClick={this.props.initiateSwap}>Initiate Swap</Button>
+          <Button variant='contained' color='primary' onClick={this.props.isPartyB ? this.props.confirmSwap : this.props.initiateSwap}>Next</Button>
         </Grid>
       </Grid>
     </Paper>

@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
-import liqualityUI from 'liquality-ui'
-import './CounterPartyWallets.css'
+import AddressInput from '../../components/AddressInput/AddressInput'
 
-const { AddressInput } = liqualityUI
+import './CounterPartyWallets.css'
 
 class CounterPartyWallets extends Component {
   render () {

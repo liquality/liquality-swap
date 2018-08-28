@@ -14,29 +14,41 @@ function switchSides () {
   return { type: types.SWITCH_SIDES }
 }
 
+async function lockFunds (dispatch, getState) {
+  const {
+    assets: { a: { currency, value } },
+    wallets: { a: { addresses } },
+    counterParty
+  } = getState().swap
+  const client = getClient(currency)
+  const bytecode = await client.generateSwap(
+    counterParty[currency],
+    addresses[0],
+    SECRET_HASH,
+    SWAP_EXPIRATION
+  )
+  const txHash = await client.sendTransaction(addresses[0], null, String(value), bytecode)
+  dispatch(transactionActions.setTransaction('a', 'fund', { hash: txHash }))
+}
+
 function initiateSwap () {
   return async (dispatch, getState) => {
-    const {
-      assets: { a: { currency, value } },
-      wallets: { a: { addresses } },
-      counterParty
-    } = getState().swap
-    const client = getClient(currency)
-    const bytecode = await client.generateSwap(
-      counterParty[currency],
-      addresses[0],
-      SECRET_HASH,
-      SWAP_EXPIRATION
-    )
-    const txHash = await client.sendTransaction(addresses[0], null, String(value), bytecode)
-    dispatch(transactionActions.setTransaction('ours', 'fund', { hash: txHash }))
+    await lockFunds(dispatch, getState)
+    dispatch(push('/link'))
+  }
+}
+
+function confirmSwap () {
+  return async (dispatch, getState) => {
+    await lockFunds(dispatch, getState)
     dispatch(push('/link'))
   }
 }
 
 const actions = {
   switchSides,
-  initiateSwap
+  initiateSwap,
+  confirmSwap
 }
 
 export { types, actions }
