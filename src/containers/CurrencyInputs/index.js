@@ -5,7 +5,8 @@ import CurrencyInputs from './CurrencyInputs'
 
 const mapStateToProps = state => {
   return {
-    assets: state.swap.assets
+    assets: state.swap.assets,
+    isPartyB: state.swap.isPartyB
   }
 }
 

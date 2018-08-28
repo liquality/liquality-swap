@@ -39,7 +39,8 @@ class WalletPanel extends Component {
             currency={assetA.currency}
             type={walletA.type}
             balance={walletA.balance}
-            title={walletA.connected ? walletA.addresses[0] : 'Wallet Not Connected'} />
+            address={walletA.addresses[0]}
+            connected={walletA.connected} />
         </div>
       </Grid>
       <Grid item xs={12} sm={6}>
@@ -48,7 +49,8 @@ class WalletPanel extends Component {
             currency={assetB.currency}
             type={walletB.type}
             balance={walletB.balance}
-            title={walletB.connected ? walletB.addresses[0] : 'Wallet Not Connected'} />
+            address={walletB.addresses[0]}
+            connected={walletB.connected} />
         </div>
       </Grid>
       <WalletConnectPopup

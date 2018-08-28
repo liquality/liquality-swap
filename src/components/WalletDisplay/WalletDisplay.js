@@ -17,20 +17,22 @@ const WalletBalance = (props) => (
     </Grid>
     <Grid item xs={9} container direction='column' spacing={0} className='WalletInfo'>
       <Grid item xs>
-        <Typography>{props.title}</Typography>
+        <Typography>{ props.address && props.address }</Typography>
+        <Typography color='secondary'>{props.connected || 'Connect Your Wallet'}</Typography>
       </Grid>
-      <Grid item xs>
+      { props.balance && <Grid item xs>
         <Typography noWrap className='WalletBalance'>BALANCE <span>{props.balance}</span> {currencies[props.currency].code}</Typography>
-      </Grid>
+      </Grid> }
     </Grid>
   </Grid>
 )
 
 WalletBalance.propTypes = PropTypes.shape({
-  title: PropTypes.string.isRequired,
   balance: PropTypes.string.isRequired,
   currency: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired
+  type: PropTypes.string.isRequired,
+  connected: PropTypes.bool.isRequired,
+  address: PropTypes.string
 }).isRequired
 
 export default WalletBalance

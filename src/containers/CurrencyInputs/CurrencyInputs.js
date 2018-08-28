@@ -13,17 +13,19 @@ class CurrencyInputs extends Component {
           <Typography variant='display1' gutterBottom>HAVE</Typography>
           <CurrencyInput currency={assetA.currency}
             value={assetA.value}
+            disabled={this.props.isPartyB}
             onChange={newValue => this.props.onAmountChange('a', newValue)} />
         </div>
       </Grid>
       <Grid container xs={12} sm={2} justify='space-around' alignItems='center'>
-        <SwapIcon onClick={() => this.props.onSwitchSides()} color='primary' style={{ fontSize: 50 }} />
+        {this.props.isPartyB || <SwapIcon onClick={() => this.props.onSwitchSides()} color='primary' style={{ fontSize: 50 }} />}
       </Grid>
       <Grid container xs={12} sm={5} justify='flex-start'>
         <div className='placeholder walletContainer'>
           <Typography variant='display1' gutterBottom>WANT</Typography>
           <CurrencyInput currency={assetB.currency}
             value={assetB.value}
+            disabled={this.props.isPartyB}
             onChange={newValue => this.props.onAmountChange('b', newValue)} />
         </div>
       </Grid>

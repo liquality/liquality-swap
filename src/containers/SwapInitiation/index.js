@@ -4,15 +4,14 @@ import SwapInitiation from './SwapInitiation'
 
 const mapStateToProps = state => {
   return {
-    assets: state.swap.assets,
-    wallets: state.swap.wallets,
-    counterParty: state.swap.counterParty
+    isPartyB: state.swap.isPartyB
   }
 }
 
 export default connect(
   mapStateToProps,
   {
-    initiateSwap: actions.initiateSwap
+    initiateSwap: actions.initiateSwap,
+    confirmSwap: actions.confirmSwap
   }
 )(SwapInitiation)
