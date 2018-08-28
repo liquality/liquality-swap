@@ -29,7 +29,7 @@ function initiateSwap () {
       SWAP_EXPIRATION
     )
     const txHash = await client.sendTransaction(addresses[0], null, String(value), bytecode)
-    dispatch(transactionActions.setTransaction('ours', 'fund', { hash: txHash }))
+    dispatch(transactionActions.setTransaction('a', 'fund', { hash: txHash }))
     dispatch(push('/link'))
   }
 }
