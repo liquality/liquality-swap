@@ -12,11 +12,16 @@ class SwapInitiation extends Component {
   walletsValid () {
     const initialSwapState = generateSwapState(window.location)
     return this.props.wallets.a.addresses[0] === initialSwapState.wallets.a.addresses[0] &&
-    this.props.wallets.b.addresses[0] === initialSwapState.wallets.b.addresses[0]
+      this.props.wallets.b.addresses[0] === initialSwapState.wallets.b.addresses[0]
   }
 
   walletsConnected () {
     return this.props.wallets.a.connected && this.props.wallets.b.connected
+  }
+
+  counterPartyAddressesValid () {
+    return this.props.counterParty[this.props.assets.a.currency].valid &&
+      this.props.counterParty[this.props.assets.b.currency].valid
   }
 
   nextEnabled () {
@@ -30,6 +35,9 @@ class SwapInitiation extends Component {
     }
     if (this.props.isPartyB && !this.walletsValid()) {
       errors.push('The connected wallets must match the wallets supplied for the swap')
+    }
+    if (!this.props.isPartyB && !this.counterPartyAddressesValid()) {
+      errors.push('Invalid counter party addresses')
     }
     return errors
   }

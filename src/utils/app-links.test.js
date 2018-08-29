@@ -12,8 +12,8 @@ it('generates correct own link', () => {
       b: { addresses: ['12wghKSUJCEgwwQjAuLVHoHuqZ18pPCjUK'] }
     },
     counterParty: {
-      eth: '0x3461e2e8a76a0554c8dC62cF42d8C75A333319EB',
-      btc: '19xQT3DfkTzVp7w6hoHP2d2zhra8mGHzn3'
+      eth: { address: '0x3461e2e8a76a0554c8dC62cF42d8C75A333319EB' },
+      btc: { address: '19xQT3DfkTzVp7w6hoHP2d2zhra8mGHzn3' }
     },
     transactions: {
       a: { fund: { hash: '0xd2e451e21d625564844d5aa74c9a0a4c9b5a607303ccd738e95dbea83cec9304' } },
@@ -35,8 +35,8 @@ it('generates correct counter party link', () => {
       b: { addresses: ['12wghKSUJCEgwwQjAuLVHoHuqZ18pPCjUK'] }
     },
     counterParty: {
-      eth: '0x3461e2e8a76a0554c8dC62cF42d8C75A333319EB',
-      btc: '19xQT3DfkTzVp7w6hoHP2d2zhra8mGHzn3'
+      eth: { address: '0x3461e2e8a76a0554c8dC62cF42d8C75A333319EB' },
+      btc: { address: '19xQT3DfkTzVp7w6hoHP2d2zhra8mGHzn3' }
     },
     transactions: {
       a: { fund: { hash: '0xd2e451e21d625564844d5aa74c9a0a4c9b5a607303ccd738e95dbea83cec9304' } },
@@ -58,8 +58,8 @@ it('generates correct swap state', () => {
       b: { addresses: ['12wghKSUJCEgwwQjAuLVHoHuqZ18pPCjUK'] }
     },
     counterParty: {
-      eth: '0x3461e2e8a76a0554c8dC62cF42d8C75A333319EB',
-      btc: '19xQT3DfkTzVp7w6hoHP2d2zhra8mGHzn3'
+      eth: { address: '0x3461e2e8a76a0554c8dC62cF42d8C75A333319EB' },
+      btc: { address: '19xQT3DfkTzVp7w6hoHP2d2zhra8mGHzn3' }
     },
     transactions: {
       a: { fund: { hash: '0xd2e451e21d625564844d5aa74c9a0a4c9b5a607303ccd738e95dbea83cec9304' }, claim: {} },

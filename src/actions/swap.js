@@ -22,7 +22,7 @@ async function lockFunds (dispatch, getState) {
   } = getState().swap
   const client = getClient(currency)
   const bytecode = await client.generateSwap(
-    counterParty[currency],
+    counterParty[currency].address,
     addresses[0],
     SECRET_HASH,
     SWAP_EXPIRATION

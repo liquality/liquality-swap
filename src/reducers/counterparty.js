@@ -3,13 +3,13 @@ import { types } from '../actions/counterparty'
 import { getReducerFunction } from './helpers'
 
 const initialState = {
-  eth: '',
-  btc: ''
+  eth: {address: '', valid: false},
+  btc: {address: '', valid: false}
 }
 
 function changeCounterPartyAddress (state, action) {
   return update(state, {
-    [action.currency]: { $set: action.newValue }
+    [action.currency]: { address: { $set: action.newValue }, valid: { $set: action.valid } }
   })
 }
 

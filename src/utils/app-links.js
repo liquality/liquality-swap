@@ -18,13 +18,13 @@ function generateLink (swap, counterparty = false) {
   const urlParams = {
     ccy1: assetA.currency,
     ccy1v: assetA.value,
-    ccy1Addr: counterparty ? swap.counterParty[assetA.currency] : walletA.addresses[0],
-    ccy1CounterPartyAddr: counterparty ? walletA.addresses[0] : swap.counterParty[assetA.currency],
+    ccy1Addr: counterparty ? swap.counterParty[assetA.currency].address : walletA.addresses[0],
+    ccy1CounterPartyAddr: counterparty ? walletA.addresses[0] : swap.counterParty[assetA.currency].address,
 
     ccy2: assetB.currency,
     ccy2v: assetB.value,
-    ccy2Addr: counterparty ? swap.counterParty[assetB.currency] : walletB.addresses[0],
-    ccy2CounterPartyAddr: counterparty ? walletB.addresses[0] : swap.counterParty[assetB.currency],
+    ccy2Addr: counterparty ? swap.counterParty[assetB.currency].address : walletB.addresses[0],
+    ccy2CounterPartyAddr: counterparty ? walletB.addresses[0] : swap.counterParty[assetB.currency].address,
 
     aFundHash: transactionsA.fund.hash,
     bFundHash: transactionsB.fund.hash,
@@ -49,8 +49,8 @@ function generateSwapState (location) {
       b: { addresses: [urlParams.ccy2Addr] }
     },
     counterParty: {
-      [urlParams.ccy1]: urlParams.ccy1CounterPartyAddr,
-      [urlParams.ccy2]: urlParams.ccy2CounterPartyAddr
+      [urlParams.ccy1]: { address: urlParams.ccy1CounterPartyAddr },
+      [urlParams.ccy2]: { address: urlParams.ccy2CounterPartyAddr }
     },
     transactions: {
       a: { fund: { hash: urlParams.aFundHash }, claim: {} },
