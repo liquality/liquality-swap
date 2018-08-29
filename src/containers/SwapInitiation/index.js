@@ -4,7 +4,8 @@ import SwapInitiation from './SwapInitiation'
 
 const mapStateToProps = state => {
   return {
-    isPartyB: state.swap.isPartyB
+    isPartyB: state.swap.isPartyB,
+    wallets: state.swap.wallets
   }
 }
 
