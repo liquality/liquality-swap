@@ -52,7 +52,7 @@ class SwapInitiation extends Component {
         </Grid>
         <Grid container xs={12} justify='center'>
           {this.getErrors().map(error =>
-            <Grid item xs={12}><Typography color='secondary' align='center'>
+            <Grid item xs={12}><Typography color='secondary' align='center' gutterBottom>
               {error}
             </Typography></Grid>
           )}

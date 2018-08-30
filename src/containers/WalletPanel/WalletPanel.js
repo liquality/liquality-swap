@@ -4,6 +4,8 @@ import { getClient } from '../../services/chainClient'
 import WalletDisplay from '../../components/WalletDisplay/WalletDisplay'
 import WalletConnectPopup from '../../components/WalletConnectPopup/WalletConnectPopup'
 
+import './WalletPanel.css'
+
 class WalletPanel extends Component {
   constructor (props) {
     super(props)
@@ -34,7 +36,7 @@ class WalletPanel extends Component {
 
     return <Grid container>
       <Grid item xs={12} sm={6}>
-        <div className='placeholder' onClick={(e) => this.props.onToggleWalletConnect('a', e.currentTarget)}>
+        <div className='wallet' onClick={(e) => this.props.onToggleWalletConnect('a', e.currentTarget)}>
           <WalletDisplay
             currency={assetA.currency}
             type={walletA.type}
@@ -44,7 +46,7 @@ class WalletPanel extends Component {
         </div>
       </Grid>
       <Grid item xs={12} sm={6}>
-        <div className='placeholder' onClick={(e) => this.props.onToggleWalletConnect('b', e.currentTarget)}>
+        <div className='wallet' onClick={(e) => this.props.onToggleWalletConnect('b', e.currentTarget)}>
           <WalletDisplay
             currency={assetB.currency}
             type={walletB.type}
