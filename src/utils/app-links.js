@@ -33,12 +33,12 @@ function generateLink (swap, counterparty = false) {
     isPartyB: counterparty === true
   }
 
-  return `${APP_BASE_URL}/?${queryString.stringify(urlParams)}`
+  return `${APP_BASE_URL}/#${queryString.stringify(urlParams)}`
 }
 
 function generateSwapState (location) {
-  if (!location.search) return undefined // no state
-  const urlParams = queryString.parse(location.search)
+  if (!location.hash) return undefined // no state
+  const urlParams = queryString.parse(location.hash)
   return {
     assets: {
       a: { currency: urlParams.ccy1, value: parseInt(urlParams.ccy1v) },
