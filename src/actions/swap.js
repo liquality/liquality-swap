@@ -34,14 +34,14 @@ async function lockFunds (dispatch, getState) {
 function initiateSwap () {
   return async (dispatch, getState) => {
     await lockFunds(dispatch, getState)
-    dispatch(push('/link'))
+    dispatch(push('/backupLink'))
   }
 }
 
 function confirmSwap () {
   return async (dispatch, getState) => {
     await lockFunds(dispatch, getState)
-    dispatch(push('/link'))
+    dispatch(push('/backupLink'))
   }
 }
 
