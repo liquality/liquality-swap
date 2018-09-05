@@ -6,7 +6,7 @@ import { getReducerFunction } from './helpers'
 const initialState = {
   a: {
     addresses: [], // TODO: why multiple addresses?
-    balance: 1000,
+    balance: 0,
     connectOpen: false,
     connected: false,
     chosen: false,
@@ -14,7 +14,7 @@ const initialState = {
   },
   b: {
     addresses: [],
-    balance: 5,
+    balance: 0,
     connectOpen: false,
     connected: false,
     chosen: false,
@@ -51,7 +51,8 @@ function connectWallet (state, action) {
   return update(state, {
     [action.party]: {
       addresses: { $set: action.addresses },
-      connected: { $set: true }
+      connected: { $set: true },
+      balance: { $set: action.balance }
     }
   })
 }

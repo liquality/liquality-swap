@@ -13,8 +13,8 @@ function chooseWallet (party, wallet) {
   return { type: types.CHOOSE_WALLET, party, wallet }
 }
 
-function connectWallet (party, addresses) {
-  return { type: types.CONNECT_WALLET, party, addresses }
+function connectWallet (party, addresses, balance) {
+  return { type: types.CONNECT_WALLET, party, addresses, balance }
 }
 
 function disconnectWallet (party) {
