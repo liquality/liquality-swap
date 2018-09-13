@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Grid, Button, Paper, Typography } from '@material-ui/core'
+import { getClient } from '../../services/chainClient'
 
 import WalletPanel from '../WalletPanel'
 import CurrencyInputs from '../CurrencyInputs'
@@ -24,6 +25,17 @@ class SwapInitiation extends Component {
       this.props.counterParty[this.props.assets.b.currency].valid
   }
 
+  async transactionConfirmed() {
+    if (this.props.isPartyB) {
+      const initialSwapState = generateSwapState(window.location)
+      const transactions = initialSwapState.transactions
+      const txHash = this.props.isPartyB ? transactions.b.fund.hash : transactions.a.fund.hash
+      const currency = this.props.wallet.a.currency
+      const transaction = await getClient(currency).getTransactionByHash(txHash)
+      return transaction ? true : false
+    }
+  }
+
   nextEnabled () {
     return this.getErrors().length === 0
   }
@@ -38,6 +50,9 @@ class SwapInitiation extends Component {
     }
     if (!this.props.isPartyB && !this.counterPartyAddressesValid()) {
       errors.push('Invalid counter party addresses')
+    }
+    if (!this.props.isPartyB && !this.transactionConfirmed()) {
+      errors.push('Transaction not confirmed')
     }
     return errors
   }
