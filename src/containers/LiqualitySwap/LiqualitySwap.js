@@ -6,6 +6,8 @@ import SwapInitiation from '../SwapInitiation'
 import CounterPartyLinkCard from '../../components/CounterPartyLinkCard/CounterPartyLinkCard'
 import BackupLinkCard from '../../components/BackupLinkCard/BackupLinkCard'
 import Waiting from '../../components/Waiting/Waiting'
+import SwapRedemption from '../SwapRedemption'
+import SwapCompleted from '../SwapCompleted'
 import SwapProgressStepper from '../../components/SwapProgressStepper/SwapProgressStepper'
 import { generateLink } from '../../utils/app-links'
 import { transactionPaths as blockExplorerTxUrl } from '../../utils/block-explorers'
@@ -19,6 +21,7 @@ class LiqualitySwap extends Component {
     super(props)
     this.getCounterPartyLinkCard = this.getCounterPartyLinkCard.bind(this)
     this.getBackupLinkCard = this.getBackupLinkCard.bind(this)
+    this.getWaitingScreen = this.getWaitingScreen.bind(this)
   }
 
   getBackupLinkCard () {
@@ -32,6 +35,15 @@ class LiqualitySwap extends Component {
     const txLink = `${blockExplorerTxUrl[currency]}/${initiationHash}`
     const link = generateLink(this.props.swap, true)
     return <CounterPartyLinkCard link={link} transactionLink={txLink} onNextClick={() => this.props.history.push('/waiting')} />
+  }
+
+  getWaitingScreen () {
+    if (this.props.swap.isPartyB) {
+      console.log('Party B Waiting Time')
+    } else {
+      this.props.waitForSwapConfirmation()
+    }
+    return <Waiting/>
   }
 
   render () {
@@ -48,7 +60,9 @@ class LiqualitySwap extends Component {
             <Route exact path='/' component={SwapInitiation} />
             <Route path='/backupLink' render={this.getBackupLinkCard} />
             <Route path='/counterPartyLink' render={this.getCounterPartyLinkCard} />
-            <Route path='/waiting' component={Waiting} />
+            <Route path='/waiting' render={this.getWaitingScreen} />
+            <Route path='/redeem' component={SwapRedemption} />
+            <Route path='/completed' component={SwapCompleted} />
           </div>
         </div>
       </Route>

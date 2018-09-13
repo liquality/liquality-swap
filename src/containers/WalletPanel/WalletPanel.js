@@ -22,8 +22,8 @@ class WalletPanel extends Component {
     const currency = this.props.assets[party].currency
     const addresses = await getClient(currency).getAddresses()
     if (addresses.length > 0) {
-      const unusedAddresses = await getClient(currency).getUnusedAddresses()
-      const balance = await getClient(currency).getBalance(unusedAddresses)
+      const usedAddresses = await getClient(currency).getUsedAddresses()
+      const balance = await getClient(currency).getBalance(usedAddresses)
       const formattedBalance = currencies[currency].unitToCurrency(balance).toFixed(3)
       this.props.onWalletConnected(party, addresses, formattedBalance)
     } else {
