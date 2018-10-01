@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { actions } from '../../actions/swap'
 import SwapRedemption from './SwapRedemption'
 
 const mapStateToProps = state => {
@@ -8,5 +9,8 @@ const mapStateToProps = state => {
 }
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  {
+    redeemSwap: actions.redeemSwap
+  }
 )(SwapRedemption)

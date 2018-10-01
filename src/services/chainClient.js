@@ -1,6 +1,6 @@
 /* global web3 */
 
-import { Client, providers, networks } from 'chainabstractionlayer/dist/index.umd.js'
+import { Client, providers, networks, crypto } from 'chainabstractionlayer/dist/index.umd.js'
 
 const ethClient = new Client()
 ethClient.addProvider(new providers.ethereum.EthereumRPCProvider('http://localhost:8545'))
@@ -10,7 +10,7 @@ ethClient.addProvider(new providers.ethereum.EthereumSwapProvider())
 const btcClient = new Client()
 btcClient.addProvider(new providers.bitcoin.BitcoinRPCProvider('http://localhost:8000', 'bitcoin', 'local321'))
 btcClient.addProvider(new providers.bitcoin.BitcoinLedgerProvider({network: networks.bitcoin_testnet}))
-btcClient.addProvider(new providers.bitcoin.BitcoinSwapProvider())
+btcClient.addProvider(new providers.bitcoin.BitcoinSwapProvider({network: networks.bitcoin_testnet}))
 
 const clients = {
   eth: ethClient,
@@ -21,4 +21,4 @@ function getClient (code) {
   return clients[code]
 }
 
-export { getClient, ethClient, btcClient }
+export { getClient, ethClient, btcClient, crypto }

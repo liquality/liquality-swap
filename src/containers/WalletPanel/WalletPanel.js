@@ -20,12 +20,15 @@ class WalletPanel extends Component {
 
   async checkWalletConnected (party) {
     const currency = this.props.assets[party].currency
-    const addresses = await getClient(currency).getAddresses()
+    const addresses = await getClient(currency).getAddresses(0, 5)
     if (addresses.length > 0) {
-      const usedAddresses = await getClient(currency).getUsedAddresses()
-      const balance = await getClient(currency).getBalance(usedAddresses)
+      const unusedAddress = await getClient(currency).getUnusedAddress()
+      let addressStrings = addresses.map((address) => address.address)
+      const balance = await getClient(currency).getBalance(addressStrings)
       const formattedBalance = currencies[currency].unitToCurrency(balance).toFixed(3)
-      this.props.onWalletConnected(party, addresses, formattedBalance)
+      addressStrings = addressStrings.filter(address => address != unusedAddress)
+      addressStrings = [unusedAddress.address].concat(addressStrings)
+      this.props.onWalletConnected(party, addressStrings, formattedBalance)
     } else {
       if (this.props.wallets[party].chosen) {
         setTimeout(this.checkWalletConnected(party), 1000)

@@ -12,6 +12,7 @@ export default withRouter(connect(
   mapStateToProps,
   {
     waitForSwapConfirmation: actions.waitForSwapConfirmation,
+    waitForSwapRedemption: actions.waitForSwapRedemption,
     setStep: stepActions.setStep
   }
 )(LiqualitySwap))

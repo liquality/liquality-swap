@@ -5,7 +5,17 @@
     padding: 0 10px;
   }
   h3 {
-    margin: 2rem 2rem;
-    padding: 20px;
+    margin: 2rem 2rem 0;
+    padding: 5px;
+  }
+  .padding-bottom {
+    margin-bottom: 15px;
+  }
+  .currency-box {
+    div {
+      border: 1px solid #a2bfe1;
+      margin: 10px 20px;
+      padding: 20px;
+    }
   }
 }
