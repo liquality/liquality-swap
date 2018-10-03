@@ -4,6 +4,7 @@ import { getClient } from '../../services/chainClient'
 import WalletDisplay from '../../components/WalletDisplay/WalletDisplay'
 import WalletConnectPopup from '../../components/WalletConnectPopup/WalletConnectPopup'
 
+import currencies from '../../utils/currencies'
 import './WalletPanel.css'
 
 class WalletPanel extends Component {
@@ -19,15 +20,17 @@ class WalletPanel extends Component {
 
   async checkWalletConnected (party) {
     const currency = this.props.assets[party].currency
-    getClient(currency).getAddresses().then((addresses) => {
-      if (addresses.length > 0) {
-        this.props.onWalletConnected(party, addresses)
-      } else {
-        if (this.props.wallets[party].chosen) {
-          setTimeout(this.checkWalletConnected(party), 1000)
-        }
+    const addresses = await getClient(currency).getAddresses()
+    if (addresses.length > 0) {
+      const unusedAddresses = await getClient(currency).getUnusedAddresses()
+      const balance = await getClient(currency).getBalance(unusedAddresses)
+      const formattedBalance = currencies[currency].unitToCurrency(balance).toFixed(3)
+      this.props.onWalletConnected(party, addresses, formattedBalance)
+    } else {
+      if (this.props.wallets[party].chosen) {
+        setTimeout(this.checkWalletConnected(party), 1000)
       }
-    })
+    }
   }
 
   render () {
