@@ -3,7 +3,7 @@ import queryString from 'query-string'
 const APP_BASE_URL = `${window.location.protocol}//${window.location.host}`
 
 function generateLink (swap, counterparty = false) {
-  let assetA, assetB, walletA, walletB, transactionsA, transactionsB
+  let assetA, assetB, walletA, walletB, transactionsA, transactionsB, secret
 
   if (counterparty) { // Switch around sides as this will be the state of the counter party
     ({ a: assetB, b: assetA } = swap.assets)
@@ -32,7 +32,8 @@ function generateLink (swap, counterparty = false) {
     aFundBlock: transactionsA.fund.block,
     bFundBlock: transactionsB.fund.block,
 
-    secretHash: transactionsA.fund.secretHash,
+    secretHash: swap.secretParams.secretHash,
+
     isPartyB: counterparty === true
   }
 
@@ -57,11 +58,13 @@ function generateSwapState (location) {
       [urlParams.ccy2]: { address: urlParams.ccy2CounterPartyAddr }
     },
     transactions: {
-      a: { fund: { hash: urlParams.aFundHash, block: urlParams.aFundBlock, secretHash: urlParams.secretHash }, claim: {} },
-      b: { fund: { hash: urlParams.bFundHash, block: urlParams.bFundBlock, secretHash: urlParams.secretHash }, claim: {} }
+      a: { fund: { hash: urlParams.aFundHash, block: urlParams.aFundBlock }, claim: {} },
+      b: { fund: { hash: urlParams.bFundHash, block: urlParams.bFundBlock }, claim: {} }
     },
-    isPartyB: urlParams.isPartyB === 'true',
-    secretHash: urlParams.secretHash
+    secretParams: {
+      secretHash: urlParams.secretHash
+    },
+    isPartyB: urlParams.isPartyB === 'true'
   }
 }
 

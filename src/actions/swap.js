@@ -1,6 +1,7 @@
 import { push } from 'connected-react-router'
 import { getClient, crypto } from '../services/chainClient'
 import { actions as transactionActions } from './transactions'
+import { actions as secretActions } from './secretparams'
 import currencies from '../utils/currencies'
 
 const types = {
@@ -20,11 +21,12 @@ async function lockFunds (dispatch, getState) {
     assets,
     wallets,
     counterParty,
-    transactions
+    transactions,
+    secretParams
   } = getState().swap
   const client = getClient(assets.a.currency)
   let secret, secretMsg
-  let secretHash = transactions.a.fund.secretHash
+  let secretHash = secretParams.secretHash
   if (!secretHash) {
     secretMsg = `${assets.a.value}${assets.a.currency}${assets.b.value}${assets.b.currency}${wallets.a.addresses[0]}${counterParty[assets.a.currency].address}${wallets.b.addresses[0]}${counterParty[assets.b.currency].address}`
     secret = await client.generateSecret(secretMsg)
@@ -39,8 +41,8 @@ async function lockFunds (dispatch, getState) {
     secretHash,
     SWAP_EXPIRATION
   )
-  dispatch(transactionActions.setTransaction('a', 'fund', { hash: txHash, block, secretHash, secret }))
-  dispatch(transactionActions.setTransaction('b', 'fund', { secretHash }))
+  dispatch(transactionActions.setTransaction('a', 'fund', { hash: txHash, block }))
+  dispatch(secretActions.setSecretParams({ secretHash, secret }))
 }
 
 function initiateSwap () {
@@ -63,14 +65,15 @@ async function checkSwapConfirmation(dispatch, getState, latestBlock) {
   const {
     assets: { b: { currency, value } },
     wallets: { b: { addresses } },
-    transactions: { a: { fund: { block, secretHash } } },
-    counterParty
+    transactions: { a: { fund: { block } } },
+    counterParty,
+    secretParams
   } = getState().swap
   const client = getClient(currency)
 
   let txid
   try {
-    txid = await client.getSwapTransaction(latestBlock, addresses[0], counterParty[currency].address, secretHash, SWAP_EXPIRATION)
+    txid = await client.getSwapTransaction(latestBlock, addresses[0], counterParty[currency].address, secretParams.secretHash, SWAP_EXPIRATION)
   } catch(e) {}
 
   if (txid) {
