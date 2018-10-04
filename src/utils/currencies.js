@@ -13,7 +13,7 @@ const currencies = {
     unitToCurrency (value) {
       return value / SAT_TO_BTC
     },
-    currentyToUnit (value) {
+    currencyToUnit (value) {
       return value * SAT_TO_BTC
     }
   },

@@ -3,7 +3,7 @@ import queryString from 'query-string'
 const APP_BASE_URL = `${window.location.protocol}//${window.location.host}`
 
 function generateLink (swap, counterparty = false) {
-  let assetA, assetB, walletA, walletB, transactionsA, transactionsB
+  let assetA, assetB, walletA, walletB, transactionsA, transactionsB, secret
 
   if (counterparty) { // Switch around sides as this will be the state of the counter party
     ({ a: assetB, b: assetA } = swap.assets)
@@ -29,7 +29,11 @@ function generateLink (swap, counterparty = false) {
     aFundHash: transactionsA.fund.hash,
     bFundHash: transactionsB.fund.hash,
 
-    secretHash: 'secrethash',
+    aFundBlock: transactionsA.fund.block,
+    bFundBlock: transactionsB.fund.block,
+
+    secretHash: swap.secretParams.secretHash,
+
     isPartyB: counterparty === true
   }
 
@@ -39,10 +43,11 @@ function generateLink (swap, counterparty = false) {
 function generateSwapState (location) {
   if (!location.hash) return undefined // no state
   const urlParams = queryString.parse(location.hash)
+
   return {
     assets: {
-      a: { currency: urlParams.ccy1, value: parseInt(urlParams.ccy1v) },
-      b: { currency: urlParams.ccy2, value: parseInt(urlParams.ccy2v) }
+      a: { currency: urlParams.ccy1, value: parseFloat(urlParams.ccy1v) },
+      b: { currency: urlParams.ccy2, value: parseFloat(urlParams.ccy2v) }
     },
     wallets: {
       a: { addresses: [urlParams.ccy1Addr] },
@@ -53,8 +58,11 @@ function generateSwapState (location) {
       [urlParams.ccy2]: { address: urlParams.ccy2CounterPartyAddr }
     },
     transactions: {
-      a: { fund: { hash: urlParams.aFundHash }, claim: {} },
-      b: { fund: { hash: urlParams.bFundHash }, claim: {} }
+      a: { fund: { hash: urlParams.aFundHash, block: urlParams.aFundBlock }, claim: {} },
+      b: { fund: { hash: urlParams.bFundHash, block: urlParams.bFundBlock }, claim: {} }
+    },
+    secretParams: {
+      secretHash: urlParams.secretHash
     },
     isPartyB: urlParams.isPartyB === 'true'
   }
