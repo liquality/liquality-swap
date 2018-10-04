@@ -60,8 +60,6 @@ function confirmSwap () {
 }
 
 async function checkSwapConfirmation(dispatch, getState, latestBlock) {
-  console.log('latestblock')
-  console.log(latestBlock)
   const {
     assets: { b: { currency, value } },
     wallets: { b: { addresses } },
@@ -77,8 +75,6 @@ async function checkSwapConfirmation(dispatch, getState, latestBlock) {
   } catch(e) {}
 
   if (txid) {
-    console.log('txid working')
-    console.log(txid)
     dispatch(transactionActions.setTransaction('b', 'fund', { hash: txid, block: latestBlock }))
     dispatch(push('/redeem'))
   } else {
@@ -89,7 +85,6 @@ async function checkSwapConfirmation(dispatch, getState, latestBlock) {
 
 function waitForSwapConfirmation () {
   return async (dispatch, getState) => {
-    console.log('test')
     const {
       assets: { b: { currency, value } },
     } = getState().swap
@@ -101,8 +96,6 @@ function waitForSwapConfirmation () {
 }
 
 async function checkSwapRedemption(dispatch, getState, latestBlock) {
-  console.log('latestblock')
-  console.log(latestBlock)
   const {
     assets: { b: { currency, value } },
     wallets: { b: { addresses } },
@@ -118,8 +111,6 @@ async function checkSwapRedemption(dispatch, getState, latestBlock) {
   } catch(e) {}
 
   if (txid) {
-    console.log('txid working')
-    console.log(txid)
     dispatch(transactionActions.setTransaction('b', 'claim', { hash: txid, block: latestBlock }))
     dispatch(push('/redeem'))
   } else {
@@ -130,7 +121,6 @@ async function checkSwapRedemption(dispatch, getState, latestBlock) {
 
 function waitForSwapRedemption() {
   return async (dispatch, getState) => {
-    console.log('test')
     const {
       assets: { a: { currency, value } },
     } = getState().swap
