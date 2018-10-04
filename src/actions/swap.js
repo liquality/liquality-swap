@@ -22,16 +22,15 @@ async function lockFunds (dispatch, getState) {
     assets,
     wallets,
     counterParty,
-    transactions,
     secretParams
   } = getState().swap
   const client = getClient(assets.a.currency)
-  let secret, secretMsg
   let secretHash = secretParams.secretHash
   if (!secretHash) {
-    secretMsg = `${assets.a.value}${assets.a.currency}${assets.b.value}${assets.b.currency}${wallets.a.addresses[0]}${counterParty[assets.a.currency].address}${wallets.b.addresses[0]}${counterParty[assets.b.currency].address}`
-    secret = await client.generateSecret(secretMsg)
+    const secretMsg = `${assets.a.value}${assets.a.currency}${assets.b.value}${assets.b.currency}${wallets.a.addresses[0]}${counterParty[assets.a.currency].address}${wallets.b.addresses[0]}${counterParty[assets.b.currency].address}`
+    const secret = await client.generateSecret(secretMsg)
     secretHash = crypto.sha256(secret)
+    dispatch(secretActions.setSecret(secret))
   }
   const block = await client.getBlockHeight()
   const valueInUnit = currencies[assets.a.currency].currencyToUnit(assets.a.value)
@@ -43,7 +42,6 @@ async function lockFunds (dispatch, getState) {
     SWAP_EXPIRATION
   )
   dispatch(transactionActions.setTransaction('a', 'fund', { hash: txHash, block }))
-  dispatch(secretActions.setSecret(secret))
 }
 
 function initiateSwap () {

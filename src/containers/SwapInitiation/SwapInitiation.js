@@ -12,8 +12,8 @@ import './SwapInitiation.css'
 class SwapInitiation extends Component {
   walletsValid () {
     const initialSwapState = generateSwapState(window.location)
-    return this.props.wallets.a.addresses[0] === initialSwapState.wallets.a.addresses[0] &&
-      this.props.wallets.b.addresses[0] === initialSwapState.wallets.b.addresses[0]
+    return this.props.wallets.a.addresses.includes(initialSwapState.wallets.a.addresses[0]) &&
+    this.props.wallets.b.addresses.includes(initialSwapState.wallets.b.addresses[0])
   }
 
   walletsConnected () {
