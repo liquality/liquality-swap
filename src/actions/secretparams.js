@@ -1,13 +1,19 @@
 const types = {
-  SET_SECRET_PARAMS: 'SET_SECRET_PARAMS'
+  SET_SECRET: 'SET_SECRET',
+  SET_SECRET_HASH: 'SET_SECRET_HASH'
 }
 
-function setSecretParams (secretParams) {
-  return { type: types.SET_SECRET_PARAMS, secretParams }
+function setSecret (secret) {
+  return { type: types.SET_SECRET, secret }
+}
+
+function setSecretHash (secretHash) {
+  return { type: types.SET_SECRET_HASH, secretHash }
 }
 
 const actions = {
-  setSecretParams
+  setSecret,
+  setSecretHash
 }
 
 export { types, actions }
