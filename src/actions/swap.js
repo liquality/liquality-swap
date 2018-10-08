@@ -58,79 +58,37 @@ function confirmSwap () {
   }
 }
 
-async function checkSwapConfirmation(dispatch, getState, latestBlock) {
-  const {
-    assets: { b: { currency, value } },
-    wallets: { b: { addresses } },
-    transactions: { a: { fund: { block } } },
-    counterParty,
-    secretParams
-  } = getState().swap
-  const client = getClient(currency)
-
-  let txid
-  try {
-    txid = await client.getSwapTransaction(latestBlock, addresses[0], counterParty[currency].address, secretParams.secretHash, SWAP_EXPIRATION)
-  } catch(e) {}
-
-  if (txid) {
-    dispatch(transactionActions.setTransaction('b', 'fund', { hash: txid, block: latestBlock }))
-    dispatch(push('/redeem'))
-  } else {
-    const newBlock = txid === undefined ? latestBlock : latestBlock + 1
-    setTimeout(checkSwapConfirmation(dispatch, getState, newBlock), 1000000)
-  }
-}
-
 function waitForSwapConfirmation () {
   return async (dispatch, getState) => {
     const {
       assets: { b: { currency, value } },
+      wallets: { b: { addresses } },
+      counterParty,
+      secretParams
     } = getState().swap
     const client = getClient(currency)
-    const latestBlock = await client.getBlockHeight()
-
-    await checkSwapConfirmation(dispatch, getState, latestBlock)
-  }
-}
-
-async function checkSwapRedemption(dispatch, getState, latestBlock) {
-  const {
-    assets: { b: { currency, value } },
-    wallets: { b: { addresses } },
-    transactions: { a: { fund: { block, secretHash } } },
-    counterParty,
-    transactions
-  } = getState().swap
-  const client = getClient(currency)
-
-  let txid
-  try {
-    txid = await client.getSwapConfirmTransaction(latestBlock, addresses[0], counterParty[currency].address, secretHash, SWAP_EXPIRATION)
-  } catch(e) {}
-
-  if (txid) {
-    dispatch(transactionActions.setTransaction('b', 'claim', { hash: txid, block: latestBlock }))
+    const initiateTransaction = await client.findInitiateSwapTransaction(addresses[0], counterParty[currency].address, secretParams.secretHash, SWAP_EXPIRATION)
+    dispatch(transactionActions.setTransaction('b', 'fund', initiateTransaction))
     dispatch(push('/redeem'))
-  } else {
-    const newBlock = txid === undefined ? latestBlock : latestBlock + 1
-    setTimeout(checkSwapRedemption(dispatch, getState, newBlock), 1000000)
   }
 }
 
-function waitForSwapRedemption() {
+function waitForSwapClaim (dispatch, getState) {
   return async (dispatch, getState) => {
     const {
-      assets: { a: { currency, value } },
+      assets,
+      transactions,
+      secretParams
     } = getState().swap
-    const client = getClient(currency)
-    const latestBlock = await client.getBlockHeight()
-
-    await checkSwapConfirmation(dispatch, getState, latestBlock)
+    const client = getClient(assets.a.currency)
+    const claimTransaction = await client.findClaimSwapTransaction(transactions.a.fund.hash, secretParams.secretHash)
+    dispatch(secretActions.setSecret(claimTransaction.secret))
+    dispatch(transactionActions.setTransaction('a', 'claim', claimTransaction))
+    dispatch(push('/redeem'))
   }
 }
 
-async function unlockFunds(dispatch, getState) {
+async function unlockFunds (dispatch, getState) {
   const {
     assets,
     wallets,
@@ -144,7 +102,7 @@ async function unlockFunds(dispatch, getState) {
   dispatch(transactionActions.setTransaction('b', 'claim', { hash: txHash, block }))
 }
 
-function redeemSwap() {
+function redeemSwap () {
   return async (dispatch, getState) => {
     await unlockFunds(dispatch, getState)
     dispatch(push('/completed'))
@@ -155,8 +113,8 @@ const actions = {
   switchSides,
   initiateSwap,
   confirmSwap,
-  checkSwapConfirmation,
   waitForSwapConfirmation,
+  waitForSwapClaim,
   redeemSwap
 }
 
