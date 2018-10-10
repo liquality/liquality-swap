@@ -1,4 +1,4 @@
-import queryString from 'query-string'
+import queryString from 'qs'
 
 const APP_BASE_URL = `${window.location.protocol}//${window.location.host}`
 
@@ -42,7 +42,7 @@ function generateLink (swap, counterparty = false) {
 
 function generateSwapState (location) {
   if (!location.hash) return undefined // no state
-  const urlParams = queryString.parse(location.hash)
+  const urlParams = queryString.parse(location.hash.replace('#', ''))
 
   return {
     assets: {

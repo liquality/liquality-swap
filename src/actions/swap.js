@@ -73,7 +73,7 @@ function waitForSwapConfirmation () {
   }
 }
 
-function waitForSwapClaim (dispatch, getState) {
+function waitForSwapClaim () {
   return async (dispatch, getState) => {
     const {
       assets,
