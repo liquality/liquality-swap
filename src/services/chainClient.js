@@ -1,6 +1,6 @@
 /* global web3 */
 
-import { Client, providers, networks } from 'chainabstractionlayer/dist/index.umd.js'
+import { Client, providers, networks } from '@liquality/chainabstractionlayer/dist/index.umd.js'
 
 const ethClient = new Client()
 ethClient.addProvider(new providers.ethereum.EthereumRPCProvider('https://localhost:8545'))
