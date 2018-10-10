@@ -39,7 +39,7 @@ class LiqualitySwap extends Component {
 
   getWaitingScreen () {
     if (this.props.swap.isPartyB) {
-      this.props.waitForSwapRedemption()
+      this.props.waitForSwapClaim()
     } else {
       this.props.waitForSwapConfirmation()
     }
