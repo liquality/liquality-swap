@@ -1,6 +1,6 @@
 import { push } from 'connected-react-router'
 import { getClient } from '../services/chainClient'
-import { crypto } from '@liquality/chainabstractionlayer/dist/index.umd.js'
+import { crypto } from '@liquality/chainabstractionlayer'
 import { actions as transactionActions } from './transactions'
 import { actions as secretActions } from './secretparams'
 import currencies from '../utils/currencies'
