@@ -69,12 +69,15 @@ async function findAndVerifyInitiateSwapTransaction (dispatch, getState) {
   } = getState().swap
   const client = getClient(currency)
   const valueInUnit = currencies[currency].currencyToUnit(value)
-  let initiateTransaction
-  while (!(initiateTransaction && initiateTransaction.confirmations > 0)) {
+  while (true) {
     const swapVerified = await client.verifyInitiateSwapTransaction(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty[currency].address, secretParams.secretHash, SWAP_EXPIRATION)
-    if (swapVerified) {
-      initiateTransaction = await client.getTransactionByHash(transactions.b.fund.hash)
-    }
+    if (swapVerified) break
+    await sleep(5000)
+  }
+  let initiateTransaction
+  while (true) {
+    initiateTransaction = await client.getTransactionByHash(transactions.b.fund.hash)
+    if (initiateTransaction && initiateTransaction.confirmations > 0) break
     await sleep(5000)
   }
   dispatch(transactionActions.setTransaction('b', 'fund', initiateTransaction))
