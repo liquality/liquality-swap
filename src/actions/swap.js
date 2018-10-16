@@ -4,6 +4,7 @@ import { crypto } from '@liquality/chainabstractionlayer/dist/index.umd.js'
 import { actions as transactionActions } from './transactions'
 import { actions as secretActions } from './secretparams'
 import currencies from '../utils/currencies'
+import { sleep } from '../utils/async'
 
 const types = {
   SWITCH_SIDES: 'SWITCH_SIDES'
@@ -58,17 +59,46 @@ function confirmSwap () {
   }
 }
 
+async function findAndVerifyInitiateSwapTransaction (dispatch, getState) {
+  const {
+    assets: { b: { currency, value } },
+    wallets: { b: { addresses } },
+    counterParty,
+    secretParams,
+    transactions
+  } = getState().swap
+  const client = getClient(currency)
+  const valueInUnit = currencies[currency].currencyToUnit(value)
+  while (true) {
+    const swapVerified = await client.verifyInitiateSwapTransaction(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty[currency].address, secretParams.secretHash, SWAP_EXPIRATION)
+    if (swapVerified) break
+    await sleep(5000)
+  }
+  let initiateTransaction
+  while (true) {
+    initiateTransaction = await client.getTransactionByHash(transactions.b.fund.hash)
+    if (initiateTransaction && initiateTransaction.confirmations > 0) break
+    await sleep(5000)
+  }
+  dispatch(transactionActions.setTransaction('b', 'fund', initiateTransaction))
+}
+
+async function findInitiateSwapTransaction (dispatch, getState) {
+  const {
+    assets: { b: { currency, value } },
+    wallets: { b: { addresses } },
+    counterParty,
+    secretParams
+  } = getState().swap
+  const client = getClient(currency)
+  const valueInUnit = currencies[currency].currencyToUnit(value)
+  const initiateTransaction = await client.findInitiateSwapTransaction(valueInUnit, addresses[0], counterParty[currency].address, secretParams.secretHash, SWAP_EXPIRATION)
+  dispatch(transactionActions.setTransaction('b', 'fund', initiateTransaction))
+}
+
 function waitForSwapConfirmation () {
   return async (dispatch, getState) => {
-    const {
-      assets: { b: { currency, value } },
-      wallets: { b: { addresses } },
-      counterParty,
-      secretParams
-    } = getState().swap
-    const client = getClient(currency)
-    const initiateTransaction = await client.findInitiateSwapTransaction(addresses[0], counterParty[currency].address, secretParams.secretHash, SWAP_EXPIRATION)
-    dispatch(transactionActions.setTransaction('b', 'fund', initiateTransaction))
+    await findInitiateSwapTransaction(dispatch, getState)
     dispatch(push('/redeem'))
   }
 }
@@ -113,6 +143,8 @@ const actions = {
   switchSides,
   initiateSwap,
   confirmSwap,
+  findInitiateSwapTransaction,
+  findAndVerifyInitiateSwapTransaction,
   waitForSwapConfirmation,
   waitForSwapClaim,
   redeemSwap

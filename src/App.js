@@ -7,6 +7,7 @@ import { createBrowserHistory } from 'history'
 import { ConnectedRouter, connectRouter, routerMiddleware } from 'connected-react-router'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 
+import { actions as swapActions } from './actions/swap'
 import LiqualitySwap from './containers/LiqualitySwap'
 import reducers from './reducers'
 import theme from './theme'
@@ -24,6 +25,10 @@ const store = createStore(
   initialAppState,
   applyMiddleware(thunk, routerMiddleware(history))
 )
+
+if (initialAppState.swap && initialAppState.swap.isPartyB) {
+  store.dispatch(swapActions.findAndVerifyInitiateSwapTransaction)
+}
 
 class App extends Component {
   render () {
