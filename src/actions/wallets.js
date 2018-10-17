@@ -19,17 +19,30 @@ function waitForWallet (party, currency, wallet) {
     dispatch(chooseWallet(party, wallet))
     const currency = assets[party].currency
     const client = getClient(currency)
-    let addresses = []
+
+    const unusedAddress = isPartyB ? wallets[party].addresses[0] : (await client.getUnusedAddress()).address
+    let usedAddresses = []
+    let unusedAddressFound = false
+    let addressesIndex = 0
     while (true) {
-      addresses = await getClient(currency).getAddresses(0, 5)
-      if (addresses.length > 0) break
+      let addresses = await client.getAddresses(addressesIndex, 5)
+      addresses = addresses.map(addr => addr.address)
+      for (const address of addresses) {
+        if (address === unusedAddress) {
+          unusedAddressFound = true
+          break
+        } else {
+          usedAddresses.push(address)
+        }
+      }
+      if (unusedAddressFound) break
+      addressesIndex += 5
       await sleep(1000)
     }
-    addresses = addresses.map(addr => addr.address)
-    const balance = await client.getBalance(addresses)
+
+    const balance = await client.getBalance([...usedAddresses, unusedAddress])
     const formattedBalance = currencies[currency].unitToCurrency(balance).toFixed(3)
-    const unusedAddress = isPartyB ? wallets[party].addresses[0] : (await client.getUnusedAddress()).address
-    dispatch(connectWallet(party, [unusedAddress], formattedBalance))
+    dispatch(connectWallet(party, [unusedAddress, ...usedAddresses], formattedBalance))
   }
 }
 
@@ -50,8 +63,8 @@ function disconnectWallet (party) {
 }
 
 const actions = {
-  toggleWalletConnect,
   waitForWallet,
+  toggleWalletConnect,
   chooseWallet,
   connectWallet,
   disconnectWallet
