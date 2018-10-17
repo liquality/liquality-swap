@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Paper } from '@material-ui/core'
-import './Waiting.css'
+
 
 class Waiting extends Component {
   render () {

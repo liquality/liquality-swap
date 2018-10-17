@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import currencies from '../../utils/currencies'
 import wallets from '../../utils/wallets'
 
-import './WalletDisplay.css'
+
 
 const WalletBalance = (props) => (
   <Grid container spacing={8} justify='center' alignItems='stretch' className='WalletDisplay'>

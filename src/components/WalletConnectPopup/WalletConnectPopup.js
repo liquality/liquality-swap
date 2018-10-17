@@ -7,7 +7,7 @@ import WalletConnecting from '../WalletConnecting/WalletConnecting'
 import WalletConnected from '../WalletConnected/WalletConnected'
 import wallets from '../../Wallets'
 
-import './WalletConnectPopup.css'
+
 
 class WalletConnectPopup extends Component {
   constructor (props) {

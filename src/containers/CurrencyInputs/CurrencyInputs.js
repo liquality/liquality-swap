@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import SwapIcon from '@material-ui/icons/SwapHorizontalCircle'
 import CurrencyInput from '../../components/CurrencyInput/CurrencyInput'
-import './CurrencyInputs.css'
+
 
 class CurrencyInputs extends Component {
   render () {

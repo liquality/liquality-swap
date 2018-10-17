@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Paper, Typography, Input, Grid, Button } from '@material-ui/core'
 import CopyIcon from '@material-ui/icons/FileCopy'
 import DoneIcon from '@material-ui/icons/Done'
-import './CounterPartyLinkCard.css'
+
 
 class CounterPartyLinkCard extends Component {
   constructor (props) {

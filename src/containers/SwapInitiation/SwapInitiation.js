@@ -7,7 +7,7 @@ import CounterPartyWallets from '../CounterPartyWallets'
 import ExpirationDetails from '../../components/ExpirationDetails/ExpirationDetails'
 import { generateSwapState } from '../../utils/app-links'
 
-import './SwapInitiation.css'
+
 
 class SwapInitiation extends Component {
   walletsValid () {

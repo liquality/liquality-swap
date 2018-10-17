@@ -8,7 +8,7 @@ import { shortenAddress } from '../../utils/address'
 import currencies from '../../utils/currencies'
 import wallets from '../../utils/wallets'
 
-import './WalletConnected.css'
+
 
 const WalletConnected = (props) => (
   <div className='WalletConnected'>

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Paper, Typography, Input, Grid, Button } from '@material-ui/core'
 import CopyIcon from '@material-ui/icons/FileCopy'
 import WarningIcon from '@material-ui/icons/Warning'
-import './BackupLinkCard.css'
+
 
 class BackupLinkCard extends Component {
   constructor (props) {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Input, InputAdornment, Typography } from '@material-ui/core'
 
 import currencies from '../../utils/currencies'
-import './CurrencyInput.css'
+
 
 const CurrencyInput = (props) => (
   <div className='CurrencyInput'>

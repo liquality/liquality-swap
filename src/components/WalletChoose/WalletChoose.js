@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import currencies from '../../utils/currencies'
 import wallets from '../../utils/wallets'
 
-import './WalletChoose.css'
+
 
 const WalletChoose = (props) => (
   <div className='WalletChoose'>

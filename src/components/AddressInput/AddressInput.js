@@ -5,7 +5,7 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import Typography from '@material-ui/core/Typography'
 
 import currencies from '../../utils/currencies'
-import './AddressInput.css'
+
 
 const AddressInput = (props) => {
   const valid = currencies[props.currency].isValidAddress(props.value)

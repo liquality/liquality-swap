@@ -15,7 +15,7 @@ import { transactionPaths as blockExplorerTxUrl } from '../../utils/block-explor
 
 import LiqualityLogo from '../../logo.png'
 import LiqualityText from '../../logo-text.png'
-import './LiqualitySwap.css'
+
 
 class LiqualitySwap extends Component {
   constructor (props) {

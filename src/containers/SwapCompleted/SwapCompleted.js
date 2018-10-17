@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Paper, Typography, Grid, Button } from '@material-ui/core'
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
-import './SwapCompleted.css'
+
 
 import currencies from '../../utils/currencies'
 

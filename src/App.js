@@ -12,7 +12,6 @@ import LiqualitySwap from './containers/LiqualitySwap'
 import reducers from './reducers'
 import theme from './theme'
 import { generateSwapState } from './utils/app-links'
-import './App.css'
 
 const history = createBrowserHistory()
 
