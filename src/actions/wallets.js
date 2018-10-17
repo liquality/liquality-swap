@@ -1,6 +1,5 @@
 import { getClient } from '../services/chainClient'
 import currencies from '../utils/currencies'
-import { sleep } from '../utils/async'
 
 const types = {
   TOGGLE_WALLET_CONNECT: 'TOGGLE_WALLET_CONNECT',
@@ -20,29 +19,35 @@ function waitForWallet (party, currency, wallet) {
     const currency = assets[party].currency
     const client = getClient(currency)
 
-    const unusedAddress = isPartyB ? wallets[party].addresses[0] : (await client.getUnusedAddress()).address
+    let unusedAddress
     let usedAddresses = []
-    let unusedAddressFound = false
     let addressesIndex = 0
     while (true) {
       let addresses = await client.getAddresses(addressesIndex, 5)
       addresses = addresses.map(addr => addr.address)
       for (const address of addresses) {
-        if (address === unusedAddress) {
-          unusedAddressFound = true
-          break
-        } else {
+        if (await client.isAddressUsed(address)) {
           usedAddresses.push(address)
+        } else {
+          unusedAddress = address
+          break
         }
       }
-      if (unusedAddressFound) break
+      if (unusedAddress) break
       addressesIndex += 5
-      await sleep(1000)
     }
 
-    const balance = await client.getBalance([...usedAddresses, unusedAddress])
+    let allAddresses = [unusedAddress, ...usedAddresses]
+    if (isPartyB) { // Preserve the preset address for party B
+      const expectedAddress = wallets[party].addresses[0]
+      if (allAddresses.includes(expectedAddress)) {
+        allAddresses = [expectedAddress, ...allAddresses.filter(address => address !== expectedAddress)]
+      }
+    }
+
+    const balance = await client.getBalance(allAddresses)
     const formattedBalance = currencies[currency].unitToCurrency(balance).toFixed(3)
-    dispatch(connectWallet(party, [unusedAddress, ...usedAddresses], formattedBalance))
+    dispatch(connectWallet(party, allAddresses, formattedBalance))
   }
 }
 
