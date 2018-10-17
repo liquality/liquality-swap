@@ -5,7 +5,8 @@ import WalletPanel from './WalletPanel'
 const mapStateToProps = state => {
   return {
     assets: state.swap.assets,
-    wallets: state.swap.wallets
+    wallets: state.swap.wallets,
+    isPartyB: state.swap.isPartyB
   }
 }
 
