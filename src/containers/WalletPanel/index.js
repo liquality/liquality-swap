@@ -14,7 +14,7 @@ export default connect(
   mapStateToProps,
   {
     onToggleWalletConnect: actions.toggleWalletConnect,
-    onChooseWallet: actions.chooseWallet,
+    waitForWallet: actions.waitForWallet,
     onWalletConnected: actions.connectWallet,
     onWalletDisconnected: actions.disconnectWallet
   }
