@@ -4,6 +4,7 @@ import { Grid, Button, Paper, Typography } from '@material-ui/core'
 import WalletPanel from '../WalletPanel'
 import CurrencyInputs from '../CurrencyInputs'
 import CounterPartyWallets from '../CounterPartyWallets'
+import ExpirationDetails from '../../components/ExpirationDetails/ExpirationDetails'
 import { generateSwapState } from '../../utils/app-links'
 
 import './SwapInitiation.css'
@@ -55,6 +56,7 @@ class SwapInitiation extends Component {
         <WalletPanel />
         <Grid container className='main'>
           <CurrencyInputs />
+          <ExpirationDetails expiration={this.props.expiration} isPartyB={this.props.isPartyB} />
           { this.props.isPartyB || <CounterPartyWallets /> }
         </Grid>
         <Grid container xs={12} justify='center'>

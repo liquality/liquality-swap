@@ -5,17 +5,19 @@ import { actions as transactionActions } from './transactions'
 import { actions as secretActions } from './secretparams'
 import currencies from '../utils/currencies'
 import { sleep } from '../utils/async'
+import { getPartyExpiration, generateExpiration } from '../utils/expiration'
 
 const types = {
-  SWITCH_SIDES: 'SWITCH_SIDES'
+  SWITCH_SIDES: 'SWITCH_SIDES',
+  SET_EXPIRATION: 'SET_EXPIRATION'
 }
-
-const SWAP_EXPIRATION = 12
-const SECRET = 'this is a secret'
-const SECRET_HASH = 'EDC64C6523778961FE9BA03AB7D624B27CA1DD5B01E7734CC6C891D50DB04269'
 
 function switchSides () {
   return { type: types.SWITCH_SIDES }
+}
+
+function setExpiration (expiration) {
+  return { type: types.SET_EXPIRATION, expiration }
 }
 
 async function lockFunds (dispatch, getState) {
@@ -23,7 +25,8 @@ async function lockFunds (dispatch, getState) {
     assets,
     wallets,
     counterParty,
-    secretParams
+    secretParams,
+    expiration
   } = getState().swap
   const client = getClient(assets.a.currency)
   let secretHash = secretParams.secretHash
@@ -33,6 +36,15 @@ async function lockFunds (dispatch, getState) {
     secretHash = crypto.sha256(secret)
     dispatch(secretActions.setSecret(secret))
   }
+
+  let swapExpiration
+  if (expiration) {
+    swapExpiration = getPartyExpiration(expiration, 'b')
+  } else {
+    swapExpiration = generateExpiration()
+    dispatch(setExpiration(swapExpiration))
+  }
+
   const block = await client.getBlockHeight()
   const valueInUnit = currencies[assets.a.currency].currencyToUnit(assets.a.value)
   const txHash = await client.initiateSwap(
@@ -40,7 +52,7 @@ async function lockFunds (dispatch, getState) {
     counterParty[assets.a.currency].address,
     wallets.a.addresses[0],
     secretHash,
-    SWAP_EXPIRATION
+    swapExpiration.unix()
   )
   dispatch(transactionActions.setTransaction('a', 'fund', { hash: txHash, block }))
 }
@@ -65,12 +77,13 @@ async function findAndVerifyInitiateSwapTransaction (dispatch, getState) {
     wallets: { b: { addresses } },
     counterParty,
     secretParams,
-    transactions
+    transactions,
+    expiration
   } = getState().swap
   const client = getClient(currency)
   const valueInUnit = currencies[currency].currencyToUnit(value)
   while (true) {
-    const swapVerified = await client.verifyInitiateSwapTransaction(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty[currency].address, secretParams.secretHash, SWAP_EXPIRATION)
+    const swapVerified = await client.verifyInitiateSwapTransaction(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty[currency].address, secretParams.secretHash, expiration.unix())
     if (swapVerified) break
     await sleep(5000)
   }
@@ -88,11 +101,13 @@ async function findInitiateSwapTransaction (dispatch, getState) {
     assets: { b: { currency, value } },
     wallets: { b: { addresses } },
     counterParty,
-    secretParams
+    secretParams,
+    expiration
   } = getState().swap
   const client = getClient(currency)
   const valueInUnit = currencies[currency].currencyToUnit(value)
-  const initiateTransaction = await client.findInitiateSwapTransaction(valueInUnit, addresses[0], counterParty[currency].address, secretParams.secretHash, SWAP_EXPIRATION)
+  const swapExpiration = getPartyExpiration(expiration, 'b')
+  const initiateTransaction = await client.findInitiateSwapTransaction(valueInUnit, addresses[0], counterParty[currency].address, secretParams.secretHash, swapExpiration.unix())
   dispatch(transactionActions.setTransaction('b', 'fund', initiateTransaction))
 }
 
@@ -124,11 +139,20 @@ async function unlockFunds (dispatch, getState) {
     wallets,
     counterParty,
     transactions,
-    secretParams
+    secretParams,
+    isPartyB,
+    expiration
   } = getState().swap
   const client = getClient(assets.b.currency)
   const block = await client.getBlockHeight()
-  const txHash = await client.claimSwap(transactions.b.fund.hash, wallets.b.addresses[0], counterParty[assets.b.currency].address, secretParams.secret, SWAP_EXPIRATION)
+  const swapExpiration = getPartyExpiration(expiration, isPartyB ? 'a' : 'b')
+  const txHash = await client.claimSwap(
+    transactions.b.fund.hash,
+    wallets.b.addresses[0],
+    counterParty[assets.b.currency].address,
+    secretParams.secret,
+    swapExpiration.unix()
+  )
   dispatch(transactionActions.setTransaction('b', 'claim', { hash: txHash, block }))
 }
 
@@ -141,6 +165,7 @@ function redeemSwap () {
 
 const actions = {
   switchSides,
+  setExpiration,
   initiateSwap,
   confirmSwap,
   findInitiateSwapTransaction,

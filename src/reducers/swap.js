@@ -6,6 +6,7 @@ import counterParty from './counterparty'
 import transactions from './transactions'
 import step from './step'
 import secretParams from './secretparams'
+import expiration from './expiration'
 
 export default combineReducers({
   assets,
@@ -14,5 +15,6 @@ export default combineReducers({
   transactions,
   step,
   secretParams,
+  expiration,
   isPartyB: (state = false) => state
 })

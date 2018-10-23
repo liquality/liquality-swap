@@ -1,4 +1,5 @@
 import queryString from 'qs'
+import moment from 'moment'
 
 const APP_BASE_URL = `${window.location.protocol}//${window.location.host}`
 
@@ -34,6 +35,8 @@ function generateLink (swap, counterparty = false) {
 
     secretHash: swap.secretParams.secretHash,
 
+    expiration: swap.expiration.unix(),
+
     isPartyB: counterparty === true
   }
 
@@ -64,6 +67,7 @@ function generateSwapState (location) {
     secretParams: {
       secretHash: urlParams.secretHash
     },
+    expiration: moment.unix(urlParams.expiration),
     isPartyB: urlParams.isPartyB === 'true'
   }
 }
