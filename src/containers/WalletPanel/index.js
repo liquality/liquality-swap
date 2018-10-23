@@ -5,7 +5,8 @@ import WalletPanel from './WalletPanel'
 const mapStateToProps = state => {
   return {
     assets: state.swap.assets,
-    wallets: state.swap.wallets
+    wallets: state.swap.wallets,
+    isPartyB: state.swap.isPartyB
   }
 }
 
@@ -13,7 +14,7 @@ export default connect(
   mapStateToProps,
   {
     onToggleWalletConnect: actions.toggleWalletConnect,
-    onChooseWallet: actions.chooseWallet,
+    waitForWallet: actions.waitForWallet,
     onWalletConnected: actions.connectWallet,
     onWalletDisconnected: actions.disconnectWallet
   }

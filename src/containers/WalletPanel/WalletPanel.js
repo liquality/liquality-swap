@@ -1,41 +1,11 @@
 import React, { Component } from 'react'
 import Grid from '@material-ui/core/Grid'
-import { getClient } from '../../services/chainClient'
 import WalletDisplay from '../../components/WalletDisplay/WalletDisplay'
 import WalletConnectPopup from '../../components/WalletConnectPopup/WalletConnectPopup'
 
-import currencies from '../../utils/currencies'
 import './WalletPanel.css'
 
 class WalletPanel extends Component {
-  constructor (props) {
-    super(props)
-    this.chooseWallet = this.chooseWallet.bind(this)
-  }
-
-  async chooseWallet (party, currency, wallet) {
-    this.props.onChooseWallet(party, wallet)
-    this.checkWalletConnected(party)
-  }
-
-  async checkWalletConnected (party) {
-    const currency = this.props.assets[party].currency
-    const addresses = await getClient(currency).getAddresses(0, 5)
-    if (addresses.length > 0) {
-      const unusedAddress = await getClient(currency).getUnusedAddress()
-      let addressStrings = addresses.map((address) => address.address)
-      const balance = await getClient(currency).getBalance(addressStrings)
-      const formattedBalance = currencies[currency].unitToCurrency(balance).toFixed(3)
-      addressStrings = addressStrings.filter(address => address != unusedAddress)
-      addressStrings = [unusedAddress.address].concat(addressStrings)
-      this.props.onWalletConnected(party, addressStrings, formattedBalance)
-    } else {
-      if (this.props.wallets[party].chosen) {
-        setTimeout(this.checkWalletConnected(party), 1000)
-      }
-    }
-  }
-
   render () {
     const { a: assetA, b: assetB } = this.props.assets
     const { a: walletA, b: walletB } = this.props.wallets
@@ -67,7 +37,7 @@ class WalletPanel extends Component {
         id='a'
         walletChosen={walletA.chosen}
         wallet={walletA.type}
-        chooseWallet={this.chooseWallet}
+        chooseWallet={this.props.waitForWallet}
         disconnectWallet={this.props.onWalletDisconnected}
         anchorEl={walletA.anchorEl}
         addresses={walletA.addresses}
@@ -80,7 +50,7 @@ class WalletPanel extends Component {
         id='b'
         walletChosen={walletB.chosen}
         wallet={walletB.type}
-        chooseWallet={this.chooseWallet}
+        chooseWallet={this.props.waitForWallet}
         disconnectWallet={this.props.onWalletDisconnected}
         anchorEl={walletB.anchorEl}
         addresses={walletB.addresses}
