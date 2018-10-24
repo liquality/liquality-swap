@@ -43,7 +43,7 @@ class LiqualitySwap extends Component {
     } else {
       this.props.waitForSwapConfirmation()
     }
-    return <Waiting/>
+    return <Waiting />
   }
 
   render () {
