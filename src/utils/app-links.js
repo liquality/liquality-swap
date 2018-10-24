@@ -4,7 +4,7 @@ import moment from 'moment'
 const APP_BASE_URL = `${window.location.protocol}//${window.location.host}`
 
 function generateLink (swap, counterparty = false) {
-  let assetA, assetB, walletA, walletB, transactionsA, transactionsB, secret
+  let assetA, assetB, walletA, walletB, transactionsA, transactionsB
 
   if (counterparty) { // Switch around sides as this will be the state of the counter party
     ({ a: assetB, b: assetA } = swap.assets)

@@ -4,13 +4,8 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 import './SwapCompleted.css'
 
 import currencies from '../../utils/currencies'
-import wallets from '../../utils/wallets'
 
 class SwapCompleted extends Component {
-  constructor (props) {
-    super(props)
-  }
-
   render () {
     return <Paper className='SwapRedemption'>
       <Typography variant='headline' component='h3'><CheckCircleIcon style={{color: '#7ed321', fontSize: 36}} /> Swap Completed</Typography>
@@ -24,7 +19,7 @@ class SwapCompleted extends Component {
             <Typography component='p' gutterBottom>Receive</Typography>
           </div>
         </Grid>
-        
+
         <Grid item xs={12} sm={6} justify='flex-end'>
           <div>
             <Typography component='p' gutterBottom>Send</Typography>
@@ -43,7 +38,7 @@ class SwapCompleted extends Component {
           </div>
         </Grid>
       </Grid>
-      <Button variant="contained" color="primary">
+      <Button variant='contained' color='primary'>
         Start Another Swap
       </Button>
     </Paper>
