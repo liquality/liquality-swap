@@ -26,8 +26,12 @@ const store = createStore(
   applyMiddleware(thunk, routerMiddleware(history))
 )
 
-if (initialAppState.swap && initialAppState.swap.isPartyB) {
-  store.dispatch(swapActions.findAndVerifyInitiateSwapTransaction)
+if (initialAppState.swap) {
+  store.dispatch(swapActions.waitForExpiration)
+
+  if (initialAppState.swap.isPartyB) {
+    store.dispatch(swapActions.findAndVerifyInitiateSwapTransaction)
+  }
 }
 
 class App extends Component {

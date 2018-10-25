@@ -6,6 +6,7 @@ import { actions as secretActions } from './secretparams'
 import currencies from '../utils/currencies'
 import { sleep } from '../utils/async'
 import { getPartyExpiration, generateExpiration } from '../utils/expiration'
+import moment from 'moment'
 
 const types = {
   SWITCH_SIDES: 'SWITCH_SIDES',
@@ -55,6 +56,7 @@ async function lockFunds (dispatch, getState) {
     swapExpiration.unix()
   )
   dispatch(transactionActions.setTransaction('a', 'fund', { hash: txHash, block }))
+  dispatch(waitForExpiration)
 }
 
 function initiateSwap () {
@@ -154,6 +156,7 @@ async function unlockFunds (dispatch, getState) {
     swapExpiration.unix()
   )
   dispatch(transactionActions.setTransaction('b', 'claim', { hash: txHash, block }))
+  dispatch(waitForExpiration)
 }
 
 function redeemSwap () {
@@ -161,6 +164,46 @@ function redeemSwap () {
     await unlockFunds(dispatch, getState)
     dispatch(push('/completed'))
   }
+}
+
+function refundSwap () {
+  return async (dispatch, getState) => {
+    const {
+      assets,
+      wallets,
+      counterParty,
+      transactions,
+      secretParams,
+      isPartyB,
+      expiration
+    } = getState().swap
+
+    const client = getClient(assets.a.currency)
+    const swapExpiration = getPartyExpiration(expiration, isPartyB ? 'b' : 'a')
+    await client.refundSwap(
+      transactions.a.fund.hash,
+      counterParty[assets.a.currency].address,
+      wallets.a.addresses[0],
+      secretParams.secretHash,
+      swapExpiration.unix()
+    )
+  }
+}
+
+async function waitForExpiration (dispatch, getState) {
+  const {
+    isPartyB,
+    expiration
+  } = getState().swap
+
+  const swapExpiration = getPartyExpiration(expiration, isPartyB ? 'b' : 'a')
+  let swapExpired = false
+  while (true) {
+    swapExpired = moment().isAfter(swapExpiration)
+    if (swapExpired) break
+    await sleep(5000)
+  }
+  dispatch(push('/refund'))
 }
 
 const actions = {
@@ -172,7 +215,9 @@ const actions = {
   findAndVerifyInitiateSwapTransaction,
   waitForSwapConfirmation,
   waitForSwapClaim,
-  redeemSwap
+  waitForExpiration,
+  redeemSwap,
+  refundSwap
 }
 
 export { types, actions }
