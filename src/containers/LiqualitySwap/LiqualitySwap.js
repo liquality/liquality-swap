@@ -8,6 +8,7 @@ import BackupLinkCard from '../../components/BackupLinkCard/BackupLinkCard'
 import Waiting from '../../components/Waiting/Waiting'
 import SwapRedemption from '../SwapRedemption'
 import SwapCompleted from '../SwapCompleted'
+import SwapRefund from '../SwapRefund'
 import SwapProgressStepper from '../../components/SwapProgressStepper/SwapProgressStepper'
 import { generateLink } from '../../utils/app-links'
 import { transactionPaths as blockExplorerTxUrl } from '../../utils/block-explorers'
@@ -63,6 +64,7 @@ class LiqualitySwap extends Component {
             <Route path='/waiting' render={this.getWaitingScreen} />
             <Route path='/redeem' component={SwapRedemption} />
             <Route path='/completed' component={SwapCompleted} />
+            <Route path='/refund' component={SwapRefund} />
           </div>
         </div>
       </Route>
