@@ -19,7 +19,6 @@ const CurrencyInput = (props) => (
         endAdornment={<InputAdornment position='end'>{currencies[props.currency].code}</InputAdornment>}
         fullWidth
       />}
-
   </div>
 )
 
