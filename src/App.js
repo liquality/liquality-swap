@@ -27,7 +27,9 @@ const store = createStore(
 )
 
 if (initialAppState.swap) {
-  store.dispatch(swapActions.waitForExpiration)
+  if (initialAppState.swap.transactions.a.fund.hash) {
+    store.dispatch(swapActions.waitForExpiration)
+  }
 
   if (initialAppState.swap.isPartyB) {
     store.dispatch(swapActions.findAndVerifyInitiateSwapTransaction)

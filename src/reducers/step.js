@@ -1,4 +1,4 @@
-import { types } from '../actions/transactions'
+import { types } from '../actions/step'
 import { getReducerFunction } from './helpers'
 import { steps } from '../components/SwapProgressStepper/steps'
 
