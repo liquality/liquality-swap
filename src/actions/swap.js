@@ -62,14 +62,14 @@ async function lockFunds (dispatch, getState) {
 function initiateSwap () {
   return async (dispatch, getState) => {
     await lockFunds(dispatch, getState)
-    dispatch(push('/backupLink'))
+    dispatch(push('/counterPartyLink'))
   }
 }
 
 function confirmSwap () {
   return async (dispatch, getState) => {
     await lockFunds(dispatch, getState)
-    dispatch(push('/backupLink'))
+    dispatch(push('/waiting'))
   }
 }
 
@@ -130,7 +130,7 @@ function waitForSwapClaim () {
     const client = getClient(assets.a.currency)
     const claimTransaction = await client.findClaimSwapTransaction(transactions.a.fund.hash, secretParams.secretHash)
     dispatch(secretActions.setSecret(claimTransaction.secret))
-    dispatch(transactionActions.setTransaction('a', 'claim', claimTransaction))
+    dispatch(transactionActions.setTransaction('b', 'claim', claimTransaction))
     dispatch(push('/redeem'))
   }
 }
@@ -155,7 +155,7 @@ async function unlockFunds (dispatch, getState) {
     secretParams.secret,
     swapExpiration.unix()
   )
-  dispatch(transactionActions.setTransaction('b', 'claim', { hash: txHash, block }))
+  dispatch(transactionActions.setTransaction('a', 'claim', { hash: txHash, block }))
   dispatch(waitForExpiration)
 }
 
