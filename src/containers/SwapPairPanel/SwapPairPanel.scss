@@ -1,0 +1,71 @@
+@import '../../scss/variables.scss';
+
+.SwapPairPanel {
+  $asset-horizontal-padding: 294px;
+  $panel-horizontal-padding: 60px;
+
+  &_assetsBG {
+    display: block;
+    margin: 0 auto;
+  }
+
+  &_swapIcon {
+    position: absolute;
+    display: block;
+    margin: 0 auto;
+    top: 123px;
+    left: 0;
+    right: 0;
+  }
+  
+  &_assetContainer {
+    position: relative;
+    z-index: $layer-top;
+  }
+
+  &_asset {
+    position: absolute;
+    height: 48px;
+    margin-top: 64px;
+    
+    &_left {
+      left: $asset-horizontal-padding;
+    }
+
+    &_right {
+      right: $asset-horizontal-padding;
+    }
+  }
+  
+  &_labels {
+    position: absolute;
+    top: 45px;
+    width: 100%;
+    z-index: $layer-bottom;
+
+    > h1 {
+      border: 7px solid #fff;
+      line-height: normal;
+      padding-top: 23px;
+      width: 40%;
+      height: 89px;
+      color: #fff;
+    }
+
+    &_have {
+      float: left;
+      background: theme-color('primary');
+      border-radius: $swap-panel-radius $swap-panel-radius $swap-panel-radius 0px;
+      padding-left: $panel-horizontal-padding;
+    }
+    
+    &_want {
+      float: right;
+      background: theme-color('secondary');
+      border-radius: $swap-panel-radius $swap-panel-radius 0 $swap-panel-radius;
+      text-align: right;
+      padding-right: $panel-horizontal-padding;
+    }
+  }
+}
+

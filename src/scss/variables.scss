@@ -1,0 +1,27 @@
+
+// colors
+$color-primary-1: #9D4DFA;
+$color-primary-2: #1CE5C3;
+
+$primary: $color-primary-1;
+$secondary: $color-primary-2;
+
+// font
+$h1-font-size: 30px;
+$h2-font-size: 24px;
+$h3-font-size: 20px;
+$h4-font-size: 18px;
+
+$headings-font-weight: 300;
+$headings-font-family: sans-serif;
+$font-family-base: sans-serif;
+
+// sizes
+$swap-panel-radius: 22px;
+
+// layers
+$layer-bottom: 1;
+$layer-top: 2;
+
+@import 'node_modules/bootstrap/scss/_functions';
+@import 'node_modules/bootstrap/scss/_variables';
