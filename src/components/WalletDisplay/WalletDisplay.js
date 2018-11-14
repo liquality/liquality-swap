@@ -1,30 +1,27 @@
 import React from 'react'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
 import PropTypes from 'prop-types'
 
 import currencies from '../../utils/currencies'
 import wallets from '../../utils/wallets'
+import WalletIcon from './wallet-icon.svg'
 
 import './WalletDisplay.css'
 
 const WalletBalance = (props) => (
-  <Grid container spacing={8} justify='center' alignItems='stretch' className='WalletDisplay'>
-    <Grid item xs={3} container justify='flex-end'>
+  <div class='WalletDisplay'>
+    <img class='WalletDisplay_icon' src={wallets[props.type] ? wallets[props.type].icon : WalletIcon} />
+    <p class='WalletDisplay_address'>{ props.address && props.address }</p>
+    { props.connected
+      ? <p class='WalletDisplay_message'>Change wallet</p>
+      : <p class='WalletDisplay_message error'>Connect wallet</p>
+    }
+    { props.balance &&
       <div>
-        <img className='WalletIcon' src={wallets[props.type] ? wallets[props.type].icon : ''} />
+        <p>Spendable</p>
+        <p class='WalletDisplay_balance'>{props.balance} {currencies[props.currency].code}</p>
       </div>
-    </Grid>
-    <Grid item xs={9} container direction='column' spacing={0} className='WalletInfo'>
-      <Grid item xs>
-        <Typography>{ props.address && props.address }</Typography>
-        <Typography color='secondary'>{props.connected || 'Connect Your Wallet'}</Typography>
-      </Grid>
-      { props.balance && <Grid item xs>
-        <Typography noWrap className='WalletBalance'>BALANCE <span>{props.balance}</span> {currencies[props.currency].code}</Typography>
-      </Grid> }
-    </Grid>
-  </Grid>
+    }
+  </div>
 )
 
 WalletBalance.propTypes = PropTypes.shape({

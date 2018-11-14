@@ -54,6 +54,9 @@ class SwapInitiation extends Component {
   render () {
     return <Paper className='liquality-wrapper'>
       <SwapPairPanel />
+      <CurrencyInputs />
+      <WalletPanel />
+
       {/* <Grid container spacing={0}>
         <WalletPanel />
         <Grid container className='main'>

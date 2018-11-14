@@ -1,25 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Input, InputAdornment, Typography } from '@material-ui/core'
 
 import currencies from '../../utils/currencies'
 import './CurrencyInput.css'
 
 const CurrencyInput = (props) => (
   <div className='CurrencyInput'>
-    <div className='CurrencyInput_icon'>
-      <img src={currencies[props.currency].icon} />
-    </div>
-    {props.disabled
-      ? <Typography variant='title'>{props.value} {currencies[props.currency].code}</Typography>
-      : <Input
-        value={props.value}
-        type='number'
-        onChange={e => props.onChange(e.target.value)}
-        endAdornment={<InputAdornment position='end'>{currencies[props.currency].code}</InputAdornment>}
-        fullWidth
-      />}
-
+    <h3 className='CurrencyInput_heading'>{currencies[props.currency].code}</h3>
+    <input type='number' className='CurrencyInput_input' onChange={e => props.onChange(e.target.value)} />
   </div>
 )
 

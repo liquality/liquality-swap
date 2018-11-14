@@ -1,36 +1,28 @@
 import React, { Component } from 'react'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import SwapIcon from '@material-ui/icons/SwapHorizontalCircle'
 import CurrencyInput from '../../components/CurrencyInput/CurrencyInput'
 import './CurrencyInputs.css'
 
 class CurrencyInputs extends Component {
   render () {
     const { a: assetA, b: assetB } = this.props.assets
-    return <Grid container className='CurrencyInputs'>
-      <Grid container xs={12} sm={5} justify='flex-end'>
-        <div>
-          <Typography variant='display1' gutterBottom>HAVE</Typography>
-          <CurrencyInput currency={assetA.currency}
+    return <div class='CurrencyInputs'>
+      <div class='row justify-content-between no-gutters'>
+        <div class='col CurrencyInputs_left'>
+          <CurrencyInput
+            currency={assetA.currency}
             value={assetA.value}
             disabled={this.props.isPartyB}
             onChange={newValue => this.props.onAmountChange('a', newValue)} />
         </div>
-      </Grid>
-      <Grid container xs={12} sm={2} justify='space-around' alignItems='center'>
-        {this.props.isPartyB || <SwapIcon onClick={() => this.props.onSwitchSides()} color='primary' style={{ fontSize: 50 }} />}
-      </Grid>
-      <Grid container xs={12} sm={5} justify='flex-start'>
-        <div>
-          <Typography variant='display1' gutterBottom>WANT</Typography>
-          <CurrencyInput currency={assetB.currency}
+        <div class='col CurrencyInputs_right'>
+          <CurrencyInput
+            currency={assetB.currency}
             value={assetB.value}
             disabled={this.props.isPartyB}
             onChange={newValue => this.props.onAmountChange('b', newValue)} />
         </div>
-      </Grid>
-    </Grid>
+      </div>
+    </div>
   }
 }
 

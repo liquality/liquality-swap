@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Grid from '@material-ui/core/Grid'
 import WalletDisplay from '../../components/WalletDisplay/WalletDisplay'
 import WalletConnectPopup from '../../components/WalletConnectPopup/WalletConnectPopup'
 
@@ -10,9 +9,9 @@ class WalletPanel extends Component {
     const { a: assetA, b: assetB } = this.props.assets
     const { a: walletA, b: walletB } = this.props.wallets
 
-    return <Grid container>
-      <Grid item xs={12} sm={6}>
-        <div className='wallet' onClick={(e) => this.props.onToggleWalletConnect('a', e.currentTarget)}>
+    return <div class='WalletPanel'>
+      <div class='row justify-content-between no-gutters'>
+        <div class='col WalletPanel_left' onClick={(e) => this.props.onToggleWalletConnect('a', e.currentTarget)}>
           <WalletDisplay
             currency={assetA.currency}
             type={walletA.type}
@@ -20,9 +19,7 @@ class WalletPanel extends Component {
             address={walletA.addresses[0]}
             connected={walletA.connected} />
         </div>
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <div className='wallet' onClick={(e) => this.props.onToggleWalletConnect('b', e.currentTarget)}>
+        <div class='col WalletPanel_right' onClick={(e) => this.props.onToggleWalletConnect('b', e.currentTarget)}>
           <WalletDisplay
             currency={assetB.currency}
             type={walletB.type}
@@ -30,7 +27,7 @@ class WalletPanel extends Component {
             address={walletB.addresses[0]}
             connected={walletB.connected} />
         </div>
-      </Grid>
+      </div>
       <WalletConnectPopup
         open={walletA.connectOpen}
         currency={assetA.currency}
@@ -56,7 +53,7 @@ class WalletPanel extends Component {
         addresses={walletB.addresses}
         walletConnected={walletB.connected}
       />
-    </Grid>
+    </div>
   }
 }
 

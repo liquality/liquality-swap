@@ -2,16 +2,27 @@
 // colors
 $color-primary-1: #9D4DFA;
 $color-primary-2: #1CE5C3;
+$color-error: #F12274;
+
+$color-text-1: #1D1E21;
+$color-text-2: #747E8D;
 
 $primary: $color-primary-1;
 $secondary: $color-primary-2;
+$danger: $color-error;
+$body-color: $color-text-1;
 
 // font
+$font-size-base: 0.875rem;
+$font-size-sm: 0.75rem;
+$font-size-lg: 1rem;
+
 $h1-font-size: 30px;
 $h2-font-size: 24px;
 $h3-font-size: 20px;
 $h4-font-size: 18px;
 
+$headings-color: $color-text-2;
 $headings-font-weight: 300;
 $headings-font-family: sans-serif;
 $font-family-base: sans-serif;
