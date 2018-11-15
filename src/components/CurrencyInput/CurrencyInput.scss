@@ -1,4 +1,5 @@
 @import '../../scss/variables.scss';
+@import '../../scss/mixins.scss';
 
 .CurrencyInput {
   width: 100px;
@@ -10,6 +11,7 @@
   }
 
   &_input {
+    @include blank-input;
     display: block;
     width: 100px;
     height: 30px;
@@ -17,9 +19,5 @@
     font-size: $h1-font-size;
     font-weight: 500;
     border-bottom: 1px solid #31E4C3;
-    border-top: 0;
-    border-left: 0;
-    border-right: 0;
-    outline: 0;
   }
 }

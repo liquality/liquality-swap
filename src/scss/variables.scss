@@ -3,9 +3,13 @@
 $color-primary-1: #9D4DFA;
 $color-primary-2: #1CE5C3;
 $color-error: #F12274;
+$color-bg-primary: #FFFFFF;
+$color-bg-secondary: #F7F8F9;
 
 $color-text-1: #1D1E21;
 $color-text-2: #747E8D;
+
+$color-shadow: rgba(69, 73, 91, 0.04);
 
 $primary: $color-primary-1;
 $secondary: $color-primary-2;
@@ -21,6 +25,7 @@ $h1-font-size: 30px;
 $h2-font-size: 24px;
 $h3-font-size: 20px;
 $h4-font-size: 18px;
+$h5-font-size: 14px;
 
 $headings-color: $color-text-2;
 $headings-font-weight: 300;
@@ -29,6 +34,9 @@ $font-family-base: sans-serif;
 
 // sizes
 $swap-panel-radius: 22px;
+
+$input-border-radius: 25px;
+$btn-border-radius: 22px;
 
 // layers
 $layer-bottom: 1;

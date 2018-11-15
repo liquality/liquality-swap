@@ -10,30 +10,24 @@ class CounterPartyWallets extends Component {
     const { a: assetA, b: assetB } = this.props.assets
     const counterParty = this.props.counterParty
 
-    return <Grid container xs={12} className='counterparty'>
-      <Grid container>
-        <Grid item xs={12}>
-          <Typography variant='title'>Receive From</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <AddressInput
-            currency={assetB.currency}
+    return <div class='CounterPartyWallets container'>
+      <div class='row'>
+        <div class='col'>
+          <h5 class='CounterPartyWallets_heading'>Receive From</h5>
+          <AddressInput currency={assetB.currency}
             value={counterParty[assetB.currency].address}
             onChange={(newValue, valid) => this.props.onCounterPartyAddressChange(assetB.currency, newValue, valid)}
           />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography variant='title'>Send To</Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <AddressInput
-            currency={assetA.currency}
+        </div>
+        <div class='col'>
+          <h5 class='CounterPartyWallets_heading'>Send To</h5>
+          <AddressInput currency={assetA.currency}
             value={counterParty[assetA.currency].address}
             onChange={(newValue, valid) => this.props.onCounterPartyAddressChange(assetA.currency, newValue, valid)}
           />
-        </Grid>
-      </Grid>
-    </Grid>
+        </div>
+      </div>
+    </div>
   }
 }
 

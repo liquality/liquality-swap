@@ -1,3 +1,49 @@
+@import '../../scss/variables.scss';
+@import '../../scss/mixins.scss';
+
 .AddressInput {
-  
+
+  &_wrapper {
+    display: flex;
+  }
+
+  &_box {
+    flex: 1;
+    height: 45px;
+    padding: 8px 10px;
+    background: $color-bg-secondary;
+    border-radius: $input-border-radius;
+    display: flex;
+
+    &_invalid {
+      border: 1px solid $danger;
+    }
+  }
+
+  &_icon {
+    flex: 0;
+    height: 29px;
+    width: auto;
+    justify-content: center;
+    margin-right: 8px;
+  }
+
+  &_input {
+    @include blank-input;
+    color: $color-text-2;
+    font-size: 13px;
+    flex: 1;
+  }
+
+  &_status {
+    flex: 0;
+    margin-left: 8px;
+  }
+
+  &_message {
+    padding: 3px 0 0 50px;
+    font-size: $font-size-sm;
+    color: $danger;
+  }
+
 }

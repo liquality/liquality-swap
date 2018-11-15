@@ -52,10 +52,14 @@ class SwapInitiation extends Component {
   }
 
   render () {
-    return <Paper className='liquality-wrapper'>
+    return <Paper className='SwapInitiation_wrapper'>
       <SwapPairPanel />
       <CurrencyInputs />
       <WalletPanel />
+      <div class='SwapInitiation_bottom'>
+        <h5 class='SwapInitiation_counterPartyLabel'>Counter party wallets</h5>
+        { this.props.isPartyB || <CounterPartyWallets /> }
+      </div>
 
       {/* <Grid container spacing={0}>
         <WalletPanel />

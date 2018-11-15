@@ -1,32 +1,30 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Input from '@material-ui/core/Input'
-import InputAdornment from '@material-ui/core/InputAdornment'
-import Typography from '@material-ui/core/Typography'
 
 import currencies from '../../utils/currencies'
 import './AddressInput.css'
+import TickIcon from './tick.svg'
+import ErrorIcon from './error.svg'
 
 const AddressInput = (props) => {
   const valid = currencies[props.currency].isValidAddress(props.value)
   let helperMessage
   if (!valid) {
-    helperMessage = <Typography color='secondary'>Invalid Address</Typography>
+    helperMessage = 'Invalid Address'
   }
 
-  return <div>
-    <Input
-      className='AddressInput'
-      error={!valid}
-      value={props.value}
-      onChange={e =>
-        props.onChange(e.target.value, currencies[props.currency].isValidAddress(e.target.value))}
-      startAdornment={
-        <InputAdornment position='start'><img src={currencies[props.currency].icon} /></InputAdornment>
-      }
-      fullWidth
-    />
-    {helperMessage}
+  return <div class='AddressInput'>
+    <div class='AddressInput_wrapper'>
+      <div className={'AddressInput_box ' + (valid ? 'AddressInput_box_valid' : 'AddressInput_box_invalid')}>
+        <img class='AddressInput_icon' src={currencies[props.currency].icon} />
+        <input class='AddressInput_input'
+          value={props.value}
+          onChange={e => props.onChange(e.target.value, currencies[props.currency].isValidAddress(e.target.value))}
+        />
+      </div>
+      <img class='AddressInput_status' src={valid ? TickIcon : ErrorIcon} />
+    </div>
+    <div class='AddressInput_message'>{helperMessage}</div>
   </div>
 }
 

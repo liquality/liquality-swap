@@ -1,7 +1,9 @@
+@import '../../scss/variables.scss';
+
 .WalletPanel {
-  background: #FAFCFE; // background
+  background: $color-bg-secondary;
   margin-top: 50px;
-  padding: 40px 0 20px 0;
+  padding: 40px 0;
 
   &_left {
     margin-left: 80px;
