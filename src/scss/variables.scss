@@ -34,9 +34,17 @@ $font-family-base: sans-serif;
 
 // sizes
 $swap-panel-radius: 22px;
-
 $input-border-radius: 25px;
-$btn-border-radius: 22px;
+
+// buttons
+$btn-padding-y:               12px;
+$btn-padding-x:               12px;
+$btn-font-size:               $font-size-lg;
+$btn-box-shadow:              none;
+$btn-disabled-opacity:        .65;
+$btn-link-disabled-color:     $color-bg-primary;
+$btn-border-radius:           22px;
+
 
 // layers
 $layer-bottom: 1;

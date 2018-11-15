@@ -59,6 +59,7 @@ class SwapInitiation extends Component {
       <div class='SwapInitiation_bottom'>
         <h5 class='SwapInitiation_counterPartyLabel'>Counter party wallets</h5>
         { this.props.isPartyB || <CounterPartyWallets /> }
+        <button disabled={!this.nextEnabled()} class='btn btn-wide btn-primary' onClick={this.props.isPartyB ? this.props.confirmSwap : this.props.initiateSwap}>Next</button>
       </div>
 
       {/* <Grid container spacing={0}>
@@ -74,7 +75,6 @@ class SwapInitiation extends Component {
               {error}
             </Typography></Grid>
           )}
-          <Button disabled={!this.nextEnabled()} variant='contained' color='primary' onClick={this.props.isPartyB ? this.props.confirmSwap : this.props.initiateSwap}>Next</Button>
         </Grid>
       </Grid> */}
     </Paper>

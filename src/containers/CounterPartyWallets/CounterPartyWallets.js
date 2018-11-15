@@ -10,7 +10,7 @@ class CounterPartyWallets extends Component {
     const { a: assetA, b: assetB } = this.props.assets
     const counterParty = this.props.counterParty
 
-    return <div class='CounterPartyWallets container'>
+    return <div class='CounterPartyWallets'>
       <div class='row'>
         <div class='col'>
           <h5 class='CounterPartyWallets_heading'>Receive From</h5>

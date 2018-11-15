@@ -13,12 +13,12 @@ const initialState = {
     type: ''
   },
   b: {
-    addresses: [],
-    balance: null,
+    addresses: ['myPhar2QNiePwTAL775nNipcpatpLP2GPG'],
+    balance: 1.42,
     connectOpen: false,
-    connected: false,
-    chosen: false,
-    type: ''
+    connected: true,
+    chosen: true,
+    type: 'ledger'
   }
 }
 
