@@ -1,0 +1,30 @@
+@import '../../scss/variables.scss';
+
+.Button {
+  color: #ffffff;
+  position: relative;
+
+  &_wide {
+      width: 350px;
+  }
+
+  &_icon {
+    position: absolute;
+    width: 54px;
+    left: 0;
+    border-right: 1px solid #C49FEF;
+    text-align: center;
+    img {
+      max-height: 18px;
+    }
+  }
+}
+
+.btn-secondary {
+  background: #ffffff;
+  border: 1px solid $primary;
+  color: $primary;
+  .Button_icon {
+    border-color: $primary;
+  }
+}
