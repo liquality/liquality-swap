@@ -7,7 +7,7 @@ import './CurrencyInput.css'
 const CurrencyInput = (props) => (
   <div className='CurrencyInput'>
     <h3 className='CurrencyInput_heading'>{currencies[props.currency].code}</h3>
-    <input type='number' className='CurrencyInput_input' placeholder='0.00' onChange={e => props.onChange(e.target.value)} />
+    <input type='number' value={props.value} className='CurrencyInput_input' placeholder='0.00' onChange={e => props.onChange(e.target.value)} />
   </div>
 )
 

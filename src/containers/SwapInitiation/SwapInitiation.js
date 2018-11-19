@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { Grid, Button, Paper, Typography } from '@material-ui/core'
 
 import WalletPanel from '../WalletPanel'
 import SwapPairPanel from '../SwapPairPanel'
 import CurrencyInputs from '../CurrencyInputs'
 import CounterPartyWallets from '../CounterPartyWallets'
+import Button from '../../components/Button/Button'
 import ExpirationDetails from '../../components/ExpirationDetails/ExpirationDetails'
 import { generateSwapState } from '../../utils/app-links'
 
@@ -52,20 +52,20 @@ class SwapInitiation extends Component {
   }
 
   render () {
-    return <Paper className='SwapInitiation_wrapper'>
+    return <div className='SwapInitiation_wrapper'>
       <SwapPairPanel />
       <CurrencyInputs />
       <WalletPanel />
       <div class='SwapInitiation_bottom'>
-        <h5 class='SwapInitiation_counterPartyLabel'>Counter party wallets</h5>
+        { this.props.isPartyB || <h5 class='SwapInitiation_counterPartyLabel'>Counter party wallets</h5> }
         { this.props.isPartyB || <CounterPartyWallets /> }
         <ExpirationDetails expiration={this.props.expiration} isPartyB={this.props.isPartyB} />
-        <button disabled={!this.nextEnabled()} class='SwapInitiation_next btn btn-wide btn-primary' onClick={this.props.isPartyB ? this.props.confirmSwap : this.props.initiateSwap}>Next</button>
+        <Button primary disabled={!this.nextEnabled()} className='SwapInitiation_next' onClick={this.props.isPartyB ? this.props.confirmSwap : this.props.initiateSwap}>Next</Button>
         <div class='SwapInitiation_errors'>
           {this.getErrors().map(error => <p>{error}</p>)}
         </div>
       </div>
-    </Paper>
+    </div>
   }
 }
 

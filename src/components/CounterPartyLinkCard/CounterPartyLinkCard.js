@@ -1,35 +1,34 @@
 import React, { Component } from 'react'
-import { Paper, Typography, Input, Grid, Button } from '@material-ui/core'
-import CopyIcon from '@material-ui/icons/FileCopy'
-import DoneIcon from '@material-ui/icons/Done'
+import BrandCard from '../BrandCard/BrandCard'
+import Button from '../Button/Button'
+import CompletedIcon from '../../icons/completed.svg'
+import CopyIcon from '../../icons/copy.svg'
 import './CounterPartyLinkCard.css'
 
 class CounterPartyLinkCard extends Component {
   constructor (props) {
     super(props)
     this.handleCopyClick = this.handleCopyClick.bind(this)
+    this.textArea = React.createRef()
   }
 
   handleCopyClick () {
-    this.textArea.select()
+    const tempInput = document.createElement('input')
+    tempInput.value = this.props.link
+    tempInput.style = 'position: absolute; top: -2000px;'
+    document.body.appendChild(tempInput)
+    tempInput.select()
     document.execCommand('copy')
+    document.body.removeChild(tempInput)
   }
 
   render () {
-    return <Paper className='CounterPartyLinkCard'>
-      <Typography variant='headline' component='h3' gutterBottom><DoneIcon /> Swap Initiated</Typography>
-      <Typography variant='p' gutterBottom><a href={this.props.transactionLink} target='_blank'>Link to transaction</a></Typography>
-      <Typography component='p' gutterBottom>To continue, share the Swap link with the counter party.</Typography>
-      <Grid container spacing={16}>
-        <Grid item xs>
-          <Input value={this.props.link} inputRef={textarea => { this.textArea = textarea }} readOnly fullWidth autoFocus />
-        </Grid>
-        <Grid item>
-          <Button variant='fab' color='primary' onClick={this.handleCopyClick}><CopyIcon /></Button>
-        </Grid>
-      </Grid>
-      <Button variant='contained' color='primary' onClick={this.props.onNextClick}>Next</Button>
-    </Paper>
+    return <BrandCard className='CounterPartyLinkCard' title='Swap Initiated'>
+      <img class='CounterPartyLinkCard_icon' src={CompletedIcon} />
+      <p class='CounterPartyLinkCard_description'>To continue, share this link with your counterparty</p>
+      <p><Button secondary onClick={this.handleCopyClick} icon={CopyIcon}>Counterparty Link</Button></p>
+      <p><Button primary onClick={this.props.onNextClick}>Link Sent</Button></p>
+    </BrandCard>
   }
 }
 

@@ -1,7 +1,12 @@
 .CounterPartyLinkCard {
-  padding: 2rem;
   text-align: center;
-  p {
-    margin: 2rem 0;
+
+  &_description {
+    margin: 40px 0; 
+  }
+
+  &_icon {
+    margin-top: 30px;
+    width: 40px;
   }
 }
