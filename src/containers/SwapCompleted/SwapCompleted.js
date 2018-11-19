@@ -7,7 +7,7 @@ import currencies from '../../utils/currencies'
 
 class SwapCompleted extends Component {
   render () {
-    return <Paper className='SwapRedemption'>
+    return <Paper className='SwapCompleted'>
       <Typography variant='headline' component='h3'><CheckCircleIcon style={{color: '#7ed321', fontSize: 36}} /> Swap Completed</Typography>
       <Typography component='p' className='padding-bottom' gutterBottom>in 13 min</Typography>
       <Typography component='p'>Swap Link:</Typography>

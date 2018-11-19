@@ -53,7 +53,7 @@ class SwapInitiation extends Component {
   }
 
   render () {
-    return <div className='SwapInitiation_wrapper'>
+    return <div className='SwapInitiation'>
       <SwapPairPanel />
       <CurrencyInputs />
       <WalletPanel />
@@ -63,8 +63,8 @@ class SwapInitiation extends Component {
           : <h5 class='SwapInitiation_counterPartyLabel'>Counter party wallets</h5> }
         { this.props.isPartyB || <CounterPartyWallets /> }
         <ExpirationDetails expiration={this.props.expiration} isPartyB={this.props.isPartyB} />
-        {!this.props.isPartyB && <Button primary disabled={!this.nextEnabled()} className='SwapInitiation_next' onClick={this.props.initiateSwap}>Next</Button>}
-        {this.props.isPartyB && <Button primary disabled={!this.nextEnabled()} className='SwapInitiation_next' onClick={this.props.confirmSwap}>Confirm Terms</Button>}
+        {!this.props.isPartyB && <Button primary disabled={!this.nextEnabled()} onClick={this.props.initiateSwap}>Next</Button>}
+        {this.props.isPartyB && <Button primary disabled={!this.nextEnabled()} onClick={this.props.confirmSwap}>Confirm Terms</Button>}
         <div class='SwapInitiation_errors'>
           {this.getErrors().map(error => <p>{error}</p>)}
         </div>

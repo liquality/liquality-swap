@@ -1,12 +1,10 @@
 @import '../../scss/variables.scss';
 
 .SwapInitiation {
-  &_wrapper {
-    position: relative;
-    padding: 0!important;
-    background: transparent!important;
-    box-shadow: none!important;
-  }
+  position: relative;
+  padding: 0!important;
+  background: transparent!important;
+  box-shadow: none!important;
   
   &_bottom {
     position: relative;
@@ -53,18 +51,14 @@
     }
   }
 
-  &_next {
-    margin-top: 30px;
-  }
-
   &_errors {
     p {
       color: $danger;
       margin: 0;
     }
   }
-}
 
-.CounterPartyWallets {
-  margin-bottom: 30px;
+  .CounterPartyWallets, .ExpirationDetails {
+    margin-bottom: 30px;
+  }
 }
