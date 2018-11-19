@@ -59,24 +59,12 @@ class SwapInitiation extends Component {
       <div class='SwapInitiation_bottom'>
         <h5 class='SwapInitiation_counterPartyLabel'>Counter party wallets</h5>
         { this.props.isPartyB || <CounterPartyWallets /> }
-        <button disabled={!this.nextEnabled()} class='btn btn-wide btn-primary' onClick={this.props.isPartyB ? this.props.confirmSwap : this.props.initiateSwap}>Next</button>
+        <ExpirationDetails expiration={this.props.expiration} isPartyB={this.props.isPartyB} />
+        <button disabled={!this.nextEnabled()} class='SwapInitiation_next btn btn-wide btn-primary' onClick={this.props.isPartyB ? this.props.confirmSwap : this.props.initiateSwap}>Next</button>
+        <div class='SwapInitiation_errors'>
+          {this.getErrors().map(error => <p>{error}</p>)}
+        </div>
       </div>
-
-      {/* <Grid container spacing={0}>
-        <WalletPanel />
-        <Grid container className='main'>
-          <CurrencyInputs />
-          <ExpirationDetails expiration={this.props.expiration} isPartyB={this.props.isPartyB} />
-          { this.props.isPartyB || <CounterPartyWallets /> }
-        </Grid>
-        <Grid container xs={12} justify='center'>
-          {this.getErrors().map(error =>
-            <Grid item xs={12}><Typography color='secondary' align='center' gutterBottom>
-              {error}
-            </Typography></Grid>
-          )}
-        </Grid>
-      </Grid> */}
     </Paper>
   }
 }

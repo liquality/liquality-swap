@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
 import moment from 'moment'
 import { expirationDurations, getPartyExpiration, generateExpiration } from '../../utils/expiration'
 
@@ -49,14 +47,14 @@ class ExpirationDetails extends Component {
   }
 
   render () {
-    return <Grid container xs={12} className='expiration'>
-      <Grid item xs={12} sm={6}>
-        <Typography component='p' align='center'><strong>OFFER ACTIVE</strong> {this.state.duration.hours()} Hours {this.state.duration.minutes()} Minutes</Typography>
-      </Grid>
-      <Grid item xs={12} sm={6}>
-        <Typography component='p' align='center'><strong>EXPIRATION</strong> {this.state.expiration.format('D/M/Y HH:mm')}</Typography>
-      </Grid>
-    </Grid>
+    return <div class='ExpirationDetails row'>
+      <div class='col'>
+        <strong>OFFER ACTIVE</strong> {this.state.duration.hours()} Hours {this.state.duration.minutes()} Minutes
+      </div>
+      <div class='col'>
+        <strong>EXPIRATION</strong> {this.state.expiration.format('D/M/Y HH:mm')}
+      </div>
+    </div>
   }
 }
 
