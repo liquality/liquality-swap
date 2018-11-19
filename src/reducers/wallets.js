@@ -6,7 +6,7 @@ import { getReducerFunction } from './helpers'
 const initialState = {
   a: {
     addresses: [], // TODO: why multiple addresses?
-    balance: 0,
+    balance: null,
     connectOpen: false,
     connected: false,
     chosen: false,
@@ -14,7 +14,7 @@ const initialState = {
   },
   b: {
     addresses: [],
-    balance: 0,
+    balance: null,
     connectOpen: false,
     connected: false,
     chosen: false,

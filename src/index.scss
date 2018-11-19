@@ -1,5 +1,12 @@
+@import 'scss/variables.scss';
+@import 'node_modules/bootstrap/scss/bootstrap';
+
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  background: #eee;
+}
+
+.btn.btn-wide {
+  width: 350px;
 }

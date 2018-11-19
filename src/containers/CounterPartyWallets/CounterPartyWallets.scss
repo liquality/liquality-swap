@@ -1,6 +1,11 @@
-.counterparty {
-  margin-top: 2rem;
-  padding: 1rem;
-  background: #e3e3e3;
-  text-align: center;
+@import '../../scss/variables.scss';
+
+.CounterPartyWallets {
+  text-align: left;
+
+  &_heading {
+    padding-left: 50px;
+    font-weight: 700;
+    color: $body-color;
+  }
 }

@@ -1,12 +1,41 @@
-.WalletDisplay {
-  text-align: left;
+@import '../../scss/variables.scss';
 
-  .WalletIcon {
-    object-fit: cover;
-    height: 100%;
+.WalletDisplay {
+  text-align: center;
+  width: 100px;
+  min-height: 114px;
+
+  p {
+    margin-bottom: 2px;
   }
 
-  .WalletInfo .WalletBalance:hover {
-    overflow: visible;
+  &_icon {
+    height: 20px;
+    margin-bottom: 6px;
+  }
+
+  &_address {
+    width: 100px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: $font-size-sm;
+    color: $color-text-2;
+    padding-bottom: 4px;
+    &:hover {
+      overflow: visible;
+    }
+  }
+
+  &_message {
+    font-size: $font-size-sm;
+    color: $primary;
+    &.error {
+      color: $danger;
+    }
+  }
+
+  &_balance {
+    color: $color-text-2;
   }
 }

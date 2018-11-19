@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Grid, Button, Paper, Typography } from '@material-ui/core'
 
 import WalletPanel from '../WalletPanel'
+import SwapPairPanel from '../SwapPairPanel'
 import CurrencyInputs from '../CurrencyInputs'
 import CounterPartyWallets from '../CounterPartyWallets'
 import ExpirationDetails from '../../components/ExpirationDetails/ExpirationDetails'
@@ -51,8 +52,17 @@ class SwapInitiation extends Component {
   }
 
   render () {
-    return <Paper style={{padding: '1rem'}}>
-      <Grid container spacing={0}>
+    return <Paper className='SwapInitiation_wrapper'>
+      <SwapPairPanel />
+      <CurrencyInputs />
+      <WalletPanel />
+      <div class='SwapInitiation_bottom'>
+        <h5 class='SwapInitiation_counterPartyLabel'>Counter party wallets</h5>
+        { this.props.isPartyB || <CounterPartyWallets /> }
+        <button disabled={!this.nextEnabled()} class='btn btn-wide btn-primary' onClick={this.props.isPartyB ? this.props.confirmSwap : this.props.initiateSwap}>Next</button>
+      </div>
+
+      {/* <Grid container spacing={0}>
         <WalletPanel />
         <Grid container className='main'>
           <CurrencyInputs />
@@ -65,9 +75,8 @@ class SwapInitiation extends Component {
               {error}
             </Typography></Grid>
           )}
-          <Button disabled={!this.nextEnabled()} variant='contained' color='primary' onClick={this.props.isPartyB ? this.props.confirmSwap : this.props.initiateSwap}>Next</Button>
         </Grid>
-      </Grid>
+      </Grid> */}
     </Paper>
   }
 }
