@@ -8,6 +8,7 @@ import Button from '../../components/Button/Button'
 import ExpirationDetails from '../../components/ExpirationDetails/ExpirationDetails'
 import { generateSwapState } from '../../utils/app-links'
 
+import HandshakeIcon from '../../icons/handshake.png'
 import './SwapInitiation.css'
 
 class SwapInitiation extends Component {
@@ -57,10 +58,13 @@ class SwapInitiation extends Component {
       <CurrencyInputs />
       <WalletPanel />
       <div class='SwapInitiation_bottom'>
-        { this.props.isPartyB || <h5 class='SwapInitiation_counterPartyLabel'>Counter party wallets</h5> }
+        { this.props.isPartyB
+          ? <span class='SwapInitiation_handshake'><img src={HandshakeIcon} /></span>
+          : <h5 class='SwapInitiation_counterPartyLabel'>Counter party wallets</h5> }
         { this.props.isPartyB || <CounterPartyWallets /> }
         <ExpirationDetails expiration={this.props.expiration} isPartyB={this.props.isPartyB} />
-        <Button primary disabled={!this.nextEnabled()} className='SwapInitiation_next' onClick={this.props.isPartyB ? this.props.confirmSwap : this.props.initiateSwap}>Next</Button>
+        {!this.props.isPartyB && <Button primary disabled={!this.nextEnabled()} className='SwapInitiation_next' onClick={this.props.initiateSwap}>Next</Button>}
+        {this.props.isPartyB && <Button primary disabled={!this.nextEnabled()} className='SwapInitiation_next' onClick={this.props.confirmSwap}>Confirm Terms</Button>}
         <div class='SwapInitiation_errors'>
           {this.getErrors().map(error => <p>{error}</p>)}
         </div>
