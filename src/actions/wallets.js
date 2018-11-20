@@ -15,10 +15,15 @@ function waitForWallet (party, currency, wallet) {
       wallets,
       isPartyB
     } = getState().swap
-    dispatch(chooseWallet(party, wallet))
+
     const currency = assets[party].currency
     const client = getClient(currency)
 
+    if (currency === 'eth') {
+      window.ethereum.enable()
+    }
+
+    dispatch(chooseWallet(party, wallet))
     let unusedAddress
     let usedAddresses = []
     let addressesIndex = 0

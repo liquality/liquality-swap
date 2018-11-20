@@ -39,6 +39,7 @@ class WalletPanel extends Component {
         anchorEl={walletA.anchorEl}
         addresses={walletA.addresses}
         walletConnected={walletA.connected}
+        handleClose={(e) => this.props.onToggleWalletConnect('a', e.currentTarget)}
       />
 
       <WalletConnectPopup
@@ -52,6 +53,7 @@ class WalletPanel extends Component {
         anchorEl={walletB.anchorEl}
         addresses={walletB.addresses}
         walletConnected={walletB.connected}
+        handleClose={(e) => this.props.onToggleWalletConnect('b', e.currentTarget)}
       />
     </div>
   }

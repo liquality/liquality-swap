@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Button from '@material-ui/core/Button'
+import Button from '../../components/Button/Button'
 import Typography from '@material-ui/core/Typography'
 import _ from 'lodash'
 
@@ -12,14 +12,13 @@ import './WalletConnected.css'
 
 const WalletConnected = (props) => (
   <div className='WalletConnected'>
-    <Button className='WalletCurrency' size='small' disabled>
-      <img src={currencies[props.currency].icon} />
-      Connect your {props.currency.toUpperCase()} wallet
-    </Button>
-    <div><img src={wallets[props.wallet].icon} /></div>
-    <Typography variant='title'>{_.capitalize(props.wallet)} Connected</Typography>
-    <Typography>{shortenAddress(props.addresses[0])}</Typography>
-    <Button onClick={props.disconnectWallet}>{props.disconnectText}</Button>
+    <h2>{wallets[props.wallet].name} Connected</h2>
+    <div className="WalletConnected_wallet">
+      <img src={wallets[props.wallet].icon} className='WalletPanel_walletImg' />
+      <h5>{wallets[props.wallet].name}</h5>
+      <Typography>{shortenAddress(props.addresses[0])}</Typography>
+    </div>
+    <Button primary onClick={props.disconnectWallet}>{props.disconnectText}</Button>
   </div>
 )
 

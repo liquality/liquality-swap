@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Button from '@material-ui/core/Button'
+
+import Button from '../../components/Button/Button'
 import Typography from '@material-ui/core/Typography'
 
 import currencies from '../../utils/currencies'
@@ -12,20 +13,16 @@ const WalletChoose = (props) => (
   <div className='WalletChoose'>
     <Typography variant='display1'>{props.title}</Typography>
     <Typography>{props.subTitle}</Typography>
-    <Button className='WalletCurrency' size='small' disabled>
-      <img src={currencies[props.currency].icon} />
-      Connect your {props.currency.toUpperCase()} wallet
-    </Button>
+    <h2>Pay with {props.currency.toUpperCase()}</h2>
     {props.wallets.map((wallet) => (
       <div>
-        <Button
-          onClick={() => props.chooseWallet(wallet)}
-          fullWidth
-          className='WalletButton'
-        >
-          <img src={wallets[wallet].icon} />
-          {wallet}
-        </Button>
+        <div class="WalletChoose_wallet">
+          <p><a href="#">Testnet only</a></p>
+          <img src={wallets[wallet].icon} className='WalletPanel_walletImg' />
+          <h5>{wallets[wallet].name}</h5>
+          <p><a href="#">Trouble connecting?</a></p>
+        </div>
+        <Button primary onClick={() => props.chooseWallet(wallet)}>Connect</Button>
       </div>
     ))}
   </div>

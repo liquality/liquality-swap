@@ -2,6 +2,11 @@
   text-align: center;
   padding: 15px;
 
+  h2 {
+    color: #333;
+    text-align: left;
+  }
+
   .WalletCurrency {
     button {
       color: #333;
@@ -9,6 +14,18 @@
 
     img {
       margin-right: 5px;
+    }
+  }
+
+  &_wallet {
+    border-radius: 10px;
+    background-color: #f7f8f9;
+    padding: 40px 10px;
+    margin: 10px 5px 20px;
+
+    h5 {
+      padding-top: 7px;
+      color: #333;
     }
   }
 }
