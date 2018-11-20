@@ -1,0 +1,33 @@
+@import '../../scss/variables.scss';
+
+.SwapProgressStepper {
+  padding-bottom: 0 !important;
+
+  .SwapProgressStepper_alternativeLabel {
+    color: $color-text-2;
+
+    .SwapProgressStepper_label_active {
+      color: $color-text-2;
+      font-weight: bold;
+    }
+
+    .SwapProgressStepper_icon {
+      width: 30px;
+      height: 30px;
+      border: 1px solid $primary;
+      color: #ffffff;
+      border-radius: 50%;
+
+      .SwapProgressStepper_icon_text {
+        fill: $primary;
+      }
+    }
+
+    .SwapProgressStepper_icon_active {
+      color: $primary;
+      .SwapProgressStepper_icon_text {
+        fill: #ffffff;
+      }
+    }
+  }
+}
