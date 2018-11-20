@@ -13,8 +13,7 @@ import SwapProgressStepper from '../../components/SwapProgressStepper/SwapProgre
 import { generateLink } from '../../utils/app-links'
 import { transactionPaths as blockExplorerTxUrl } from '../../utils/block-explorers'
 
-import LiqualityLogo from '../../logo.png'
-import LiqualityText from '../../logo-text.png'
+import LiqualityLogo from '../../logo-text.png'
 import './LiqualitySwap.css'
 
 class LiqualitySwap extends Component {
@@ -49,14 +48,14 @@ class LiqualitySwap extends Component {
 
   render () {
     return <div className='LiqualitySwap'>
-      <AppBar position='static'>
-        <Toolbar>
-          <img className='LiqualitySwap_logo' src={LiqualityLogo} /><img className='LiqualitySwap_logoText' src={LiqualityText} />
-        </Toolbar>
-      </AppBar>
-      <Route path='/'>
-        <div className='LiqualitySwap_main'>
-          <SwapProgressStepper state={this.props.swap.step} />
+      <div class='LiqualitySwap_bar' />
+      <div class='LiqualitySwap_header'>
+        <img class='LiqualitySwap_logo' src={LiqualityLogo} />
+        <SwapProgressStepper state={this.props.swap.step} />
+      </div>
+      <div className='LiqualitySwap_main'>
+        <div class='LiqualitySwap_wave' />
+        <Route path='/'>
           <div className='LiqualitySwap_wrapper'>
             <Route exact path='/' component={SwapInitiation} />
             <Route path='/backupLink' render={this.getBackupLinkCard} />
@@ -66,8 +65,8 @@ class LiqualitySwap extends Component {
             <Route path='/completed' component={SwapCompleted} />
             <Route path='/refund' component={SwapRefund} />
           </div>
-        </div>
-      </Route>
+        </Route>
+      </div>
     </div>
   }
 }
