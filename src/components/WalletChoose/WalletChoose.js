@@ -22,7 +22,7 @@ const WalletChoose = (props) => (
           <h5>{wallets[wallet].name}</h5>
           <p><a href="#">Trouble connecting?</a></p>
         </div>
-        <Button primary onClick={() => props.chooseWallet(wallet)}>Connect</Button>
+        <Button wide primary onClick={() => props.chooseWallet(wallet)}>Connect</Button>
       </div>
     ))}
   </div>

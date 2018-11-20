@@ -24,7 +24,7 @@ const WalletConnecting = (props) => (
         </div>
       </div>
     )}
-    <Button primary onClick={props.cancelWallet}>{props.cancelText}</Button>
+    <Button wide primary onClick={props.cancelWallet}>{props.cancelText}</Button>
   </div>
 )
 

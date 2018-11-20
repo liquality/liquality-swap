@@ -18,7 +18,7 @@ const WalletConnected = (props) => (
       <h5>{wallets[props.wallet].name}</h5>
       <Typography>{shortenAddress(props.addresses[0])}</Typography>
     </div>
-    <Button primary onClick={props.disconnectWallet}>{props.disconnectText}</Button>
+    <Button wide primary onClick={props.disconnectWallet}>{props.disconnectText}</Button>
   </div>
 )
 

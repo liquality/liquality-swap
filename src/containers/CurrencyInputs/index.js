@@ -3,10 +3,10 @@ import { actions as swapActions } from '../../actions/swap'
 import { actions as assetActions } from '../../actions/assets'
 import CurrencyInputs from './CurrencyInputs'
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
     assets: state.swap.assets,
-    isPartyB: state.swap.isPartyB
+    disabled: ownProps.disabled
   }
 }
 

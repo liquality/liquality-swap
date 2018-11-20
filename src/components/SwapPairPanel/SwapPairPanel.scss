@@ -3,13 +3,14 @@
 .SwapPairPanel {
   $asset-horizontal-padding: 294px;
   $panel-horizontal-padding: 60px;
+  position: relative;
 
   &_assetsBG {
     display: block;
     margin: 0 auto;
   }
 
-  &_swapIcon {
+  &_icon {
     position: absolute;
     display: block;
     margin: 0 auto;
@@ -42,6 +43,7 @@
     top: 45px;
     width: 100%;
     z-index: $layer-bottom;
+    text-transform: uppercase;
 
     > h1 {
       border: 7px solid #fff;

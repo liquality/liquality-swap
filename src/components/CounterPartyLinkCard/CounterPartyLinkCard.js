@@ -26,8 +26,8 @@ class CounterPartyLinkCard extends Component {
     return <BrandCard className='CounterPartyLinkCard' title='Swap Initiated'>
       <img class='CounterPartyLinkCard_icon' src={CompletedIcon} />
       <p class='CounterPartyLinkCard_description'>To continue, share this link with your counterparty</p>
-      <p><Button secondary onClick={this.handleCopyClick} icon={CopyIcon}>Counterparty Link</Button></p>
-      <p><Button primary onClick={this.props.onNextClick}>Link Sent</Button></p>
+      <p><Button wide secondary onClick={this.handleCopyClick} icon={CopyIcon}>Counterparty Link</Button></p>
+      <p><Button wide primary onClick={this.props.onNextClick}>Link Sent</Button></p>
     </BrandCard>
   }
 }

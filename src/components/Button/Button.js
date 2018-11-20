@@ -4,7 +4,7 @@ import './Button.css'
 
 class Button extends Component {
   render () {
-    const classes = ['Button', 'btn', 'Button_wide']
+    const classes = ['Button', 'btn']
 
     if (this.props.className) {
       classes.push(this.props.className)
@@ -14,6 +14,10 @@ class Button extends Component {
       classes.push('btn-primary')
     } else if (this.props.secondary) {
       classes.push('btn-secondary')
+    }
+
+    if (this.props.wide) {
+      classes.push('Button_wide')
     }
 
     return <button className={classes.join(' ')} disabled={this.props.disabled} onClick={e => this.props.onClick(e)}>
@@ -27,6 +31,7 @@ Button.propTypes = {
   className: PropTypes.string,
   primary: PropTypes.bool,
   secondary: PropTypes.bool,
+  wide: PropTypes.bool,
   disabled: PropTypes.bool,
   icon: PropTypes.any,
   onClick: PropTypes.func

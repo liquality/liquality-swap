@@ -1,21 +1,65 @@
+@import '../../scss/variables.scss';
+
 .SwapCompleted {
-  text-align: center;
-  p {
-    margin: 0px 2rem;
-    padding: 0 10px;
+  position: relative;
+  $panel-spacing: 80px;
+
+  .SwapPairPanel {
+    z-index: $layer-top;
   }
-  h3 {
-    margin: 2rem 2rem 0;
-    padding: 5px;
+
+  &_top {
+    position: absolute;
+    width: 100%;
+    top: $panel-spacing;
+    padding: $panel-spacing 0 28px 0;
+    box-shadow: 0px 2px 14px $color-shadow;
+    border-radius: 0 0 $swap-panel-radius $swap-panel-radius;
+    background: $color-bg-primary;
+    z-index: $layer-middle;
   }
-  .padding-bottom {
-    margin-bottom: 15px;
-  }
-  .currency-box {
-    div {
-      border: 1px solid #a2bfe1;
-      margin: 10px 20px;
-      padding: 20px;
+
+  &_handshake {
+    width: 70px;
+    height: 70px;
+    display: inline-block;
+    position: absolute;
+    background: $color-bg-primary;
+    bottom: -35px;
+    right: -35px;
+    left: -35px;
+    border-radius: 50%;
+    margin: auto;
+    z-index: $layer-top;
+
+    img {
+      width: 38px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
     }
+  }
+
+  &_label {
+    width: 100%;
+    position: absolute;
+    top: $panel-spacing;
+    text-align: center;
+    color: $primary;
+  }
+
+  &_bottom {
+    position: relative;
+    text-align: center;
+    top: -$swap-panel-radius;
+    margin-top: 80px;
+    padding: 70px 30px 40px 30px;
+    background: $color-bg-secondary;
+    box-shadow: 0px -2px 14px $color-shadow;
+    border-radius: 0 0 $swap-panel-radius $swap-panel-radius;
+    z-index: $layer-bottom;
   }
 }

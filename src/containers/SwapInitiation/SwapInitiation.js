@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import WalletPanel from '../WalletPanel'
-import SwapPairPanel from '../SwapPairPanel'
+import SwapPairPanel from '../../components/SwapPairPanel/SwapPairPanel'
 import CurrencyInputs from '../CurrencyInputs'
 import CounterPartyWallets from '../CounterPartyWallets'
 import Button from '../../components/Button/Button'
@@ -9,6 +9,7 @@ import ExpirationDetails from '../../components/ExpirationDetails/ExpirationDeta
 import { generateSwapState } from '../../utils/app-links'
 
 import HandshakeIcon from '../../icons/handshake.png'
+import SwapIcon from '../../icons/switch.svg'
 import './SwapInitiation.css'
 
 class SwapInitiation extends Component {
@@ -54,8 +55,14 @@ class SwapInitiation extends Component {
 
   render () {
     return <div className='SwapInitiation'>
-      <SwapPairPanel />
-      <CurrencyInputs />
+      <SwapPairPanel
+        haveCurrency={this.props.assets.a.currency}
+        wantCurrency={this.props.assets.b.currency}
+        icon={SwapIcon}
+        onIconClick={() => this.props.switchSides()} />
+      <div class='SwapInitiation_top'>
+        <CurrencyInputs />
+      </div>
       <WalletPanel />
       <div class='SwapInitiation_bottom'>
         { this.props.isPartyB
@@ -63,8 +70,8 @@ class SwapInitiation extends Component {
           : <h5 class='SwapInitiation_counterPartyLabel'>Counter party wallets</h5> }
         { this.props.isPartyB || <CounterPartyWallets /> }
         <ExpirationDetails expiration={this.props.expiration} isPartyB={this.props.isPartyB} />
-        {!this.props.isPartyB && <Button primary disabled={!this.nextEnabled()} onClick={this.props.initiateSwap}>Next</Button>}
-        {this.props.isPartyB && <Button primary disabled={!this.nextEnabled()} onClick={this.props.confirmSwap}>Confirm Terms</Button>}
+        {!this.props.isPartyB && <Button wide primary disabled={!this.nextEnabled()} onClick={this.props.initiateSwap}>Next</Button>}
+        {this.props.isPartyB && <Button wide primary disabled={!this.nextEnabled()} onClick={this.props.confirmSwap}>Confirm Terms</Button>}
         <div class='SwapInitiation_errors'>
           {this.getErrors().map(error => <p>{error}</p>)}
         </div>
