@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@liquality/chainabstractionlayer": "^0.1.2",
+    "@liquality/chainabstractionlayer": "^0.1.4",
     "@material-ui/core": "^3.5.1",
     "bootstrap": "^4.1.3",
     "connected-react-router": "^4.4.1",
