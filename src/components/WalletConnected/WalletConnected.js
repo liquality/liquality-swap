@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Button from '../../components/Button/Button'
-import Typography from '@material-ui/core/Typography'
 import { shortenAddress } from '../../utils/address'
 import wallets from '../../utils/wallets'
 
@@ -13,7 +12,7 @@ const WalletConnected = (props) => (
     <div className='WalletConnected_wallet'>
       <img src={wallets[props.wallet].icon} className='WalletPanel_walletImg' />
       <h5>{wallets[props.wallet].name}</h5>
-      <Typography>{shortenAddress(props.addresses[0])}</Typography>
+      <p>{shortenAddress(props.addresses[0])}</p>
     </div>
     <Button wide primary onClick={props.disconnectWallet}>{props.disconnectText}</Button>
   </div>

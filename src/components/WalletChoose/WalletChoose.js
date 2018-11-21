@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Button from '../../components/Button/Button'
-import Typography from '@material-ui/core/Typography'
 
 import wallets from '../../utils/wallets'
 
@@ -10,8 +9,8 @@ import './WalletChoose.css'
 
 const WalletChoose = (props) => (
   <div className='WalletChoose'>
-    <Typography variant='display1'>{props.title}</Typography>
-    <Typography>{props.subTitle}</Typography>
+    <h1>{props.title}</h1>
+    <p>{props.subTitle}</p>
     <h2>Pay with {props.currency.toUpperCase()}</h2>
     {props.wallets.map((wallet) => (
       <div>
