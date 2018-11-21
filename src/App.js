@@ -5,12 +5,10 @@ import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { createBrowserHistory } from 'history'
 import { ConnectedRouter, connectRouter, routerMiddleware } from 'connected-react-router'
-import { MuiThemeProvider } from '@material-ui/core/styles'
 
 import { actions as swapActions } from './actions/swap'
 import LiqualitySwap from './containers/LiqualitySwap'
 import reducers from './reducers'
-import theme from './theme'
 import { generateSwapState } from './utils/app-links'
 import './App.css'
 
@@ -41,9 +39,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <MuiThemeProvider theme={theme}>
-            <LiqualitySwap />
-          </MuiThemeProvider>
+          <LiqualitySwap />
         </ConnectedRouter>
       </Provider>
     )

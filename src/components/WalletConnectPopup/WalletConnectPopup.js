@@ -1,8 +1,5 @@
 import React, {Component} from 'react'
-import Popper from '@material-ui/core/Popper'
-import Modal from '@material-ui/core/Modal';
-import Fade from '@material-ui/core/Fade'
-import Paper from '@material-ui/core/Paper'
+import Modal from '@material-ui/core/Modal'
 import WalletChoose from '../WalletChoose/WalletChoose'
 import WalletConnecting from '../WalletConnecting/WalletConnecting'
 import WalletConnected from '../WalletConnected/WalletConnected'

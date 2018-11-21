@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
 import AddressInput from '../../components/AddressInput/AddressInput'
 
 import './CounterPartyWallets.css'
