@@ -1,6 +1,6 @@
 import metamask from '../icons/metamask.svg'
 import ledger from '../icons/ledger.svg'
-import ledger_purple from '../icons/ledger_purple.svg'
+import ledgerPurple from '../icons/ledger_purple.svg'
 
 const wallets = {
   'metamask': {
@@ -12,7 +12,7 @@ const wallets = {
     name: 'Ledger'
   },
   'ledger_purple': {
-    icon: ledger_purple
+    icon: ledgerPurple
   }
 }
 

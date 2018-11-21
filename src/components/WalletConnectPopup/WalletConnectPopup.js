@@ -64,8 +64,8 @@ class WalletConnectPopup extends Component {
     return (
       <div>
         <Modal id={props.id} open={props.open} onClose={props.handleClose}>
-          <div className="WalletConnectModal">
-            <div className="WalletConnectModal_body">
+          <div className='WalletConnectModal'>
+            <div className='WalletConnectModal_body'>
               { walletConnectBody }
             </div>
           </div>
