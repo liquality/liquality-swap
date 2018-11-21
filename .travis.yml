@@ -21,8 +21,16 @@ before_install:
 script:
   - CI=false npm run build
 deploy:
-  provider: script
-  skip_cleanup: true
-  script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/build/ $LIQUALITY_USER@$LIQUALITY_HOST:/var/www/html/it/leep/swap/
-  on:
-    branch: master
+  - provider: pages
+    skip-cleanup: true
+    github-token: "$GITHUB_TOKEN"
+    keep-history: false
+    target-branch: gh-pages
+    local-dir: "./build"
+    on:
+      branch: master
+  - provider: script
+    skip_cleanup: true
+    script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/build/ $LIQUALITY_USER@$LIQUALITY_HOST:/var/www/html/it/leep/swap/
+    on:
+      branch: master
