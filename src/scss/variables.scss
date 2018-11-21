@@ -12,7 +12,7 @@ $color-text-2: #747E8D;
 $color-shadow: rgba(69, 73, 91, 0.04);
 
 $primary: $color-primary-1;
-$secondary: $color-primary-2;
+$secondary: #ffffff;
 $danger: $color-error;
 $body-color: $color-text-1;
 
@@ -38,8 +38,9 @@ $input-border-radius: 25px;
 
 // buttons
 $btn-padding-y:               12px;
-$btn-padding-x:               12px;
+$btn-padding-x:               20px;
 $btn-font-size:               $font-size-lg;
+$btn-font-weight:             600;
 $btn-box-shadow:              none;
 $btn-disabled-opacity:        .65;
 $btn-link-disabled-color:     $color-bg-primary;
@@ -48,7 +49,8 @@ $btn-border-radius:           22px;
 
 // layers
 $layer-bottom: 1;
-$layer-top: 2;
+$layer-middle: 2;
+$layer-top: 3;
 
 @import 'node_modules/bootstrap/scss/_functions';
 @import 'node_modules/bootstrap/scss/_variables';

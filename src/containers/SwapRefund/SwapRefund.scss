@@ -1,4 +1,9 @@
+@import '../../scss/variables.scss';
+
 .SwapRefund {
-  padding: 20px;
   text-align: center;
+
+  &_terms {
+    font-size: $h1-font-size;
+  }
 }

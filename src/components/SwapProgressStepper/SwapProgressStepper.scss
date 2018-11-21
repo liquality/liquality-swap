@@ -1,0 +1,61 @@
+@import '../../scss/variables.scss';
+
+.SwapProgressStepper {
+  padding-bottom: 0 !important;
+
+  .SwapProgressStepper_alternativeLabel {
+    color: $color-text-2;
+
+    .SwapProgressStepper_label_active {
+      color: $color-text-2;
+      font-weight: bold;
+    }
+
+    .SwapProgressStepper_label_completed {
+      color: $color-text-2;
+    }
+
+    .SwapProgressStepper_icon {
+      width: 30px;
+      height: 30px;
+      border: 1px solid $primary;
+      color: #ffffff;
+      border-radius: 50%;
+
+      .SwapProgressStepper_icon_text {
+        fill: $primary;
+      }
+    }
+
+    .SwapProgressStepper_icon_active {
+      color: $primary;
+      .SwapProgressStepper_icon_text {
+        fill: #ffffff;
+      }
+    }
+  }
+
+  .SwapProgressStepper_connector {
+    left: calc(-50% + 15px);
+    right: calc(50% + 15px);
+
+    &_line {
+      border: none;
+      padding-top: 4px;
+      height: 1px;
+      background-image: linear-gradient(to right, #D8D8D8 33%, rgba(255,255,255,0) 0%);
+      background-position: bottom;
+      background-size: 25px 1px;
+      background-repeat: repeat-x;
+    }
+
+    &_completed, &_active {
+      .SwapProgressStepper_connector_line {
+        height: 3px;
+        border: none;
+        background: $color-primary-2;
+      }
+    }
+
+  }
+}

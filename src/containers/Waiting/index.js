@@ -1,17 +1,15 @@
 import { connect } from 'react-redux'
-import { actions as swapActions } from '../../actions/swap'
-import SwapPairPanel from './SwapPairPanel'
+import Waiting from './Waiting'
 
 const mapStateToProps = state => {
   return {
     assets: state.swap.assets,
+    expiration: state.swap.expiration,
     isPartyB: state.swap.isPartyB
   }
 }
 
 export default connect(
   mapStateToProps,
-  {
-    onSwitchSides: swapActions.switchSides
-  }
-)(SwapPairPanel)
+  {}
+)(Waiting)

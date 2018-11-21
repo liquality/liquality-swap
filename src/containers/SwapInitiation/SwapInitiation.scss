@@ -1,14 +1,20 @@
 @import '../../scss/variables.scss';
 
 .SwapInitiation {
-  &_wrapper {
-    position: relative;
-    margin-top: 30px;
-    padding: 0!important;
-    background: transparent!important;
-    box-shadow: none!important;
-  }
+  position: relative;
   
+  &_top {
+    $panel-spacing: 80px;
+
+    position: absolute;
+    width: 100%;
+    top: $panel-spacing;
+    padding: $panel-spacing 0 28px 0;
+    box-shadow: 0px 2px 14px $color-shadow;
+    border-radius: 0 0 $swap-panel-radius $swap-panel-radius;
+    background: $color-bg-primary;
+  }
+
   &_bottom {
     position: relative;
     text-align: center;
@@ -30,8 +36,38 @@
     text-align: center;
     border-radius: $swap-panel-radius;
   }
-}
 
-.CounterPartyWallets {
-  margin-bottom: 30px;
+  &_handshake {
+    width: 70px;
+    height: 70px;
+    display: inline-block;
+    position: absolute;
+    background: $color-bg-primary;
+    top: -35px;
+    right: -35px;
+    left: -35px;
+    border-radius: 50%;
+    margin: auto;
+
+    img {
+      width: 38px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
+  }
+
+  &_errors {
+    p {
+      color: $danger;
+      margin: 0;
+    }
+  }
+
+  .CounterPartyWallets, .ExpirationDetails {
+    margin-bottom: 30px;
+  }
 }

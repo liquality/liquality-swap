@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
-import { Grid, Button, Paper, Typography } from '@material-ui/core'
 
 import WalletPanel from '../WalletPanel'
-import SwapPairPanel from '../SwapPairPanel'
+import SwapPairPanel from '../../components/SwapPairPanel/SwapPairPanel'
 import CurrencyInputs from '../CurrencyInputs'
 import CounterPartyWallets from '../CounterPartyWallets'
+import Button from '../../components/Button/Button'
 import ExpirationDetails from '../../components/ExpirationDetails/ExpirationDetails'
 import { generateSwapState } from '../../utils/app-links'
 
+import HandshakeIcon from '../../icons/handshake.png'
+import SwapIcon from '../../icons/switch.svg'
 import './SwapInitiation.css'
 
 class SwapInitiation extends Component {
@@ -52,32 +54,29 @@ class SwapInitiation extends Component {
   }
 
   render () {
-    return <Paper className='SwapInitiation_wrapper'>
-      <SwapPairPanel />
-      <CurrencyInputs />
+    return <div className='SwapInitiation'>
+      <SwapPairPanel
+        haveCurrency={this.props.assets.a.currency}
+        wantCurrency={this.props.assets.b.currency}
+        icon={SwapIcon}
+        onIconClick={() => this.props.switchSides()} />
+      <div class='SwapInitiation_top'>
+        <CurrencyInputs />
+      </div>
       <WalletPanel />
       <div class='SwapInitiation_bottom'>
-        <h5 class='SwapInitiation_counterPartyLabel'>Counter party wallets</h5>
+        { this.props.isPartyB
+          ? <span class='SwapInitiation_handshake'><img src={HandshakeIcon} /></span>
+          : <h5 class='SwapInitiation_counterPartyLabel'>Counter party wallets</h5> }
         { this.props.isPartyB || <CounterPartyWallets /> }
-        <button disabled={!this.nextEnabled()} class='btn btn-wide btn-primary' onClick={this.props.isPartyB ? this.props.confirmSwap : this.props.initiateSwap}>Next</button>
+        <ExpirationDetails expiration={this.props.expiration} isPartyB={this.props.isPartyB} />
+        {!this.props.isPartyB && <Button wide primary disabled={!this.nextEnabled()} onClick={this.props.initiateSwap}>Next</Button>}
+        {this.props.isPartyB && <Button wide primary disabled={!this.nextEnabled()} onClick={this.props.confirmSwap}>Confirm Terms</Button>}
+        <div class='SwapInitiation_errors'>
+          {this.getErrors().map(error => <p>{error}</p>)}
+        </div>
       </div>
-
-      {/* <Grid container spacing={0}>
-        <WalletPanel />
-        <Grid container className='main'>
-          <CurrencyInputs />
-          <ExpirationDetails expiration={this.props.expiration} isPartyB={this.props.isPartyB} />
-          { this.props.isPartyB || <CounterPartyWallets /> }
-        </Grid>
-        <Grid container xs={12} justify='center'>
-          {this.getErrors().map(error =>
-            <Grid item xs={12}><Typography color='secondary' align='center' gutterBottom>
-              {error}
-            </Typography></Grid>
-          )}
-        </Grid>
-      </Grid> */}
-    </Paper>
+    </div>
   }
 }
 

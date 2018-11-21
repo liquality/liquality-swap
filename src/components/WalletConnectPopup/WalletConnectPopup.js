@@ -1,11 +1,9 @@
 import React, {Component} from 'react'
-import Popper from '@material-ui/core/Popper'
-import Fade from '@material-ui/core/Fade'
-import Paper from '@material-ui/core/Paper'
+import Modal from '@material-ui/core/Modal'
 import WalletChoose from '../WalletChoose/WalletChoose'
 import WalletConnecting from '../WalletConnecting/WalletConnecting'
 import WalletConnected from '../WalletConnected/WalletConnected'
-import wallets from '../../Wallets'
+import wallets from './Wallets'
 
 import './WalletConnectPopup.css'
 
@@ -65,15 +63,13 @@ class WalletConnectPopup extends Component {
 
     return (
       <div>
-        <Popper id={props.id} open={props.open} anchorEl={props.anchorEl} transition>
-          {({ TransitionProps }) => (
-            <Fade {...TransitionProps} timeout={350}>
-              <Paper style={{width: 350}}>
-                { walletConnectBody }
-              </Paper>
-            </Fade>
-          )}
-        </Popper>
+        <Modal id={props.id} open={props.open} onClose={props.handleClose}>
+          <div className='WalletConnectModal'>
+            <div className='WalletConnectModal_body'>
+              { walletConnectBody }
+            </div>
+          </div>
+        </Modal>
       </div>
     )
   }

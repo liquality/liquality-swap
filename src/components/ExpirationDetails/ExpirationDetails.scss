@@ -1,3 +1,10 @@
-.expiration {
-  margin-top: 2rem;
+@import '../../scss/variables.scss';
+
+.ExpirationDetails {
+  max-width: 600px;
+  padding: 14px 30px;
+  margin: 0 auto;
+  background: $color-bg-primary;
+  box-shadow: 0px 2px 14px $color-shadow;
+  border-radius: $swap-panel-radius;
 }

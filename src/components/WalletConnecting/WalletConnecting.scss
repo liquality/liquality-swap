@@ -2,6 +2,15 @@
   text-align: center;
   padding: 15px;
 
+  h2 {
+    color: #333;
+    text-align: left;
+  }
+
+  p {
+    text-align: left;
+  }
+
   .WalletCurrency {
     button {
       color: #333;
@@ -9,6 +18,46 @@
 
     img {
       margin-right: 5px;
+    }
+  }
+
+  &_wallet {
+    border-radius: 10px;
+    background-color: #f7f8f9;
+    padding: 40px 10px;
+    margin: 10px 5px 20px;
+
+    h5 {
+      padding-top: 7px;
+      color: #333;
+    }
+  }
+
+  &_ledger {
+    background-color: #f3edfe;
+    border-radius: 40px;
+    margin: 5px 20px 15px;
+    
+    img {
+      margin: 10px;
+    }
+
+    &Pin {
+      background-color: #f7f8f9;
+      border: 1px solid #9157f1;
+      border-radius: 40px;
+      display: inline-block;
+      float: right;
+      width: 85%;
+      padding: 7px;
+
+      p {
+        text-transform: uppercase;
+        color: #9157f1;
+        margin-bottom: 0px;
+        font-family: sans-serif;
+        text-align: center;
+      }
     }
   }
 }

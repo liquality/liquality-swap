@@ -17,6 +17,7 @@ export default connect(
   mapStateToProps,
   {
     initiateSwap: actions.initiateSwap,
-    confirmSwap: actions.confirmSwap
+    confirmSwap: actions.confirmSwap,
+    switchSides: actions.switchSides
   }
 )(SwapInitiation)

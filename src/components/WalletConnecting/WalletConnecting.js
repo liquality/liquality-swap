@@ -1,23 +1,28 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Button from '@material-ui/core/Button'
-import Typography from '@material-ui/core/Typography'
+import Button from '../../components/Button/Button'
 
-import currencies from '../../utils/currencies'
 import wallets from '../../utils/wallets'
 
 import './WalletConnecting.css'
 
 const WalletConnecting = (props) => (
   <div className='WalletConnecting'>
-    <Button className='WalletCurrency' size='small' disabled>
-      <img src={currencies[props.currency].icon} />
-      Connect your {props.currency.toUpperCase()} wallet
-    </Button>
-    <div><img src={wallets[props.wallet].icon} /></div>
-    <Typography variant='title'>{props.title}</Typography>
-    <Typography>{props.subTitle}</Typography>
-    <Button onClick={props.cancelWallet}>{props.cancelText}</Button>
+    <h2>{props.currency === 'eth' ? 'Login to MetaMask' : 'To confirm'}</h2>
+    {props.currency === 'btc' && <p>Navigate to your Bitcoin account</p>}
+    <div className='WalletConnecting_wallet'>
+      <img src={wallets[props.wallet].icon} className='WalletPanel_walletImg' />
+      <h5>{wallets[props.wallet].name}</h5>
+    </div>
+    {props.wallet === 'ledger' && (
+      <div className='WalletConnecting_ledger'>
+        <img src={wallets[props.wallet + '_purple'].icon} />
+        <div className='WalletConnecting_ledgerPin'>
+          <p>Insert Ledger Pin</p>
+        </div>
+      </div>
+    )}
+    <Button wide primary onClick={props.cancelWallet}>{props.cancelText}</Button>
   </div>
 )
 

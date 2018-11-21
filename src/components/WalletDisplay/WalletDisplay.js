@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Button from '../Button/Button'
 
 import currencies from '../../utils/currencies'
 import wallets from '../../utils/wallets'
@@ -12,8 +13,8 @@ const WalletBalance = (props) => (
     <img class='WalletDisplay_icon' src={wallets[props.type] ? wallets[props.type].icon : WalletIcon} />
     <p class='WalletDisplay_address'>{ props.address && props.address }</p>
     { props.connected
-      ? <p class='WalletDisplay_message'>Change wallet</p>
-      : <p class='WalletDisplay_message error'>Connect wallet</p>
+      ? <Button small secondary class='WalletDisplay_message' onClick={e => props.onButtonClick(e)}>Change wallet</Button>
+      : <Button small primary class='WalletDisplay_message error' onClick={e => props.onButtonClick(e)}>Connect wallet</Button>
     }
     { props.balance &&
       <div>
@@ -29,7 +30,8 @@ WalletBalance.propTypes = PropTypes.shape({
   currency: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   connected: PropTypes.bool.isRequired,
-  address: PropTypes.string
+  address: PropTypes.string,
+  onButtonClick: PropTypes.func.isRequired
 }).isRequired
 
 export default WalletBalance

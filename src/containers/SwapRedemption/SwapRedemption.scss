@@ -1,12 +1,13 @@
+@import '../../scss/variables.scss';
+
 .SwapRedemption {
-  padding: 20px;
   text-align: center;
-  p {
-    margin: 2rem 2rem;
-    padding: 20px;
+
+  &_terms {
+    font-size: $h1-font-size;
   }
-  h3 {
-    margin: 2rem 2rem;
-    padding: 20px;
+
+  .ExpirationDetails {
+    margin-bottom: 30px;
   }
 }
