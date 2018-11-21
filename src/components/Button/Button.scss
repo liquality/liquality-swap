@@ -8,6 +8,12 @@
       width: 350px;
   }
 
+  &_small {
+    padding: 6px 10px;
+    font-size: $font-size-sm;
+    font-weight: 600;
+  }
+
   &_icon {
     position: absolute;
     width: 54px;

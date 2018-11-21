@@ -19,6 +19,9 @@ class Button extends Component {
     if (this.props.wide) {
       classes.push('Button_wide')
     }
+    if (this.props.small) {
+      classes.push('Button_small')
+    }
 
     return <button className={classes.join(' ')} disabled={this.props.disabled} onClick={e => this.props.onClick(e)}>
       {this.props.icon && <span class='Button_icon'><img src={this.props.icon} /></span>}
@@ -32,6 +35,7 @@ Button.propTypes = {
   primary: PropTypes.bool,
   secondary: PropTypes.bool,
   wide: PropTypes.bool,
+  small: PropTypes.bool,
   disabled: PropTypes.bool,
   icon: PropTypes.any,
   onClick: PropTypes.func
