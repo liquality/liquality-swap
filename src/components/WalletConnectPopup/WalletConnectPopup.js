@@ -3,7 +3,7 @@ import Modal from '@material-ui/core/Modal'
 import WalletChoose from '../WalletChoose/WalletChoose'
 import WalletConnecting from '../WalletConnecting/WalletConnecting'
 import WalletConnected from '../WalletConnected/WalletConnected'
-import wallets from '../../Wallets'
+import wallets from './Wallets'
 
 import './WalletConnectPopup.css'
 
