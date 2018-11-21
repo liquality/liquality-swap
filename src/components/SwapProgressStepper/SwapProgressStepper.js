@@ -12,7 +12,10 @@ class SwapProgressStepper extends Component {
     const connector = (
       <StepConnector
         classes={{
-          line: 'SwapProgressStepper_line'
+          active: 'SwapProgressStepper_connector_active',
+          completed: 'SwapProgressStepper_connector_completed',
+          line: 'SwapProgressStepper_connector_line',
+          root: 'SwapProgressStepper_connector'
         }}
       />)
     return <Stepper connector={connector} activeStep={activeStep} alternativeLabel className='SwapProgressStepper'>
@@ -32,7 +35,8 @@ class SwapProgressStepper extends Component {
           <StepLabel classes={{
             label: 'SwapProgressStepper_label',
             alternativeLabel: 'SwapProgressStepper_alternativeLabel',
-            active: 'SwapProgressStepper_label_active'
+            active: 'SwapProgressStepper_label_active',
+            completed: 'SwapProgressStepper_label_completed'
           }} StepIconProps={stepIconProps}>{step.label}</StepLabel>
         </Step>
       })}
