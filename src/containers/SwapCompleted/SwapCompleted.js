@@ -23,7 +23,7 @@ class SwapCompleted extends Component {
         <span class='SwapCompleted_handshake'><img src={HandshakeIcon} /></span>
       </div>
       <div class='SwapCompleted_bottom'>
-        <Button wide primary onClick={() => window.location.replace('/')}>Start another Swap</Button>
+        <Button wide primary onClick={() => window.location.replace('/swap/')}>Start another Swap</Button>
       </div>
     </div>
   }

@@ -25,7 +25,7 @@ class LiqualitySwap extends Component {
 
   getBackupLinkCard () {
     const link = generateLink(this.props.swap)
-    return <BackupLinkCard link={link} onNextClick={() => this.props.history.push(this.props.swap.isPartyB ? '/waiting' : '/counterPartyLink')} />
+    return <BackupLinkCard link={link} onNextClick={() => this.props.history.push(this.props.swap.isPartyB ? '/swap/waiting' : '/swap/counterPartyLink')} />
   }
 
   getCounterPartyLinkCard () {
@@ -33,7 +33,7 @@ class LiqualitySwap extends Component {
     const initiationHash = this.props.swap.transactions.a.fund.hash
     const txLink = `${blockExplorerTxUrl[currency]}/${initiationHash}`
     const link = generateLink(this.props.swap, true)
-    return <CounterPartyLinkCard link={link} transactionLink={txLink} onNextClick={() => this.props.history.push('/waiting')} />
+    return <CounterPartyLinkCard link={link} transactionLink={txLink} onNextClick={() => this.props.history.push('/swap/waiting')} />
   }
 
   getWaitingScreen () {
@@ -54,15 +54,15 @@ class LiqualitySwap extends Component {
       </div>
       <div className='LiqualitySwap_main'>
         <div class='LiqualitySwap_wave' />
-        <Route path='/'>
+        <Route path='/swap/'>
           <div className='LiqualitySwap_wrapper'>
-            <Route exact path='/' component={SwapInitiation} />
-            <Route path='/backupLink' render={this.getBackupLinkCard} />
-            <Route path='/counterPartyLink' render={this.getCounterPartyLinkCard} />
-            <Route path='/waiting' render={this.getWaitingScreen} />
-            <Route path='/redeem' component={SwapRedemption} />
-            <Route path='/completed' component={SwapCompleted} />
-            <Route path='/refund' component={SwapRefund} />
+            <Route exact path='/swap/' component={SwapInitiation} />
+            <Route path='/swap/backupLink' render={this.getBackupLinkCard} />
+            <Route path='/swap/counterPartyLink' render={this.getCounterPartyLinkCard} />
+            <Route path='/swap/waiting' render={this.getWaitingScreen} />
+            <Route path='/swap/redeem' component={SwapRedemption} />
+            <Route path='/swap/completed' component={SwapCompleted} />
+            <Route path='/swap/refund' component={SwapRefund} />
           </div>
         </Route>
       </div>

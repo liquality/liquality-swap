@@ -40,7 +40,7 @@ function generateLink (swap, counterparty = false) {
     isPartyB: counterparty === true
   }
 
-  return `${APP_BASE_URL}/#${queryString.stringify(urlParams)}`
+  return `${APP_BASE_URL}/swap/#${queryString.stringify(urlParams)}`
 }
 
 function generateSwapState (location) {
