@@ -44,17 +44,15 @@ class LiqualitySwap extends Component {
       </div>
       <div className='LiqualitySwap_main'>
         <div class='LiqualitySwap_wave' />
-        <Route path='/'>
-          <div className='LiqualitySwap_wrapper'>
-            <Route exact path='/' component={SwapInitiation} />
-            <Route path='/backupLink' render={this.getBackupLinkCard} />
-            <Route path='/counterPartyLink' render={this.getCounterPartyLinkCard} />
-            <Route path='/waiting' component={Waiting} />
-            <Route path='/redeem' component={SwapRedemption} />
-            <Route path='/completed' component={SwapCompleted} />
-            <Route path='/refund' component={SwapRefund} />
-          </div>
-        </Route>
+        <div className='LiqualitySwap_wrapper'>
+          <Route exact path='/' component={SwapInitiation} />
+          <Route path='/backupLink' render={this.getBackupLinkCard} />
+          <Route path='/counterPartyLink' render={this.getCounterPartyLinkCard} />
+          <Route path='/waiting' component={Waiting} />
+          <Route path='/redeem' component={SwapRedemption} />
+          <Route path='/completed' component={SwapCompleted} />
+          <Route path='/refund' component={SwapRefund} />
+        </div>
       </div>
     </div>
   }
