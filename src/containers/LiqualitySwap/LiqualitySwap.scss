@@ -6,6 +6,7 @@
   flex-direction: column;
 
   &_bar {
+    flex: 0 0 6px;
     height: 6px;
     background: #1ce4c3; /* Old browsers */
     background: -moz-linear-gradient(left, #1ce4c3 0%, #ac38fd 100%); /* FF3.6-15 */

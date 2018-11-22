@@ -20,7 +20,6 @@ class LiqualitySwap extends Component {
     super(props)
     this.getCounterPartyLinkCard = this.getCounterPartyLinkCard.bind(this)
     this.getBackupLinkCard = this.getBackupLinkCard.bind(this)
-    this.getWaitingScreen = this.getWaitingScreen.bind(this)
   }
 
   getBackupLinkCard () {
@@ -33,16 +32,7 @@ class LiqualitySwap extends Component {
     const initiationHash = this.props.swap.transactions.a.fund.hash
     const txLink = `${blockExplorerTxUrl[currency]}/${initiationHash}`
     const link = generateLink(this.props.swap, true)
-    return <CounterPartyLinkCard link={link} transactionLink={txLink} onNextClick={() => this.props.history.push('/waiting')} />
-  }
-
-  getWaitingScreen () {
-    if (this.props.swap.isPartyB) {
-      this.props.waitForSwapClaim()
-    } else {
-      this.props.waitForSwapConfirmation()
-    }
-    return <Waiting />
+    return <CounterPartyLinkCard link={link} transactionLink={txLink} onNextClick={() => { this.props.waitForSwapConfirmation() }} />
   }
 
   render () {
@@ -59,7 +49,7 @@ class LiqualitySwap extends Component {
             <Route exact path='/' component={SwapInitiation} />
             <Route path='/backupLink' render={this.getBackupLinkCard} />
             <Route path='/counterPartyLink' render={this.getCounterPartyLinkCard} />
-            <Route path='/waiting' render={this.getWaitingScreen} />
+            <Route path='/waiting' component={Waiting} />
             <Route path='/redeem' component={SwapRedemption} />
             <Route path='/completed' component={SwapCompleted} />
             <Route path='/refund' component={SwapRefund} />

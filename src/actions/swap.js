@@ -69,6 +69,7 @@ function initiateSwap () {
 function confirmSwap () {
   return async (dispatch, getState) => {
     await lockFunds(dispatch, getState)
+    dispatch(waitForSwapClaim())
     dispatch(push('/waiting'))
   }
 }
@@ -115,6 +116,7 @@ async function findInitiateSwapTransaction (dispatch, getState) {
 
 function waitForSwapConfirmation () {
   return async (dispatch, getState) => {
+    dispatch(push('/waiting'))
     await findInitiateSwapTransaction(dispatch, getState)
     dispatch(push('/redeem'))
   }
