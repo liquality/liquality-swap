@@ -12,7 +12,7 @@ import reducers from './reducers'
 import { generateSwapState } from './utils/app-links'
 import './App.css'
 
-const history = createBrowserHistory()
+const history = createBrowserHistory({basename: window.location.pathname})
 
 const initialAppState = {
   swap: generateSwapState(window.location)
