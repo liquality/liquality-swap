@@ -5,7 +5,7 @@ import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { createBrowserHistory } from 'history'
 import { ConnectedRouter, connectRouter, routerMiddleware } from 'connected-react-router'
-import { hotjar } from 'react-hotjar';
+import { hotjar } from 'react-hotjar'
 
 import { actions as swapActions } from './actions/swap'
 import LiqualitySwap from './containers/LiqualitySwap'
@@ -15,7 +15,7 @@ import './App.css'
 
 const history = createBrowserHistory({basename: window.location.pathname})
 
-hotjar.initialize(1102216, 6);
+hotjar.initialize(1102216, 6)
 
 const initialAppState = {
   swap: generateSwapState(window.location)
