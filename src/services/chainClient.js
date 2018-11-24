@@ -12,7 +12,7 @@ if (typeof web3 !== 'undefined') {
 ethClient.addProvider(new providers.ethereum.EthereumSwapProvider())
 
 const btcClient = new Client()
-btcClient.addProvider(new providers.bitcoin.BitcoinRPCProvider(
+btcClient.addProvider(new providers.bitcoin.BitcoreRPCProvider(
   localStorage.btcRpc || window.btcRpc || process.env.REACT_APP_BTC_RPC || 'http://localhost:18332',
   localStorage.btcRpcUser || window.btcRpcUser || process.env.REACT_APP_BTC_RPC_USER || 'bitcoin',
   localStorage.btcRpcPass || window.btcRpcPass || process.env.REACT_APP_BTC_RPC_PASS || 'local321'
