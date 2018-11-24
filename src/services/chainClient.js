@@ -6,7 +6,9 @@ const ethClient = new Client()
 ethClient.addProvider(new providers.ethereum.EthereumRPCProvider(
   localStorage.ethRpc || window.ethRpc || 'http://localhost:8545'
 ))
-ethClient.addProvider(new providers.ethereum.EthereumMetaMaskProvider(web3.currentProvider))
+if (typeof web3 !== 'undefined') {
+  ethClient.addProvider(new providers.ethereum.EthereumMetaMaskProvider(web3.currentProvider))
+}
 ethClient.addProvider(new providers.ethereum.EthereumSwapProvider())
 
 const btcClient = new Client()

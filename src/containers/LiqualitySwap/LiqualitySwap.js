@@ -37,13 +37,13 @@ class LiqualitySwap extends Component {
 
   render () {
     return <div className='LiqualitySwap'>
-      <div class='LiqualitySwap_bar' />
-      <div class='LiqualitySwap_header'>
-        <img class='LiqualitySwap_logo' src={LiqualityLogo} />
+      <div className='LiqualitySwap_bar' />
+      <div className='LiqualitySwap_header'>
+        <img className='LiqualitySwap_logo' src={LiqualityLogo} />
         <SwapProgressStepper state={this.props.swap.step} />
       </div>
       <div className='LiqualitySwap_main'>
-        <div class='LiqualitySwap_wave' />
+        <div className='LiqualitySwap_wave' />
         <div className='LiqualitySwap_wrapper'>
           <Route exact path='/' component={SwapInitiation} />
           <Route path='/backupLink' render={this.getBackupLinkCard} />

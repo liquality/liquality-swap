@@ -6,16 +6,16 @@ import './CurrencyInputs.css'
 class CurrencyInputs extends Component {
   render () {
     const { a: assetA, b: assetB } = this.props.assets
-    return <div class='CurrencyInputs'>
-      <div class='row justify-content-between no-gutters'>
-        <div class='col CurrencyInputs_left'>
+    return <div className='CurrencyInputs'>
+      <div className='row justify-content-between no-gutters'>
+        <div className='col CurrencyInputs_left'>
           <CurrencyInput
             currency={assetA.currency}
             value={assetA.value}
             disabled={this.props.disabled}
             onChange={newValue => this.props.onAmountChange('a', newValue)} />
         </div>
-        <div class='col CurrencyInputs_right'>
+        <div className='col CurrencyInputs_right'>
           <CurrencyInput
             currency={assetB.currency}
             value={assetB.value}
