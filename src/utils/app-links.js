@@ -1,12 +1,7 @@
 import queryString from 'qs'
 import moment from 'moment'
 
-let SUB_PATH = window.appSubPath || '/'
-
-if (window.location.host === 'liquality.io') {
-  SUB_PATH = '/swap/'
-}
-
+const SUB_PATH = window.appSubPath || process.env.REACT_APP_BASE_PATH || '/'
 const APP_BASE_URL = `${window.location.protocol}//${window.location.host}${SUB_PATH}`
 
 function generateLink (swap, counterparty = false) {
