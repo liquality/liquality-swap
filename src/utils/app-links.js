@@ -1,7 +1,7 @@
 import queryString from 'qs'
 import moment from 'moment'
 
-const APP_BASE_URL = `${window.location.protocol}//${window.location.host}`
+const APP_BASE_URL = `${window.location.protocol}//${window.location.host}/swap`
 
 function generateLink (swap, counterparty = false) {
   let assetA, assetB, walletA, walletB, transactionsA, transactionsB
