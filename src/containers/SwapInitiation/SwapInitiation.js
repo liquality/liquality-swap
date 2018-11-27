@@ -4,8 +4,9 @@ import WalletPanel from '../WalletPanel'
 import SwapPairPanel from '../../components/SwapPairPanel/SwapPairPanel'
 import CurrencyInputs from '../CurrencyInputs'
 import CounterPartyWallets from '../CounterPartyWallets'
+import InitiatorExpirationInfo from '../InitiatorExpirationInfo'
 import Button from '../../components/Button/Button'
-import ExpirationDetails from '../../components/ExpirationDetails/ExpirationDetails'
+import ExpirationDetails from '../../components/ExpirationDetails'
 import { generateSwapState } from '../../utils/app-links'
 
 import HandshakeIcon from '../../icons/handshake.png'
@@ -69,7 +70,9 @@ class SwapInitiation extends Component {
           ? <span class='SwapInitiation_handshake'><img src={HandshakeIcon} /></span>
           : <h5 class='SwapInitiation_counterPartyLabel'>Counter party wallets</h5> }
         { this.props.isPartyB || <CounterPartyWallets /> }
-        <ExpirationDetails expiration={this.props.expiration} isPartyB={this.props.isPartyB} />
+        { this.props.isPartyB
+          ? <ExpirationDetails />
+          : <InitiatorExpirationInfo /> }
         {!this.props.isPartyB && <Button wide primary disabled={!this.nextEnabled()} onClick={this.props.initiateSwap}>Next</Button>}
         {this.props.isPartyB && <Button wide primary disabled={!this.nextEnabled()} onClick={this.props.confirmSwap}>Confirm Terms</Button>}
         <div class='SwapInitiation_errors'>

@@ -69,7 +69,8 @@ function generateSwapState (location) {
       secretHash: urlParams.secretHash
     },
     expiration: moment.unix(urlParams.expiration),
-    isPartyB: urlParams.isPartyB === 'true'
+    isPartyB: urlParams.isPartyB === 'true',
+    link: location.href
   }
 }
 

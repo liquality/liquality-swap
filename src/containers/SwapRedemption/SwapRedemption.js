@@ -3,7 +3,7 @@ import BrandCard from '../../components/BrandCard/BrandCard'
 import Button from '../../components/Button/Button'
 import currencies from '../../utils/currencies'
 import './SwapRedemption.css'
-import ExpirationDetails from '../../components/ExpirationDetails/ExpirationDetails'
+import ExpirationDetails from '../../components/ExpirationDetails'
 
 class SwapRedemption extends Component {
   render () {
@@ -15,7 +15,7 @@ class SwapRedemption extends Component {
         </p>
         <p>Thanks to the <strong>Atomic Swap</strong> you don't need to trust the counterparty and avoid the middleman.</p>
       </div>
-      <ExpirationDetails expiration={this.props.expiration} isPartyB={this.props.isPartyB} isClaim />
+      <ExpirationDetails isClaim />
       <p><Button wide primary onClick={this.props.redeemSwap}>Claim your funds</Button></p>
     </BrandCard>
   }

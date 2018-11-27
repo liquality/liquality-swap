@@ -1,10 +1,73 @@
 @import '../../scss/variables.scss';
 
 .ExpirationDetails {
-  max-width: 600px;
+  text-align: left;
+  display: flex;
   padding: 14px 30px;
+  height: 90px;
   margin: 0 auto;
   background: $color-bg-primary;
   box-shadow: 0px 2px 14px $color-shadow;
   border-radius: $swap-panel-radius;
+
+  &_passed, &_left {
+    display: flex;
+    align-items: center;
+  }
+
+  &_passed {
+    margin-right: 20px;
+  }
+
+  &_left {
+    margin-left: 20px;
+  }
+
+  &_clock {
+    width: 25px;
+    margin-right: 20px;
+  }
+
+  &_center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &_top,&_bottom {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &_terms {
+    font-weight: bold;
+
+    em {
+      font-style: normal;
+      color: $color-primary-1;
+    }
+  }
+
+  &_link {
+    cursor: pointer;
+    img {
+      margin-left: 10px;
+    }
+  }
+
+  &_bottom {
+    font-size: $font-size-sm;
+    color: $color-text-2;
+  }
+
+  &_progress {
+    background: #D8E2F0;
+    height: 3px;
+    margin: 10px 0;
+
+    &_fill {
+      background: $color-primary-2;
+      height: 3px;
+    }
+  }
 }
