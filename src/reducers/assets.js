@@ -11,13 +11,18 @@ const initialState = {
   b: {
     currency: 'btc',
     value: null
+  },
+  rate: {
+    value: null
   }
 }
 
 function switchSides (state, action) {
+  const newRate = +(parseFloat(state.b.value) / parseFloat(state.a.value)).toFixed(6)
   return update(state, {
     a: { $set: state.b },
-    b: { $set: state.a }
+    b: { $set: state.a },
+    rate: { $set: { value: newRate.toString() } }
   })
 }
 
