@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import currencies from '../../utils/currencies'
-import { getFundExpiration, getClaimExpiration } from '../../utils/expiration'
+import { getClaimExpiration } from '../../utils/expiration'
 import withCopyButton from '../withCopyButton'
 import ClockIcon from '../../icons/clock.svg'
 import CopyIcon from '../../icons/copy.svg'
@@ -28,7 +28,6 @@ class ExpirationDetails extends Component {
   getExpirationState () {
     const party = this.props.isPartyB ? 'b' : 'a'
     const expiration = getClaimExpiration(this.props.expiration, party)
-
     return {
       start: expiration.start,
       duration: expiration.duration,

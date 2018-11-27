@@ -7,11 +7,6 @@ import CopyIcon from '../../icons/copy.svg'
 import './CounterPartyLinkCard.css'
 
 class CounterPartyLinkCard extends Component {
-  constructor (props) {
-    super(props)
-    this.textArea = React.createRef()
-  }
-
   render () {
     return <BrandCard className='CounterPartyLinkCard' title='Swap Initiated'>
       <img class='CounterPartyLinkCard_icon' src={CompletedIcon} />
