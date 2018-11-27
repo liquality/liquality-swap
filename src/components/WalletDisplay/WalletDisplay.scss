@@ -2,7 +2,7 @@
 
 .WalletDisplay {
   text-align: center;
-  width: 100px;
+  width: 130px;
   min-height: 114px;
 
   p {
@@ -15,7 +15,7 @@
   }
 
   &_address {
-    width: 100px;
+    width: 130px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;

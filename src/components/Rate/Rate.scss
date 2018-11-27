@@ -8,13 +8,13 @@
   top: 100px;
   left: 0;
   right: 0;
-  background: white;
+  background: $color-bg-primary;
   border-radius: 50%;
   text-align: center;
   width: 135px;
   height:135px;
   padding: 20px;
-  z-index: 1;
+  z-index: $layer-bottom;
   text-transform: uppercase;
 
   input::-webkit-outer-spin-button,
