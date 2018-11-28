@@ -17,8 +17,8 @@ btcClient.addProvider(new providers.bitcoin.BitcoreRPCProvider(
   localStorage.btcRpcUser || window.btcRpcUser || process.env.REACT_APP_BTC_RPC_USER || 'bitcoin',
   localStorage.btcRpcPass || window.btcRpcPass || process.env.REACT_APP_BTC_RPC_PASS || 'local321'
 ))
-btcClient.addProvider(new providers.bitcoin.BitcoinLedgerProvider({network: networks.bitcoin_testnet}))
-btcClient.addProvider(new providers.bitcoin.BitcoinSwapProvider({network: networks.bitcoin_testnet}))
+btcClient.addProvider(new providers.bitcoin.BitcoinLedgerProvider({network: networks.bitcoin}))
+btcClient.addProvider(new providers.bitcoin.BitcoinSwapProvider({network: networks.bitcoin}))
 
 const clients = {
   eth: ethClient,
