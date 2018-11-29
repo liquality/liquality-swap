@@ -9,7 +9,8 @@ const mapStateToProps = state => {
     wallets: state.swap.wallets,
     assets: state.swap.assets,
     counterParty: state.swap.counterParty,
-    transactions: state.swap.transactions
+    transactions: state.swap.transactions,
+    isVerified: state.swap.isVerified
   }
 }
 

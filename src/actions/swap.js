@@ -13,7 +13,8 @@ const types = {
   SWITCH_SIDES: 'SWITCH_SIDES',
   SET_STEP: 'SET_STEP',
   SET_EXPIRATION: 'SET_EXPIRATION',
-  SET_LINK: 'SET_LINK'
+  SET_LINK: 'SET_LINK',
+  SET_IS_VERIFIED: 'SET_IS_VERIFIED'
 }
 
 function switchSides () {
@@ -30,6 +31,10 @@ function setExpiration (expiration) {
 
 function setLink (link) {
   return { type: types.SET_LINK, link }
+}
+
+function setIsVerified (isVerified) {
+  return { type: types.SET_IS_VERIFIED, isVerified }
 }
 
 async function lockFunds (dispatch, getState) {
@@ -77,6 +82,7 @@ async function lockFunds (dispatch, getState) {
 function initiateSwap () {
   return async (dispatch, getState) => {
     await lockFunds(dispatch, getState)
+    dispatch(setIsVerified(true))
     dispatch(push('/counterPartyLink'))
   }
 }
@@ -89,7 +95,7 @@ function confirmSwap () {
   }
 }
 
-async function findAndVerifyInitiateSwapTransaction (dispatch, getState) {
+async function verifyInitiateSwapTransaction (dispatch, getState) {
   const {
     assets: { b: { currency, value } },
     wallets: { b: { addresses } },
@@ -102,16 +108,12 @@ async function findAndVerifyInitiateSwapTransaction (dispatch, getState) {
   const valueInUnit = currencies[currency].currencyToUnit(value)
   while (true) {
     const swapVerified = await client.verifyInitiateSwapTransaction(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty[currency].address, secretParams.secretHash, expiration.unix())
-    if (swapVerified) break
+    if (swapVerified) {
+      dispatch(setIsVerified(true))
+      break
+    }
     await sleep(5000)
   }
-  let initiateTransaction
-  while (true) {
-    initiateTransaction = await client.getTransactionByHash(transactions.b.fund.hash)
-    if (initiateTransaction && initiateTransaction.confirmations > 0) break
-    await sleep(5000)
-  }
-  dispatch(transactionActions.setTransaction('b', 'fund', initiateTransaction))
 }
 
 async function findInitiateSwapTransaction (dispatch, getState) {
@@ -228,10 +230,11 @@ const actions = {
   setStep,
   setExpiration,
   setLink,
+  setIsVerified,
   initiateSwap,
   confirmSwap,
   findInitiateSwapTransaction,
-  findAndVerifyInitiateSwapTransaction,
+  verifyInitiateSwapTransaction,
   waitForSwapConfirmation,
   waitForSwapClaim,
   waitForExpiration,

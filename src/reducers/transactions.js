@@ -15,7 +15,7 @@ const initialState = {
 
 function setTransaction (state, action) {
   return update(state, {
-    [action.party]: { [action.kind]: { $set: action.tx } }
+    [action.party]: { [action.kind]: { $set: {confirmations: 0, ...action.tx} } }
   })
 }
 

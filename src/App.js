@@ -8,6 +8,7 @@ import { ConnectedRouter, connectRouter, routerMiddleware } from 'connected-reac
 import { hotjar } from 'react-hotjar'
 
 import { actions as swapActions } from './actions/swap'
+import { actions as transactionActions } from './actions/transactions'
 import LiqualitySwap from './containers/LiqualitySwap'
 import reducers from './reducers'
 import { generateSwapState } from './utils/app-links'
@@ -33,7 +34,11 @@ if (initialAppState.swap) {
   }
 
   if (initialAppState.swap.isPartyB) {
-    store.dispatch(swapActions.findAndVerifyInitiateSwapTransaction)
+    // Need to use action to kick off tx monitoring
+    store.dispatch(transactionActions.setTransaction(
+      'b', 'fund', initialAppState.swap.transactions.b.fund
+    ))
+    store.dispatch(swapActions.verifyInitiateSwapTransaction)
   }
 }
 
