@@ -1,22 +1,28 @@
 import { combineReducers } from 'redux'
 
+import { types } from '../actions/swap'
+import { steps } from '../components/SwapProgressStepper/steps'
+
 import assets from './assets'
 import wallets from './wallets'
 import counterParty from './counterparty'
 import transactions from './transactions'
-import step from './step'
 import secretParams from './secretparams'
-import expiration from './expiration'
-import link from './link'
 
 export default combineReducers({
   assets,
   wallets,
   counterParty,
   transactions,
-  step,
   secretParams,
-  expiration,
-  link,
+  step: (state = steps.INITIATION, action) => {
+    return action.type === types.SET_STEP ? action.step : state
+  },
+  expiration: (state = null, action) => {
+    return action.type === types.SET_EXPIRATION ? action.expiration : state
+  },
+  link: (state = null, action) => {
+    return action.type === types.SET_LINK ? action.link : state
+  },
   isPartyB: (state = false) => state
 })

@@ -11,12 +11,17 @@ import { generateLink } from '../utils/app-links'
 
 const types = {
   SWITCH_SIDES: 'SWITCH_SIDES',
+  SET_STEP: 'SET_STEP',
   SET_EXPIRATION: 'SET_EXPIRATION',
   SET_LINK: 'SET_LINK'
 }
 
 function switchSides () {
   return { type: types.SWITCH_SIDES }
+}
+
+function setStep (step) {
+  return { type: types.SET_STEP, step }
 }
 
 function setExpiration (expiration) {
@@ -220,6 +225,7 @@ async function waitForExpiration (dispatch, getState) {
 
 const actions = {
   switchSides,
+  setStep,
   setExpiration,
   setLink,
   initiateSwap,

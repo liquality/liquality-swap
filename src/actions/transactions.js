@@ -1,4 +1,4 @@
-import { actions as stepActions } from './step'
+import { actions as swapActions } from './swap'
 import { steps } from '../components/SwapProgressStepper/steps'
 
 const types = {
@@ -19,7 +19,7 @@ function setTransaction (party, kind, tx) {
         }
       }
     }
-    dispatch(stepActions.setStep(step))
+    dispatch(swapActions.setStep(step))
   }
 }
 
