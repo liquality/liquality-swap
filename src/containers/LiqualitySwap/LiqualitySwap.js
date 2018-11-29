@@ -23,16 +23,13 @@ class LiqualitySwap extends Component {
   }
 
   getBackupLinkCard () {
-    const link = generateLink(this.props.swap)
+    const link = this.props.swap.link
     return <BackupLinkCard link={link} onNextClick={() => this.props.history.push(this.props.swap.isPartyB ? '/waiting' : '/counterPartyLink')} />
   }
 
   getCounterPartyLinkCard () {
-    const currency = this.props.swap.assets.a.currency
-    const initiationHash = this.props.swap.transactions.a.fund.hash
-    const txLink = `${blockExplorerTxUrl[currency]}/${initiationHash}`
     const link = generateLink(this.props.swap, true)
-    return <CounterPartyLinkCard link={link} transactionLink={txLink} onNextClick={() => { this.props.waitForSwapConfirmation() }} />
+    return <CounterPartyLinkCard link={link} onNextClick={() => { this.props.waitForSwapConfirmation() }} />
   }
 
   render () {

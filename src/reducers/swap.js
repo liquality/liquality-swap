@@ -7,6 +7,7 @@ import transactions from './transactions'
 import step from './step'
 import secretParams from './secretparams'
 import expiration from './expiration'
+import link from './link'
 
 export default combineReducers({
   assets,
@@ -16,5 +17,6 @@ export default combineReducers({
   step,
   secretParams,
   expiration,
+  link,
   isPartyB: (state = false) => state
 })

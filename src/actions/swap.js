@@ -5,12 +5,14 @@ import { actions as transactionActions } from './transactions'
 import { actions as secretActions } from './secretparams'
 import currencies from '../utils/currencies'
 import { sleep } from '../utils/async'
-import { getPartyExpiration, generateExpiration } from '../utils/expiration'
+import { getFundExpiration, getClaimExpiration, generateExpiration } from '../utils/expiration'
 import moment from 'moment'
+import { generateLink } from '../utils/app-links'
 
 const types = {
   SWITCH_SIDES: 'SWITCH_SIDES',
-  SET_EXPIRATION: 'SET_EXPIRATION'
+  SET_EXPIRATION: 'SET_EXPIRATION',
+  SET_LINK: 'SET_LINK'
 }
 
 function switchSides () {
@@ -21,13 +23,18 @@ function setExpiration (expiration) {
   return { type: types.SET_EXPIRATION, expiration }
 }
 
+function setLink (link) {
+  return { type: types.SET_LINK, link }
+}
+
 async function lockFunds (dispatch, getState) {
   const {
     assets,
     wallets,
     counterParty,
     secretParams,
-    expiration
+    expiration,
+    link
   } = getState().swap
   const client = getClient(assets.a.currency)
   let secretHash = secretParams.secretHash
@@ -40,7 +47,7 @@ async function lockFunds (dispatch, getState) {
 
   let swapExpiration
   if (expiration) {
-    swapExpiration = getPartyExpiration(expiration, 'b')
+    swapExpiration = getFundExpiration(expiration, 'b').time
   } else {
     swapExpiration = generateExpiration()
     dispatch(setExpiration(swapExpiration))
@@ -57,6 +64,9 @@ async function lockFunds (dispatch, getState) {
   )
   dispatch(transactionActions.setTransaction('a', 'fund', { hash: txHash, block }))
   dispatch(waitForExpiration)
+  if (!link) {
+    dispatch(setLink(generateLink(getState().swap)))
+  }
 }
 
 function initiateSwap () {
@@ -109,7 +119,7 @@ async function findInitiateSwapTransaction (dispatch, getState) {
   } = getState().swap
   const client = getClient(currency)
   const valueInUnit = currencies[currency].currencyToUnit(value)
-  const swapExpiration = getPartyExpiration(expiration, 'b')
+  const swapExpiration = getFundExpiration(expiration, 'b').time
   const initiateTransaction = await client.findInitiateSwapTransaction(valueInUnit, addresses[0], counterParty[currency].address, secretParams.secretHash, swapExpiration.unix())
   dispatch(transactionActions.setTransaction('b', 'fund', initiateTransaction))
 }
@@ -149,7 +159,7 @@ async function unlockFunds (dispatch, getState) {
   } = getState().swap
   const client = getClient(assets.b.currency)
   const block = await client.getBlockHeight()
-  const swapExpiration = getPartyExpiration(expiration, isPartyB ? 'a' : 'b')
+  const swapExpiration = getClaimExpiration(expiration, isPartyB ? 'b' : 'a').time
   const txHash = await client.claimSwap(
     transactions.b.fund.hash,
     wallets.b.addresses[0],
@@ -181,7 +191,7 @@ function refundSwap () {
     } = getState().swap
 
     const client = getClient(assets.a.currency)
-    const swapExpiration = getPartyExpiration(expiration, isPartyB ? 'b' : 'a')
+    const swapExpiration = getFundExpiration(expiration, isPartyB ? 'b' : 'a').time
     await client.refundSwap(
       transactions.a.fund.hash,
       counterParty[assets.a.currency].address,
@@ -198,7 +208,7 @@ async function waitForExpiration (dispatch, getState) {
     expiration
   } = getState().swap
 
-  const swapExpiration = getPartyExpiration(expiration, isPartyB ? 'b' : 'a')
+  const swapExpiration = getFundExpiration(expiration, isPartyB ? 'b' : 'a').time
   let swapExpired = false
   while (true) {
     swapExpired = moment().isAfter(swapExpiration)
@@ -211,6 +221,7 @@ async function waitForExpiration (dispatch, getState) {
 const actions = {
   switchSides,
   setExpiration,
+  setLink,
   initiateSwap,
   confirmSwap,
   findInitiateSwapTransaction,
