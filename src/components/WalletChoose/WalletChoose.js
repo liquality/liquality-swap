@@ -15,7 +15,7 @@ const WalletChoose = (props) => (
     {props.wallets.map((wallet) => (
       <div>
         <div class='WalletChoose_wallet'>
-          <p><a href='#'>Testnet only</a></p>
+          <p><a href='https://faucet.rinkeby.io/'>{props.currency === 'eth' && 'Testnet Rinkeby ETH Only'}</a></p>
           <img src={wallets[wallet].icon} className='WalletPanel_walletImg' />
           <h5>{wallets[wallet].name}</h5>
           <p><a href='#'>Trouble connecting?</a></p>
