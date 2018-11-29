@@ -5,14 +5,14 @@ const SUB_PATH = window.appSubPath || process.env.REACT_APP_BASE_PATH || '/'
 const APP_BASE_URL = `${window.location.protocol}//${window.location.host}${SUB_PATH}`
 
 function generateLink (swap, counterparty = false) {
-  let assetA, assetB, walletA, walletB, transactionsA, transactionsB
+  let assetA, assetB, assetRate, walletA, walletB, transactionsA, transactionsB
 
   if (counterparty) { // Switch around sides as this will be the state of the counter party
-    ({ a: assetB, b: assetA } = swap.assets)
+    ({ a: assetB, b: assetA, rate: assetRate } = swap.assets)
     ;({ a: walletB, b: walletA } = swap.wallets)
     ;({ a: transactionsB, b: transactionsA } = swap.transactions)
   } else {
-    ({ a: assetA, b: assetB } = swap.assets)
+    ({ a: assetA, b: assetB, rate: assetRate } = swap.assets)
     ;({ a: walletA, b: walletB } = swap.wallets)
     ;({ a: transactionsA, b: transactionsB } = swap.transactions)
   }
@@ -27,6 +27,8 @@ function generateLink (swap, counterparty = false) {
     ccy2v: assetB.value,
     ccy2Addr: counterparty ? swap.counterParty[assetB.currency].address : walletB.addresses[0],
     ccy2CounterPartyAddr: counterparty ? walletB.addresses[0] : swap.counterParty[assetB.currency].address,
+
+    ccy3v: assetRate.value,
 
     aFundHash: transactionsA.fund.hash,
     bFundHash: transactionsB.fund.hash,
@@ -51,7 +53,8 @@ function generateSwapState (location) {
   return {
     assets: {
       a: { currency: urlParams.ccy1, value: parseFloat(urlParams.ccy1v) },
-      b: { currency: urlParams.ccy2, value: parseFloat(urlParams.ccy2v) }
+      b: { currency: urlParams.ccy2, value: parseFloat(urlParams.ccy2v) },
+      rate: { value: parseFloat(urlParams.ccy3v) }
     },
     wallets: {
       a: { addresses: [urlParams.ccy1Addr] },
