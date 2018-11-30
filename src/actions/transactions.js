@@ -10,8 +10,8 @@ const types = {
 function setStep (transactions, dispatch) {
   let step = steps.INITIATION
   if (transactions.a.fund.hash) {
+    step = steps.AGREEMENT
     if (transactions.b.fund.hash) {
-      step = steps.AGREEMENT
       if (transactions.a.fund.confirmations > 0 && transactions.b.fund.confirmations > 0) {
         step = steps.CLAIMING
         if (transactions.a.claim.hash) {
