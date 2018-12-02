@@ -7,7 +7,7 @@ addons:
   ssh_known_hosts:
     - liquality.io
 env:
-  - REACT_APP_ETH_RPC="https://rinkeby.infura.io/pjvC14Kn4cv47X3U8qLq" REACT_APP_BTC_RPC=https://bitcoin.liquality.io REACT_APP_BTC_RPC_USER=liquality REACT_APP_BTC_RPC_PASS=liquality123 REACT_APP_BASE_PATH="/swap-challenge/"
+  - REACT_APP_ETH_RPC="https://rinkeby.infura.io/pjvC14Kn4cv47X3U8qLq" REACT_APP_BTC_RPC=https://btc-testnet.leep.it REACT_APP_BTC_RPC_USER=bitcoin REACT_APP_BTC_RPC_PASS=local321 REACT_APP_BASE_PATH="/swap/"
 branches:
   only:
     - master
@@ -33,6 +33,6 @@ deploy:
       branch: master
   - provider: script
     skip_cleanup: true
-    script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/build/ $LIQUALITY_USER@$LIQUALITY_HOST:/var/www/html/it/leep/swap-challenge/
+    script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/build/ $LIQUALITY_USER@$LIQUALITY_HOST:/var/www/html/it/leep/swap/
     on:
       branch: master
