@@ -30,7 +30,7 @@ class SwapInitiation extends Component {
   }
 
   initiationConfirmed () {
-    return this.props.transactions.b.fund.confirmations > 0
+    return this.props.isVerified && this.props.transactions.b.fund.confirmations > 0
   }
 
   nextEnabled () {
