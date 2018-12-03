@@ -1,10 +1,11 @@
 /* global web3, localStorage */
 
 import { Client, providers, networks } from '@liquality/chainabstractionlayer/dist/index.umd.js'
+import config from '../config/config'
 
 const ethClient = new Client()
 ethClient.addProvider(new providers.ethereum.EthereumRPCProvider(
-  localStorage.ethRpc || window.ethRpc || process.env.REACT_APP_ETH_RPC || 'http://localhost:8545'
+  localStorage.ethRpc || window.ethRpc || process.env.REACT_APP_ETH_RPC || config.eth.rpc.url
 ))
 if (typeof web3 !== 'undefined') {
   ethClient.addProvider(new providers.ethereum.EthereumMetaMaskProvider(web3.currentProvider))
@@ -13,12 +14,12 @@ ethClient.addProvider(new providers.ethereum.EthereumSwapProvider())
 
 const btcClient = new Client()
 btcClient.addProvider(new providers.bitcoin.BitcoreRPCProvider(
-  localStorage.btcRpc || window.btcRpc || process.env.REACT_APP_BTC_RPC || 'http://localhost:18332',
-  localStorage.btcRpcUser || window.btcRpcUser || process.env.REACT_APP_BTC_RPC_USER || 'bitcoin',
-  localStorage.btcRpcPass || window.btcRpcPass || process.env.REACT_APP_BTC_RPC_PASS || 'local321'
+  localStorage.btcRpc || window.btcRpc || process.env.REACT_APP_BTC_RPC || config.btc.rpc.url,
+  localStorage.btcRpcUser || window.btcRpcUser || process.env.REACT_APP_BTC_RPC_USER || config.btc.rpc.username,
+  localStorage.btcRpcPass || window.btcRpcPass || process.env.REACT_APP_BTC_RPC_PASS || config.btc.rpc.password
 ))
-btcClient.addProvider(new providers.bitcoin.BitcoinLedgerProvider({network: networks.bitcoin_testnet}))
-btcClient.addProvider(new providers.bitcoin.BitcoinSwapProvider({network: networks.bitcoin_testnet}))
+btcClient.addProvider(new providers.bitcoin.BitcoinLedgerProvider({network: networks[config.btc.network]}))
+btcClient.addProvider(new providers.bitcoin.BitcoinSwapProvider({network: networks[config.btc.network]}))
 
 const clients = {
   eth: ethClient,
