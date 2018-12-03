@@ -12,5 +12,6 @@ export default {
     },
     network: 'bitcoin_testnet'
   },
-  basePath: '/'
+  basePath: '/',
+  injectScript: ''
 }
