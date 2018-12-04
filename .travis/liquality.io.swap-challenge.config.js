@@ -44,5 +44,10 @@ export default {
     r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
     a.appendChild(r);
   })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+
+  // CRISP
+  window.$crisp=[];
+  window.CRISP_WEBSITE_ID="aebdc8b6-79e1-4afd-83d8-70a9143bd88b";
+  (function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();
   `
 }
