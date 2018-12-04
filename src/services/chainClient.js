@@ -1,14 +1,14 @@
 /* global web3, localStorage */
 
 import { Client, providers, networks } from '@liquality/chainabstractionlayer/dist/index.umd.js'
-import config from '../config/config'
+import config from '../config'
 
 const ethClient = new Client()
 ethClient.addProvider(new providers.ethereum.EthereumRPCProvider(
   localStorage.ethRpc || window.ethRpc || process.env.REACT_APP_ETH_RPC || config.eth.rpc.url
 ))
 if (typeof web3 !== 'undefined') {
-  ethClient.addProvider(new providers.ethereum.EthereumMetaMaskProvider(web3.currentProvider))
+  ethClient.addProvider(new providers.ethereum.EthereumMetaMaskProvider(web3.currentProvider, config.eth.network))
 }
 ethClient.addProvider(new providers.ethereum.EthereumSwapProvider())
 

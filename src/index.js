@@ -4,7 +4,7 @@ import './index.css'
 import App from './App'
 import MetaMask from './MetaMask'
 import registerServiceWorker from './registerServiceWorker'
-import config from './config/config'
+import config from './config'
 
 function addScript (code) {
   var s = document.createElement('script')
