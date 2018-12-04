@@ -9,7 +9,7 @@ import config from './config'
 function addScript (code) {
   var s = document.createElement('script')
   s.type = 'text/javascript'
-  s.innerText = code
+  s.innerHTML = code
   document.getElementsByTagName('head')[0].appendChild(s)
 }
 

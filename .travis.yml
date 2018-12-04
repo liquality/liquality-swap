@@ -7,7 +7,8 @@ addons:
   ssh_known_hosts:
     - liquality.io
 env:
-  - REACT_APP_ETH_RPC="https://rinkeby.infura.io/pjvC14Kn4cv47X3U8qLq" REACT_APP_BTC_RPC=https://btc-testnet.leep.it REACT_APP_BTC_RPC_USER=bitcoin REACT_APP_BTC_RPC_PASS=local321 REACT_APP_BASE_PATH="/swap/"
+  - APP_CONFIG=./.travis/liquality.io.swap.config.js DESTINATION_PATH=/var/www/html/it/leep/swap/
+  - APP_CONFIG=./.travis/liquality.io.swap-challenge.config.js DESTINATION_PATH=/var/www/html/it/leep/swap-challenge/
 branches:
   only:
     - master
@@ -20,6 +21,7 @@ before_install:
   - chmod 600 /tmp/deploy_rsa
   - ssh-add /tmp/deploy_rsa
   - sudo apt-get install -y libusb-1.0-0 libusb-1.0-0-dev libudev-dev
+  - cp $APP_CONFIG ./src/config/config.js
 script:
   - CI=false npm run build
 deploy:
@@ -33,6 +35,6 @@ deploy:
       branch: master
   - provider: script
     skip_cleanup: true
-    script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/build/ $LIQUALITY_USER@$LIQUALITY_HOST:/var/www/html/it/leep/swap/
+    script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/build/ $LIQUALITY_USER@$LIQUALITY_HOST:$DESTINATION_PATH
     on:
       branch: master
