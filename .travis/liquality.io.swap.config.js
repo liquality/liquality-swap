@@ -27,10 +27,13 @@ export default {
     window.ga('set', 'page', path);
     window.ga('send', 'pageview');
   }
+
+  var pushState = history.pushState;
   history.pushState = function () {
     pushState.apply(history, arguments);
     sendPageView(arguments[2])
   };
+
   window.onpopstate = function (e) {
     sendPageView(document.location.pathname + document.location.search)
   };
