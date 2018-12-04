@@ -1,3 +1,45 @@
+@import '../../scss/variables.scss';
+
 .Waiting {
+  margin: 30px 0px 50px;
+  padding: 35px 0 84px;
   text-align: center;
+  background: white;
+  border-radius: $swap-panel-radius;
+  font-family: $font-family-base;
+
+  h1, h3, h4 {
+    padding: 4px;
+  }
+
+  h1, h3 {
+    color: #333;
+  }
+
+  h3 {
+    text-transform: uppercase;
+  }
+
+  &_icon {
+    padding: 5px;
+    height: 38px;
+  }
+
+  &_animalIcon {
+    position: absolute;
+    bottom: 21px;
+    left: 10px;
+  }
+
+  &_catIcon {
+    position: absolute;
+    bottom: 21px;
+    left: 10px;
+  }
+
+  &_chamaleonIcon {
+    position: absolute;
+    bottom: -30px;
+    left: 10px;
+  }
 }
