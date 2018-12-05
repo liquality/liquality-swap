@@ -13,6 +13,7 @@ export default {
     },
     network: 'bitcoin'
   },
+  debug: true,
   basePath: '/swap-challenge/',
   injectScript: `
   // GA

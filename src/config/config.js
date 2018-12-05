@@ -11,5 +11,6 @@ export default {
       url: 'http://localhost:18332'
     },
     network: 'bitcoin_testnet'
-  }
+  },
+  debug: true
 }

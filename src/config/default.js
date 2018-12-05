@@ -1,4 +1,5 @@
 export default {
   basePath: '/',
-  injectScript: ''
+  injectScript: '',
+  debug: false
 }

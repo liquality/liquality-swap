@@ -1,6 +1,7 @@
 /* global alert */
 
 import { push } from 'connected-react-router'
+import config from '../config'
 import { getClient } from '../services/chainClient'
 import { crypto } from '@liquality/chainabstractionlayer/dist/index.umd.js'
 import { actions as transactionActions } from './transactions'
@@ -71,13 +72,17 @@ async function lockFunds (dispatch, getState) {
 
   const block = await client.getBlockHeight()
   const valueInUnit = currencies[assets.a.currency].currencyToUnit(assets.a.value)
-  const txHash = await client.initiateSwap(
+  const initiateSwapParams = [
     valueInUnit,
     counterParty[assets.a.currency].address,
     wallets.a.addresses[0],
     secretHash,
     swapExpiration.unix()
-  )
+  ]
+  if (config.debug) { // TODO: enable debugging universally on all CAL functions (chainClient.js)
+    console.log('Initiating Swap', initiateSwapParams)
+  }
+  const txHash = await client.initiateSwap(...initiateSwapParams)
   dispatch(transactionActions.setTransaction('a', 'fund', { hash: txHash, block }))
   dispatch(waitForExpiration)
   if (!link) {
@@ -175,13 +180,17 @@ async function unlockFunds (dispatch, getState) {
   const client = getClient(assets.b.currency)
   const block = await client.getBlockHeight()
   const swapExpiration = getClaimExpiration(expiration, isPartyB ? 'b' : 'a').time
-  const txHash = await client.claimSwap(
+  const claimSwapParams = [
     transactions.b.fund.hash,
     wallets.b.addresses[0],
     counterParty[assets.b.currency].address,
     secretParams.secret,
     swapExpiration.unix()
-  )
+  ]
+  if (config.debug) { // TODO: enable debugging universally on all CAL functions (chainClient.js)
+    console.log('Claiming Swap', claimSwapParams)
+  }
+  const txHash = await client.claimSwap(...claimSwapParams)
   dispatch(transactionActions.setTransaction('a', 'claim', { hash: txHash, block }))
   dispatch(waitForExpiration)
 }
