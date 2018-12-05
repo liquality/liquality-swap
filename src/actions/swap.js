@@ -1,3 +1,5 @@
+/* global alert */
+
 import { push } from 'connected-react-router'
 import { getClient } from '../services/chainClient'
 import { crypto } from '@liquality/chainabstractionlayer/dist/index.umd.js'
@@ -35,6 +37,10 @@ function setLink (link) {
 
 function setIsVerified (isVerified) {
   return { type: types.SET_IS_VERIFIED, isVerified }
+}
+
+function alphaWarning () {
+  alert('Warning: On this alpha version, do not close your browser during the swap. The swap state will be lost.')
 }
 
 async function lockFunds (dispatch, getState) {
@@ -92,6 +98,7 @@ function confirmSwap () {
     await lockFunds(dispatch, getState)
     dispatch(waitForSwapClaim())
     dispatch(push('/waiting'))
+    alphaWarning()
   }
 }
 
@@ -134,6 +141,7 @@ async function findInitiateSwapTransaction (dispatch, getState) {
 function waitForSwapConfirmation () {
   return async (dispatch, getState) => {
     dispatch(push('/waiting'))
+    alphaWarning()
     await findInitiateSwapTransaction(dispatch, getState)
     dispatch(push('/redeem'))
   }
