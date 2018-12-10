@@ -51,7 +51,8 @@ async function lockFunds (dispatch, getState) {
     counterParty,
     secretParams,
     expiration,
-    link
+    link,
+    isPartyB
   } = getState().swap
   const client = getClient(assets.a.currency)
   let secretHash = secretParams.secretHash
@@ -63,7 +64,7 @@ async function lockFunds (dispatch, getState) {
   }
 
   let swapExpiration
-  if (expiration) {
+  if (isPartyB) {
     swapExpiration = getFundExpiration(expiration, 'b').time
   } else {
     swapExpiration = generateExpiration()
