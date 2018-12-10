@@ -11,6 +11,7 @@ export default {
       password: 'local321',
       url: 'https://btc-testnet.leep.it'
     },
+    feeNumberOfBlocks: 2,
     network: 'bitcoin_testnet'
   },
   basePath: '/swap/',

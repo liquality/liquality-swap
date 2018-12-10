@@ -10,7 +10,8 @@ export default {
       password: 'local321',
       url: 'http://localhost:18332'
     },
-    network: 'bitcoin_testnet'
+    network: 'bitcoin_testnet',
+    feeNumberOfBlocks: 2
   },
   debug: true
 }

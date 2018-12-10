@@ -11,6 +11,7 @@ export default {
       password: 'liquality123',
       url: 'https://bitcoin.liquality.io'
     },
+    feeNumberOfBlocks: 2,
     network: 'bitcoin'
   },
   debug: true,

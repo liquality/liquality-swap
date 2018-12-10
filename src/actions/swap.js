@@ -156,11 +156,16 @@ function waitForSwapClaim () {
   return async (dispatch, getState) => {
     const {
       assets,
+      wallets,
       transactions,
-      secretParams
+      counterParty,
+      secretParams,
+      expiration,
+      isPartyB
     } = getState().swap
     const client = getClient(assets.a.currency)
-    const claimTransaction = await client.findClaimSwapTransaction(transactions.a.fund.hash, secretParams.secretHash)
+    const swapExpiration = getFundExpiration(expiration, isPartyB ? 'b' : 'a').time
+    const claimTransaction = await client.findClaimSwapTransaction(transactions.a.fund.hash, counterParty[assets.a.currency].address, wallets.a.addresses[0], secretParams.secretHash, swapExpiration.unix())
     dispatch(secretActions.setSecret(claimTransaction.secret))
     dispatch(transactionActions.setTransaction('b', 'claim', claimTransaction))
     dispatch(push('/redeem'))
