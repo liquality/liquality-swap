@@ -24,22 +24,22 @@ function waitForWallet (party, currency, wallet) {
     }
 
     dispatch(chooseWallet(party, wallet))
-    let unusedAddress
+    const addressesPerCall = 20
+    const unusedAddress = (await client.getUnusedAddress()).address
+    let unusedAddressReached = false
     let usedAddresses = []
     let addressesIndex = 0
-    while (true) {
-      let addresses = await client.getAddresses(addressesIndex, 5)
+    while (!unusedAddressReached) {
+      let addresses = await client.getAddresses(addressesIndex, addressesPerCall)
       addresses = addresses.map(addr => addr.address)
       for (const address of addresses) {
-        if (await client.isAddressUsed(address)) {
-          usedAddresses.push(address)
-        } else {
-          unusedAddress = address
+        if (address === unusedAddress) {
+          unusedAddressReached = true
           break
         }
+        usedAddresses.push(address)
       }
-      if (unusedAddress) break
-      addressesIndex += 5
+      addressesIndex += addressesPerCall
     }
 
     let allAddresses = [unusedAddress, ...usedAddresses]
