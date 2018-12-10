@@ -16,6 +16,13 @@ class CurrencyInputs extends Component {
             disabled={this.props.disabled}
             onChange={newValue => this.props.onAmountChange('a', newValue)} />
         </div>
+        <div class='col CurrencyInputs_right'>
+          <CurrencyInput
+            currency={assetB.currency}
+            value={assetB.value}
+            disabled={this.props.disabled}
+            onChange={newValue => this.props.onAmountChange('b', newValue)} />
+        </div>
         {!this.props.disabled && 
           <div className='CurrencyInputs_centre'>
             <Rate
@@ -27,13 +34,6 @@ class CurrencyInputs extends Component {
             />
           </div>
         }
-        <div class='col CurrencyInputs_right'>
-          <CurrencyInput
-            currency={assetB.currency}
-            value={assetB.value}
-            disabled={this.props.disabled}
-            onChange={newValue => this.props.onAmountChange('b', newValue)} />
-        </div>
       </div>
     </div>
   }
