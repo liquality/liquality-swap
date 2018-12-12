@@ -15,6 +15,7 @@ class CounterPartyWallets extends Component {
           <AddressInput currency={assetB.currency}
             value={counterParty[assetB.currency].address}
             onChange={(newValue, valid) => this.props.onCounterPartyAddressChange(assetB.currency, newValue, valid)}
+            tabindex={4}
           />
         </div>
         <div class='col'>
@@ -22,6 +23,7 @@ class CounterPartyWallets extends Component {
           <AddressInput currency={assetA.currency}
             value={counterParty[assetA.currency].address}
             onChange={(newValue, valid) => this.props.onCounterPartyAddressChange(assetA.currency, newValue, valid)}
+            tabindex={5}
           />
         </div>
       </div>

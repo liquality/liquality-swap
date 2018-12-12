@@ -23,7 +23,7 @@ class Button extends Component {
       classes.push('Button_small')
     }
 
-    return <button className={classes.join(' ')} disabled={this.props.disabled} onClick={e => this.props.onClick(e)}>
+    return <button tabindex={this.props.tabindex} className={classes.join(' ')} disabled={this.props.disabled} onClick={e => this.props.onClick(e)}>
       {this.props.icon && <span class='Button_icon'><img src={this.props.icon} /></span>}
       {this.props.children}
     </button>
@@ -38,7 +38,12 @@ Button.propTypes = {
   small: PropTypes.bool,
   disabled: PropTypes.bool,
   icon: PropTypes.any,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  tabindex: PropTypes.number
+}
+
+Button.defaultProps = {
+  tabindex: -1
 }
 
 export default Button
