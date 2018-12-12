@@ -10,7 +10,7 @@ import SwapCompleted from '../SwapCompleted'
 import SwapRefund from '../SwapRefund'
 import SwapProgressStepper from '../../components/SwapProgressStepper/SwapProgressStepper'
 import { generateLink } from '../../utils/app-links'
-import { transactionPaths as blockExplorerTxUrl } from '../../utils/block-explorers'
+import config from '../../config'
 
 import LiqualityLogo from '../../logo-text.png'
 import './LiqualitySwap.css'
@@ -51,6 +51,7 @@ class LiqualitySwap extends Component {
           <Route path='/refund' component={SwapRefund} />
         </div>
       </div>
+      <footer dangerouslySetInnerHTML={{__html: config.injectFooter}} />
     </div>
   }
 }

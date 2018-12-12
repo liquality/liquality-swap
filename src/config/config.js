@@ -13,5 +13,6 @@ export default {
     network: 'bitcoin_testnet',
     feeNumberOfBlocks: 2
   },
-  debug: true
+  debug: true,
+  injectFooter: `<p style="text-align: center;"><a href="https://github.com/liquality/chainabstractionlayer">Powered by ChainAbstractionLayer</a></p>`
 }
