@@ -7,15 +7,23 @@ import TickIcon from './tick.svg'
 import ErrorIcon from './error.svg'
 
 const AddressInput = (props) => {
-  const valid = currencies[props.currency].isValidAddress(props.value)
   let helperMessage
-  if (!valid) {
-    helperMessage = 'Invalid Address'
+  let cls = ''
+  let valid = false
+  if (props.value !== '') {
+    valid = currencies[props.currency].isValidAddress(props.value)
+
+    if (valid) {
+      cls = 'AddressInput_box_valid'
+    } else {
+      helperMessage = 'Invalid Address'
+      cls = 'AddressInput_box_invalid'
+    }
   }
 
   return <div class='AddressInput'>
     <div class='AddressInput_wrapper'>
-      <div className={'AddressInput_box ' + (valid ? 'AddressInput_box_valid' : 'AddressInput_box_invalid')}>
+      <div className={'AddressInput_box ' + cls}>
         <img class='AddressInput_icon' src={currencies[props.currency].icon} />
         <input class='AddressInput_input'
           value={props.value}
