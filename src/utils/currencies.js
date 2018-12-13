@@ -21,7 +21,7 @@ const currencies = {
   'eth': {
     icon: ethIcon,
     code: 'ETH',
-    isValidAddress: address => /^[0-9a-fA-F]{40}$/.test(address),
+    isValidAddress: address => /^(0x)?[0-9a-fA-F]{40}$/.test(address),
     unitToCurrency (value) {
       return BigNumber(value).dividedBy(WEI_TO_ETH).toNumber()
     },
