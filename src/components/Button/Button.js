@@ -43,7 +43,7 @@ class Button extends Component {
     const showLoader = this.props.loadingAfterClick && this.state.clickDisabled
     const disabled = this.state.clickDisabled || this.props.disabled
 
-    return <button className={classes.join(' ')} disabled={disabled} onClick={e => this.onClickHandler(e)}>
+    return <button tabindex={this.props.tabindex} className={classes.join(' ')} disabled={disabled} onClick={e => this.onClickHandler(e)}>
       {this.props.icon && <span class='Button_icon'><img src={this.props.icon} /></span>}
       {showLoader &&
         <img class='Button_spinner' src={Spinner} />
@@ -62,9 +62,14 @@ Button.propTypes = {
   small: PropTypes.bool,
   disabled: PropTypes.bool,
   icon: PropTypes.any,
+  onClick: PropTypes.func,
   loadingAfterClick: PropTypes.bool,
   loadingAfterClickMessage: PropTypes.string,
-  onClick: PropTypes.func
+  tabindex: PropTypes.number
+}
+
+Button.defaultProps = {
+  tabindex: -1
 }
 
 export default Button

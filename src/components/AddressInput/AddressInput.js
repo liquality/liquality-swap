@@ -26,6 +26,7 @@ const AddressInput = (props) => {
       <div className={'AddressInput_box ' + cls}>
         <img class='AddressInput_icon' src={currencies[props.currency].icon} />
         <input class='AddressInput_input'
+          tabindex={props.tabindex}
           value={props.value}
           onChange={e => props.onChange(e.target.value, currencies[props.currency].isValidAddress(e.target.value))}
         />
@@ -40,7 +41,12 @@ AddressInput.propTypes = {
   // TODO: probably need some sort of repository for currency codes and icons?
   currency: PropTypes.oneOf(Object.keys(currencies)).isRequired,
   value: PropTypes.string,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  tabindex: PropTypes.number
+}
+
+AddressInput.defaultProps = {
+  tabindex: -1
 }
 
 export default AddressInput
