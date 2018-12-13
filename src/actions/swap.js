@@ -149,7 +149,6 @@ function waitForSwapConfirmation () {
     dispatch(push('/waiting'))
     alphaWarning()
     await findInitiateSwapTransaction(dispatch, getState)
-    dispatch(push('/redeem'))
   }
 }
 
@@ -169,7 +168,6 @@ function waitForSwapClaim () {
     const claimTransaction = await client.findClaimSwapTransaction(transactions.a.fund.hash, counterParty[assets.a.currency].address, wallets.a.addresses[0], secretParams.secretHash, swapExpiration.unix())
     dispatch(secretActions.setSecret(claimTransaction.secret))
     dispatch(transactionActions.setTransaction('b', 'claim', claimTransaction))
-    dispatch(push('/redeem'))
   }
 }
 
@@ -204,7 +202,6 @@ async function unlockFunds (dispatch, getState) {
 function redeemSwap () {
   return async (dispatch, getState) => {
     await unlockFunds(dispatch, getState)
-    dispatch(push('/completed'))
   }
 }
 
