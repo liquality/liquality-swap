@@ -67,7 +67,7 @@ function waitForWallet (party, currency, wallet) {
     }
 
     const balance = await client.getBalance(allAddresses)
-    const formattedBalance = currencies[currency].unitToCurrency(balance).toFixed(3)
+    const formattedBalance = currencies[currency].unitToCurrency(balance).toFixed(6)
     dispatch(connectWallet(party, allAddresses, formattedBalance))
   }
 }
