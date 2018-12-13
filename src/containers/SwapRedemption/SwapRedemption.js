@@ -16,7 +16,7 @@ class SwapRedemption extends Component {
         <p>Thanks to the <strong>Atomic Swap</strong> you don't need to trust the counterparty and avoid the middleman.</p>
       </div>
       <ExpirationDetails isClaim />
-      <p><Button wide primary onClick={this.props.redeemSwap}>Claim your funds</Button></p>
+      <p><Button wide primary loadingAfterClickMessage='Check wallet for action' onClick={this.props.redeemSwap}>Claim your funds</Button></p>
     </BrandCard>
   }
 }

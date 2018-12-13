@@ -48,5 +48,9 @@ export default {
     r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
     a.appendChild(r);
   })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-  `
+  `,
+  injectFooter: `<p style="text-align: center;">
+  <a href="https://liquality.io/terms-of-use" target="_blank">Terms of Use</a>
+  <a href="https://liquality.io/privacy-policy" target="_blank">Privacy Policy</a>
+  </p>`
 }

@@ -7,15 +7,14 @@ export default {
   },
   btc: {
     rpc: {
-      username: 'liquality',
-      password: 'liquality123',
-      url: 'https://bitcoin.liquality.io'
+      username: 'bitcoin',
+      password: 'local321',
+      url: 'https://btc-testnet.leep.it'
     },
     feeNumberOfBlocks: 2,
-    network: 'bitcoin'
+    network: 'bitcoin_testnet'
   },
-  debug: true,
-  basePath: '/swap-challenge/',
+  basePath: '/swap-development/',
   injectScript: `
   // GA
   (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -49,14 +48,5 @@ export default {
     r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
     a.appendChild(r);
   })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-
-  // CRISP
-  window.$crisp=[];
-  window.CRISP_WEBSITE_ID="aebdc8b6-79e1-4afd-83d8-70a9143bd88b";
-  (function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();
-  `,
-  injectFooter: `<p style="text-align: center;">
-  <a href="https://liquality.io/terms-of-use" target="_blank">Terms of Use</a>
-  <a href="https://liquality.io/privacy-policy" target="_blank">Privacy Policy</a>
-  </p>`
+  `
 }

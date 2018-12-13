@@ -73,8 +73,8 @@ class SwapInitiation extends Component {
         { this.props.isPartyB
           ? <ExpirationDetails />
           : <InitiatorExpirationInfo /> }
-        {!this.props.isPartyB && <Button wide primary disabled={!this.nextEnabled()} onClick={this.props.initiateSwap}>Next</Button>}
-        {this.props.isPartyB && <Button wide primary disabled={!this.nextEnabled()} onClick={this.props.confirmSwap}>Confirm Terms</Button>}
+        {!this.props.isPartyB && <Button wide primary disabled={!this.nextEnabled()} loadingAfterClickMessage='Check wallet for action' onClick={this.props.initiateSwap}>Next</Button>}
+        {this.props.isPartyB && <Button wide primary disabled={!this.nextEnabled()} loadingAfterClickMessage='Check wallet for action' onClick={this.props.confirmSwap}>Confirm Terms</Button>}
         <div class='SwapInitiation_errors'>
           {this.getErrors().map(error => <p>{error}</p>)}
         </div>

@@ -30,7 +30,7 @@
     left: -35px;
     border-radius: 50%;
     margin: auto;
-    z-index: $layer-top;
+    z-index: $layer-middle;
 
     img {
       width: 38px;
@@ -49,6 +49,15 @@
     top: $panel-spacing;
     text-align: center;
     color: $primary;
+  }
+
+  &_subLabel {
+    width: 100%;
+    position: absolute;
+    top: $panel-spacing + 35px;
+    text-align:center;
+    color: $primary;
+    z-index: $layer-top;
   }
 
   &_bottom {
