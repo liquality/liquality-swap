@@ -13,7 +13,7 @@ class SwapRedemption extends Component {
         </p>
         <p>Your funds are ready for a refund.</p>
       </div>
-      <p><Button wide primary loadingAfterClickMessage='Check wallet for action' onClick={this.props.refundSwap}>Get Refund</Button></p>
+      <p><Button wide primary loadingAfterClick loadingAfterClickMessage='Check wallet for action' onClick={this.props.refundSwap}>Get Refund</Button></p>
     </BrandCard>
   }
 }
