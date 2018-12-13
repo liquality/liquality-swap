@@ -14,5 +14,5 @@ export default {
     feeNumberOfBlocks: 2
   },
   debug: true,
-  injectFooter: `<p style="text-align: center;"><a href="https://github.com/liquality/chainabstractionlayer">Powered by ChainAbstractionLayer</a></p>`
+  injectFooter: `<p style="text-align: center;"><a href="https://github.com/liquality/chainabstractionlayer" target="_blank">Powered by ChainAbstractionLayer</a></p>`
 }
