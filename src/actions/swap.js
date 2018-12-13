@@ -3,7 +3,7 @@
 import { push } from 'connected-react-router'
 import config from '../config'
 import { getClient } from '../services/chainClient'
-import { crypto } from '@liquality/chainabstractionlayer/dist/index.umd.js'
+import { crypto } from '@mattblackdesign/chainabstractionlayer/dist/index.umd.js'
 import { actions as transactionActions } from './transactions'
 import { actions as secretActions } from './secretparams'
 import currencies from '../utils/currencies'
