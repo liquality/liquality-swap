@@ -17,7 +17,7 @@ class Waiting extends Component {
         }
       } else {
         if (!this.props.transactions.b.fund.hash) {
-          return 'Counter hasn\'t confirmed terms.'
+          return 'Counterparty hasn\'t confirmed terms.'
         }
         if (!this.props.transactions.b.fund.confirmations > 0) {
           return 'Counterparty has confirmed terms. Awaiting confirmations.'
