@@ -1,5 +1,5 @@
 import update from 'immutability-helper'
-import { crypto } from '@mattblackdesign/chainabstractionlayer/dist/index.umd.js'
+import { crypto } from '@liquality/chainabstractionlayer/dist/index.umd.js'
 import { types } from '../actions/secretparams'
 import { getReducerFunction } from './helpers'
 
