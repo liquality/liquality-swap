@@ -120,10 +120,14 @@ async function verifyInitiateSwapTransaction (dispatch, getState) {
   const client = getClient(currency)
   const valueInUnit = currencies[currency].currencyToUnit(value)
   while (true) {
-    const swapVerified = await client.verifyInitiateSwapTransaction(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty[currency].address, secretParams.secretHash, expiration.unix())
-    if (swapVerified) {
-      dispatch(setIsVerified(true))
-      break
+    try {
+      const swapVerified = await client.verifyInitiateSwapTransaction(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty[currency].address, secretParams.secretHash, expiration.unix())
+      if (swapVerified) {
+        dispatch(setIsVerified(true))
+        break
+      }
+    } catch (e) {
+      console.error(e)
     }
     await sleep(5000)
   }
