@@ -15,7 +15,6 @@ export default {
     network: 'bitcoin'
   },
   debug: true,
-  basePath: '/swap-challenge/',
   injectScript: `
   // GA
   (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
