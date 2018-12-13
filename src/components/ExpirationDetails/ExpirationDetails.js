@@ -6,7 +6,6 @@ import { getClaimExpiration } from '../../utils/expiration'
 import withCopyButton from '../withCopyButton'
 import ClockIcon from '../../icons/clock.svg'
 import CopyIcon from '../../icons/copy.svg'
-import { steps } from '../SwapProgressStepper/steps'
 import './ExpirationDetails.css'
 
 class ExpirationDetails extends Component {
@@ -17,18 +16,15 @@ class ExpirationDetails extends Component {
 
   getTransaction () {
     const transactions = this.props.transactions
-    let displayOrder = [
+    const displayOrder = [
       transactions.b.claim,
-      transactions.a.claim,
-      transactions.b.fund,
-      transactions.a.fund
+      transactions.a.claim
     ]
 
-    if (this.props.step === steps.INITIATION || this.props.step === steps.AGREEMENT) {
-      displayOrder = [
-        transactions.a.fund,
-        transactions.b.fund
-      ]
+    if (this.props.isPartyB) {
+      displayOrder.push(transactions.a.fund, transactions.b.fund)
+    } else {
+      displayOrder.push(transactions.b.fund, transactions.a.fund)
     }
 
     return displayOrder.find(tx => tx.hash) || {}
