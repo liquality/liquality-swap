@@ -14,7 +14,6 @@ export default {
     feeNumberOfBlocks: 2,
     network: 'bitcoin_testnet'
   },
-  basePath: '/swap/',
   injectScript: `
   // GA
   (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
