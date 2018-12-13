@@ -33,4 +33,4 @@ deploy:
     skip_cleanup: true
     script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/build/ $LIQUALITY_USER@$LIQUALITY_HOST:$DESTINATION_PATH
     on:
-      branch: master
+      branch: dev
