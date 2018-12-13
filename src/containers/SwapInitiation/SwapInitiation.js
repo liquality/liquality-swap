@@ -72,7 +72,7 @@ class SwapInitiation extends Component {
         icon={this.props.isPartyB || SwapIcon}
         onIconClick={() => this.props.switchSides()} />
       <div class='SwapInitiation_top'>
-        <CurrencyInputs disabled={this.props.isPartyB}/>
+        <CurrencyInputs disabled={this.props.isPartyB} showRate />
       </div>
       <WalletPanel />
       <div class='SwapInitiation_bottom'>
