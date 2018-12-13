@@ -1,7 +1,7 @@
 export default {
   eth: {
     rpc: {
-      url: 'https://rinkeby.infura.io/pjvC14Kn4cv47X3U8qLq',
+      url: 'https://rinkeby.infura.io/pjvC14Kn4cv47X3U8qLq'
     },
     network: 4
   },
@@ -15,7 +15,6 @@ export default {
     network: 'bitcoin'
   },
   debug: true,
-  basePath: '/swap-challenge/',
   injectScript: `
   // GA
   (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -54,5 +53,10 @@ export default {
   window.$crisp=[];
   window.CRISP_WEBSITE_ID="aebdc8b6-79e1-4afd-83d8-70a9143bd88b";
   (function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();
-  `
+  `,
+  injectFooter: `<p style="text-align: center;">
+  <a href="https://liquality.io/terms-of-use" target="_blank">Terms of Use</a>
+  &nbsp;|&nbsp;
+  <a href="https://liquality.io/privacy-policy" target="_blank">Privacy Policy</a>
+  </p>`
 }

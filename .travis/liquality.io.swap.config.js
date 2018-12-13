@@ -1,7 +1,7 @@
 export default {
   eth: {
     rpc: {
-      url: 'https://rinkeby.infura.io/pjvC14Kn4cv47X3U8qLq',
+      url: 'https://rinkeby.infura.io/pjvC14Kn4cv47X3U8qLq'
     },
     network: 4
   },
@@ -14,7 +14,6 @@ export default {
     feeNumberOfBlocks: 2,
     network: 'bitcoin_testnet'
   },
-  basePath: '/swap/',
   injectScript: `
   // GA
   (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -48,5 +47,10 @@ export default {
     r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
     a.appendChild(r);
   })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-  `
+  `,
+  injectFooter: `<p style="text-align: center;">
+  <a href="https://liquality.io/terms-of-use" target="_blank">Terms of Use</a>
+  &nbsp;|&nbsp;
+  <a href="https://liquality.io/privacy-policy" target="_blank">Privacy Policy</a>
+  </p>`
 }

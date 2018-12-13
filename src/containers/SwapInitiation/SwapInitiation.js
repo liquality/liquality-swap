@@ -29,6 +29,10 @@ class SwapInitiation extends Component {
       this.props.counterParty[this.props.assets.b.currency].valid
   }
 
+  initiationExists () {
+    return this.props.isVerified && this.props.transactions.b.fund.hash
+  }
+
   initiationConfirmed () {
     return this.props.isVerified && this.props.transactions.b.fund.confirmations > 0
   }
@@ -42,14 +46,20 @@ class SwapInitiation extends Component {
     if (!this.walletsConnected()) {
       errors.push('Wallets are not connected')
     }
-    if (this.props.isPartyB && !this.walletsValid()) {
-      errors.push('The connected wallets must match the wallets supplied for the swap')
-    }
-    if (!this.props.isPartyB && !this.counterPartyAddressesValid()) {
-      errors.push('Invalid counter party addresses')
-    }
-    if (this.props.isPartyB && !this.initiationConfirmed()) {
-      errors.push('Counter party yet to lock funds')
+    if (this.props.isPartyB) {
+      if (!this.walletsValid()) {
+        errors.push('The connected wallets must match the wallets supplied for the swap')
+      }
+      if (!this.initiationExists()) {
+        errors.push('Counterparty hasn\'t initiated')
+      }
+      if (!this.initiationConfirmed()) {
+        errors.push('Counterparty has initiated, awaiting confirmations')
+      }
+    } else {
+      if (!this.counterPartyAddressesValid()) {
+        errors.push('Invalid counterparty addresses')
+      }
     }
     return errors
   }
@@ -59,10 +69,10 @@ class SwapInitiation extends Component {
       <SwapPairPanel
         haveCurrency={this.props.assets.a.currency}
         wantCurrency={this.props.assets.b.currency}
-        icon={SwapIcon}
+        icon={this.props.isPartyB || SwapIcon}
         onIconClick={() => this.props.switchSides()} />
       <div class='SwapInitiation_top'>
-        <CurrencyInputs />
+        <CurrencyInputs disabled={this.props.isPartyB} showRate />
       </div>
       <WalletPanel />
       <div class='SwapInitiation_bottom'>
@@ -73,8 +83,8 @@ class SwapInitiation extends Component {
         { this.props.isPartyB
           ? <ExpirationDetails />
           : <InitiatorExpirationInfo /> }
-        {!this.props.isPartyB && <Button wide primary disabled={!this.nextEnabled()} onClick={this.props.initiateSwap}>Next</Button>}
-        {this.props.isPartyB && <Button wide primary disabled={!this.nextEnabled()} onClick={this.props.confirmSwap}>Confirm Terms</Button>}
+        {!this.props.isPartyB && <Button wide primary disabled={!this.nextEnabled()} loadingAfterClick loadingAfterClickMessage='Check wallet for action' onClick={this.props.initiateSwap}>Next</Button>}
+        {this.props.isPartyB && <Button wide primary disabled={!this.nextEnabled()} loadingAfterClick loadingAfterClickMessage='Check wallet for action' onClick={this.props.confirmSwap}>Confirm Terms</Button>}
         <div class='SwapInitiation_errors'>
           {this.getErrors().map(error => <p>{error}</p>)}
         </div>

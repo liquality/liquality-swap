@@ -120,10 +120,14 @@ async function verifyInitiateSwapTransaction (dispatch, getState) {
   const client = getClient(currency)
   const valueInUnit = currencies[currency].currencyToUnit(value)
   while (true) {
-    const swapVerified = await client.verifyInitiateSwapTransaction(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty[currency].address, secretParams.secretHash, expiration.unix())
-    if (swapVerified) {
-      dispatch(setIsVerified(true))
-      break
+    try {
+      const swapVerified = await client.verifyInitiateSwapTransaction(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty[currency].address, secretParams.secretHash, expiration.unix())
+      if (swapVerified) {
+        dispatch(setIsVerified(true))
+        break
+      }
+    } catch (e) {
+      console.error(e)
     }
     await sleep(5000)
   }
@@ -149,7 +153,6 @@ function waitForSwapConfirmation () {
     dispatch(push('/waiting'))
     alphaWarning()
     await findInitiateSwapTransaction(dispatch, getState)
-    dispatch(push('/redeem'))
   }
 }
 
@@ -169,7 +172,6 @@ function waitForSwapClaim () {
     const claimTransaction = await client.findClaimSwapTransaction(transactions.a.fund.hash, counterParty[assets.a.currency].address, wallets.a.addresses[0], secretParams.secretHash, swapExpiration.unix())
     dispatch(secretActions.setSecret(claimTransaction.secret))
     dispatch(transactionActions.setTransaction('b', 'claim', claimTransaction))
-    dispatch(push('/redeem'))
   }
 }
 
@@ -204,7 +206,6 @@ async function unlockFunds (dispatch, getState) {
 function redeemSwap () {
   return async (dispatch, getState) => {
     await unlockFunds(dispatch, getState)
-    dispatch(push('/completed'))
   }
 }
 

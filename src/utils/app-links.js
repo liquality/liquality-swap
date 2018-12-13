@@ -1,9 +1,7 @@
 import queryString from 'qs'
 import moment from 'moment'
-import config from '../config'
 
-const SUB_PATH = window.appSubPath || process.env.REACT_APP_BASE_PATH || config.basePath
-const APP_BASE_URL = `${window.location.protocol}//${window.location.host}${SUB_PATH}`
+const APP_BASE_URL = `${window.location.protocol}//${window.location.host}${window.location.pathname}`
 
 function generateLink (swap, counterparty = false) {
   let assetA, assetB, assetRate, walletA, walletB, transactionsA, transactionsB

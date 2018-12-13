@@ -20,6 +20,9 @@ class SwapCompleted extends Component {
       <div class='SwapCompleted_top'>
         <CurrencyInputs disabled />
         <h2 class='SwapCompleted_label'>Swap Completed</h2>
+        <p class='SwapCompleted_subLabel'>
+          Go to {this.props.assets.b.currency === 'btc' ? 'Ledger Live' : 'MetaMask'} to confirm your balance
+        </p>
         <span class='SwapCompleted_handshake'><img src={HandshakeIcon} /></span>
       </div>
       <div class='SwapCompleted_bottom'>

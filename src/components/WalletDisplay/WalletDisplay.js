@@ -13,8 +13,8 @@ const WalletBalance = (props) => (
     <img class='WalletDisplay_icon' src={wallets[props.type] ? wallets[props.type].icon : WalletIcon} />
     <p class='WalletDisplay_address'>{ props.address && props.address }</p>
     { props.connected
-      ? <Button small secondary class='WalletDisplay_message' onClick={e => props.onButtonClick(e)}>Change wallet</Button>
-      : <Button small primary class='WalletDisplay_message error' onClick={e => props.onButtonClick(e)}>Connect wallet</Button>
+      ? <Button tabindex={-1} small secondary class='WalletDisplay_message' onClick={e => props.onButtonClick(e)}>Change wallet</Button>
+      : <Button tabindex={-1} small primary class='WalletDisplay_message error' onClick={e => props.onButtonClick(e)}>Connect wallet</Button>
     }
     { props.balance &&
       <div>
