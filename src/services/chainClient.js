@@ -1,6 +1,6 @@
 /* global web3, localStorage */
 
-import { Client, providers, networks } from '@mattblackdesign/chainabstractionlayer/dist/index.umd.js'
+import { Client, providers, networks } from '@liquality/chainabstractionlayer/dist/index.umd.js'
 import config from '../config'
 
 const ethClient = new Client()
