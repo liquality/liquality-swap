@@ -29,11 +29,11 @@ deploy:
       branch: master
   - provider: script
     skip_cleanup: true
-    script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/build/ $LIQUALITY_USER@$LIQUALITY_HOST:$DESTINATION_PATH/
+    script: echo "LIQ TEST" && rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/build/ $LIQUALITY_USER@$LIQUALITY_HOST:$DESTINATION_PATH/
     on:
       branch: master
   - provider: script
     skip_cleanup: true
-    script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/build/ $LIQUALITY_USER@$LIQUALITY_HOST:$DESTINATION_PATH-dev/
+    script: echo  "LIQ TEST" && rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/build/ $LIQUALITY_USER@$LIQUALITY_HOST:$DESTINATION_PATH-dev/
     on:
       branch: dev
