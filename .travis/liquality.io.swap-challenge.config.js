@@ -56,6 +56,7 @@ export default {
   `,
   injectFooter: `<p style="text-align: center;">
   <a href="https://liquality.io/terms-of-use" target="_blank">Terms of Use</a>
+  &nbsp;|&nbsp;
   <a href="https://liquality.io/privacy-policy" target="_blank">Privacy Policy</a>
   </p>`
 }
