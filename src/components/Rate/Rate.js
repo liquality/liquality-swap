@@ -7,11 +7,11 @@ import './Rate.css'
 const Rate = (props) => (
   <div className='Rate'>
     <h5 className='Rate_heading'>Rate</h5>
-    <h5 className='Rate_stable'><strong>1 {currencies[props.currencyB].code}</strong></h5>
+    <h5 className='Rate_stable'><strong>1 {currencies[props.currencyA].code}</strong></h5>
     <h4 className='Rate_equal'>=</h4>
     <h6>
-      <input type='number' readOnly={props.disabled} value={props.value} className='Rate_input' placeholder='0.0000' onChange={e => props.onChange(e.target.value)} />
-      {currencies[props.currencyA].code}
+      <input tabindex={props.tabindex} type='number' readOnly={props.disabled} value={props.value} className='Rate_input' placeholder='0.0000' onChange={e => props.onChange(e.target.value)} />
+      {currencies[props.currencyB].code}
     </h6>
   </div>
 )
@@ -19,11 +19,13 @@ const Rate = (props) => (
 Rate.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   disabled: PropTypes.bool,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  tabindex: PropTypes.number
 }
 
 Rate.defaultProps = {
-  value: 0
+  value: 0,
+  tabindex: -1
 }
 
 export default Rate

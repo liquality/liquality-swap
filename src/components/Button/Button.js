@@ -1,8 +1,25 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import Spinner from './spinner.svg'
 import './Button.css'
 
 class Button extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      clickDisabled: false
+    }
+  }
+
+  onClickHandler (e) {
+    if (this.props.loadingAfterClickMessage) {
+      this.setState({
+        clickDisabled: true
+      })
+    }
+    this.props.onClick(e)
+  }
+
   render () {
     const classes = ['Button', 'btn']
 
@@ -23,9 +40,16 @@ class Button extends Component {
       classes.push('Button_small')
     }
 
-    return <button className={classes.join(' ')} disabled={this.props.disabled} onClick={e => this.props.onClick(e)}>
+    const showLoader = this.props.loadingAfterClick && this.state.clickDisabled
+    const disabled = this.state.clickDisabled || this.props.disabled
+
+    return <button tabindex={this.props.tabindex} className={classes.join(' ')} disabled={disabled} onClick={e => this.onClickHandler(e)}>
       {this.props.icon && <span class='Button_icon'><img src={this.props.icon} /></span>}
-      {this.props.children}
+      {showLoader &&
+        <img class='Button_spinner' src={Spinner} />
+      }
+      { this.props.loadingAfterClickMessage && this.state.clickDisabled
+        ? this.props.loadingAfterClickMessage : this.props.children }
     </button>
   }
 }
@@ -38,7 +62,14 @@ Button.propTypes = {
   small: PropTypes.bool,
   disabled: PropTypes.bool,
   icon: PropTypes.any,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  loadingAfterClick: PropTypes.bool,
+  loadingAfterClickMessage: PropTypes.string,
+  tabindex: PropTypes.number
+}
+
+Button.defaultProps = {
+  tabindex: -1
 }
 
 export default Button
