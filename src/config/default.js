@@ -1,5 +1,6 @@
 export default {
   injectScript: '',
   injectFooter: '',
-  debug: false
+  debug: false,
+  twitterButton: false
 }

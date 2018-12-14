@@ -6,6 +6,7 @@ import Button from '../../components/Button/Button'
 import CompletedIcon from '../../icons/completed.svg'
 import HandshakeIcon from '../../icons/handshake.png'
 import './SwapCompleted.css'
+import config from '../../config'
 
 class SwapCompleted extends Component {
   render () {
@@ -27,6 +28,7 @@ class SwapCompleted extends Component {
       </div>
       <div class='SwapCompleted_bottom'>
         <Button wide primary onClick={() => window.location.replace('/')}>Start another Swap</Button>
+        {config.twitterButton && <a className='twitter-share-button' href={'https://twitter.com/intent/tweet' + config.twitterButton} data-size='large'>Tweet</a>}
       </div>
     </div>
   }

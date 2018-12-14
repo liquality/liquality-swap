@@ -53,10 +53,29 @@ export default {
   window.$crisp=[];
   window.CRISP_WEBSITE_ID="aebdc8b6-79e1-4afd-83d8-70a9143bd88b";
   (function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();
+
+  // TWITTER
+  window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+    if (d.getElementById(id)) return t;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://platform.twitter.com/widgets.js";
+    fjs.parentNode.insertBefore(js, fjs);
+
+    t._e = [];
+    t.ready = function(f) {
+      t._e.push(f);
+    };
+
+    return t;
+  }(document, "script", "twitter-wjs"));
   `,
   injectFooter: `<p style="text-align: center;">
   <a href="https://liquality.io/terms-of-use" target="_blank">Terms of Use</a>
   &nbsp;|&nbsp;
   <a href="https://liquality.io/privacy-policy" target="_blank">Privacy Policy</a>
-  </p>`
+  </p>`,
+  twitterButton: `?text=${encodeURIComponent('I just swapped mainnet $BTC and testnet $ETH without middlemen, fees, or counterparty risk. Thank you!')}&url=${encodeURIComponent('https://liquality.io/')}&hashtags=bitcoin,atomicswap,liquality,ethereum,atomiccrosschainswap&via=liquality_io`
 }
