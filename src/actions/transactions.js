@@ -1,4 +1,4 @@
-import { push } from 'connected-react-router'
+import { replace } from 'connected-react-router'
 import { actions as swapActions } from './swap'
 import { steps } from '../components/SwapProgressStepper/steps'
 import { getClient } from '../services/chainClient'
@@ -16,16 +16,25 @@ function setStep (transactions, isPartyB, dispatch) {
       if (transactions.a.fund.confirmations > 0 && transactions.b.fund.confirmations > 0) {
         if (transactions.b.claim.confirmations > 0 || !isPartyB) {
           step = steps.CLAIMING
-          dispatch(push('/redeem'))
         }
         if (transactions.a.claim.hash) {
           step = steps.SETTLED
-          dispatch(push('/completed'))
         }
       }
     }
   }
+
   dispatch(swapActions.setStep(step))
+}
+
+function setLocation (step, currentLocation, dispatch) {
+  if (currentLocation.pathname !== '/refund') {
+    if (step === steps.CLAIMING) {
+      dispatch(replace('/redeem'))
+    } else if (step === steps.SETTLED) {
+      dispatch(replace('/completed'))
+    }
+  }
 }
 
 async function monitorTransaction (swap, party, kind, tx, dispatch, getState) {
@@ -38,8 +47,10 @@ async function monitorTransaction (swap, party, kind, tx, dispatch, getState) {
     }
     const updatedTransaction = await client.getTransactionByHash(tx.hash)
     dispatch({ type: types.SET_TRANSACTION, party, kind, tx: updatedTransaction })
-    const newSwapState = getState().swap
-    setStep(newSwapState.transactions, newSwapState.isPartyB, dispatch)
+    let state = getState()
+    setStep(state.swap.transactions, state.swap.isPartyB, dispatch)
+    state = getState()
+    setLocation(state.swap.step, state.router.location, dispatch)
     await sleep(5000)
   }
 }

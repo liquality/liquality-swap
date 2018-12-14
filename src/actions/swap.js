@@ -1,6 +1,6 @@
 /* global alert */
 
-import { push } from 'connected-react-router'
+import { replace } from 'connected-react-router'
 import config from '../config'
 import { getClient } from '../services/chainClient'
 import { crypto } from '@liquality/chainabstractionlayer/dist/index.umd.js'
@@ -95,7 +95,7 @@ function initiateSwap () {
   return async (dispatch, getState) => {
     await lockFunds(dispatch, getState)
     dispatch(setIsVerified(true))
-    dispatch(push('/counterPartyLink'))
+    dispatch(replace('/counterPartyLink'))
   }
 }
 
@@ -103,7 +103,7 @@ function confirmSwap () {
   return async (dispatch, getState) => {
     await lockFunds(dispatch, getState)
     dispatch(waitForSwapClaim())
-    dispatch(push('/waiting'))
+    dispatch(replace('/waiting'))
     alphaWarning()
   }
 }
@@ -150,7 +150,7 @@ async function findInitiateSwapTransaction (dispatch, getState) {
 
 function waitForSwapConfirmation () {
   return async (dispatch, getState) => {
-    dispatch(push('/waiting'))
+    dispatch(replace('/waiting'))
     alphaWarning()
     await findInitiateSwapTransaction(dispatch, getState)
   }
@@ -200,7 +200,6 @@ async function unlockFunds (dispatch, getState) {
   }
   const txHash = await client.claimSwap(...claimSwapParams)
   dispatch(transactionActions.setTransaction('a', 'claim', { hash: txHash, block }))
-  dispatch(waitForExpiration)
 }
 
 function redeemSwap () {
@@ -240,13 +239,16 @@ async function waitForExpiration (dispatch, getState) {
   } = getState().swap
 
   const swapExpiration = getFundExpiration(expiration, isPartyB ? 'b' : 'a').time
-  let swapExpired = false
   while (true) {
-    swapExpired = moment().isAfter(swapExpiration)
-    if (swapExpired) break
+    const swapClaimed = getState().swap.transactions.b.claim.confirmations > 0
+    if (swapClaimed) break
+    const swapExpired = moment().isAfter(swapExpiration)
+    if (swapExpired) {
+      dispatch(replace('/refund'))
+      break
+    }
     await sleep(5000)
   }
-  dispatch(push('/refund'))
 }
 
 const actions = {

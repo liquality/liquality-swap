@@ -29,10 +29,6 @@ const store = createStore(
 )
 
 if (initialAppState.swap) {
-  if (initialAppState.swap.transactions.a.fund.hash) {
-    store.dispatch(swapActions.waitForExpiration)
-  }
-
   if (initialAppState.swap.isPartyB) {
     // Need to use action to kick off tx monitoring
     store.dispatch(transactionActions.setTransaction(
