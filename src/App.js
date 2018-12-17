@@ -14,6 +14,10 @@ import reducers from './reducers'
 import { generateSwapState } from './utils/app-links'
 import './App.css'
 
+window.onbeforeunload = () => { // Prompt on trying to leave app
+  return true
+}
+
 const history = createBrowserHistory({basename: window.location.pathname})
 
 hotjar.initialize(1102216, 6)
