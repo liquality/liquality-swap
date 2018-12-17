@@ -25,7 +25,8 @@ function waitForWallet (party, currency, wallet) {
 
     dispatch(chooseWallet(party, wallet))
     const addressesPerCall = 20
-    let allAddresses = await client.getUsedAddress(addressesPerCall)
+    let allAddresses = await client.getUsedAddresses(addressesPerCall)
+    allAddresses = allAddresses.map(a => a.address)
 
     if (isPartyB) { // Preserve the preset address for party B
       const expectedAddress = wallets[party].addresses[0]
