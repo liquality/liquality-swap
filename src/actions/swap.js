@@ -40,10 +40,6 @@ function setIsVerified (isVerified) {
   return { type: types.SET_IS_VERIFIED, isVerified }
 }
 
-function alphaWarning () {
-  alert('Warning: On this alpha version, do not close your browser during the swap. The swap state will be lost.')
-}
-
 async function lockFunds (dispatch, getState) {
   const {
     assets,
@@ -56,11 +52,11 @@ async function lockFunds (dispatch, getState) {
   } = getState().swap
   const client = getClient(assets.a.currency)
   let secretHash = secretParams.secretHash
+  let secret
   if (!secretHash) {
     const secretMsg = `${assets.a.value}${assets.a.currency}${assets.b.value}${assets.b.currency}${wallets.a.addresses[0]}${counterParty[assets.a.currency].address}${wallets.b.addresses[0]}${counterParty[assets.b.currency].address}`
-    const secret = await client.generateSecret(secretMsg)
+    secret = await client.generateSecret(secretMsg)
     secretHash = crypto.sha256(secret)
-    dispatch(secretActions.setSecret(secret))
   }
 
   let swapExpiration
@@ -87,6 +83,7 @@ async function lockFunds (dispatch, getState) {
   if (!link) {
     dispatch(setLink(generateLink(getState().swap)))
   }
+  dispatch(secretActions.setSecret(secret))
   dispatch(transactionActions.setTransaction('a', 'fund', { hash: txHash, block }))
   dispatch(waitForExpiration)
 }
@@ -95,7 +92,7 @@ function initiateSwap () {
   return async (dispatch, getState) => {
     await lockFunds(dispatch, getState)
     dispatch(setIsVerified(true))
-    dispatch(replace('/counterPartyLink'))
+    dispatch(replace('/backupLink'))
   }
 }
 
@@ -103,8 +100,7 @@ function confirmSwap () {
   return async (dispatch, getState) => {
     await lockFunds(dispatch, getState)
     dispatch(waitForSwapClaim())
-    dispatch(replace('/waiting'))
-    alphaWarning()
+    dispatch(replace('/backupLink'))
   }
 }
 
@@ -151,7 +147,6 @@ async function findInitiateSwapTransaction (dispatch, getState) {
 function waitForSwapConfirmation () {
   return async (dispatch, getState) => {
     dispatch(replace('/waiting'))
-    alphaWarning()
     await findInitiateSwapTransaction(dispatch, getState)
   }
 }
@@ -170,7 +165,6 @@ function waitForSwapClaim () {
     const client = getClient(assets.a.currency)
     const swapExpiration = getFundExpiration(expiration, isPartyB ? 'b' : 'a').time
     const claimTransaction = await client.findClaimSwapTransaction(transactions.a.fund.hash, counterParty[assets.a.currency].address, wallets.a.addresses[0], secretParams.secretHash, swapExpiration.unix())
-    dispatch(secretActions.setSecret(claimTransaction.secret))
     dispatch(transactionActions.setTransaction('b', 'claim', claimTransaction))
   }
 }
