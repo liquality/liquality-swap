@@ -1,8 +1,10 @@
 import { replace } from 'connected-react-router'
+import _ from 'lodash'
 import { actions as swapActions } from './swap'
 import { steps } from '../components/SwapProgressStepper/steps'
 import { getClient } from '../services/chainClient'
 import { sleep } from '../utils/async'
+import storage from '../utils/storage'
 
 const types = {
   SET_TRANSACTION: 'SET_TRANSACTION'
@@ -58,13 +60,36 @@ async function monitorTransaction (swap, party, kind, tx, dispatch, getState) {
 function setTransaction (party, kind, tx) {
   return async (dispatch, getState) => {
     dispatch({ type: types.SET_TRANSACTION, party, kind, tx })
+    storage.update({ transactions: { [party]: { [kind]: { hash: tx.hash } } } })
     const swap = getState().swap
     await monitorTransaction(swap, party, kind, tx, dispatch, getState)
   }
 }
 
+function loadTransactions () {
+  return async (dispatch) => {
+    const transactions = storage.get().transactions
+    const transactionPaths = [
+      'a.fund.hash',
+      'b.fund.hash',
+      'a.claim.hash',
+      'b.claim.hash'
+    ]
+    transactionPaths.forEach(path => {
+      if (_.has(transactions, path)) {
+        const parts = path.split('.')
+        const party = parts[0]
+        const kind = parts[1]
+        const txHash = _.get(transactions, path)
+        dispatch(setTransaction(party, kind, { hash: txHash }))
+      }
+    })
+  }
+}
+
 const actions = {
-  setTransaction
+  setTransaction,
+  loadTransactions
 }
 
 export { types, actions }

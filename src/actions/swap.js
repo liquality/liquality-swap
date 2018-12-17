@@ -84,11 +84,11 @@ async function lockFunds (dispatch, getState) {
     console.log('Initiating Swap', initiateSwapParams)
   }
   const txHash = await client.initiateSwap(...initiateSwapParams)
-  dispatch(transactionActions.setTransaction('a', 'fund', { hash: txHash, block }))
-  dispatch(waitForExpiration)
   if (!link) {
     dispatch(setLink(generateLink(getState().swap)))
   }
+  dispatch(transactionActions.setTransaction('a', 'fund', { hash: txHash, block }))
+  dispatch(waitForExpiration)
 }
 
 function initiateSwap () {
