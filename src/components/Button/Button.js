@@ -16,6 +16,10 @@ class Button extends Component {
       this.setState({
         clickDisabled: true
       })
+      var _ = this
+      setTimeout((function() {_.setState({
+        clickDisabled: false
+      })}), 20000)
     }
     this.props.onClick(e)
   }
