@@ -4,9 +4,7 @@ const types = {
 }
 
 function setSecret (secret) {
-  return async (dispatch) => {
-    dispatch({ type: types.SET_SECRET, secret })
-  }
+  return { type: types.SET_SECRET, secret }
 }
 
 function setSecretHash (secretHash) {
