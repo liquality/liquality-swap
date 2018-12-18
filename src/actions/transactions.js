@@ -1,11 +1,23 @@
 import { replace } from 'connected-react-router'
+import _ from 'lodash'
+import moment from 'moment'
 import { actions as swapActions } from './swap'
+import { actions as secretActions } from './secretparams'
 import { steps } from '../components/SwapProgressStepper/steps'
 import { getClient } from '../services/chainClient'
 import { sleep } from '../utils/async'
+import { getFundExpiration } from '../utils/expiration'
+import { generateLink } from '../utils/app-links'
+import storage from '../utils/storage'
 
 const types = {
   SET_TRANSACTION: 'SET_TRANSACTION'
+}
+
+async function setSecret (swap, party, tx, dispatch) {
+  const client = getClient(swap.assets[party === 'a' ? 'b' : 'a'].currency)
+  const secret = await client.getSwapSecret(tx.hash)
+  dispatch(secretActions.setSecret(secret))
 }
 
 function setStep (transactions, isPartyB, dispatch) {
@@ -27,11 +39,24 @@ function setStep (transactions, isPartyB, dispatch) {
   dispatch(swapActions.setStep(step))
 }
 
-function setLocation (step, currentLocation, dispatch) {
-  if (currentLocation.pathname !== '/refund') {
-    if (step === steps.CLAIMING) {
+function setLocation (swap, currentLocation, dispatch) {
+  const canNavigate = currentLocation.pathname !== '/backupLink' && currentLocation.pathname !== '/refund'
+  if (canNavigate) {
+    const hasInitiated = swap.transactions.a.fund.hash && swap.transactions.a.fund.confirmations > 0
+    const canRefund = !swap.transactions.b.claim.hash || swap.transactions.b.claim.confirmations === 0
+    const swapExpiration = getFundExpiration(swap.expiration, swap.isPartyB ? 'b' : 'a').time
+    const swapExpired = moment().isAfter(swapExpiration)
+    if (hasInitiated && canRefund && swapExpired) {
+      dispatch(replace('/refund'))
+    } else if (swap.step === steps.AGREEMENT && currentLocation.pathname !== '/waiting') {
+      if (swap.isPartyB || swap.transactions.b.fund.hash) {
+        dispatch(replace('/waiting'))
+      } else {
+        dispatch(replace('/counterPartyLink'))
+      }
+    } else if (swap.step === steps.CLAIMING) {
       dispatch(replace('/redeem'))
-    } else if (step === steps.SETTLED) {
+    } else if (swap.step === steps.SETTLED) {
       dispatch(replace('/completed'))
     }
   }
@@ -50,7 +75,7 @@ async function monitorTransaction (swap, party, kind, tx, dispatch, getState) {
     let state = getState()
     setStep(state.swap.transactions, state.swap.isPartyB, dispatch)
     state = getState()
-    setLocation(state.swap.step, state.router.location, dispatch)
+    setLocation(state.swap, state.router.location, dispatch)
     await sleep(5000)
   }
 }
@@ -58,13 +83,52 @@ async function monitorTransaction (swap, party, kind, tx, dispatch, getState) {
 function setTransaction (party, kind, tx) {
   return async (dispatch, getState) => {
     dispatch({ type: types.SET_TRANSACTION, party, kind, tx })
-    const swap = getState().swap
+    let swap = getState().swap
+    if (kind === 'claim') {
+      await setSecret(swap, party, tx, dispatch)
+    }
+    swap = getState().swap
+    if (!swap.link) {
+      const link = generateLink(getState().swap)
+      dispatch(swapActions.setLink(link))
+    }
+    swap = getState().swap
+    storage.update({ transactions: { [party]: { [kind]: { hash: tx.hash } } } })
     await monitorTransaction(swap, party, kind, tx, dispatch, getState)
   }
 }
 
+function loadTransactions () {
+  return async (dispatch, getState) => {
+    const data = storage.get()
+    if (data && data.transactions) {
+      const transactions = data.transactions
+      const transactionPaths = [
+        'a.fund.hash',
+        'b.fund.hash',
+        'a.claim.hash',
+        'b.claim.hash'
+      ]
+      transactionPaths.forEach(path => {
+        if (_.has(transactions, path)) {
+          const parts = path.split('.')
+          const party = parts[0]
+          const kind = parts[1]
+          const txHash = _.get(transactions, path)
+          dispatch(setTransaction(party, kind, { hash: txHash }))
+        }
+      })
+      const swapState = getState().swap
+      if (swapState.transactions.a.fund.hash && !swapState.transactions.b.claim.hash) {
+        dispatch(swapActions.waitForSwapClaim())
+      }
+    }
+  }
+}
+
 const actions = {
-  setTransaction
+  setTransaction,
+  loadTransactions
 }
 
 export { types, actions }
