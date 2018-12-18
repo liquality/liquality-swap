@@ -13,8 +13,8 @@ function setStep (transactions, isPartyB, dispatch) {
   if (transactions.a.fund.hash) {
     step = steps.AGREEMENT
     if (transactions.b.fund.hash) {
-      if (transactions.a.fund.confirmations > 0 && transactions.b.fund.confirmations > 0) {
-        if (transactions.b.claim.confirmations > 0 || !isPartyB) {
+      if (transactions.a.fund.confirmations >= 0 && transactions.b.fund.confirmations >= 0) {
+        if (transactions.b.claim.confirmations >= 0 || !isPartyB) {
           step = steps.CLAIMING
         }
         if (transactions.a.claim.hash) {
