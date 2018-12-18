@@ -25,11 +25,6 @@ const initialState = {
 }
 
 function switchSides (state, action) {
-  if (state.b.chosen && !state.b.connected) {
-    state.b.switched = !state.b.switched
-  } else if (state.a.chosen && !state.a.connected) {
-    state.a.switched = !state.a.switched
-  }
   return update(state, {
     a: { $set: state.b },
     b: { $set: state.a }
@@ -55,10 +50,6 @@ function chooseWallet (state, action) {
 }
 
 function connectWallet (state, action) {
-  const otherParty = action.party === 'a' ? 'b' : 'a'
-  if (state[otherParty].switched) {
-    action.party = otherParty
-  }
   return update(state, {
     [action.party]: {
       addresses: { $set: action.addresses },
