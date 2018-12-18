@@ -10,7 +10,6 @@ const initialState = {
     connectOpen: false,
     connected: false,
     chosen: false,
-    switched: false,
     type: ''
   },
   b: {
@@ -19,7 +18,6 @@ const initialState = {
     connectOpen: false,
     connected: false,
     chosen: false,
-    switched: false,
     type: ''
   }
 }
