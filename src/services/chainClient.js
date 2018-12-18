@@ -17,7 +17,7 @@ btcClient.addProvider(new providers.bitcoin.BitcoreRPCProvider(
   localStorage.btcRpc || window.btcRpc || process.env.REACT_APP_BTC_RPC || config.btc.rpc.url,
   localStorage.btcRpcUser || window.btcRpcUser || process.env.REACT_APP_BTC_RPC_USER || config.btc.rpc.username,
   localStorage.btcRpcPass || window.btcRpcPass || process.env.REACT_APP_BTC_RPC_PASS || config.btc.rpc.password,
-  config.feeNumberOfBlocks
+  config.btc.feeNumberOfBlocks
 ))
 btcClient.addProvider(new providers.bitcoin.BitcoinLedgerProvider({network: networks[config.btc.network]}))
 btcClient.addProvider(new providers.bitcoin.BitcoinSwapProvider({network: networks[config.btc.network]}))
