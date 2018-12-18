@@ -38,7 +38,9 @@ function waitForWallet (party, currency, wallet) {
 
     const balance = await client.getBalance(allAddresses)
     const formattedBalance = currencies[currency].unitToCurrency(balance).toFixed(6)
-    dispatch(connectWallet(party, allAddresses, formattedBalance))
+    const otherParty = party === 'a' ? 'b' : 'a'
+    const walletParty = getState().swap.assets[party].currency === currency ? party : otherParty
+    dispatch(connectWallet(walletParty, allAddresses, formattedBalance))
   }
 }
 
