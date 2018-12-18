@@ -9,7 +9,7 @@ export default {
     rpc: {
       username: 'liquality',
       password: 'liquality123',
-      url: 'https://bitcoin.liquality.io'
+      url: 'https://liquality.io/bitcoinrpc/'
     },
     feeNumberOfBlocks: 2,
     network: 'bitcoin'

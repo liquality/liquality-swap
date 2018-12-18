@@ -9,7 +9,7 @@ export default {
     rpc: {
       username: 'bitcoin',
       password: 'local321',
-      url: 'https://btc-testnet.leep.it'
+      url: 'https://liquality.io/bitcointestnetrpc/'
     },
     feeNumberOfBlocks: 2,
     network: 'bitcoin_testnet'
