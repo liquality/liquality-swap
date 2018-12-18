@@ -7,7 +7,6 @@ import { store, initialAppState } from './store'
 import history from './history'
 
 import { actions as swapActions } from './actions/swap'
-import { actions as secretActions } from './actions/secretparams'
 import { actions as transactionActions } from './actions/transactions'
 
 import LiqualitySwap from './containers/LiqualitySwap'
@@ -19,7 +18,6 @@ window.onbeforeunload = () => { // Prompt on trying to leave app
 
 if (initialAppState.swap) {
   store.dispatch(transactionActions.loadTransactions())
-  store.dispatch(secretActions.loadSecret())
   if (initialAppState.swap.isPartyB) {
     // Need to use action to kick off tx monitoring
     store.dispatch(transactionActions.setTransaction(
