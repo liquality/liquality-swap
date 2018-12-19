@@ -29,5 +29,9 @@
     font-size: $h1-font-size;
     font-weight: 500;
     border-bottom: 1px solid #31E4C3;
+
+    &[readonly] {
+      border: none;
+    }
   }
 }

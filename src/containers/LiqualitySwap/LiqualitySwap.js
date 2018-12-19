@@ -24,7 +24,7 @@ class LiqualitySwap extends Component {
 
   getBackupLinkCard () {
     const link = this.props.swap.link
-    return <BackupLinkCard link={link} onNextClick={() => this.props.history.push(this.props.swap.isPartyB ? '/waiting' : '/counterPartyLink')} />
+    return <BackupLinkCard link={link} onNextClick={() => this.props.history.replace(this.props.swap.isPartyB ? '/waiting' : '/counterPartyLink')} />
   }
 
   getCounterPartyLinkCard () {
