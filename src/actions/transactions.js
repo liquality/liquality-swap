@@ -88,8 +88,10 @@ function setTransaction (party, kind, tx) {
       await setSecret(swap, party, tx, dispatch)
     }
     swap = getState().swap
-    const link = generateLink(getState().swap)
-    dispatch(swapActions.setLink(link))
+    if (!swap.link) {
+      const link = generateLink(getState().swap)
+      dispatch(swapActions.setLink(link))
+    }
     swap = getState().swap
     storage.update({ transactions: { [party]: { [kind]: { hash: tx.hash } } } })
     await monitorTransaction(swap, party, kind, tx, dispatch, getState)
