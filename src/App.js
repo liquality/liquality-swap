@@ -1,38 +1,23 @@
 import React, { Component } from 'react'
 
 import { Provider } from 'react-redux'
-import { createStore, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
-import { createBrowserHistory } from 'history'
-import { ConnectedRouter, connectRouter, routerMiddleware } from 'connected-react-router'
-import { hotjar } from 'react-hotjar'
+import { ConnectedRouter } from 'connected-react-router'
+
+import { store, initialAppState } from './store'
+import history from './history'
 
 import { actions as swapActions } from './actions/swap'
 import { actions as transactionActions } from './actions/transactions'
+
 import LiqualitySwap from './containers/LiqualitySwap'
-import reducers from './reducers'
-import { generateSwapState } from './utils/app-links'
 import './App.css'
 
 window.onbeforeunload = () => { // Prompt on trying to leave app
   return true
 }
 
-const history = createBrowserHistory({basename: window.location.pathname})
-
-hotjar.initialize(1102216, 6)
-
-const initialAppState = {
-  swap: generateSwapState(window.location)
-}
-
-const store = createStore(
-  connectRouter(history)(reducers),
-  initialAppState,
-  applyMiddleware(thunk, routerMiddleware(history))
-)
-
 if (initialAppState.swap) {
+  store.dispatch(transactionActions.loadTransactions())
   if (initialAppState.swap.isPartyB) {
     // Need to use action to kick off tx monitoring
     store.dispatch(transactionActions.setTransaction(
