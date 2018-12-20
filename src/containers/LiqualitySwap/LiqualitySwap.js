@@ -4,6 +4,8 @@ import { Route } from 'react-router-dom'
 import SwapInitiation from '../SwapInitiation'
 import CounterPartyLinkCard from '../../components/CounterPartyLinkCard/CounterPartyLinkCard'
 import BackupLinkCard from '../../components/BackupLinkCard/BackupLinkCard'
+import Button from '../../components/Button/Button'
+import Modal from '@material-ui/core/Modal';
 import Waiting from '../Waiting'
 import SwapRedemption from '../SwapRedemption'
 import SwapCompleted from '../SwapCompleted'
@@ -18,6 +20,7 @@ import './LiqualitySwap.css'
 class LiqualitySwap extends Component {
   constructor (props) {
     super(props)
+
     this.getCounterPartyLinkCard = this.getCounterPartyLinkCard.bind(this)
     this.getBackupLinkCard = this.getBackupLinkCard.bind(this)
   }
@@ -52,6 +55,15 @@ class LiqualitySwap extends Component {
         </div>
       </div>
       <footer dangerouslySetInnerHTML={{__html: config.injectFooter}} />
+      {window.location.href.indexOf("challenge") > -1 &&
+      <Modal open={true}>
+        <div className='SwapChallengeModal'>
+          <h4>Thanks for all of you that participated in the Swap Challenge</h4>
+          <h2>The Challenge is now complete</h2>
+          <Button wide primary onClick={() => window.open("https://liquality.io", "_self")}>Back to home page</Button>
+        </div>
+      </Modal>}
+      
     </div>
   }
 }
