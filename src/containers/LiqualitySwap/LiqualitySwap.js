@@ -58,7 +58,7 @@ class LiqualitySwap extends Component {
       {window.location.href.indexOf("challenge") > -1 &&
       <Modal open={true}>
         <div className='SwapChallengeModal'>
-          <h4>Thanks for all of you that participated in the Swap Challenge</h4>
+          <h4>Thanks to all of you who have participated in the Swap Challenge</h4>
           <h2>The Challenge is now complete</h2>
           <Button wide primary onClick={() => window.open("https://liquality.io", "_self")}>Back to home page</Button>
         </div>
