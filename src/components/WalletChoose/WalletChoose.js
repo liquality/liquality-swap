@@ -10,7 +10,7 @@ import './WalletChoose.css'
 const WalletChoose = (props) => (
   <div className='WalletChoose'>
     <h1>{props.title}</h1>
-    <p>{props.subTitle}</p>
+    {props.subTitle && <p>{props.subTitle}</p>}
     <h2>Pay with {props.currency.toUpperCase()}</h2>
     {props.wallets.map((wallet) => (
       <div>
@@ -21,6 +21,7 @@ const WalletChoose = (props) => (
           <p><a href='#'>Trouble connecting?</a></p>
         </div>
         <Button wide primary onClick={() => props.chooseWallet(wallet)}>Connect</Button>
+        <Button wide link onClick={props.onCancel}>Cancel</Button>
       </div>
     ))}
   </div>
@@ -28,6 +29,7 @@ const WalletChoose = (props) => (
 
 WalletChoose.propTypes = {
   chooseWallet: PropTypes.func,
+  onCancel: PropTypes.func,
   currency: PropTypes.string,
   title: PropTypes.string,
   subTitle: PropTypes.string,
