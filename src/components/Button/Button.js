@@ -16,10 +16,9 @@ class Button extends Component {
       this.setState({
         clickDisabled: true
       })
-      var _ = this
-      setTimeout((function() {_.setState({
-        clickDisabled: false
-      })}), 20000)
+      setTimeout(() => {
+        this.setState({clickDisabled: false})
+      }, 20000)
     }
     this.props.onClick(e)
   }
@@ -35,6 +34,8 @@ class Button extends Component {
       classes.push('btn-primary')
     } else if (this.props.secondary) {
       classes.push('btn-secondary')
+    } else if (this.props.link) {
+      classes.push('btn-link')
     }
 
     if (this.props.wide) {
@@ -62,6 +63,7 @@ Button.propTypes = {
   className: PropTypes.string,
   primary: PropTypes.bool,
   secondary: PropTypes.bool,
+  link: PropTypes.bool,
   wide: PropTypes.bool,
   small: PropTypes.bool,
   disabled: PropTypes.bool,

@@ -36,6 +36,7 @@ class WalletConnectPopup extends Component {
           currency={props.currency}
           disconnectText='Disconnect'
           disconnectWallet={this.disconnectWallet}
+          onOk={this.props.handleClose}
           wallet={props.wallet}
         />
 
@@ -54,9 +55,10 @@ class WalletConnectPopup extends Component {
       walletConnectBody = (
         <WalletChoose
           title='Liquality'
-          subTitle='By connecting you understand that you are on your own trust a cutting-edge technology without need to trust your trading partner'
+          subTitle=''
           wallets={props.currency === 'eth' ? ['metamask'] : ['ledger']}
           chooseWallet={this.chooseWallet}
+          onCancel={this.props.handleClose}
           currency={props.currency} />
       )
     }
