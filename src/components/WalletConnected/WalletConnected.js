@@ -14,7 +14,8 @@ const WalletConnected = (props) => (
       <h5>{wallets[props.wallet].name}</h5>
       <p>{shortenAddress(props.addresses[0])}</p>
     </div>
-    <Button wide primary onClick={props.disconnectWallet}>{props.disconnectText}</Button>
+    <Button wide primary onClick={props.onOk}>OK</Button>
+    <Button wide link onClick={props.disconnectWallet}>{props.disconnectText}</Button>
   </div>
 )
 
@@ -23,6 +24,7 @@ WalletConnected.propTypes = {
   currency: PropTypes.string,
   disconnectText: PropTypes.string,
   disconnectWallet: PropTypes.func,
+  onOk: PropTypes.func,
   wallet: PropTypes.string
 }
 
