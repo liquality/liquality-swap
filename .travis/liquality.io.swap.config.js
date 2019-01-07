@@ -3,7 +3,7 @@ export default {
     rpc: {
       url: 'https://rinkeby.infura.io/pjvC14Kn4cv47X3U8qLq'
     },
-    network: 4
+    network: 'rinkeby'
   },
   btc: {
     rpc: {
