@@ -9,8 +9,8 @@ import './CounterPartyLinkCard.css'
 class CounterPartyLinkCard extends Component {
   render () {
     return <BrandCard className='CounterPartyLinkCard' title='Swap Initiated'>
-      <img class='CounterPartyLinkCard_icon' src={CompletedIcon} />
-      <p class='CounterPartyLinkCard_description'>To continue, share this link with your counterparty</p>
+      <img className='CounterPartyLinkCard_icon' src={CompletedIcon} alt='Completed' />
+      <p className='CounterPartyLinkCard_description'>To continue, share this link with your counterparty</p>
       <p><Button wide secondary onClick={this.props.onCopyClick} icon={CopyIcon}>Counterparty Link</Button></p>
       <p><Button wide primary onClick={this.props.onNextClick}>Link Sent</Button></p>
     </BrandCard>

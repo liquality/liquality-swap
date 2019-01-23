@@ -29,7 +29,7 @@ class SwapProgressStepper extends Component {
           }
         }
         if (index < activeStep) {
-          stepIconProps.icon = <img src={CompletedIcon} />
+          stepIconProps.icon = <img src={CompletedIcon} alt='Completed' />
         }
         return <Step key={step.id}>
           <StepLabel classes={{

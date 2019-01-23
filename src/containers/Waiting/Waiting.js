@@ -29,9 +29,9 @@ class Waiting extends Component {
 
   render () {
     return <BrandCard className='Waiting' title='Awaiting Counterparty'>
-      <p class='Waiting_status'>{ this.getWaitingStatus() }</p>
+      <p className='Waiting_status'>{ this.getWaitingStatus() }</p>
       <p>Thanks to the Atomic Swap you don't need to trust the counterparty and avoid the middlemen.</p>
-      <p><img className='LiqualitySwap_logo' src={LiqualityLogo} /></p>
+      <p><img className='LiqualitySwap_logo' src={LiqualityLogo} alt='Liquality Logo' /></p>
       <ExpirationDetails isClaim />
     </BrandCard>
   }

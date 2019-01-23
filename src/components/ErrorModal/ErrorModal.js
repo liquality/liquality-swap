@@ -6,8 +6,8 @@ class ErrorModal extends Component {
   render () {
     return (
       <div>
-        { this.props.open && <div class='ErrorModal'>
-          <img className='ErrorModal_close' src={CloseIcon} onClick={this.props.onClose} />
+        { this.props.open && <div className='ErrorModal'>
+          <img className='ErrorModal_close' src={CloseIcon} onClick={this.props.onClose} alt='Close' />
           {this.props.error && this.props.error.toString()}
         </div> }
       </div>

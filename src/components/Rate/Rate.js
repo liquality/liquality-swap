@@ -10,7 +10,7 @@ const Rate = (props) => (
     <h5 className='Rate_stable'><strong>1 {currencies[props.currencyA].code}</strong></h5>
     <h4 className='Rate_equal'>=</h4>
     <h6>
-      <input tabindex={props.tabindex} type='number' readOnly={props.disabled} value={props.value} className='Rate_input' placeholder='0.0000' onChange={e => props.onChange(e.target.value)} />
+      <input tabIndex={props.tabIndex} type='number' readOnly={props.disabled} value={props.value} className='Rate_input' placeholder='0.0000' onChange={e => props.onChange(e.target.value)} />
       {currencies[props.currencyB].code}
     </h6>
   </div>
@@ -20,12 +20,12 @@ Rate.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
-  tabindex: PropTypes.number
+  tabIndex: PropTypes.number
 }
 
 Rate.defaultProps = {
   value: 0,
-  tabindex: -1
+  tabIndex: -1
 }
 
 export default Rate

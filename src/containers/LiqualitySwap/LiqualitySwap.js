@@ -38,7 +38,7 @@ class LiqualitySwap extends Component {
     return <div className='LiqualitySwap'>
       <div className='LiqualitySwap_bar' />
       <div className='LiqualitySwap_header'>
-        <img className='LiqualitySwap_logo' src={LiqualityLogo} />
+        <img className='LiqualitySwap_logo' src={LiqualityLogo} alt='Liquality Logo' />
         <SwapProgressStepper state={this.props.swap.step} />
       </div>
       <div className='LiqualitySwap_main'>
