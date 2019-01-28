@@ -21,19 +21,19 @@ const AddressInput = (props) => {
     }
   }
 
-  return <div class='AddressInput'>
-    <div class='AddressInput_wrapper'>
+  return <div className='AddressInput'>
+    <div className='AddressInput_wrapper'>
       <div className={'AddressInput_box ' + cls}>
-        <img class='AddressInput_icon' src={currencies[props.currency].icon} />
-        <input class='AddressInput_input'
-          tabindex={props.tabindex}
+        <img className='AddressInput_icon' src={currencies[props.currency].icon} alt={currencies[props.currency].name} />
+        <input className='AddressInput_input'
+          tabIndex={props.tabIndex}
           value={props.value}
           onChange={e => props.onChange(e.target.value, currencies[props.currency].isValidAddress(e.target.value))}
         />
       </div>
-      <img class='AddressInput_status' src={valid ? TickIcon : ErrorIcon} />
+      <img className='AddressInput_status' src={valid ? TickIcon : ErrorIcon} alt={valid ? 'Valid' : 'Invalid'} />
     </div>
-    <div class='AddressInput_message'>{helperMessage}</div>
+    <div className='AddressInput_message'>{helperMessage}</div>
   </div>
 }
 
@@ -42,11 +42,11 @@ AddressInput.propTypes = {
   currency: PropTypes.oneOf(Object.keys(currencies)).isRequired,
   value: PropTypes.string,
   onChange: PropTypes.func,
-  tabindex: PropTypes.number
+  tabIndex: PropTypes.number
 }
 
 AddressInput.defaultProps = {
-  tabindex: -1
+  tabIndex: -1
 }
 
 export default AddressInput

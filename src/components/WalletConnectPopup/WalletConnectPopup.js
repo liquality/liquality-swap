@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import Modal from '@material-ui/core/Modal'
 import WalletChoose from '../WalletChoose/WalletChoose'
 import WalletConnecting from '../WalletConnecting/WalletConnecting'
@@ -75,6 +76,14 @@ class WalletConnectPopup extends Component {
       </div>
     )
   }
+}
+
+WalletConnectPopup.propTypes = {
+  open: PropTypes.bool
+}
+
+WalletConnectPopup.defaultProps = {
+  open: false
 }
 
 export default WalletConnectPopup

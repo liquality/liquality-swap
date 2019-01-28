@@ -9,17 +9,19 @@ import WalletIcon from './wallet-icon.svg'
 import './WalletDisplay.css'
 
 const WalletBalance = (props) => (
-  <div class='WalletDisplay'>
-    <img class='WalletDisplay_icon' src={wallets[props.type] ? wallets[props.type].icon : WalletIcon} />
-    <p class='WalletDisplay_address'>{ props.address && props.address }</p>
+  <div className='WalletDisplay'>
+    <img className='WalletDisplay_icon'
+      src={wallets[props.type] ? wallets[props.type].icon : WalletIcon}
+      alt={wallets[props.type] ? wallets[props.type].name : 'Wallet'} />
+    <p className='WalletDisplay_address'>{ props.address && props.address }</p>
     { props.connected
-      ? <Button tabindex={-1} small secondary class='WalletDisplay_message' onClick={e => props.onButtonClick(e)}>Change wallet</Button>
-      : <Button tabindex={-1} small primary class='WalletDisplay_message error' onClick={e => props.onButtonClick(e)}>Connect wallet</Button>
+      ? <Button tabIndex={-1} small secondary onClick={e => props.onButtonClick(e)}>Change wallet</Button>
+      : <Button tabIndex={-1} small primary onClick={e => props.onButtonClick(e)}>Connect wallet</Button>
     }
     { props.balance &&
       <div>
         <p>Spendable</p>
-        <p class='WalletDisplay_balance'>{props.balance} {currencies[props.currency].code}</p>
+        <p className='WalletDisplay_balance'>{props.balance} {currencies[props.currency].code}</p>
       </div>
     }
   </div>

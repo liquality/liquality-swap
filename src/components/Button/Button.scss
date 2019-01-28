@@ -2,9 +2,6 @@
 
 .Button {
   font-weight: 600;
-  .btn-primary {
-    color: #ffffff;
-  }
   position: relative;
 
   &_wide {
@@ -32,6 +29,10 @@
     margin: -12px 10px -10px 0;
     width: 26px;
   }
+}
+
+.btn-primary {
+  color: #ffffff;
 }
 
 .btn-secondary {

@@ -7,6 +7,7 @@ const WEI_TO_ETH = 1000000000000000000
 
 const currencies = {
   'btc': {
+    name: 'Bitcoin',
     icon: btcIcon,
     code: 'BTC',
     // TODO: include network types in validation
@@ -19,6 +20,7 @@ const currencies = {
     }
   },
   'eth': {
+    name: 'Ethereum',
     icon: ethIcon,
     code: 'ETH',
     isValidAddress: address => /^(0x)?[0-9a-fA-F]{40}$/.test(address),

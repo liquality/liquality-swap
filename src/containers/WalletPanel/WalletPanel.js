@@ -9,9 +9,9 @@ class WalletPanel extends Component {
     const { a: assetA, b: assetB } = this.props.assets
     const { a: walletA, b: walletB } = this.props.wallets
 
-    return <div class='WalletPanel'>
-      <div class='row justify-content-between no-gutters'>
-        <div class='col WalletPanel_left'>
+    return <div className='WalletPanel'>
+      <div className='row justify-content-between no-gutters'>
+        <div className='col WalletPanel_left'>
           <WalletDisplay
             currency={assetA.currency}
             type={walletA.type}
@@ -20,7 +20,7 @@ class WalletPanel extends Component {
             connected={walletA.connected}
             onButtonClick={(e) => this.props.onToggleWalletConnect('a', e.currentTarget)} />
         </div>
-        <div class='col WalletPanel_right'>
+        <div className='col WalletPanel_right'>
           <WalletDisplay
             currency={assetB.currency}
             type={walletB.type}
