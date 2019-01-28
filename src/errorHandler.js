@@ -3,8 +3,9 @@ import { store } from './store'
 import { actions as errorActions } from './actions/errors'
 
 function errorHandler (e) {
-  if (e.reason instanceof errors.WalletError) {
-    store.dispatch(errorActions.setError(e.reason))
+  if (e instanceof errors.WalletError ||
+      e instanceof errors.NodeError) {
+    store.dispatch(errorActions.setError(e))
   } else {
     throw e
   }
