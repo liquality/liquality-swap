@@ -41,11 +41,21 @@ class SwapInitiation extends Component {
     return this.getErrors().length === 0
   }
 
+  amountsValid () {
+    return (parseInt(this.props.assets.a.value) > 0 && (parseInt(this.props.assets.a.value) <= parseInt(this.props.wallets.a.balance))) && (parseInt(this.props.assets.b.value) > 0 && (parseInt(this.props.assets.b.value) <= parseInt(this.props.wallets.b.balance)))
+  }
+
   getErrors () {
     const errors = []
+
+    if (!this.amountsValid()) {
+      errors.push('Amounts are incorrect')
+    }
+
     if (!this.walletsConnected()) {
       errors.push('Wallets are not connected')
     }
+
     if (this.props.isPartyB) {
       if (!this.walletsValid()) {
         errors.push('The connected wallets must match the wallets supplied for the swap')
