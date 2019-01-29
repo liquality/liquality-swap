@@ -8,22 +8,22 @@ class CounterPartyWallets extends Component {
     const { a: assetA, b: assetB } = this.props.assets
     const counterParty = this.props.counterParty
 
-    return <div class='CounterPartyWallets'>
-      <div class='row'>
-        <div class='col'>
-          <h5 class='CounterPartyWallets_heading'>Receive From</h5>
+    return <div className='CounterPartyWallets'>
+      <div className='row'>
+        <div className='col'>
+          <h5 className='CounterPartyWallets_heading'>Receive From</h5>
           <AddressInput currency={assetB.currency}
             value={counterParty[assetB.currency].address}
             onChange={(newValue, valid) => this.props.onCounterPartyAddressChange(assetB.currency, newValue, valid)}
-            tabindex={4}
+            tabIndex={4}
           />
         </div>
-        <div class='col'>
-          <h5 class='CounterPartyWallets_heading'>Send To</h5>
+        <div className='col'>
+          <h5 className='CounterPartyWallets_heading'>Send To</h5>
           <AddressInput currency={assetA.currency}
             value={counterParty[assetA.currency].address}
             onChange={(newValue, valid) => this.props.onCounterPartyAddressChange(assetA.currency, newValue, valid)}
-            tabindex={5}
+            tabIndex={5}
           />
         </div>
       </div>

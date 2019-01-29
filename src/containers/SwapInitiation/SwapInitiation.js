@@ -41,11 +41,21 @@ class SwapInitiation extends Component {
     return this.getErrors().length === 0
   }
 
+  amountsValid () {
+    return (parseFloat(this.props.assets.a.value) > 0 && (parseFloat(this.props.assets.a.value) <= parseFloat(this.props.wallets.a.balance))) && (parseFloat(this.props.assets.b.value) > 0 && (parseFloat(this.props.assets.b.value) <= parseFloat(this.props.wallets.b.balance)))
+  }
+
   getErrors () {
     const errors = []
+
+    if (!this.amountsValid()) {
+      errors.push('Amounts are incorrect')
+    }
+
     if (!this.walletsConnected()) {
       errors.push('Wallets are not connected')
     }
+
     if (this.props.isPartyB) {
       if (!this.walletsValid()) {
         errors.push('The connected wallets must match the wallets supplied for the swap')
@@ -69,24 +79,24 @@ class SwapInitiation extends Component {
       <SwapPairPanel
         haveCurrency={this.props.assets.a.currency}
         wantCurrency={this.props.assets.b.currency}
-        icon={this.props.isPartyB || SwapIcon}
+        icon={this.props.isPartyB ? undefined : SwapIcon}
         onIconClick={() => this.props.switchSides()} />
-      <div class='SwapInitiation_top'>
+      <div className='SwapInitiation_top'>
         <CurrencyInputs disabled={this.props.isPartyB} showRate />
       </div>
       <WalletPanel />
-      <div class='SwapInitiation_bottom'>
+      <div className='SwapInitiation_bottom'>
         { this.props.isPartyB
-          ? <span class='SwapInitiation_handshake'><img src={HandshakeIcon} /></span>
-          : <h5 class='SwapInitiation_counterPartyLabel'>Counter party wallets</h5> }
+          ? <span className='SwapInitiation_handshake'><img src={HandshakeIcon} alt='Agree' /></span>
+          : <h5 className='SwapInitiation_counterPartyLabel'>Counter party wallets</h5> }
         { this.props.isPartyB || <CounterPartyWallets /> }
         { this.props.isPartyB
           ? <ExpirationDetails />
           : <InitiatorExpirationInfo /> }
         {!this.props.isPartyB && <Button wide primary disabled={!this.nextEnabled()} loadingAfterClick loadingAfterClickMessage='Check wallet for action' onClick={this.props.initiateSwap}>Next</Button>}
         {this.props.isPartyB && <Button wide primary disabled={!this.nextEnabled()} loadingAfterClick loadingAfterClickMessage='Check wallet for action' onClick={this.props.confirmSwap}>Confirm Terms</Button>}
-        <div class='SwapInitiation_errors'>
-          {this.getErrors().map(error => <p>{error}</p>)}
+        <div className='SwapInitiation_errors'>
+          {this.getErrors().map(error => <p key={error}>{error}</p>)}
         </div>
       </div>
     </div>
