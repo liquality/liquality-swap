@@ -41,7 +41,7 @@ class SwapInitiation extends Component {
     return this.getErrors().length === 0
   }
 
-  amountsValid() {
+  amountsValid () {
     return (parseInt(this.props.assets.a.value) > 0 && (parseInt(this.props.assets.a.value) <= parseInt(this.props.wallets.a.balance))) && (parseInt(this.props.assets.b.value) > 0 && (parseInt(this.props.assets.b.value) <= parseInt(this.props.wallets.b.balance)))
   }
 
