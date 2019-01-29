@@ -6,14 +6,14 @@ import { getReducerFunction } from './helpers'
 const initialState = {
   a: {
     currency: 'eth',
-    value: ''
+    value: null
   },
   b: {
     currency: 'btc',
-    value: ''
+    value: null
   },
   rate: {
-    value: ''
+    value: null
   }
 }
 

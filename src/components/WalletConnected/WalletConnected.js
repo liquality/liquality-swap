@@ -10,7 +10,7 @@ const WalletConnected = (props) => (
   <div className='WalletConnected'>
     <h2>{wallets[props.wallet].name} Connected</h2>
     <div className='WalletConnected_wallet'>
-      <img src={wallets[props.wallet].icon} className='WalletPanel_walletImg' alt={`${wallets[props.wallet].name} Icon`} />
+      <img src={wallets[props.wallet].icon} className='WalletPanel_walletImg' />
       <h5>{wallets[props.wallet].name}</h5>
       <p>{shortenAddress(props.addresses[0])}</p>
     </div>

@@ -1,19 +1,16 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { actions as swapActions } from '../../actions/swap'
-import { actions as errorActions } from '../../actions/errors'
+import { actions } from '../../actions/swap'
 import LiqualitySwap from './LiqualitySwap'
 
 const mapStateToProps = state => ({
-  swap: state.swap,
-  error: state.error
+  swap: state.swap
 })
 
 export default withRouter(connect(
   mapStateToProps,
   {
-    waitForSwapConfirmation: swapActions.waitForSwapConfirmation,
-    waitForSwapClaim: swapActions.waitForSwapClaim,
-    clearError: errorActions.clearError
+    waitForSwapConfirmation: actions.waitForSwapConfirmation,
+    waitForSwapClaim: actions.waitForSwapClaim
   }
 )(LiqualitySwap))
