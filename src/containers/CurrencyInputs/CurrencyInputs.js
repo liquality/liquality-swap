@@ -15,15 +15,15 @@ class CurrencyInputs extends Component {
             value={assetA.value}
             disabled={this.props.disabled}
             onChange={newValue => this.props.onAmountChange('a', newValue)}
-            tabIndex={1} />
+            tabindex={1} />
         </div>
-        <div className='col CurrencyInputs_right'>
+        <div class='col CurrencyInputs_right'>
           <CurrencyInput
             currency={assetB.currency}
             value={assetB.value}
             disabled={this.props.disabled}
             onChange={newValue => this.props.onAmountChange('b', newValue)}
-            tabIndex={3} />
+            tabindex={3} />
         </div>
         { this.props.showRate &&
           <div className='CurrencyInputs_centre'>
@@ -33,7 +33,7 @@ class CurrencyInputs extends Component {
               value={assetRate.value}
               disabled={this.props.disabled}
               onChange={newValueA => this.props.onAmountChange('rate', newValueA)}
-              tabIndex={2}
+              tabindex={2}
             />
           </div>
         }

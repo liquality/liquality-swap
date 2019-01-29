@@ -8,10 +8,10 @@ class SwapPairPanel extends Component {
   render () {
     return <div className='SwapPairPanel'>
       <div className='SwapPairPanel_assetContainer'>
-        <img src={currencies[this.props.haveCurrency].icon} className='SwapPairPanel_asset SwapPairPanel_asset_left' alt={this.props.haveCurrency} />
-        <img src={currencies[this.props.wantCurrency].icon} className='SwapPairPanel_asset SwapPairPanel_asset_right' alt={this.props.haveCurrency} />
-        <img src={AssetsBG} className='SwapPairPanel_assetsBG' alt='' />
-        {this.props.icon && <img src={this.props.icon} className='SwapPairPanel_icon' onClick={(e) => this.props.onIconClick(e)} alt='' />}
+        <img src={currencies[this.props.haveCurrency].icon} className='SwapPairPanel_asset SwapPairPanel_asset_left' />
+        <img src={currencies[this.props.wantCurrency].icon} className='SwapPairPanel_asset SwapPairPanel_asset_right' />
+        <img src={AssetsBG} className='SwapPairPanel_assetsBG' />
+        {this.props.icon && <img src={this.props.icon} className='SwapPairPanel_icon' onClick={(e) => this.props.onIconClick(e)} />}
       </div>
       <div className='SwapPairPanel_labels'>
         <h1 className='SwapPairPanel_labels_have'>{this.props.haveLabel}</h1>

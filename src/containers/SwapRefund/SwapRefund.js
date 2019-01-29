@@ -7,8 +7,8 @@ import './SwapRefund.css'
 class SwapRedemption extends Component {
   render () {
     return <BrandCard className='SwapRefund' title='Refund'>
-      <div className='SwapRefund_confirmation'>
-        <p className='SwapRefund_terms'>
+      <div class='SwapRefund_confirmation'>
+        <p class='SwapRefund_terms'>
           {this.props.assets.a.value} {currencies[this.props.assets.a.currency].code}
         </p>
         <p>Your funds are ready for a refund.</p>

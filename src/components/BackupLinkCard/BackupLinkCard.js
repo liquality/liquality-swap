@@ -9,8 +9,8 @@ import './BackupLinkCard.css'
 class BackupLinkCard extends Component {
   render () {
     return <BrandCard className='BackupLinkCard' title='Backup'>
-      <img className='BackupLinkCard_icon' src={CompletedIcon} alt='Completed' />
-      <p className='BackupLinkCard_description'>You need this link to claim your funds if your browser closes.</p>
+      <img class='BackupLinkCard_icon' src={CompletedIcon} />
+      <p class='BackupLinkCard_description'>You need this link to claim your funds if your browser closes.</p>
       <p>Please copy this link by clicking the button below. Save it in a safe place.</p>
       <p><Button wide secondary onClick={() => this.props.onCopyClick()} icon={CopyIcon}>Backup Link</Button></p>
       <p><Button wide primary onClick={this.props.onNextClick}>Next</Button></p>

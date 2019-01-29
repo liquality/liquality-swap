@@ -18,15 +18,15 @@ class SwapCompleted extends Component {
         wantLabel='Received'
         icon={CompletedIcon}
         onIconClick={() => this.props.switchSides()} />
-      <div className='SwapCompleted_top'>
+      <div class='SwapCompleted_top'>
         <CurrencyInputs disabled />
-        <h2 className='SwapCompleted_label'>Swap Completed</h2>
-        <p className='SwapCompleted_subLabel'>
+        <h2 class='SwapCompleted_label'>Swap Completed</h2>
+        <p class='SwapCompleted_subLabel'>
           Go to {this.props.assets.b.currency === 'btc' ? 'Ledger Live' : 'MetaMask'} to confirm your balance
         </p>
-        <span className='SwapCompleted_handshake'><img src={HandshakeIcon} alt='' /></span>
+        <span class='SwapCompleted_handshake'><img src={HandshakeIcon} /></span>
       </div>
-      <div className='SwapCompleted_bottom'>
+      <div class='SwapCompleted_bottom'>
         <Button wide primary onClick={() => window.location.replace('/')}>Start another Swap</Button>
         {config.twitterButton && <a className='twitter-share-button' href={'https://twitter.com/intent/tweet' + config.twitterButton} data-size='large'>Tweet</a>}
       </div>

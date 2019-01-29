@@ -1,3 +1,5 @@
+/* global alert */
+
 import { replace } from 'connected-react-router'
 import config from '../config'
 import { getClient } from '../services/chainClient'

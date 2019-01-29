@@ -16,15 +16,11 @@ class Button extends Component {
       this.setState({
         clickDisabled: true
       })
-      this.timeout = setTimeout(() => {
+      setTimeout(() => {
         this.setState({clickDisabled: false})
       }, 20000)
     }
     this.props.onClick(e)
-  }
-
-  componentWillUnmount () {
-    clearTimeout(this.timeout)
   }
 
   render () {
@@ -52,10 +48,10 @@ class Button extends Component {
     const showLoader = this.props.loadingAfterClick && this.state.clickDisabled
     const disabled = this.state.clickDisabled || this.props.disabled
 
-    return <button tabIndex={this.props.tabIndex} className={classes.join(' ')} disabled={disabled} onClick={e => this.onClickHandler(e)}>
-      {this.props.icon && <span className='Button_icon'><img src={this.props.icon} alt='' /></span>}
+    return <button tabindex={this.props.tabindex} className={classes.join(' ')} disabled={disabled} onClick={e => this.onClickHandler(e)}>
+      {this.props.icon && <span class='Button_icon'><img src={this.props.icon} /></span>}
       {showLoader &&
-        <img className='Button_spinner' src={Spinner} alt='Loading...' />
+        <img class='Button_spinner' src={Spinner} />
       }
       { this.props.loadingAfterClickMessage && this.state.clickDisabled
         ? this.props.loadingAfterClickMessage : this.props.children }
@@ -75,11 +71,11 @@ Button.propTypes = {
   onClick: PropTypes.func,
   loadingAfterClick: PropTypes.bool,
   loadingAfterClickMessage: PropTypes.string,
-  tabIndex: PropTypes.number
+  tabindex: PropTypes.number
 }
 
 Button.defaultProps = {
-  tabIndex: -1
+  tabindex: -1
 }
 
 export default Button

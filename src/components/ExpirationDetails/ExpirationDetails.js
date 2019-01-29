@@ -62,33 +62,33 @@ class ExpirationDetails extends Component {
 
     const filled = (((total.asSeconds() - left.asSeconds()) / total.asSeconds()) * 100).toFixed(2)
 
-    return <div className='ExpirationDetails'>
-      <img src={ClockIcon} className='ExpirationDetails_clock' alt='Clock Icon' />
-      <div className='ExpirationDetails_passed'>{moment.utc(passed.asMilliseconds()).format('HH:mm')}hr</div>
-      <div className='ExpirationDetails_center'>
-        <div className='ExpirationDetails_top'>
-          <div className='ExpirationDetails_terms'>
+    return <div class='ExpirationDetails'>
+      <img src={ClockIcon} class='ExpirationDetails_clock' />
+      <div class='ExpirationDetails_passed'>{moment.utc(passed.asMilliseconds()).format('HH:mm')}hr</div>
+      <div class='ExpirationDetails_center'>
+        <div class='ExpirationDetails_top'>
+          <div class='ExpirationDetails_terms'>
             <em>Get {this.props.assets.b.value} {currencies[this.props.assets.b.currency].code}
             &nbsp;for {this.props.assets.a.value} {currencies[this.props.assets.a.currency].code}</em>
             &nbsp;Active for {moment.utc(left.asMilliseconds()).format('HH:mm')}hr {this.state.expiration.format('D/M/Y HH:mm')}
           </div>
-          <div className='ExpirationDetails_link'>
-            <a href='#copy' onClick={() => this.props.onCopyClick()}>Swap link<img src={CopyIcon} alt='Copy' /></a>
+          <div class='ExpirationDetails_link'>
+            <a onClick={() => this.props.onCopyClick()}>Swap link<img src={CopyIcon} /></a>
           </div>
         </div>
-        <div className='ExpirationDetails_progress'>
-          <div className='ExpirationDetails_progress_fill' style={{width: `${filled}%`}} />
+        <div class='ExpirationDetails_progress'>
+          <div class='ExpirationDetails_progress_fill' style={{width: `${filled}%`}} />
         </div>
-        <div className='ExpirationDetails_bottom'>
-          <div className='ExpirationDetails_transaction'>
+        <div class='ExpirationDetails_bottom'>
+          <div class='ExpirationDetails_transaction'>
             <strong>Transaction ID: </strong> {this.state.transaction.hash}
           </div>
-          <div className='ExpirationDetails_confirmations'>
+          <div class='ExpirationDetails_confirmations'>
             Confirmations: {this.state.transaction.confirmations}
           </div>
         </div>
       </div>
-      <div className='ExpirationDetails_left'>{moment.utc(left.asMilliseconds()).format('HH:mm')}hr</div>
+      <div class='ExpirationDetails_left'>{moment.utc(left.asMilliseconds()).format('HH:mm')}hr</div>
     </div>
   }
 }
