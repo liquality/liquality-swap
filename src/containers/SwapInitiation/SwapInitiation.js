@@ -42,7 +42,7 @@ class SwapInitiation extends Component {
   }
 
   amountsValid () {
-    return (parseInt(this.props.assets.a.value) > 0 && (parseInt(this.props.assets.a.value) <= parseInt(this.props.wallets.a.balance))) && (parseInt(this.props.assets.b.value) > 0 && (parseInt(this.props.assets.b.value) <= parseInt(this.props.wallets.b.balance)))
+    return (parseFloat(this.props.assets.a.value) > 0 && (parseFloat(this.props.assets.a.value) <= parseFloat(this.props.wallets.a.balance))) && (parseFloat(this.props.assets.b.value) > 0 && (parseFloat(this.props.assets.b.value) <= parseFloat(this.props.wallets.b.balance)))
   }
 
   getErrors () {
