@@ -5,6 +5,7 @@ import { ConnectedRouter } from 'connected-react-router'
 
 import { store, initialAppState } from './store'
 import history from './history'
+import errorHandler from './errorHandler'
 
 import { actions as swapActions } from './actions/swap'
 import { actions as transactionActions } from './actions/transactions'
@@ -15,6 +16,9 @@ import './App.css'
 window.onbeforeunload = () => { // Prompt on trying to leave app
   return true
 }
+
+window.onerror = errorHandler
+window.onunhandledrejection = e => errorHandler(e.reason)
 
 if (initialAppState.swap) {
   store.dispatch(transactionActions.loadTransactions())
