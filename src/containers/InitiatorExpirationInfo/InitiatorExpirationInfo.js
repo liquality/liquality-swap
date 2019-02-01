@@ -26,10 +26,10 @@ class InitiatorExpirationInfo extends Component {
   }
 
   render () {
-    return <div class='InitiatorExpirationInfo'>
-      <div class='row justify-content-center'>
-        <div><img src={LockIcon} class='InitiatorExpirationInfo_icon' />Funds Locked {expirationDurations.a.asHours().toFixed(2)} HRS</div>
-        <div><img src={ClockIcon} class='InitiatorExpirationInfo_icon' />Offer Active {expirationDurations.b.asHours().toFixed(2)} HRS</div>
+    return <div className='InitiatorExpirationInfo'>
+      <div className='row justify-content-center'>
+        <div><img src={LockIcon} className='InitiatorExpirationInfo_icon' alt='Lock Icon' />Funds Locked {expirationDurations.a.asHours().toFixed(2)} HRS</div>
+        <div><img src={ClockIcon} className='InitiatorExpirationInfo_icon' alt='Clock Icon' />Offer Active {expirationDurations.b.asHours().toFixed(2)} HRS</div>
         <div><strong>~ {this.state.expiration.format('D/M/YY HH:mm')}</strong></div>
       </div>
     </div>

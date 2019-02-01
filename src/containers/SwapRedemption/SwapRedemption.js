@@ -8,8 +8,8 @@ import ExpirationDetails from '../../components/ExpirationDetails'
 class SwapRedemption extends Component {
   render () {
     return <BrandCard className='SwapRedemption' title='Claim Funds'>
-      <div class='SwapRedemption_confirmation'>
-        <p class='SwapRedemption_terms'>
+      <div className='SwapRedemption_confirmation'>
+        <p className='SwapRedemption_terms'>
           Get <strong>{this.props.assets.b.value} {currencies[this.props.assets.b.currency].code}</strong>
           &nbsp;for <strong>{this.props.assets.a.value} {currencies[this.props.assets.a.currency].code}</strong>
         </p>

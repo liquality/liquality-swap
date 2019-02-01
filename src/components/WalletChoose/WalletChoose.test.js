@@ -14,7 +14,7 @@ it('renders without crashing', () => {
     title: 'Liquality',
     subTitle: 'Subtitle',
     wallets: ['metamask'],
-    chooseWallet: {mockFn},
+    chooseWallet: mockFn,
     currency: 'eth'
   }
   ReactDOM.render(<WalletChoose {...props} />, div)

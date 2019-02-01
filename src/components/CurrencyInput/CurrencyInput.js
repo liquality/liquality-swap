@@ -7,7 +7,7 @@ import './CurrencyInput.css'
 const CurrencyInput = (props) => (
   <div className='CurrencyInput'>
     <h3 className='CurrencyInput_heading'>{currencies[props.currency].code}</h3>
-    <input type='number' readOnly={props.disabled} value={props.value} className='CurrencyInput_input' placeholder='0.00' onChange={e => props.onChange(e.target.value)} tabindex={props.tabindex} />
+    <input type='number' readOnly={props.disabled} value={props.value} className='CurrencyInput_input' placeholder='0.00' onChange={e => props.onChange(e.target.value)} tabIndex={props.tabIndex} />
   </div>
 )
 
@@ -17,12 +17,11 @@ CurrencyInput.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
-  tabindex: PropTypes.number
+  tabIndex: PropTypes.number
 }
 
 CurrencyInput.defaultProps = {
-  value: 0,
-  tabindex: -1
+  tabIndex: -1
 }
 
 export default CurrencyInput
