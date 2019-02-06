@@ -44,7 +44,7 @@ function waitForWallet (party, currency, wallet) {
   }
 }
 
-function toggleWalletConnect (party, target) {
+function toggleWalletConnect (party) {
   return { type: types.TOGGLE_WALLET_CONNECT, party }
 }
 

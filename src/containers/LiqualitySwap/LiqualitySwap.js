@@ -6,6 +6,7 @@ import CounterPartyLinkCard from '../../components/CounterPartyLinkCard/CounterP
 import BackupLinkCard from '../../components/BackupLinkCard/BackupLinkCard'
 import ErrorModal from '../../components/ErrorModal/ErrorModal'
 import Waiting from '../Waiting'
+import WalletPopups from '../WalletPopups'
 import SwapRedemption from '../SwapRedemption'
 import SwapCompleted from '../SwapCompleted'
 import SwapRefund from '../SwapRefund'
@@ -51,6 +52,7 @@ class LiqualitySwap extends Component {
           <Route path='/redeem' component={SwapRedemption} />
           <Route path='/completed' component={SwapCompleted} />
           <Route path='/refund' component={SwapRefund} />
+          <WalletPopups />
         </div>
       </div>
       <footer dangerouslySetInnerHTML={{__html: config.injectFooter}} />

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import WalletDisplay from '../../components/WalletDisplay/WalletDisplay'
-import WalletConnectPopup from '../../components/WalletConnectPopup/WalletConnectPopup'
 
 import './WalletPanel.css'
 
@@ -30,33 +29,6 @@ class WalletPanel extends Component {
             onButtonClick={() => this.props.onToggleWalletConnect('b')} />
         </div>
       </div>
-      <WalletConnectPopup
-        open={walletA.connectOpen}
-        currency={assetA.currency}
-        id='a'
-        walletChosen={walletA.chosen}
-        wallet={walletA.type}
-        chooseWallet={this.props.waitForWallet}
-        disconnectWallet={this.props.onWalletDisconnected}
-        anchorEl={walletA.anchorEl}
-        addresses={walletA.addresses}
-        walletConnected={walletA.connected}
-        handleClose={() => this.props.onToggleWalletConnect('a')}
-      />
-
-      <WalletConnectPopup
-        open={walletB.connectOpen}
-        currency={assetB.currency}
-        id='b'
-        walletChosen={walletB.chosen}
-        wallet={walletB.type}
-        chooseWallet={this.props.waitForWallet}
-        disconnectWallet={this.props.onWalletDisconnected}
-        anchorEl={walletB.anchorEl}
-        addresses={walletB.addresses}
-        walletConnected={walletB.connected}
-        handleClose={() => this.props.onToggleWalletConnect('b')}
-      />
     </div>
   }
 }
