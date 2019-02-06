@@ -41,15 +41,15 @@ class SwapInitiation extends Component {
     return this.getErrors().length === 0
   }
 
-  amountsValid () {
-    return (parseFloat(this.props.assets.a.value) > 0 && (parseFloat(this.props.assets.a.value) <= parseFloat(this.props.wallets.a.balance))) && (parseFloat(this.props.assets.b.value) > 0 && (parseFloat(this.props.assets.b.value) <= parseFloat(this.props.wallets.b.balance)))
+  amountsEntered () {
+    return parseFloat(this.props.assets.a.value) > 0 && parseFloat(this.props.assets.b.value) > 0
   }
 
   getErrors () {
     const errors = []
 
-    if (!this.amountsValid()) {
-      errors.push('Amounts are incorrect')
+    if (!this.amountsEntered()) {
+      errors.push('Amounts are not set')
     }
 
     if (!this.walletsConnected()) {
