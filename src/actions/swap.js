@@ -57,14 +57,26 @@ async function ensureSecret (dispatch, getState) {
     assets,
     wallets,
     counterParty,
-    isPartyB
+    isPartyB,
+    expiration
   } = getState().swap
   if (!isPartyB && !secretParams.secret) {
     const walletConnected = await ensureWallet('a', dispatch, getState)
     if (!walletConnected) return
 
     const client = getClient(assets.a.currency)
-    const secretMsg = `${assets.a.value}${assets.a.currency}${assets.b.value}${assets.b.currency}${wallets.a.addresses[0]}${counterParty[assets.a.currency].address}${wallets.b.addresses[0]}${counterParty[assets.b.currency].address}`
+    const secretData = [
+      assets.a.value,
+      assets.a.currency,
+      assets.b.value,
+      assets.b.currency,
+      wallets.a.addresses[0],
+      counterParty[assets.a.currency].address,
+      wallets.b.addresses[0],
+      counterParty[assets.b.currency].address,
+      expiration.unix()
+    ]
+    const secretMsg = secretData.join('')
     const secret = await client.generateSecret(secretMsg)
     dispatch(secretActions.setSecret(secret))
   }
@@ -84,13 +96,7 @@ async function lockFunds (dispatch, getState) {
 
   const client = getClient(assets.a.currency)
 
-  let swapExpiration
-  if (isPartyB) {
-    swapExpiration = getFundExpiration(expiration, 'b').time
-  } else {
-    swapExpiration = generateExpiration()
-    dispatch(setExpiration(swapExpiration))
-  }
+  const swapExpiration = isPartyB ? getFundExpiration(expiration, 'b').time : expiration
 
   const block = await client.getBlockHeight()
   const valueInUnit = currencies[assets.a.currency].currencyToUnit(assets.a.value)
@@ -110,6 +116,7 @@ async function lockFunds (dispatch, getState) {
 
 function initiateSwap () {
   return async (dispatch, getState) => {
+    dispatch(setExpiration(generateExpiration()))
     await ensureSecret(dispatch, getState)
     await lockFunds(dispatch, getState)
     dispatch(setIsVerified(true))
