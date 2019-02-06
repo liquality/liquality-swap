@@ -32,8 +32,7 @@ function switchSides (state, action) {
 function toggleWalletConnect (state, action) {
   return update(state, {
     [action.party]: {
-      connectOpen: { $set: !state[action.party].connectOpen },
-      anchorEl: { $set: action.target }
+      connectOpen: { $set: !state[action.party].connectOpen }
     }
   })
 }

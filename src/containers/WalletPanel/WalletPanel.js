@@ -18,7 +18,7 @@ class WalletPanel extends Component {
             balance={walletA.balance}
             address={walletA.addresses[0]}
             connected={walletA.connected}
-            onButtonClick={(e) => this.props.onToggleWalletConnect('a', e.currentTarget)} />
+            onButtonClick={() => this.props.onToggleWalletConnect('a')} />
         </div>
         <div className='col WalletPanel_right'>
           <WalletDisplay
@@ -27,7 +27,7 @@ class WalletPanel extends Component {
             balance={walletB.balance}
             address={walletB.addresses[0]}
             connected={walletB.connected}
-            onButtonClick={(e) => this.props.onToggleWalletConnect('b', e.currentTarget)} />
+            onButtonClick={() => this.props.onToggleWalletConnect('b')} />
         </div>
       </div>
       <WalletConnectPopup
@@ -41,7 +41,7 @@ class WalletPanel extends Component {
         anchorEl={walletA.anchorEl}
         addresses={walletA.addresses}
         walletConnected={walletA.connected}
-        handleClose={(e) => this.props.onToggleWalletConnect('a', e.currentTarget)}
+        handleClose={() => this.props.onToggleWalletConnect('a')}
       />
 
       <WalletConnectPopup
@@ -55,7 +55,7 @@ class WalletPanel extends Component {
         anchorEl={walletB.anchorEl}
         addresses={walletB.addresses}
         walletConnected={walletB.connected}
-        handleClose={(e) => this.props.onToggleWalletConnect('b', e.currentTarget)}
+        handleClose={() => this.props.onToggleWalletConnect('b')}
       />
     </div>
   }
