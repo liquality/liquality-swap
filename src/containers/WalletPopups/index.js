@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { actions } from '../../actions/wallets'
-import WalletPanel from './WalletPanel'
+import WalletPopups from './WalletPopups'
 
 const mapStateToProps = state => {
   return {
@@ -12,6 +12,9 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   {
-    onToggleWalletConnect: actions.toggleWalletConnect
+    onToggleWalletConnect: actions.toggleWalletConnect,
+    waitForWallet: actions.waitForWallet,
+    onWalletConnected: actions.connectWallet,
+    onWalletDisconnected: actions.disconnectWallet
   }
-)(WalletPanel)
+)(WalletPopups)

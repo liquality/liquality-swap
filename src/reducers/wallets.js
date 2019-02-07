@@ -32,8 +32,7 @@ function switchSides (state, action) {
 function toggleWalletConnect (state, action) {
   return update(state, {
     [action.party]: {
-      connectOpen: { $set: !state[action.party].connectOpen },
-      anchorEl: { $set: action.target }
+      connectOpen: { $set: !state[action.party].connectOpen }
     }
   })
 }
@@ -59,12 +58,14 @@ function connectWallet (state, action) {
 
 function disconnectWallet (state, action) {
   return update(state, {
-    [action.party]: {
-      addresses: { $set: [] },
-      connected: { $set: false },
-      chosen: { $set: false },
-      type: { $set: '' }
-    }
+    [action.party]: { $set: {
+      addresses: [],
+      balance: null,
+      connectOpen: false,
+      connected: false,
+      chosen: false,
+      type: ''
+    }}
   })
 }
 
