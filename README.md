@@ -10,6 +10,28 @@
 
 Trustless swaps application
 
+## How to run
+
+### Requirements
+
+- Git
+- Node.Js
+
+Steps:
+
+```
+git clone https://github.com/liquality/liquality-swap.git
+cd liquality-swap
+npm install
+```
+
+Update the configuration file at `config.js` ([config.js](src/config/config.js)) with your preferred network and nodes. An example mainnet configuration is available here [liquality.io.mainnet.config.js](.travis/liquality.io.mainnet.config.js). For maximum security, use your own nodes!
+
+Now run the app:
+
+`npm start`
+
+
 ## Development
 
 ### Run locally
