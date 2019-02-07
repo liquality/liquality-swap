@@ -45,6 +45,7 @@ async function ensureWallet (party, dispatch, getState) {
   const walletSet = wallets[party].connected
   const walletAvailable = await client.isWalletAvailable()
   if (!walletSet || !walletAvailable) {
+    dispatch(walletActions.disconnectWallet(party))
     dispatch(walletActions.toggleWalletConnect(party))
     return false
   }
@@ -91,9 +92,6 @@ async function lockFunds (dispatch, getState) {
     expiration,
     isPartyB
   } = getState().swap
-  const walletConnected = await ensureWallet('a', dispatch, getState)
-  if (!walletConnected) return
-
   const client = getClient(assets.a.currency)
 
   const swapExpiration = isPartyB ? getFundExpiration(expiration, 'b').time : expiration
@@ -118,6 +116,8 @@ function initiateSwap () {
   return async (dispatch, getState) => {
     dispatch(setExpiration(generateExpiration()))
     await ensureSecret(dispatch, getState)
+    const walletConnected = await ensureWallet('b', dispatch, getState)
+    if (!walletConnected) return
     await lockFunds(dispatch, getState)
     dispatch(setIsVerified(true))
     dispatch(replace('/backupLink'))
@@ -126,6 +126,8 @@ function initiateSwap () {
 
 function confirmSwap () {
   return async (dispatch, getState) => {
+    const walletConnected = await ensureWallet('b', dispatch, getState)
+    if (!walletConnected) return
     await lockFunds(dispatch, getState)
     dispatch(waitForSwapClaim())
     dispatch(replace('/backupLink'))
@@ -198,9 +200,6 @@ function waitForSwapClaim () {
 }
 
 async function unlockFunds (dispatch, getState) {
-  const walletConnected = await ensureWallet('b', dispatch, getState)
-  if (!walletConnected) return
-
   const {
     assets,
     wallets,
@@ -231,6 +230,8 @@ async function unlockFunds (dispatch, getState) {
 function redeemSwap () {
   return async (dispatch, getState) => {
     await ensureSecret(dispatch, getState)
+    const walletConnected = await ensureWallet('b', dispatch, getState)
+    if (!walletConnected) return
     await unlockFunds(dispatch, getState)
   }
 }
