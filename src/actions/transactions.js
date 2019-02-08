@@ -1,6 +1,7 @@
 import { replace } from 'connected-react-router'
 import _ from 'lodash'
 import moment from 'moment'
+import config from '../config'
 import { actions as swapActions } from './swap'
 import { actions as secretActions } from './secretparams'
 import { steps } from '../components/SwapProgressStepper/steps'
@@ -25,8 +26,8 @@ function setStep (transactions, isPartyB, dispatch) {
   if (transactions.a.fund.hash) {
     step = steps.AGREEMENT
     if (transactions.b.fund.hash) {
-      if (transactions.a.fund.confirmations >= 0 && transactions.b.fund.confirmations >= 0) {
-        if (transactions.b.claim.confirmations >= 0 || !isPartyB) {
+      if (transactions.a.fund.confirmations >= config.minConfirmations && transactions.b.fund.confirmations >= config.minConfirmations) {
+        if (transactions.b.claim.confirmations >= config.minConfirmations || !isPartyB) {
           step = steps.CLAIMING
         }
         if (transactions.a.claim.hash) {
