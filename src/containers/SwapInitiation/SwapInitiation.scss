@@ -2,6 +2,7 @@
 
 .SwapInitiation {
   position: relative;
+  top: -10px;
   
   &_top {
     $panel-spacing: 80px;
@@ -18,8 +19,8 @@
   &_bottom {
     position: relative;
     text-align: center;
-    top: -$swap-panel-radius;
-    padding: 40px 30px;
+    top: -30px;
+    padding: 0 30px 20px;
     background: $color-bg-primary;
     box-shadow: 0px -2px 14px $color-shadow;
     border-radius: $swap-panel-radius;
@@ -28,7 +29,7 @@
   &_counterPartyLabel {
     position: relative;
     background: $color-bg-primary;
-    top: -60px;
+    top: -20px;
     display: inline-block;
     margin: 0 auto;
     padding: 12px 16px;
@@ -41,13 +42,13 @@
     width: 70px;
     height: 70px;
     display: inline-block;
-    position: absolute;
+    position: relative;
     background: $color-bg-primary;
     top: -35px;
     right: -35px;
     left: -35px;
     border-radius: 50%;
-    margin: auto;
+    margin-bottom: -30px;
 
     img {
       width: 38px;

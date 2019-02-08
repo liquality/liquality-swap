@@ -1,18 +1,18 @@
 import React, { Component } from 'react'
 
 import config from '../../config'
-import WalletPanel from '../WalletPanel'
-import SwapPairPanel from '../../components/SwapPairPanel/SwapPairPanel'
-import CurrencyInputs from '../CurrencyInputs'
-import CounterPartyWallets from '../CounterPartyWallets'
-import InitiatorExpirationInfo from '../InitiatorExpirationInfo'
 import Button from '../../components/Button/Button'
 import ExpirationDetails from '../../components/ExpirationDetails'
-import { generateSwapState } from '../../utils/app-links'
-
+import SwapPairPanel from '../../components/SwapPairPanel/SwapPairPanel'
 import HandshakeIcon from '../../icons/handshake.png'
 import SwapIcon from '../../icons/switch.svg'
+import { generateSwapState } from '../../utils/app-links'
+import CounterPartyWallets from '../CounterPartyWallets'
+import CurrencyInputs from '../CurrencyInputs'
+import InitiatorExpirationInfo from '../InitiatorExpirationInfo'
+import WalletPanel from '../WalletPanel'
 import './SwapInitiation.css'
+import wallets from '../../utils/wallets'
 
 class SwapInitiation extends Component {
   walletsValid () {
@@ -76,6 +76,9 @@ class SwapInitiation extends Component {
   }
 
   render () {
+    const wallet = wallets[this.props.wallets.a.type]
+    const buttonLoadingMessage = wallet && `Confirm on ${wallet.name}`
+
     return <div className='SwapInitiation'>
       <SwapPairPanel
         haveCurrency={this.props.assets.a.currency}
@@ -94,8 +97,8 @@ class SwapInitiation extends Component {
         { this.props.isPartyB
           ? <ExpirationDetails />
           : <InitiatorExpirationInfo /> }
-        {!this.props.isPartyB && <Button wide primary disabled={!this.nextEnabled()} loadingAfterClick loadingAfterClickMessage='Check wallet for action' onClick={this.props.initiateSwap}>Next</Button>}
-        {this.props.isPartyB && <Button wide primary disabled={!this.nextEnabled()} loadingAfterClick loadingAfterClickMessage='Check wallet for action' onClick={this.props.confirmSwap}>Confirm Terms</Button>}
+        {!this.props.isPartyB && <Button wide primary disabled={!this.nextEnabled()} loadingAfterClick loadingAfterClickMessage={buttonLoadingMessage} onClick={this.props.initiateSwap}>Next</Button>}
+        {this.props.isPartyB && <Button wide primary disabled={!this.nextEnabled()} loadingAfterClick loadingAfterClickMessage={buttonLoadingMessage} onClick={this.props.confirmSwap}>Confirm Terms</Button>}
         <div className='SwapInitiation_errors'>
           {this.getErrors().map(error => <p key={error}>{error}</p>)}
         </div>
