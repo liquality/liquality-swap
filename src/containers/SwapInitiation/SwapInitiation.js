@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+import config from '../../config'
 import WalletPanel from '../WalletPanel'
 import SwapPairPanel from '../../components/SwapPairPanel/SwapPairPanel'
 import CurrencyInputs from '../CurrencyInputs'
@@ -34,7 +35,7 @@ class SwapInitiation extends Component {
   }
 
   initiationConfirmed () {
-    return this.props.isVerified && this.props.transactions.b.fund.confirmations >= 0
+    return this.props.isVerified && this.props.transactions.b.fund.confirmations >= config.minConfirmations
   }
 
   nextEnabled () {
