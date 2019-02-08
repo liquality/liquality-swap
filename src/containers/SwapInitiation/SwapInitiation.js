@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import Button from '../../components/Button/Button';
-import ExpirationDetails from '../../components/ExpirationDetails';
-import SwapPairPanel from '../../components/SwapPairPanel/SwapPairPanel';
-import HandshakeIcon from '../../icons/handshake.png';
-import SwapIcon from '../../icons/switch.svg';
-import { generateSwapState } from '../../utils/app-links';
-import CounterPartyWallets from '../CounterPartyWallets';
-import CurrencyInputs from '../CurrencyInputs';
-import InitiatorExpirationInfo from '../InitiatorExpirationInfo';
-import WalletPanel from '../WalletPanel';
-import './SwapInitiation.css';
+import React, { Component } from 'react'
+import Button from '../../components/Button/Button'
+import ExpirationDetails from '../../components/ExpirationDetails'
+import SwapPairPanel from '../../components/SwapPairPanel/SwapPairPanel'
+import HandshakeIcon from '../../icons/handshake.png'
+import SwapIcon from '../../icons/switch.svg'
+import { generateSwapState } from '../../utils/app-links'
+import CounterPartyWallets from '../CounterPartyWallets'
+import CurrencyInputs from '../CurrencyInputs'
+import InitiatorExpirationInfo from '../InitiatorExpirationInfo'
+import WalletPanel from '../WalletPanel'
+import './SwapInitiation.css'
 import wallets from '../../utils/wallets'
 
 class SwapInitiation extends Component {
