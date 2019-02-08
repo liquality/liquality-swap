@@ -2,11 +2,16 @@ import React, { Component } from 'react'
 import BrandCard from '../../components/BrandCard/BrandCard'
 import Button from '../../components/Button/Button'
 import currencies from '../../utils/currencies'
-import './SwapRedemption.css'
+import wallets from '../../utils/wallets'
 import ExpirationDetails from '../../components/ExpirationDetails'
+
+import './SwapRedemption.css'
 
 class SwapRedemption extends Component {
   render () {
+    const wallet = wallets[this.props.wallets.b.type]
+    const buttonLoadingMessage = wallet && `Confirm on ${wallet.name}`
+
     return <BrandCard className='SwapRedemption' title='Claim Funds'>
       <div className='SwapRedemption_confirmation'>
         <p className='SwapRedemption_terms'>
@@ -16,7 +21,7 @@ class SwapRedemption extends Component {
         <p>Thanks to the <strong>Atomic Swap</strong> you don't need to trust the counterparty and avoid the middleman.</p>
       </div>
       <ExpirationDetails isClaim />
-      <p><Button wide primary loadingAfterClick loadingAfterClickMessage='Check wallet for action' onClick={this.props.redeemSwap}>Claim your funds</Button></p>
+      <p><Button wide primary loadingAfterClick loadingAfterClickMessage={buttonLoadingMessage} onClick={this.props.redeemSwap}>Claim your funds</Button></p>
     </BrandCard>
   }
 }

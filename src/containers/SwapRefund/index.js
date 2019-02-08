@@ -5,6 +5,7 @@ import SwapRefund from './SwapRefund'
 const mapStateToProps = state => {
   return {
     assets: state.swap.assets,
+    wallets: state.swap.wallets,
     expiration: state.swap.expiration,
     isPartyB: state.swap.isPartyB
   }
