@@ -11,7 +11,7 @@ export default {
       password: 'liquality123',
       url: 'https://liquality.io/bitcoinrpc/'
     },
-    feeNumberOfBlocks: 1,
+    feeNumberOfBlocks: 2,
     network: 'bitcoin'
   },
   injectScript: `
