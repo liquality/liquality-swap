@@ -70,7 +70,7 @@ class ExpirationDetails extends Component {
           <div className='ExpirationDetails_terms'>
             <em>Get {this.props.assets.b.value} {currencies[this.props.assets.b.currency].code}
             &nbsp;for {this.props.assets.a.value} {currencies[this.props.assets.a.currency].code}</em>
-            &nbsp;Active for {moment.utc(left.asMilliseconds()).format('HH:mm')}hr {this.state.expiration.format('D/M/Y HH:mm')}
+            &nbsp;Active for {moment.utc(left.asMilliseconds()).format('HH:mm')}hr {this.state.expiration.format('L LT')}
           </div>
           <div className='ExpirationDetails_link'>
             <a href='#copy' onClick={() => this.props.onCopyClick()}>Swap link<img src={CopyIcon} alt='Copy' /></a>
