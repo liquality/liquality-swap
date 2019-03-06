@@ -14,6 +14,7 @@ export default {
     feeNumberOfBlocks: 2,
     network: 'bitcoin_testnet'
   },
+  minConfirmations: 0,
   injectScript: `
   // GA
   (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
