@@ -20,18 +20,31 @@
     margin-bottom: 0;
   }
 
+  &_inputWrapper {
+    border-bottom: 1px solid #31E4C3;
+    padding-bottom: 1px;
+  }
+
   &_input {
     @include blank-input;
     display: block;
     width: 130px;
-    height: 30px;
+    height: 32px;
     text-align: center;
     font-size: $h1-font-size;
     font-weight: 500;
-    border-bottom: 1px solid #31E4C3;
+
+    &.error {
+      border: 1px solid $danger;
+    }
 
     &[readonly] {
       border: none;
     }
+  }
+
+  &_errorMessage {
+    height: 20px;
+    @include error-message;
   }
 }

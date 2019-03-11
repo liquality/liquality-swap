@@ -1,9 +1,15 @@
 @import '../../scss/variables.scss';
+@import '../../scss/mixins.scss';
 
 .WalletDisplay {
   text-align: center;
   width: 130px;
-  min-height: 114px;
+  min-height: 126px;
+
+  &.error > &_wrapper {
+    padding: 10px 0;
+    border: 1px solid $danger;
+  }
 
   p {
     margin-bottom: 2px;
@@ -37,5 +43,9 @@
 
   &_balance {
     color: $color-text-2;
+  }
+
+  &_errorMessage {
+    @include error-message;
   }
 }

@@ -1,15 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 
 import currencies from '../../utils/currencies'
 import './CurrencyInput.css'
 
-const CurrencyInput = (props) => (
-  <div className='CurrencyInput'>
+const CurrencyInput = (props) => {
+  return <div className='CurrencyInput'>
     <h3 className='CurrencyInput_heading'>{currencies[props.currency].code}</h3>
-    <input type='number' readOnly={props.disabled} value={props.value} className='CurrencyInput_input' placeholder='0.00' onChange={e => props.onChange(e.target.value)} tabIndex={props.tabIndex} />
+    <div class='CurrencyInput_inputWrapper'>
+      <input type='number' readOnly={props.disabled} value={props.value}
+        className={classNames('CurrencyInput_input', { 'error': props.error })} placeholder='0.00'
+        onChange={e => props.onChange(e.target.value)} tabIndex={props.tabIndex} />
+    </div>
+    <div className='CurrencyInput_errorMessage'>{ props.error && props.error }</div>
   </div>
-)
+}
 
 CurrencyInput.propTypes = {
   // TODO: probably need some sort of repository for currency codes and icons?
@@ -17,7 +23,8 @@ CurrencyInput.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
-  tabIndex: PropTypes.number
+  tabIndex: PropTypes.number,
+  error: PropTypes.string
 }
 
 CurrencyInput.defaultProps = {

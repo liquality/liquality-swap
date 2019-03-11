@@ -5,17 +5,28 @@
   position: absolute;
   display: block;
   margin: 0 auto;
-  top: 100px;
+  top: 106px;
   left: 0;
   right: 0;
-  background: $color-bg-primary;
-  border-radius: 50%;
   text-align: center;
-  width: 135px;
-  height:135px;
-  padding: 20px;
   z-index: $layer-bottom;
-  text-transform: uppercase;
+  width: 250px;
+
+  &_circle {
+    margin: 0 auto;
+    display: block;
+    width: 135px;
+    height: 135px;
+    margin-bottom: 2px;
+    border-radius: 50%;
+    padding: 20px;
+    background: $color-bg-primary;
+    text-transform: uppercase;
+  }
+
+  &.error &_circle {
+    border: 1px solid $danger;
+  }
 
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
@@ -53,5 +64,9 @@
 
   &_stable {
     margin-bottom: 0px;
+  }
+
+  &_errorMessage {
+    @include error-message;
   }
 }

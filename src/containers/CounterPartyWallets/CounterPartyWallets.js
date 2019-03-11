@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import AddressInput from '../../components/AddressInput/AddressInput'
+import { getCounterPartyErrors } from '../../utils/validation'
 
 import './CounterPartyWallets.css'
 
@@ -7,6 +8,7 @@ class CounterPartyWallets extends Component {
   render () {
     const { a: assetA, b: assetB } = this.props.assets
     const counterParty = this.props.counterParty
+    const errors = this.props.showErrors ? getCounterPartyErrors(this.props.assets, this.props.counterParty) : {}
 
     return <div className='CounterPartyWallets'>
       <div className='row'>
@@ -14,7 +16,8 @@ class CounterPartyWallets extends Component {
           <h5 className='CounterPartyWallets_heading'>Send To</h5>
           <AddressInput currency={assetA.currency}
             value={counterParty[assetA.currency].address}
-            onChange={(newValue, valid) => this.props.onCounterPartyAddressChange(assetA.currency, newValue, valid)}
+            error={errors.counterPartyA}
+            onChange={newValue => this.props.onCounterPartyAddressChange(assetA.currency, newValue)}
             tabIndex={5}
           />
         </div>
@@ -22,7 +25,8 @@ class CounterPartyWallets extends Component {
           <h5 className='CounterPartyWallets_heading'>Receive From</h5>
           <AddressInput currency={assetB.currency}
             value={counterParty[assetB.currency].address}
-            onChange={(newValue, valid) => this.props.onCounterPartyAddressChange(assetB.currency, newValue, valid)}
+            error={errors.counterPartyB}
+            onChange={newValue => this.props.onCounterPartyAddressChange(assetB.currency, newValue)}
             tabIndex={4}
           />
         </div>
