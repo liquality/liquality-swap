@@ -7,13 +7,15 @@ import { actions as walletActions } from './wallets'
 import currencies from '../utils/currencies'
 import { sleep } from '../utils/async'
 import { getFundExpiration, getClaimExpiration, generateExpiration } from '../utils/expiration'
+import { isInitiateValid } from '../utils/validation'
 
 const types = {
   SWITCH_SIDES: 'SWITCH_SIDES',
   SET_STEP: 'SET_STEP',
   SET_EXPIRATION: 'SET_EXPIRATION',
   SET_LINK: 'SET_LINK',
-  SET_IS_VERIFIED: 'SET_IS_VERIFIED'
+  SET_IS_VERIFIED: 'SET_IS_VERIFIED',
+  SET_SHOW_ERRORS: 'SET_SHOW_ERRORS'
 }
 
 function switchSides () {
@@ -34,6 +36,14 @@ function setLink (link) {
 
 function setIsVerified (isVerified) {
   return { type: types.SET_IS_VERIFIED, isVerified }
+}
+
+function showErrors () {
+  return { type: types.SET_SHOW_ERRORS, showErrors: true }
+}
+
+function hideErrors () {
+  return { type: types.SET_SHOW_ERRORS, showErrors: false }
 }
 
 async function ensureWallet (party, dispatch, getState) {
@@ -114,10 +124,13 @@ async function lockFunds (dispatch, getState) {
 
 function initiateSwap () {
   return async (dispatch, getState) => {
+    dispatch(showErrors())
     dispatch(setExpiration(generateExpiration()))
-    await ensureSecret(dispatch, getState)
     const walletConnected = await ensureWallet('b', dispatch, getState)
     if (!walletConnected) return
+    const initiateValid = isInitiateValid(getState().swap)
+    if (!initiateValid) return
+    await ensureSecret(dispatch, getState)
     await lockFunds(dispatch, getState)
     dispatch(setIsVerified(true))
     dispatch(replace('/backupLink'))
@@ -126,8 +139,11 @@ function initiateSwap () {
 
 function confirmSwap () {
   return async (dispatch, getState) => {
+    dispatch(showErrors())
     const walletConnected = await ensureWallet('b', dispatch, getState)
     if (!walletConnected) return
+    const initiateValid = isInitiateValid(getState().swap)
+    if (!initiateValid) return
     await lockFunds(dispatch, getState)
     dispatch(waitForSwapClaim())
     dispatch(replace('/backupLink'))
@@ -269,6 +285,8 @@ const actions = {
   setExpiration,
   setLink,
   setIsVerified,
+  showErrors,
+  hideErrors,
   initiateSwap,
   confirmSwap,
   findInitiateSwapTransaction,

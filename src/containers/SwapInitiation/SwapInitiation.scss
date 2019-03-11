@@ -1,4 +1,5 @@
 @import '../../scss/variables.scss';
+@import '../../scss/mixins.scss';
 
 .SwapInitiation {
   position: relative;
@@ -61,11 +62,8 @@
     }
   }
 
-  &_errors {
-    p {
-      color: $danger;
-      margin: 0;
-    }
+  &_errorMessage {
+    @include error-message;
   }
 
   .CounterPartyWallets, .ExpirationDetails, .InitiatorExpirationInfo {

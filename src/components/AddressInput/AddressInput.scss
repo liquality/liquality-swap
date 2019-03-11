@@ -14,10 +14,10 @@
     background: $color-bg-secondary;
     border-radius: $input-border-radius;
     display: flex;
+  }
 
-    &_invalid {
-      border: 1px solid $danger;
-    }
+  &.error &_box {
+    border: 1px solid $danger;
   }
 
   &_icon {
@@ -40,7 +40,7 @@
     margin-left: 8px;
   }
 
-  &_message {
+  &_errorMessage {
     padding: 3px 0 0 50px;
     font-size: $font-size-sm;
     color: $danger;

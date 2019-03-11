@@ -6,7 +6,8 @@ import CurrencyInputs from './CurrencyInputs'
 const mapStateToProps = (state, ownProps) => {
   return {
     assets: state.swap.assets,
-    disabled: ownProps.disabled
+    disabled: ownProps.disabled,
+    showErrors: state.swap.showErrors
   }
 }
 

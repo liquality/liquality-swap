@@ -27,5 +27,8 @@ export default combineReducers({
   isVerified: (state = false, action) => {
     return action.type === types.SET_IS_VERIFIED ? action.isVerified : state
   },
+  showErrors: (state = false, action) => {
+    return action.type === types.SET_SHOW_ERRORS ? action.showErrors : state
+  },
   isPartyB: (state = false) => state
 })

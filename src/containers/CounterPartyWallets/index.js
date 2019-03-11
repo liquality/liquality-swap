@@ -5,7 +5,8 @@ import CounterPartyWallets from './CounterPartyWallets'
 const mapStateToProps = state => {
   return {
     assets: state.swap.assets,
-    counterParty: state.swap.counterParty
+    counterParty: state.swap.counterParty,
+    showErrors: state.swap.showErrors
   }
 }
 

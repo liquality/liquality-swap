@@ -7,7 +7,7 @@ function changeCounterPartyAddress (currency, newValue, valid) {
     newValue = newValue.replace('0x', '')
     newValue = newValue.toLowerCase()
   }
-  return { type: types.CHANGE_COUNTER_PARTY_ADDRESS, currency, newValue, valid }
+  return { type: types.CHANGE_COUNTER_PARTY_ADDRESS, currency, newValue }
 }
 
 const actions = {
