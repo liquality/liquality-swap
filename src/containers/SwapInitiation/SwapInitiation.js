@@ -11,7 +11,7 @@ import InitiatorExpirationInfo from '../InitiatorExpirationInfo'
 import WalletPanel from '../WalletPanel'
 import './SwapInitiation.css'
 import wallets from '../../utils/wallets'
-import { getInitiationErrors } from '../../utils/validation';
+import { getInitiationErrors } from '../../utils/validation'
 
 class SwapInitiation extends Component {
   render () {

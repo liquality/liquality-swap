@@ -38,11 +38,11 @@ function setIsVerified (isVerified) {
   return { type: types.SET_IS_VERIFIED, isVerified }
 }
 
-function showErrors() {
+function showErrors () {
   return { type: types.SET_SHOW_ERRORS, showErrors: true }
 }
 
-function hideErrors() {
+function hideErrors () {
   return { type: types.SET_SHOW_ERRORS, showErrors: false }
 }
 
