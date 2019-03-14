@@ -37,7 +37,7 @@ export default {
   })('https://browser.sentry-cdn.com/4.6.4/bundle.min.js', function () {
     console.log('Sentry is ready')
     Sentry.init({ dsn: 'https://359e2469731748d3b21019bd37771e85@sentry.io/1415428' })
-  })
+  });
 
   // GA
   (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
