@@ -16,6 +16,32 @@ export default {
   },
   minConfirmations: 0,
   injectScript: `
+  // Sentry
+  function loadScript(src, callback) {
+    var s,
+        r,
+        t;
+    r = false;
+    s = document.createElement('script');
+    s.type = 'text/javascript';
+    s.src = src;
+    s.onload = s.onreadystatechange = function() {
+      //console.log( this.readyState ); //uncomment this line to see which ready states are called.
+      if ( !r && (!this.readyState || this.readyState == 'complete') )
+      {
+        r = true;
+        callback();
+      }
+    };
+    t = document.getElementsByTagName('script')[0];
+    t.parentNode.insertBefore(s, t);
+  }
+
+  loadScript('https://browser.sentry-cdn.com/4.6.4/bundle.min.js', function () {
+    console.log('Sentry is ready')
+    Sentry.init({ dsn: 'https://12ddc74cff10472ebb8a940da86e12d9@sentry.io/1415462' })
+  })
+
   // GA
   (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
