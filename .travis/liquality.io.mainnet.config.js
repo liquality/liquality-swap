@@ -16,7 +16,7 @@ export default {
   },
   injectScript: `
   // Sentry
-  function loadScript(src, callback) {
+  (function loadScript(src, callback) {
     var s,
         r,
         t;
@@ -34,9 +34,7 @@ export default {
     };
     t = document.getElementsByTagName('script')[0];
     t.parentNode.insertBefore(s, t);
-  }
-
-  loadScript('https://browser.sentry-cdn.com/4.6.4/bundle.min.js', function () {
+  })('https://browser.sentry-cdn.com/4.6.4/bundle.min.js', function () {
     console.log('Sentry is ready')
     Sentry.init({ dsn: 'https://359e2469731748d3b21019bd37771e85@sentry.io/1415428' })
   })
