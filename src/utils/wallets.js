@@ -1,18 +1,21 @@
 import metamask from '../icons/metamask.svg'
 import ledger from '../icons/ledger.svg'
-import ledgerPurple from '../icons/ledger_purple.svg'
 
 const wallets = {
   'metamask': {
     icon: metamask,
-    name: 'MetaMask'
+    name: 'MetaMask',
+    connection: {
+      title: 'Login to MetaMask'
+    }
   },
   'ledger': {
     icon: ledger,
-    name: 'Ledger'
-  },
-  'ledger_purple': {
-    icon: ledgerPurple
+    name: 'Ledger',
+    connection: {
+      title: 'On your ledger',
+      description: 'Navigate to your Bitcoin account. Follow Ledger instructions to connect Bitcoin wallet'
+    }
   }
 }
 
