@@ -106,7 +106,7 @@ export default {
   }
   `,
   injectFooter: `<p style="text-align: center;">
-  <a href="https://liquality.io/terms-of-use" target="_blank">Terms of Use</a>
+  <a href="https://liquality.io/terms-of-use/standalone.html" target="_blank">Terms of Use</a>
   &nbsp;|&nbsp;
   <a href="https://liquality.io/privacy-policy" target="_blank">Privacy Policy</a>
   </p>
@@ -134,7 +134,7 @@ export default {
   </style>
   <div id="terms" style="display: none;">
     <div class="terms-wrapper">
-      <iframe style="width: 100%; height: 100%;" src="https://liquality.io/terms-of-use/"></iframe>
+      <iframe style="width: 100%; height: 100%;" src="https://liquality.io/terms-of-use/standalone.html"></iframe>
       <p><input type="checkbox" id="analytics-checkbox"/> Enable analytics to help us better understand issues and improve the experience.</p>
       <div style="text-align: center;">
         <button
