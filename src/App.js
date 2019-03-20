@@ -17,8 +17,8 @@ window.onbeforeunload = () => { // Prompt on trying to leave app
   return true
 }
 
-window.onerror = errorHandler
-window.onunhandledrejection = e => errorHandler(e.reason)
+window.addEventListener('error', errorHandler)
+window.addEventListener('unhandledrejection', e => errorHandler(e.reason))
 
 if (initialAppState.swap) {
   store.dispatch(transactionActions.loadTransactions())
