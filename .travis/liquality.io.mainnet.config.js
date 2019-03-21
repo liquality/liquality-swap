@@ -1,7 +1,7 @@
 export default {
   eth: {
     rpc: {
-      url: 'https://mainnet.infura.io/pjvC14Kn4cv47X3U8qLq'
+      url: 'https://mainnet.infura.io/v3/95c490ff6d1c4e5eb44e0ae067854303'
     },
     network: 'mainnet'
   },
