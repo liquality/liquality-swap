@@ -76,4 +76,4 @@ function generateSwapState (location) {
   }
 }
 
-export { generateLink, generateSwapState }
+export { APP_BASE_URL, generateLink, generateSwapState }
