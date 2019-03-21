@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@liquality/chainabstractionlayer": "^0.1.22-next.3",
+    "@liquality/chainabstractionlayer": "^0.1.22-next.4",
     "@material-ui/core": "^3.5.1",
     "bignumber.js": "^8.0.1",
     "bootstrap": "^4.1.3",
