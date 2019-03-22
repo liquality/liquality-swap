@@ -8,7 +8,7 @@ const wallets = {
     connection: {
       title: 'Login to MetaMask'
     },
-    troubleshootConnectionLink: "https://metamask.zendesk.com/hc/en-us/articles/360015489531-Getting-Started-With-MetaMask-Part-1-",
+    troubleshootConnectionLink: 'https://metamask.zendesk.com/hc/en-us/articles/360015489531-Getting-Started-With-MetaMask-Part-1-'
   },
   'ledger': {
     icon: ledger,
@@ -17,7 +17,7 @@ const wallets = {
       title: 'On your ledger',
       description: 'Navigate to your Bitcoin account. Follow Ledger instructions to connect Bitcoin wallet'
     },
-    troubleshootConnectionLink: "https://support.ledger.com/hc/en-us/articles/115005195945",
+    troubleshootConnectionLink: 'https://support.ledger.com/hc/en-us/articles/115005195945'
   }
 }
 

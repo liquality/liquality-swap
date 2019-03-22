@@ -20,7 +20,7 @@ const WalletChoose = (props) => {
           {network && network.isTestnet && <p>Testnet only</p>}
           <img src={wallets[wallet].icon} className='WalletPanel_walletImg' alt={`${wallets[wallet].name} Icon`} />
           <h5>{wallets[wallet].name}</h5>
-          <p><a href={wallets[wallet].troubleshootConnectionLink} target="blank">Trouble connecting?</a></p>
+          <p><a href={wallets[wallet].troubleshootConnectionLink} target='blank'>Trouble connecting?</a></p>
         </div>
         <Button wide primary onClick={() => props.chooseWallet(wallet)}>Connect</Button>
         <Button wide link onClick={props.onCancel}>Cancel</Button>
