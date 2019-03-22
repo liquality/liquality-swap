@@ -15,6 +15,7 @@ export default connect(
   mapStateToProps,
   {
     onSwitchSides: swapActions.switchSides,
-    onAmountChange: assetActions.changeAmount
+    onAmountChange: assetActions.changeAmount,
+    onRateChange: assetActions.changeRate
   }
 )(CurrencyInputs)

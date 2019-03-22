@@ -7,7 +7,7 @@ function getCurrencyInputErrors (assets) {
   const { a: assetA, b: assetB, rate: assetRate } = assets
   if (!(assetA.value > 0)) errors.assetA = 'Amount not set'
   if (!(assetB.value > 0)) errors.assetB = 'Amount not set'
-  if (!(assetRate.value > 0)) errors.rate = 'Please select the conversion rate'
+  if (!(assetRate > 0)) errors.rate = 'Please select the conversion rate'
   return errors
 }
 

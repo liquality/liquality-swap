@@ -34,10 +34,10 @@ class CurrencyInputs extends Component {
             <Rate
               currencyA={assetA.currency}
               currencyB={assetB.currency}
-              value={assetRate.value}
+              value={assetRate}
               disabled={this.props.disabled}
               error={errors.rate}
-              onChange={newValueA => this.props.onAmountChange('rate', newValueA)}
+              onChange={newValueA => this.props.onRateChange(newValueA)}
               tabIndex={2}
             />
           </div>
