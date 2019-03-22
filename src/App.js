@@ -9,6 +9,7 @@ import errorHandler from './errorHandler'
 
 import { actions as swapActions } from './actions/swap'
 import { actions as transactionActions } from './actions/transactions'
+import { actions as assetActions } from './actions/assets'
 
 import LiqualitySwap from './containers/LiqualitySwap'
 import './App.css'
@@ -28,6 +29,7 @@ if (initialAppState.swap) {
       'b', 'fund', initialAppState.swap.transactions.b.fund
     ))
     store.dispatch(swapActions.verifyInitiateSwapTransaction)
+    store.dispatch(assetActions.changeAmount('b', initialAppState.swap.assets.b.value)) // Trigger rate calc
   }
 }
 
