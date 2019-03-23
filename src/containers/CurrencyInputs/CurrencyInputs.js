@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { getCurrencyInputErrors } from '../../utils/validation'
 import CurrencyInput from '../../components/CurrencyInput/CurrencyInput'
 import Rate from '../../components/Rate/Rate'
 import './CurrencyInputs.css'
@@ -7,6 +8,7 @@ import './CurrencyInputs.css'
 class CurrencyInputs extends Component {
   render () {
     const { a: assetA, b: assetB, rate: assetRate } = this.props.assets
+    const errors = this.props.showErrors ? getCurrencyInputErrors(this.props.assets) : {}
     return <div className='CurrencyInputs'>
       <div className='row justify-content-between no-gutters'>
         <div className='col CurrencyInputs_left'>
@@ -14,6 +16,7 @@ class CurrencyInputs extends Component {
             currency={assetA.currency}
             value={assetA.value}
             disabled={this.props.disabled}
+            error={errors.assetA}
             onChange={newValue => this.props.onAmountChange('a', newValue)}
             tabIndex={1} />
         </div>
@@ -22,6 +25,7 @@ class CurrencyInputs extends Component {
             currency={assetB.currency}
             value={assetB.value}
             disabled={this.props.disabled}
+            error={errors.assetB}
             onChange={newValue => this.props.onAmountChange('b', newValue)}
             tabIndex={3} />
         </div>
@@ -30,9 +34,10 @@ class CurrencyInputs extends Component {
             <Rate
               currencyA={assetA.currency}
               currencyB={assetB.currency}
-              value={assetRate.value}
+              value={assetRate}
               disabled={this.props.disabled}
-              onChange={newValueA => this.props.onAmountChange('rate', newValueA)}
+              error={errors.rate}
+              onChange={newValueA => this.props.onRateChange(newValueA)}
               tabIndex={2}
             />
           </div>

@@ -1,5 +1,14 @@
+@import './variables.scss';
+
 @mixin blank-input {
   border: 0;
   outline: 0;
   background: none;
+}
+
+@mixin error-message {
+  height: $font-size-sm;
+  color: $danger;
+  font-size: $font-size-sm;
+  text-align: center;
 }

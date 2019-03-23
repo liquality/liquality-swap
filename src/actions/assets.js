@@ -1,5 +1,18 @@
 const types = {
-  CHANGE_AMOUNT: 'CHANGE_AMOUNT'
+  CHANGE_AMOUNT: 'CHANGE_AMOUNT',
+  CHANGE_RATE: 'CHANGE_RATE'
+}
+
+function changeRate (newValue) {
+  return (dispatch, getState) => {
+    dispatch({ type: types.CHANGE_RATE, newValue })
+    const { assets } = getState().swap
+    const a = {type: 'a', value: assets.a.value || 0}
+    const rate = assets.rate || 0
+
+    let newVal = +(parseFloat(a.value) * parseFloat(rate)).toFixed(6)
+    dispatch({ type: types.CHANGE_AMOUNT, party: 'b', newValue: newVal.toString() })
+  }
 }
 
 function changeAmount (party, newValue) {
@@ -9,25 +22,26 @@ function changeAmount (party, newValue) {
 
     const a = {type: 'a', value: assets.a.value || 0}
     const b = {type: 'b', value: assets.b.value || 0}
-    const rate = {type: 'rate', value: assets.rate.value || 0}
+    const rate = assets.rate || 0
 
-    if (party === 'a' || party === 'rate') {
-      let newVal = +(parseFloat(a.value) * parseFloat(rate.value)).toFixed(6)
+    if (party === 'a') {
+      let newVal = +(parseFloat(a.value) * parseFloat(rate)).toFixed(6)
       dispatch({ type: types.CHANGE_AMOUNT, party: 'b', newValue: newVal.toString() })
     } else if (party === 'b') {
       if (a.value === 0) {
         let newVal = +(parseFloat(b.value) * parseFloat(rate.value)).toFixed(6)
         dispatch({ type: types.CHANGE_AMOUNT, party: 'a', newValue: newVal.toString() })
       } else {
-        let newVal = +(parseFloat(b.value) / parseFloat(a.value)).toFixed(6)
-        dispatch({ type: types.CHANGE_AMOUNT, party: 'rate', newValue: newVal.toString() })
+        let newRate = +(parseFloat(b.value) / parseFloat(a.value)).toFixed(6)
+        dispatch({ type: types.CHANGE_RATE, newValue: newRate.toString() })
       }
     }
   }
 }
 
 const actions = {
-  changeAmount
+  changeAmount,
+  changeRate
 }
 
 export { types, actions }

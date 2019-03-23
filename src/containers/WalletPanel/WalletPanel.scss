@@ -2,15 +2,16 @@
 
 .WalletPanel {
   background: $color-bg-secondary;
-  margin-top: 50px;
+  margin-top: 60px;
   padding: 40px 0;
+  min-height: 210px;
 
   &_left {
-    margin-left: 80px;
+    margin-left: 60px;
   }
 
   &_right {
-    margin-right: 80px;
+    margin-right: 60px;
 
     .WalletDisplay {
       float: right;

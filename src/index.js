@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
 import MetaMask from './MetaMask'
-import registerServiceWorker from './registerServiceWorker'
+import { unregister as unregisterServiceWorker } from './registerServiceWorker'
 import config from './config'
 
 function addScript (code) {
@@ -21,4 +21,4 @@ if (typeof web3 === 'undefined') {
   ReactDOM.render(<App />, document.getElementById('root'))
 }
 
-registerServiceWorker()
+unregisterServiceWorker() // Incase anyone has it

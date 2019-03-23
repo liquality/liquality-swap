@@ -6,16 +6,14 @@ const mapStateToProps = state => {
   return {
     assets: state.swap.assets,
     wallets: state.swap.wallets,
-    isPartyB: state.swap.isPartyB
+    isPartyB: state.swap.isPartyB,
+    showErrors: state.swap.showErrors
   }
 }
 
 export default connect(
   mapStateToProps,
   {
-    onToggleWalletConnect: actions.toggleWalletConnect,
-    waitForWallet: actions.waitForWallet,
-    onWalletConnected: actions.connectWallet,
-    onWalletDisconnected: actions.disconnectWallet
+    onToggleWalletConnect: actions.toggleWalletConnect
   }
 )(WalletPanel)

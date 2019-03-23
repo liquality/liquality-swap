@@ -12,9 +12,7 @@ const initialState = {
     currency: 'btc',
     value: ''
   },
-  rate: {
-    value: ''
-  }
+  rate: ''
 }
 
 function switchSides (state, action) {
@@ -22,7 +20,7 @@ function switchSides (state, action) {
   return update(state, {
     a: { $set: state.b },
     b: { $set: state.a },
-    rate: { $set: { value: newRate.toString() } }
+    rate: { $set: newRate.toString() }
   })
 }
 
@@ -32,9 +30,16 @@ function changeAmount (state, action) {
   })
 }
 
+function changeRate (state, action) {
+  return update(state, {
+    rate: { $set: action.newValue }
+  })
+}
+
 const reducers = {
   [swapTypes.SWITCH_SIDES]: switchSides,
-  [assetTypes.CHANGE_AMOUNT]: changeAmount
+  [assetTypes.CHANGE_AMOUNT]: changeAmount,
+  [assetTypes.CHANGE_RATE]: changeRate
 }
 
 const assets = getReducerFunction(reducers, initialState)

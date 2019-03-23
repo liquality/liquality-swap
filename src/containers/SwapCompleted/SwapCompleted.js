@@ -2,11 +2,13 @@ import React, { Component } from 'react'
 import CurrencyInputs from '../CurrencyInputs'
 import SwapPairPanel from '../../components/SwapPairPanel/SwapPairPanel'
 import Button from '../../components/Button/Button'
-
 import CompletedIcon from '../../icons/completed.svg'
 import HandshakeIcon from '../../icons/handshake.png'
-import './SwapCompleted.css'
+
 import config from '../../config'
+import { APP_BASE_URL } from '../../utils/app-links'
+
+import './SwapCompleted.css'
 
 class SwapCompleted extends Component {
   render () {
@@ -27,7 +29,7 @@ class SwapCompleted extends Component {
         <span className='SwapCompleted_handshake'><img src={HandshakeIcon} alt='' /></span>
       </div>
       <div className='SwapCompleted_bottom'>
-        <Button wide primary onClick={() => window.location.replace('/')}>Start another Swap</Button>
+        <Button wide primary onClick={() => window.location.replace(APP_BASE_URL)}>Start another Swap</Button>
         {config.twitterButton && <a className='twitter-share-button' href={'https://twitter.com/intent/tweet' + config.twitterButton} data-size='large'>Tweet</a>}
       </div>
     </div>
