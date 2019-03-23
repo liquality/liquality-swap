@@ -4,16 +4,18 @@ import PropTypes from 'prop-types'
 import Button from '../../components/Button/Button'
 
 import wallets from '../../utils/wallets'
+import currencies from '../../utils/currencies'
 import { getNetworkByCurrency } from '../../utils/networks'
 
 import './WalletChoose.css'
 
 const WalletChoose = (props) => {
+  const currency = currencies[props.currency]
   const network = getNetworkByCurrency(props.currency)
   return <div className='WalletChoose'>
     <h1>{props.title}</h1>
     {props.subTitle && <p>{props.subTitle}</p>}
-    <h2>Pay with {props.currency.toUpperCase()}</h2>
+    <h2>{currency.code}</h2>
     {props.wallets.map((wallet) => (
       <div key={wallet}>
         <div className='WalletChoose_wallet'>
