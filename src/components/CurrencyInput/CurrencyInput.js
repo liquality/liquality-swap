@@ -8,7 +8,7 @@ import './CurrencyInput.css'
 const CurrencyInput = (props) => {
   return <div className='CurrencyInput'>
     <h3 className='CurrencyInput_heading'>{currencies[props.currency].code}</h3>
-    <div class='CurrencyInput_inputWrapper'>
+    <div className='CurrencyInput_inputWrapper'>
       <input type='number' readOnly={props.disabled} value={props.value}
         className={classNames('CurrencyInput_input', { 'error': props.error })} placeholder='0.00'
         onChange={e => props.onChange(e.target.value)} tabIndex={props.tabIndex} />

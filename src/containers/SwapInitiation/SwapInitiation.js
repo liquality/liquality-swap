@@ -39,7 +39,7 @@ class SwapInitiation extends Component {
           : <InitiatorExpirationInfo /> }
         {!errors.initiation && !this.props.isPartyB && <Button wide primary loadingAfterClick loadingAfterClickMessage={buttonLoadingMessage} onClick={this.props.initiateSwap}>Next</Button>}
         {!errors.initiation && this.props.isPartyB && <Button wide primary loadingAfterClick loadingAfterClickMessage={buttonLoadingMessage} onClick={this.props.confirmSwap}>Confirm Terms</Button>}
-        {errors.initiation && <div class='SwapInitiation_errorMessage'>{errors.initiation}</div>}
+        {errors.initiation && <div className='SwapInitiation_errorMessage'>{errors.initiation}</div>}
       </div>
     </div>
   }
