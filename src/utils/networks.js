@@ -1,4 +1,4 @@
-import { providers } from '@liquality/chainabstractionlayer/dist/index.umd.js'
+import { providers } from '@liquality/chainabstractionlayer'
 import config from '../config'
 
 const networksByCurrency = {
