@@ -7,9 +7,8 @@ addons:
   ssh_known_hosts:
     - liquality.io
 env:
-  - APP_CONFIG=./.travis/liquality.io.mainnet.config.js DESTINATION_PATH=/var/www/html/it/leep/swap
-  - APP_CONFIG=./.travis/liquality.io.testnet.config.js DESTINATION_PATH=/var/www/html/it/leep/swap-testnet
-  - REACT_APP_TRAVIS_COMMIT=$TRAVIS_COMMIT
+  - REACT_APP_TRAVIS_COMMIT=$TRAVIS_COMMIT APP_CONFIG=./.travis/liquality.io.mainnet.config.js DESTINATION_PATH=/var/www/html/it/leep/swap
+  - REACT_APP_TRAVIS_COMMIT=$TRAVIS_COMMIT APP_CONFIG=./.travis/liquality.io.testnet.config.js DESTINATION_PATH=/var/www/html/it/leep/swap-testnet
 before_install:
   - openssl aes-256-cbc -K $encrypted_a1bc936c4a1a_key -iv $encrypted_a1bc936c4a1a_iv -in ./.travis/deploy_rsa.enc -out /tmp/deploy_rsa -d
   - eval "$(ssh-agent -s)"
