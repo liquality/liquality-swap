@@ -16,18 +16,16 @@ function waitForWallet (party, currency, wallet) {
       isPartyB
     } = getState().swap
 
-    const currency = assets[party].currency
-    const client = getClient(currency)
-
-    if (currency === 'eth') {
-      window.ethereum.enable()
-    }
+    const currencyCode = assets[party].currency
+    const currency = currencies[currencyCode]
+    const client = getClient(currencyCode)
 
     dispatch(chooseWallet(party, wallet))
     const addressesPerCall = 100
     const unusedAddress = await client.getUnusedAddress()
     let allAddresses = await client.getUsedAddresses(addressesPerCall)
     allAddresses = [ ...new Set([ unusedAddress, ...allAddresses ].map(a => a.address)) ]
+    allAddresses = allAddresses.map(currency.formatAddress)
 
     if (isPartyB) { // Preserve the preset address for party B
       const expectedAddress = wallets[party].addresses[0]
@@ -37,9 +35,9 @@ function waitForWallet (party, currency, wallet) {
     }
 
     const balance = await client.getBalance(allAddresses)
-    const formattedBalance = currencies[currency].unitToCurrency(balance).toFixed(6)
+    const formattedBalance = currency.unitToCurrency(balance).toFixed(6)
     const otherParty = party === 'a' ? 'b' : 'a'
-    const walletParty = getState().swap.assets[party].currency === currency ? party : otherParty
+    const walletParty = getState().swap.assets[party].currency === currencyCode ? party : otherParty
     dispatch(connectWallet(walletParty, allAddresses, formattedBalance))
   }
 }
