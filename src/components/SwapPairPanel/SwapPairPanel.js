@@ -8,8 +8,16 @@ class SwapPairPanel extends Component {
   render () {
     return <div className='SwapPairPanel'>
       <div className='SwapPairPanel_assetContainer'>
-        <img src={currencies[this.props.haveCurrency].icon} className='SwapPairPanel_asset SwapPairPanel_asset_left' alt={this.props.haveCurrency} />
-        <img src={currencies[this.props.wantCurrency].icon} className='SwapPairPanel_asset SwapPairPanel_asset_right' alt={this.props.haveCurrency} />
+        <img
+          src={currencies[this.props.haveCurrency].icon}
+          className='SwapPairPanel_asset SwapPairPanel_asset_left'
+          alt={this.props.haveCurrency}
+          onClick={this.props.onHaveClick} />
+        <img
+          src={currencies[this.props.wantCurrency].icon}
+          className='SwapPairPanel_asset SwapPairPanel_asset_right'
+          alt={this.props.wantCurrency}
+          onClick={this.props.onWantClick} />
         <img src={AssetsBG} className='SwapPairPanel_assetsBG' alt='' />
         {this.props.icon && <img src={this.props.icon} className='SwapPairPanel_icon' onClick={(e) => this.props.onIconClick(e)} alt='' />}
       </div>
@@ -24,8 +32,10 @@ class SwapPairPanel extends Component {
 SwapPairPanel.propTypes = {
   haveCurrency: PropTypes.string.isRequired,
   haveLabel: PropTypes.string.isRequired,
+  onHaveClick: PropTypes.func,
   wantCurrency: PropTypes.string.isRequired,
   wantLabel: PropTypes.string.isRequired,
+  onWantClick: PropTypes.func,
   icon: PropTypes.any,
   onIconClick: PropTypes.func
 }

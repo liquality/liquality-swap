@@ -9,7 +9,6 @@ import CounterPartyWallets from '../CounterPartyWallets'
 import CurrencyInputs from '../CurrencyInputs'
 import InitiatorExpirationInfo from '../InitiatorExpirationInfo'
 import WalletPanel from '../WalletPanel'
-import AssetSelector from '../../components/AssetSelector/AssetSelector'
 import './SwapInitiation.css'
 import wallets from '../../utils/wallets'
 import { getInitiationErrors } from '../../utils/validation'
@@ -42,7 +41,6 @@ class SwapInitiation extends Component {
         {!errors.initiation && this.props.isPartyB && <Button wide primary loadingAfterClick loadingAfterClickMessage={buttonLoadingMessage} onClick={this.props.confirmSwap}>Confirm Terms</Button>}
         {errors.initiation && <div className='SwapInitiation_errorMessage'>{errors.initiation}</div>}
       </div>
-      <AssetSelector open />
     </div>
   }
 }

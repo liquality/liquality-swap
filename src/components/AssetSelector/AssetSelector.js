@@ -1,26 +1,28 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import Modal from '@material-ui/core/Modal'
+import currencies from '../../utils/currencies'
 
 import './AssetSelector.css'
 
 class AssetSelector extends Component {
   render () {
-    return <Modal open={this.props.open} onClose={this.props.onClose}>
-      <div className='AssetSelector'>
-        BO SELECTA
-      </div>
-    </Modal>
+    return <div className='AssetSelector'>
+      <ul className='AssetSelector_list'>
+        {Object.entries(currencies).filter(([id]) => id !== this.props.excludeAsset).map(
+          ([id, currency]) =>
+            <li className='AssetSelector_asset' key={id} onClick={() => this.props.onSelectAsset(id)}>
+              <img className='AssetSelector_asset_icon' src={currency.icon} alt={currency.name} />
+              <h3 className='AssetSelector_asset_name'>{currency.code} {currency.name}</h3>
+            </li>
+        )}
+      </ul>
+    </div>
   }
 }
 
 AssetSelector.propTypes = {
-  open: PropTypes.bool,
-  onClose: PropTypes.func
-}
-
-AssetSelector.defaultProps = {
-  open: false
+  excludeAsset: PropTypes.oneOf(Object.keys(currencies)),
+  onSelectAsset: PropTypes.func.isRequired
 }
 
 export default AssetSelector
