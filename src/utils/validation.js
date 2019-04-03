@@ -16,7 +16,6 @@ function getWalletErrors (wallets, isPartyB) {
   const { a: walletA, b: walletB } = wallets
   if (isPartyB) {
     const initialSwapState = generateSwapState(window.location)
-    console.log(wallets.b.addresses, initialSwapState.wallets.b.addresses)
     if (!wallets.a.addresses.includes(initialSwapState.wallets.a.addresses[0])) errors.walletA = 'Address does not match swap'
     if (!wallets.b.addresses.includes(initialSwapState.wallets.b.addresses[0])) errors.walletB = 'Address does not match swap'
   }
@@ -27,10 +26,8 @@ function getWalletErrors (wallets, isPartyB) {
 
 function getCounterPartyErrors (assets, counterParty) {
   const errors = {}
+  const { a: counterPartyA, b: counterPartyB } = counterParty
   const { a: assetA, b: assetB } = assets
-  const counterPartyA = counterParty[assetA.currency]
-  const counterPartyB = counterParty[assetB.currency]
-  console.log(counterPartyB)
   if (!currencies[assetA.currency].isValidAddress(counterPartyA.address)) errors.counterPartyA = 'Address incomplete'
   if (!currencies[assetB.currency].isValidAddress(counterPartyB.address)) errors.counterPartyB = 'Address incomplete'
   return errors
@@ -58,8 +55,6 @@ function isInitiateValid (swap) {
   ]
 
   const numErrors = errors.reduce((prev, next) => prev + Object.keys(next).length, 0)
-
-  console.log(errors)
 
   return numErrors === 0
 }
