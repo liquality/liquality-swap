@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import BrandCard from '../../components/BrandCard/BrandCard'
 import Button from '../../components/Button/Button'
 import currencies from '../../utils/currencies'
-import wallets from '../../utils/wallets'
+import { wallets } from '../../utils/wallets'
 import ExpirationDetails from '../../components/ExpirationDetails'
 
 import './SwapRedemption.css'

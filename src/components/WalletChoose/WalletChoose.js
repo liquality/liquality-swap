@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import Button from '../../components/Button/Button'
 
-import wallets from '../../utils/wallets'
+import { wallets } from '../../utils/wallets'
 import currencies from '../../utils/currencies'
 import { getNetworkByCurrency } from '../../utils/networks'
 

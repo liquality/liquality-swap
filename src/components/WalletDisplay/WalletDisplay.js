@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import Button from '../Button/Button'
 
 import currencies from '../../utils/currencies'
-import wallets from '../../utils/wallets'
+import { wallets } from '../../utils/wallets'
 import WalletIcon from './wallet-icon.svg'
 
 import './WalletDisplay.css'
