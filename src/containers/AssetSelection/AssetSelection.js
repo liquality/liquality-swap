@@ -9,7 +9,7 @@ import './AssetSelection.css'
 class AssetSelection extends Component {
   handleSelectAsset (asset) {
     this.props.setAsset(this.props.assetSelector.party, asset)
-    this.props.toggleAssetSelector()
+    this.props.closeAssetSelector()
   }
 
   render () {
@@ -18,8 +18,8 @@ class AssetSelection extends Component {
       <SwapPairPanel
         haveCurrency={assetA.currency}
         wantCurrency={assetB.currency}
-        onHaveClick={() => this.props.toggleAssetSelector('a')}
-        onWantClick={() => this.props.toggleAssetSelector('b')}
+        onHaveClick={() => this.props.openAssetSelector('a')}
+        onWantClick={() => this.props.openAssetSelector('b')}
         icon={SwapIcon}
         onIconClick={() => this.props.switchSides()} />
       <div className='AssetSelection_wrapper'>

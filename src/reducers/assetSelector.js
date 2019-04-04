@@ -7,15 +7,23 @@ const initialState = {
   party: null
 }
 
-function toggleAssetSelector (state, action) {
+function openAssetSelector (state, action) {
   return update(state, {
-    open: { $set: !state.open },
+    open: { $set: true },
     party: { $set: action.party }
   })
 }
 
+function closeAssetSelector (state, action) {
+  return update(state, {
+    open: { $set: false },
+    party: { $set: null }
+  })
+}
+
 const reducers = {
-  [types.TOGGLE_ASSET_SELECTOR]: toggleAssetSelector
+  [types.OPEN_ASSET_SELECTOR]: openAssetSelector,
+  [types.CLOSE_ASSET_SELECTOR]: closeAssetSelector
 }
 
 const secretParams = getReducerFunction(reducers, initialState)

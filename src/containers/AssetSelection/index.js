@@ -14,7 +14,8 @@ const mapStateToProps = state => {
 export default withRouter(connect(
   mapStateToProps,
   {
-    toggleAssetSelector: assetSelectorActions.toggleAssetSelector,
+    openAssetSelector: assetSelectorActions.openAssetSelector,
+    closeAssetSelector: assetSelectorActions.closeAssetSelector,
     setAsset: assetActions.setAsset
   }
 )(AssetSelection))
