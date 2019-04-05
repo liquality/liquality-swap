@@ -14,7 +14,7 @@ it('Bitcoin invalid address', () => {
 })
 
 it('Ethereum valid address', () => {
-  expect(currencies.eth.isValidAddress('ea674fdde714fd979de3edf0f56aa9716b898ec8')).toBe(true)
+  expect(currencies.eth.isValidAddress('0xea674fdde714fd979de3edf0f56aa9716b898ec8')).toBe(true)
 })
 
 it('Ethereum invalid address', () => {

@@ -4,6 +4,12 @@ export default {
       url: 'http://localhost:8545'
     }
   },
+  dai: {
+    rpc: {
+      url: 'http://localhost:8545'
+    },
+    contractAddress: '0x481a3A7c25ab07cC5faddf930B39a9e7f8ed1838' // Local ERC20 contract (18 decimals)
+  },
   btc: {
     rpc: {
       username: 'bitcoin',

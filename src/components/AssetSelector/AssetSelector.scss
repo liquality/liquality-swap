@@ -1,0 +1,58 @@
+@import '../../scss/variables.scss';
+@import '../../scss/mixins.scss';
+
+.AssetSelector {
+  &_search {
+    padding: 10px 10px 30px 10px;
+    background: $color-bg-secondary;
+    border-radius: 7px 7px 0 0;
+
+    input {
+      @include blank-input;
+      color: $color-text-2;
+      width: 350px;
+      height: 45px;
+      padding: 8px 20px;
+      background: $color-bg-primary;
+      border: 1px solid $color-text-2;
+      border-radius: 25px;
+      font-size: 13px;
+      flex: 1;
+    }
+  }
+
+  &_close {
+    float: right;
+    width: 45px;
+    height: 45px;
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
+
+  &_list {
+    position: relative;
+    top: -20px;
+    margin: 0;
+    padding: 25px;
+    background: $color-bg-primary;
+    border-radius: $swap-panel-radius;
+    list-style: none;
+  }
+
+  &_asset {
+    display: inline-block;
+    width: 25%;
+    text-align: center;
+    cursor: pointer;
+
+    &_name {
+      color: #333;
+      margin-top: 20px;
+    }
+
+    &_icon {
+      width: 90px;
+    }
+  }
+}

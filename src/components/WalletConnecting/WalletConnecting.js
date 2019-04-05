@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Button from '../../components/Button/Button'
 
-import wallets from '../../utils/wallets'
+import { wallets } from '../../utils/wallets'
 
 import './WalletConnecting.css'
 
@@ -23,8 +23,6 @@ WalletConnecting.propTypes = {
   cancelText: PropTypes.string,
   cancelWallet: PropTypes.func,
   currency: PropTypes.string,
-  title: PropTypes.string,
-  subTitle: PropTypes.string,
   wallet: PropTypes.string
 }
 

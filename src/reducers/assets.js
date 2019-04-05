@@ -24,6 +24,14 @@ function switchSides (state, action) {
   })
 }
 
+function setAsset (state, action) {
+  return update(state, {
+    [action.party]: {
+      currency: { $set: action.currency }
+    }
+  })
+}
+
 function changeAmount (state, action) {
   return update(state, {
     [action.party]: { value: { $set: action.newValue } }
@@ -38,6 +46,7 @@ function changeRate (state, action) {
 
 const reducers = {
   [swapTypes.SWITCH_SIDES]: switchSides,
+  [assetTypes.SET_ASSET]: setAsset,
   [assetTypes.CHANGE_AMOUNT]: changeAmount,
   [assetTypes.CHANGE_RATE]: changeRate
 }

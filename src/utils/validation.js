@@ -26,9 +26,8 @@ function getWalletErrors (wallets, isPartyB) {
 
 function getCounterPartyErrors (assets, counterParty) {
   const errors = {}
+  const { a: counterPartyA, b: counterPartyB } = counterParty
   const { a: assetA, b: assetB } = assets
-  const counterPartyA = counterParty[assetA.currency]
-  const counterPartyB = counterParty[assetB.currency]
   if (!currencies[assetA.currency].isValidAddress(counterPartyA.address)) errors.counterPartyA = 'Address incomplete'
   if (!currencies[assetB.currency].isValidAddress(counterPartyB.address)) errors.counterPartyB = 'Address incomplete'
   return errors

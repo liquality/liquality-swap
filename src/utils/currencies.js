@@ -1,36 +1,45 @@
-import btcIcon from '../icons/btc.svg'
-import ethIcon from '../icons/eth.svg'
+import _ from 'lodash'
+import * as ethUtil from 'ethereumjs-util'
 import BigNumber from 'bignumber.js'
+import btcIcon from '../../node_modules/cryptocurrency-icons/svg/color/btc.svg'
+import ethIcon from '../../node_modules/cryptocurrency-icons/svg/color/eth.svg'
+import daiIcon from '../../node_modules/cryptocurrency-icons/svg/color/dai.svg'
 
-const SAT_TO_BTC = 100000000
-const WEI_TO_ETH = 1000000000000000000
-
-const currencies = {
+let currencies = {
   'btc': {
     name: 'Bitcoin',
     icon: btcIcon,
     code: 'BTC',
+    decimals: 8,
     // TODO: include network types in validation
     isValidAddress: address => /^[13mn][a-km-zA-HJ-NP-Z1-9]{25,34}$/.test(address),
-    unitToCurrency (value) {
-      return BigNumber(value).dividedBy(SAT_TO_BTC).toNumber()
-    },
-    currencyToUnit (value) {
-      return BigNumber(value).times(SAT_TO_BTC).toNumber()
-    }
+    formatAddress: address => address
   },
   'eth': {
     name: 'Ethereum',
     icon: ethIcon,
     code: 'ETH',
-    isValidAddress: address => /^(0x)?[0-9a-fA-F]{40}$/.test(address),
-    unitToCurrency (value) {
-      return BigNumber(value).dividedBy(WEI_TO_ETH).toNumber()
-    },
-    currencyToUnit (value) {
-      return BigNumber(value).times(WEI_TO_ETH).toNumber()
-    }
+    decimals: 18,
+    isValidAddress: ethUtil.isValidAddress,
+    formatAddress: ethUtil.toChecksumAddress
+  },
+  'dai': {
+    name: 'Dai',
+    icon: daiIcon,
+    code: 'DAI',
+    decimals: 18,
+    isValidAddress: ethUtil.isValidAddress,
+    formatAddress: ethUtil.toChecksumAddress
   }
 }
+
+function withCurrencyConverters (currency) {
+  const multiplier = BigNumber(10).pow(currency.decimals)
+  currency.unitToCurrency = value => BigNumber(value).dividedBy(multiplier).toNumber()
+  currency.currencyToUnit = value => BigNumber(value).times(multiplier).toNumber()
+  return currency
+}
+
+currencies = _.mapValues(currencies, withCurrencyConverters)
 
 export default currencies

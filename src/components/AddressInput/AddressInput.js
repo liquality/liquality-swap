@@ -8,14 +8,16 @@ import TickIcon from './tick.svg'
 import ErrorIcon from './error.svg'
 
 const AddressInput = (props) => {
-  const valid = currencies[props.currency].isValidAddress(props.value)
+  const currency = currencies[props.currency]
+  const valid = currency.isValidAddress(props.value)
+  const formattedAddress = props.value && currency.formatAddress(props.value)
   return <div className={classNames('AddressInput', { error: props.error })}>
     <div className='AddressInput_wrapper'>
       <div className='AddressInput_box'>
-        <img className='AddressInput_icon' src={currencies[props.currency].icon} alt={currencies[props.currency].name} />
+        <img className='AddressInput_icon' src={currency.icon} alt={currency.name} />
         <input className='AddressInput_input'
           tabIndex={props.tabIndex}
-          value={props.value}
+          value={formattedAddress}
           onChange={e => props.onChange(e.target.value)}
         />
       </div>

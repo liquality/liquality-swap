@@ -1,20 +1,29 @@
 import update from 'immutability-helper'
-import { types } from '../actions/counterparty'
+import { types as counterPartyTypes } from '../actions/counterparty'
+import { types as swapTypes } from '../actions/swap'
 import { getReducerFunction } from './helpers'
 
 const initialState = {
-  eth: {address: '', valid: false},
-  btc: {address: '', valid: false}
+  a: { address: '', valid: false },
+  b: { address: '', valid: false }
+}
+
+function switchSides (state) {
+  return update(state, {
+    a: { $set: state.b },
+    b: { $set: state.a }
+  })
 }
 
 function changeCounterPartyAddress (state, action) {
   return update(state, {
-    [action.currency]: { address: { $set: action.newValue }, valid: { $set: action.valid } }
+    [action.party]: { address: { $set: action.newValue }, valid: { $set: action.valid } }
   })
 }
 
 const reducers = {
-  [types.CHANGE_COUNTER_PARTY_ADDRESS]: changeCounterPartyAddress
+  [swapTypes.SWITCH_SIDES]: switchSides,
+  [counterPartyTypes.CHANGE_COUNTER_PARTY_ADDRESS]: changeCounterPartyAddress
 }
 
 const counterParty = getReducerFunction(reducers, initialState)

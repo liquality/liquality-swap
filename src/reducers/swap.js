@@ -8,6 +8,7 @@ import wallets from './wallets'
 import counterParty from './counterparty'
 import transactions from './transactions'
 import secretParams from './secretparams'
+import assetSelector from './assetSelector'
 
 export default combineReducers({
   assets,
@@ -15,6 +16,7 @@ export default combineReducers({
   counterParty,
   transactions,
   secretParams,
+  assetSelector,
   step: (state = steps.INITIATION, action) => {
     return action.type === types.SET_STEP ? action.step : state
   },

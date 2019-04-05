@@ -3,7 +3,8 @@ import config from '../config'
 
 const networksByCurrency = {
   btc: providers.bitcoin.networks,
-  eth: providers.ethereum.networks
+  eth: providers.ethereum.networks,
+  dai: providers.ethereum.networks
 }
 
 function getNetworkByCurrency (currency) {

@@ -21,4 +21,14 @@ const wallets = {
   }
 }
 
-export default wallets
+const walletsByAsset = {
+  eth: ['metamask'],
+  btc: ['ledger'],
+  dai: ['metamask']
+}
+
+function getAssetWallets (asset) {
+  return walletsByAsset[asset]
+}
+
+export { wallets, getAssetWallets }
