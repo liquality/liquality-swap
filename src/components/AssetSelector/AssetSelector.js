@@ -1,13 +1,16 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import currencies from '../../utils/currencies'
+import config from '../../config'
 
 import closeIcon from '../../icons/close.svg'
 import './AssetSelector.css'
 
 class AssetSelector extends Component {
   render () {
-    const dipslayedCurrencies = Object.entries(currencies)
+    const configuredAssets = Object.keys(config.assets)
+    const displayedAssets = Object.entries(currencies)
+      .filter(([id]) => configuredAssets.includes(id))
       .filter(([id]) => id !== this.props.excludeAsset)
       .filter(([, currency]) =>
         currency.code.toLowerCase().includes(this.props.search.toLowerCase()) ||
@@ -20,10 +23,10 @@ class AssetSelector extends Component {
           value={this.props.search}
           placeholder='Search by Asset Name or Symbol'
           onChange={e => this.props.onSearchChange(e.target.value)} />
-        <button class='AssetSelector_close' onClick={() => this.props.onClose()}><img src={closeIcon} alt='Close asset selector' /></button>
+        <button className='AssetSelector_close' onClick={() => this.props.onClose()}><img src={closeIcon} alt='Close asset selector' /></button>
       </div>
       <ul className='AssetSelector_list'>
-        {dipslayedCurrencies.map(
+        {displayedAssets.map(
           ([id, currency]) =>
             <li className='AssetSelector_asset' key={id} onClick={() => this.props.onSelectAsset(id)}>
               <img className='AssetSelector_asset_icon' src={currency.icon} alt={currency.name} />

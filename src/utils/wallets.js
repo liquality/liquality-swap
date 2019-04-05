@@ -1,3 +1,4 @@
+import config from '../config'
 import metamask from '../icons/metamask.svg'
 import ledger from '../icons/ledger.svg'
 
@@ -24,11 +25,12 @@ const wallets = {
 const walletsByAsset = {
   eth: ['metamask'],
   btc: ['ledger'],
-  dai: ['metamask']
+  erc20: ['metamask']
 }
 
 function getAssetWallets (asset) {
-  return walletsByAsset[asset]
+  const assetConfig = config.assets[asset]
+  return walletsByAsset[asset] || walletsByAsset[assetConfig.type]
 }
 
 export { wallets, getAssetWallets }

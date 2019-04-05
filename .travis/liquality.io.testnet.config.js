@@ -1,18 +1,20 @@
 export default {
-  eth: {
-    rpc: {
-      url: 'https://rinkeby.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
+  assets: {
+    eth: {
+      rpc: {
+        url: 'https://rinkeby.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
+      },
+      network: 'rinkeby'
     },
-    network: 'rinkeby'
-  },
-  btc: {
-    rpc: {
-      username: 'bitcoin',
-      password: 'local321',
-      url: 'https://liquality.io/bitcointestnetrpc/'
-    },
-    feeNumberOfBlocks: 2,
-    network: 'bitcoin_testnet'
+    btc: {
+      rpc: {
+        username: 'bitcoin',
+        password: 'local321',
+        url: 'https://liquality.io/bitcointestnetrpc/'
+      },
+      feeNumberOfBlocks: 2,
+      network: 'bitcoin_testnet'
+    }
   },
   minConfirmations: 0,
   injectScript: `
