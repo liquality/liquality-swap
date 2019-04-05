@@ -18,6 +18,7 @@ export default withRouter(connect(
     switchSides: swapActions.switchSides,
     openAssetSelector: assetSelectorActions.openAssetSelector,
     closeAssetSelector: assetSelectorActions.closeAssetSelector,
+    setAssetSelectorSearch: assetSelectorActions.setAssetSelectorSearch,
     setAsset: assetActions.setAsset
   }
 )(AssetSelection))

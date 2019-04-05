@@ -4,7 +4,8 @@ import { getReducerFunction } from './helpers'
 
 const initialState = {
   open: false,
-  party: null
+  party: null,
+  search: ''
 }
 
 function openAssetSelector (state, action) {
@@ -15,15 +16,19 @@ function openAssetSelector (state, action) {
 }
 
 function closeAssetSelector (state, action) {
+  return update(state, { $set: initialState })
+}
+
+function setAssetSelectorSearch (state, action) {
   return update(state, {
-    open: { $set: false },
-    party: { $set: null }
+    search: { $set: action.value }
   })
 }
 
 const reducers = {
   [types.OPEN_ASSET_SELECTOR]: openAssetSelector,
-  [types.CLOSE_ASSET_SELECTOR]: closeAssetSelector
+  [types.CLOSE_ASSET_SELECTOR]: closeAssetSelector,
+  [types.SET_ASSET_SELECTOR_SEARCH]: setAssetSelectorSearch
 }
 
 const secretParams = getReducerFunction(reducers, initialState)
