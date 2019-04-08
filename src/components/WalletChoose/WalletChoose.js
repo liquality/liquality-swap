@@ -4,13 +4,13 @@ import PropTypes from 'prop-types'
 import Button from '../../components/Button/Button'
 
 import { wallets } from '../../utils/wallets'
-import currencies from '../../utils/currencies'
+import cryptoassets from '@liquality/cryptoassets'
 import { getNetworkByCurrency } from '../../utils/networks'
 
 import './WalletChoose.css'
 
 const WalletChoose = (props) => {
-  const currency = currencies[props.currency]
+  const currency = cryptoassets[props.currency]
   const network = getNetworkByCurrency(props.currency)
   return <div className='WalletChoose'>
     <h1>{props.title}</h1>

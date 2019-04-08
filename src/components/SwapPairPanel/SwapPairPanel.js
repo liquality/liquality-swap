@@ -1,20 +1,21 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import currencies from '../../utils/currencies'
+import cryptoassets from '@liquality/cryptoassets'
+import * as assetUtils from '../../utils/assets'
 import AssetsBG from './assets-bg.svg'
 import './SwapPairPanel.css'
 
 class SwapPairPanel extends Component {
   render () {
-    const haveCurrency = currencies[this.props.haveCurrency]
-    const wantCurrency = currencies[this.props.wantCurrency]
+    const haveCurrency = cryptoassets[this.props.haveCurrency]
+    const wantCurrency = cryptoassets[this.props.wantCurrency]
     const showHave = (!this.props.focusSide || this.props.focusSide === 'have')
     const showWant = (!this.props.focusSide || this.props.focusSide === 'want')
     return <div className='SwapPairPanel'>
       <div className='SwapPairPanel_assetContainer'>
         {showHave && <img
-          src={haveCurrency.icon}
+          src={assetUtils.getIcon(haveCurrency.code)}
           className={classNames(
             'SwapPairPanel_asset',
             'SwapPairPanel_asset_left',
@@ -23,7 +24,7 @@ class SwapPairPanel extends Component {
           alt={haveCurrency.code}
           onClick={this.props.onHaveClick} />}
         {showWant && <img
-          src={wantCurrency.icon}
+          src={assetUtils.getIcon(wantCurrency.code)}
           className={classNames(
             'SwapPairPanel_asset',
             'SwapPairPanel_asset_right',

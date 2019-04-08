@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@liquality/chainabstractionlayer": "^0.1.23-next.4",
+    "@liquality/cryptoassets": "0.0.2",
     "@material-ui/core": "^3.5.1",
     "bignumber.js": "^8.0.1",
     "bootstrap": "^4.1.3",

@@ -1,20 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-
-import currencies from '../../utils/currencies'
+import cryptoassets from '@liquality/cryptoassets'
+import * as assetUtils from '../../utils/assets'
 import './AddressInput.css'
 import TickIcon from './tick.svg'
 import ErrorIcon from './error.svg'
 
 const AddressInput = (props) => {
-  const currency = currencies[props.currency]
+  const currency = cryptoassets[props.currency]
   const valid = currency.isValidAddress(props.value)
   const formattedAddress = props.value && currency.formatAddress(props.value)
   return <div className={classNames('AddressInput', { error: props.error })}>
     <div className='AddressInput_wrapper'>
       <div className='AddressInput_box'>
-        <img className='AddressInput_icon' src={currency.icon} alt={currency.name} />
+        <img className='AddressInput_icon' src={assetUtils.getIcon(currency.code)} alt={currency.name} />
         <input className='AddressInput_input'
           tabIndex={props.tabIndex}
           value={formattedAddress}
@@ -30,7 +30,7 @@ const AddressInput = (props) => {
 
 AddressInput.propTypes = {
   // TODO: probably need some sort of repository for currency codes and icons?
-  currency: PropTypes.oneOf(Object.keys(currencies)).isRequired,
+  currency: PropTypes.oneOf(Object.keys(cryptoassets)).isRequired,
   value: PropTypes.string,
   onChange: PropTypes.func,
   tabIndex: PropTypes.number,
