@@ -14,6 +14,14 @@ export default {
       },
       feeNumberOfBlocks: 2,
       network: 'bitcoin_testnet'
+    },
+    midman: {
+      type: 'erc20',
+      rpc: {
+        url: 'https://rinkeby.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
+      },
+      contractAddress: '0xcE2748BE67fB4346654B4500c4BB0642536365FC',
+      network: 'rinkeby'
     }
   },
   minConfirmations: 0,

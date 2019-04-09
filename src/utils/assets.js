@@ -1,5 +1,9 @@
 function getIcon (code) {
-  return require(`../../node_modules/cryptocurrency-icons/svg/color/${code.toLowerCase()}.svg`)
+  try {
+    return require(`../../node_modules/cryptocurrency-icons/svg/color/${code.toLowerCase()}.svg`)
+  } catch (e) {
+    return require('../icons/blank-asset.svg')
+  }
 }
 
 export { getIcon }

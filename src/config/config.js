@@ -5,12 +5,12 @@ export default {
         url: 'http://localhost:8545'
       }
     },
-    dai: {
+    midman: {
       type: 'erc20',
       rpc: {
         url: 'http://localhost:8545'
       },
-      contractAddress: '0x481a3A7c25ab07cC5faddf930B39a9e7f8ed1838' // Local ERC20 contract (18 decimals)
+      contractAddress: '0x422950598Eb23877deAfF346dA0550Aa53482156' // Local ERC20 contract (18 decimals)
     },
     btc: {
       rpc: {
