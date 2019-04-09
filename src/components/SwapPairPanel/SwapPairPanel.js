@@ -46,8 +46,18 @@ class SwapPairPanel extends Component {
         )}>{this.props.wantLabel}</h1>
       </div>
       { this.props.showCurrencyLabels && <div className='SwapPairPanel_currency_labels'>
-        {showHave && <h4 className='SwapPairPanel_currency_labels_have'>{haveCurrency.code} {haveCurrency.name}</h4>}
-        {showWant && <h4 className='SwapPairPanel_currency_labels_want'>{wantCurrency.code} {wantCurrency.name}</h4>}
+        {showHave &&
+          <h4
+            className={classNames('SwapPairPanel_currency_labels_have', {'SwapPairPanel_currency_labels_interactive': this.props.onHaveClick})}
+            onClick={this.props.onHaveClick} >
+            {haveCurrency.name} ({haveCurrency.code})
+          </h4>}
+        {showWant &&
+          <h4
+            className={classNames('SwapPairPanel_currency_labels_want', {'SwapPairPanel_currency_labels_interactive': this.props.onWantClick})}
+            onClick={this.props.onWantClick}>
+            {wantCurrency.name} ({wantCurrency.code})
+          </h4>}
       </div> }
     </div>
   }

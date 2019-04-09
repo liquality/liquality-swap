@@ -31,7 +31,7 @@ class AssetSelector extends Component {
           ([id, currency]) =>
             <li className='AssetSelector_asset' key={id} onClick={() => this.props.onSelectAsset(id)}>
               <img className='AssetSelector_asset_icon' src={assetUtils.getIcon(currency.code)} alt={currency.name} />
-              <h3 className='AssetSelector_asset_name'>{currency.code} {currency.name}</h3>
+              <h4 className='AssetSelector_asset_name'>{currency.name} ({currency.code})</h4>
             </li>
         )}
       </ul>
