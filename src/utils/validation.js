@@ -1,5 +1,5 @@
 import config from '../config'
-import currencies from './currencies'
+import cryptoassets from '@liquality/cryptoassets'
 import { generateSwapState } from './app-links'
 
 function getCurrencyInputErrors (assets) {
@@ -28,8 +28,8 @@ function getCounterPartyErrors (assets, counterParty) {
   const errors = {}
   const { a: counterPartyA, b: counterPartyB } = counterParty
   const { a: assetA, b: assetB } = assets
-  if (!currencies[assetA.currency].isValidAddress(counterPartyA.address)) errors.counterPartyA = 'Address incomplete'
-  if (!currencies[assetB.currency].isValidAddress(counterPartyB.address)) errors.counterPartyB = 'Address incomplete'
+  if (!cryptoassets[assetA.currency].isValidAddress(counterPartyA.address)) errors.counterPartyA = 'Address incomplete'
+  if (!cryptoassets[assetB.currency].isValidAddress(counterPartyB.address)) errors.counterPartyB = 'Address incomplete'
   return errors
 }
 

@@ -4,7 +4,7 @@ import { getClient } from '../services/chainClient'
 import { actions as transactionActions } from './transactions'
 import { actions as secretActions } from './secretparams'
 import { actions as walletActions } from './wallets'
-import currencies from '../utils/currencies'
+import cryptoassets from '@liquality/cryptoassets'
 import { sleep } from '../utils/async'
 import { getFundExpiration, getClaimExpiration, generateExpiration } from '../utils/expiration'
 import { isInitiateValid } from '../utils/validation'
@@ -107,7 +107,7 @@ async function lockFunds (dispatch, getState) {
   const swapExpiration = isPartyB ? getFundExpiration(expiration, 'b').time : expiration
 
   const block = await client.getBlockHeight()
-  const valueInUnit = currencies[assets.a.currency].currencyToUnit(assets.a.value)
+  const valueInUnit = cryptoassets[assets.a.currency].currencyToUnit(assets.a.value)
   const initiateSwapParams = [
     valueInUnit,
     counterParty.a.address,
@@ -160,7 +160,7 @@ async function verifyInitiateSwapTransaction (dispatch, getState) {
     expiration
   } = getState().swap
   const client = getClient(currency)
-  const valueInUnit = currencies[currency].currencyToUnit(value)
+  const valueInUnit = cryptoassets[currency].currencyToUnit(value)
   while (true) {
     try {
       const swapVerified = await client.verifyInitiateSwapTransaction(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty.b.address, secretParams.secretHash, expiration.unix())
@@ -184,7 +184,7 @@ async function findInitiateSwapTransaction (dispatch, getState) {
     expiration
   } = getState().swap
   const client = getClient(currency)
-  const valueInUnit = currencies[currency].currencyToUnit(value)
+  const valueInUnit = cryptoassets[currency].currencyToUnit(value)
   const swapExpiration = getFundExpiration(expiration, 'b').time
   const initiateTransaction = await client.findInitiateSwapTransaction(valueInUnit, addresses[0], counterParty.b.address, secretParams.secretHash, swapExpiration.unix())
   dispatch(transactionActions.setTransaction('b', 'fund', initiateTransaction))

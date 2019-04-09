@@ -98,14 +98,21 @@
 
     &_have {
       float: left;
-      padding-left: 220px;
-      padding-right: 40px;
+      padding-left: 190px;
     }
 
     &_want {
       float: right;
-      padding-right: 220px;
-      padding-left: 40px;
+      padding-right: 190px;
+    }
+
+    &_interactive {
+      cursor: pointer;
+      color: $color-primary-1;
+
+      &:hover {
+        opacity: 0.7;
+      }
     }
 
     &::after {

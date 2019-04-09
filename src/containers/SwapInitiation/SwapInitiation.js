@@ -12,6 +12,7 @@ import WalletPanel from '../WalletPanel'
 import './SwapInitiation.css'
 import { wallets } from '../../utils/wallets'
 import { getInitiationErrors } from '../../utils/validation'
+import { APP_BASE_URL } from '../../utils/app-links'
 
 class SwapInitiation extends Component {
   render () {
@@ -37,8 +38,10 @@ class SwapInitiation extends Component {
         { this.props.isPartyB
           ? <ExpirationDetails />
           : <InitiatorExpirationInfo /> }
-        {!errors.initiation && !this.props.isPartyB && <Button wide primary loadingAfterClick loadingAfterClickMessage={buttonLoadingMessage} onClick={this.props.initiateSwap}>Next</Button>}
-        {!errors.initiation && this.props.isPartyB && <Button wide primary loadingAfterClick loadingAfterClickMessage={buttonLoadingMessage} onClick={this.props.confirmSwap}>Confirm Terms</Button>}
+        {!errors.initiation && !this.props.isPartyB && <Button wide primary loadingAfterClick loadingAfterClickMessage={buttonLoadingMessage} onClick={this.props.initiateSwap}>Initiate Swap</Button>}
+        {!errors.initiation && this.props.isPartyB && <Button wide primary loadingAfterClick loadingAfterClickMessage={buttonLoadingMessage} onClick={this.props.confirmSwap}>Confirm Terms</Button>}<br />
+        {/* TODO: Do actual resetting of app state instead of refresh. */}
+        <Button wide link onClick={() => window.location.replace(APP_BASE_URL)}>{ this.props.isPartyB ? 'Abandon Swap' : 'Cancel' }</Button>
         {errors.initiation && <div className='SwapInitiation_errorMessage'>{errors.initiation}</div>}
       </div>
     </div>

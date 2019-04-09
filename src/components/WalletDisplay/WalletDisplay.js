@@ -3,14 +3,14 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import Button from '../Button/Button'
 
-import currencies from '../../utils/currencies'
+import cryptoassets from '@liquality/cryptoassets'
 import { wallets } from '../../utils/wallets'
 import WalletIcon from './wallet-icon.svg'
 
 import './WalletDisplay.css'
 
 const WalletDisplay = (props) => {
-  const currency = currencies[props.currency]
+  const currency = cryptoassets[props.currency]
   const address = props.address && currency.formatAddress(props.address)
   return <div className={classNames('WalletDisplay', {error: props.error})}>
     <div className='WalletDisplay_wrapper'>

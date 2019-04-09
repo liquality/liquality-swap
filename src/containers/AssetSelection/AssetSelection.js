@@ -40,9 +40,9 @@ class AssetSelection extends Component {
             onSelectAsset={asset => this.handleSelectAsset(asset)}
             onSearchChange={value => this.props.setAssetSelectorSearch(value)}
             onClose={() => this.props.closeAssetSelector()} /> }
-        <div className='AssetSelection_bottom'>
-          { !this.props.assetSelector.open && <Button wide primary onClick={() => this.props.history.replace('/initiation')}>Next</Button> }
-        </div>
+        { !this.props.assetSelector.open && <div className='AssetSelection_bottom'>
+          <Button wide primary onClick={() => this.props.history.replace('/initiation')}>Next</Button>
+        </div> }
       </div>
     </div>
   }

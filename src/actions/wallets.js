@@ -1,5 +1,5 @@
 import { getClient } from '../services/chainClient'
-import currencies from '../utils/currencies'
+import cryptoassets from '@liquality/cryptoassets'
 
 const types = {
   TOGGLE_WALLET_CONNECT: 'TOGGLE_WALLET_CONNECT',
@@ -17,7 +17,7 @@ function waitForWallet (party, currency, wallet) {
     } = getState().swap
 
     const currencyCode = assets[party].currency
-    const currency = currencies[currencyCode]
+    const currency = cryptoassets[currencyCode]
     const client = getClient(currencyCode)
 
     dispatch(chooseWallet(party, wallet))

@@ -1,18 +1,20 @@
 export default {
-  eth: {
-    rpc: {
-      url: 'https://mainnet.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
+  assets: {
+    eth: {
+      rpc: {
+        url: 'https://mainnet.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
+      },
+      network: 'mainnet'
     },
-    network: 'mainnet'
-  },
-  btc: {
-    rpc: {
-      username: 'liquality',
-      password: 'liquality123',
-      url: 'https://liquality.io/bitcoinrpc/'
-    },
-    feeNumberOfBlocks: 2,
-    network: 'bitcoin'
+    btc: {
+      rpc: {
+        username: 'liquality',
+        password: 'liquality123',
+        url: 'https://liquality.io/bitcoinrpc/'
+      },
+      feeNumberOfBlocks: 2,
+      network: 'bitcoin'
+    }
   },
   injectScript: `
   function addSentry () {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import BrandCard from '../../components/BrandCard/BrandCard'
 import Button from '../../components/Button/Button'
-import currencies from '../../utils/currencies'
+import cryptoassets from '@liquality/cryptoassets'
 import { wallets } from '../../utils/wallets'
 import ExpirationDetails from '../../components/ExpirationDetails'
 
@@ -15,8 +15,8 @@ class SwapRedemption extends Component {
     return <BrandCard className='SwapRedemption' title='Claim Funds'>
       <div className='SwapRedemption_confirmation'>
         <p className='SwapRedemption_terms'>
-          Get <strong>{this.props.assets.b.value} {currencies[this.props.assets.b.currency].code}</strong>
-          &nbsp;for <strong>{this.props.assets.a.value} {currencies[this.props.assets.a.currency].code}</strong>
+          Get <strong>{this.props.assets.b.value} {cryptoassets[this.props.assets.b.currency].code}</strong>
+          &nbsp;for <strong>{this.props.assets.a.value} {cryptoassets[this.props.assets.a.currency].code}</strong>
         </p>
         <p>Thanks to the <strong>Atomic Swap</strong> you don't need to trust the counterparty and avoid the middleman.</p>
       </div>
