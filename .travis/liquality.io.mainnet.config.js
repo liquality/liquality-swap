@@ -14,6 +14,14 @@ export default {
       },
       feeNumberOfBlocks: 2,
       network: 'bitcoin'
+    },
+    dai: {
+      type: 'erc20',
+      rpc: {
+        url: 'https://mainnet.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
+      },
+      contractAddress: '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359',
+      network: 'mainnet'
     }
   },
   injectScript: `
