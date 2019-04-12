@@ -51,7 +51,8 @@ async function ensureWallet (party, dispatch, getState) {
     wallets,
     assets
   } = getState().swap
-  const client = getClient(assets[party].currency)
+  console.log(getState())
+  const client = getClient(assets[party].currency, wallets[party].type)
   const walletSet = wallets[party].connected
   const walletAvailable = await client.isWalletAvailable()
   if (!walletSet || !walletAvailable) {
@@ -75,7 +76,7 @@ async function ensureSecret (dispatch, getState) {
     const walletConnected = await ensureWallet('a', dispatch, getState)
     if (!walletConnected) return
 
-    const client = getClient(assets.a.currency)
+    const client = getClient(assets.a.currency, wallets.a.type)
     const secretData = [
       assets.a.value,
       assets.a.currency,
@@ -102,7 +103,7 @@ async function lockFunds (dispatch, getState) {
     expiration,
     isPartyB
   } = getState().swap
-  const client = getClient(assets.a.currency)
+  const client = getClient(assets.a.currency, wallets.a.type)
 
   const swapExpiration = isPartyB ? getFundExpiration(expiration, 'b').time : expiration
 
@@ -153,13 +154,13 @@ function confirmSwap () {
 async function verifyInitiateSwapTransaction (dispatch, getState) {
   const {
     assets: { b: { currency, value } },
-    wallets: { b: { addresses } },
+    wallets: { b: { addresses, type } },
     counterParty,
     secretParams,
     transactions,
     expiration
   } = getState().swap
-  const client = getClient(currency)
+  const client = getClient(currency, type)
   const valueInUnit = cryptoassets[currency].currencyToUnit(value)
   while (true) {
     try {
@@ -178,12 +179,13 @@ async function verifyInitiateSwapTransaction (dispatch, getState) {
 async function findInitiateSwapTransaction (dispatch, getState) {
   const {
     assets: { b: { currency, value } },
-    wallets: { b: { addresses } },
+    wallets: { b: { addresses, type } },
     counterParty,
     secretParams,
     expiration
   } = getState().swap
-  const client = getClient(currency)
+  console.log(type)
+  const client = getClient(currency, type)
   const valueInUnit = cryptoassets[currency].currencyToUnit(value)
   const swapExpiration = getFundExpiration(expiration, 'b').time
   const initiateTransaction = await client.findInitiateSwapTransaction(valueInUnit, addresses[0], counterParty.b.address, secretParams.secretHash, swapExpiration.unix())
@@ -208,7 +210,7 @@ function waitForSwapClaim () {
       expiration,
       isPartyB
     } = getState().swap
-    const client = getClient(assets.a.currency)
+    const client = getClient(assets.a.currency, wallets.a.type)
     const swapExpiration = getFundExpiration(expiration, isPartyB ? 'b' : 'a').time
     const claimTransaction = await client.findClaimSwapTransaction(transactions.a.fund.hash, counterParty.a.address, wallets.a.addresses[0], secretParams.secretHash, swapExpiration.unix())
     dispatch(transactionActions.setTransaction('b', 'claim', claimTransaction))
@@ -226,7 +228,7 @@ async function unlockFunds (dispatch, getState) {
     expiration
   } = getState().swap
 
-  const client = getClient(assets.b.currency)
+  const client = getClient(assets.b.currency, wallets.b.type)
   const block = await client.getBlockHeight()
   const swapExpiration = getClaimExpiration(expiration, isPartyB ? 'b' : 'a').time
   const claimSwapParams = [
@@ -267,7 +269,7 @@ function refundSwap () {
       expiration
     } = getState().swap
 
-    const client = getClient(assets.a.currency)
+    const client = getClient(assets.a.currency, wallets.a.type)
     const swapExpiration = getFundExpiration(expiration, isPartyB ? 'b' : 'a').time
     await client.refundSwap(
       transactions.a.fund.hash,

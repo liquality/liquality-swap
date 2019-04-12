@@ -10,6 +10,12 @@ const types = {
 
 function waitForWallet (party, currency, wallet) {
   return async (dispatch, getState) => {
+    dispatch(chooseWallet(party, wallet))
+  }
+}
+
+function waitForWalletInitialization (party, currency, wallet) {
+  return async (dispatch, getState) => {
     const {
       assets,
       wallets,
@@ -18,9 +24,8 @@ function waitForWallet (party, currency, wallet) {
 
     const currencyCode = assets[party].currency
     const currency = cryptoassets[currencyCode]
-    const client = getClient(currencyCode)
+    const client = getClient(currencyCode, wallet)
 
-    dispatch(chooseWallet(party, wallet))
     const addressesPerCall = 100
     const unusedAddress = await client.getUnusedAddress()
     let allAddresses = await client.getUsedAddresses(addressesPerCall)
@@ -60,6 +65,7 @@ function disconnectWallet (party) {
 
 const actions = {
   waitForWallet,
+  waitForWalletInitialization,
   toggleWalletConnect,
   chooseWallet,
   connectWallet,

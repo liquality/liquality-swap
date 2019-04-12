@@ -19,13 +19,13 @@ const wallets = {
       description: 'Navigate to your Bitcoin account. Follow Ledger instructions to connect Bitcoin wallet'
     },
     troubleshootConnectionLink: 'https://support.ledger.com/hc/en-us/articles/115005195945'
-  }
+  },
 }
 
 const walletsByAsset = {
-  eth: ['metamask'],
+  eth: ['metamask', 'ledger'],
   btc: ['ledger'],
-  erc20: ['metamask']
+  erc20: ['metamask', 'ledger']
 }
 
 function getAssetWallets (asset) {

@@ -9,45 +9,30 @@
     line-height: 1.6;
     color: #747E8D; // TODO: use sass vars
     text-align: center;
-    text-transform: uppercase;
     font-size: 1.7rem;
   }
 
-  h2 {
-    color: #333;
-    padding: 20px;
-  }
-
-  h5 {
-    margin-top: 7px;
-    margin-bottom: 3px;
-    color: #333;
-  }
-
-  p {
-    font-size: 0.7rem;
-  }
-
-  .WalletCurrency {
-    button {
-      color: #333;
-    }
-
-    img {
-      margin-right: 5px;
-    }
-  }
-
-  .WalletButton {
-    img {
-      margin-right: 5px;
-    }
-  }
-
-  &_wallet {
+  .WalletsContainer {
     border-radius: 10px;
     background-color: #f7f8f9;
     padding: 10px;
     margin: 10px 5px 20px;
+  }
+
+  &_wallet {
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    align-items:center;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #f1f0f9;
+    }
+
+    &_image {
+      margin-right: 15px;
+      width: 20px;
+    }
   }
 }

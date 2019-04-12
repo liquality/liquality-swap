@@ -39,7 +39,7 @@ class SwapInitiation extends Component {
           ? <ExpirationDetails />
           : <InitiatorExpirationInfo /> }
         {!errors.initiation && !this.props.isPartyB && <Button wide primary loadingAfterClick loadingAfterClickMessage={buttonLoadingMessage} onClick={this.props.initiateSwap}>Initiate Swap</Button>}
-        {!errors.initiation && this.props.isPartyB && <Button wide primary loadingAfterClick loadingAfterClickMessage={buttonLoadingMessage} onClick={this.props.confirmSwap}>Confirm Terms</Button>}<br />
+        {!errors.initiation && this.props.isPartyB && <Button wide primary disabled={this.props.wallets.a === null || !this.props.wallets.a.chosen || this.props.wallets.b === null || !this.props.wallets.b.chosen} loadingAfterClick loadingAfterClickMessage={buttonLoadingMessage} onClick={this.props.confirmSwap}>Confirm Terms</Button>}<br />
         {/* TODO: Do actual resetting of app state instead of refresh. */}
         <Button wide link onClick={() => window.location.replace(APP_BASE_URL)}>{ this.props.isPartyB ? 'Abandon Swap' : 'Cancel' }</Button>
         {errors.initiation && <div className='SwapInitiation_errorMessage'>{errors.initiation}</div>}

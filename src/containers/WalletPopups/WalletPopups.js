@@ -14,6 +14,7 @@ class WalletPanel extends Component {
         walletChosen={walletA.chosen}
         wallet={walletA.type}
         chooseWallet={this.props.waitForWallet}
+        connectWallet={this.props.waitForWalletInitialization}
         disconnectWallet={this.props.onWalletDisconnected}
         addresses={walletA.addresses}
         walletConnected={walletA.connected}
@@ -27,6 +28,7 @@ class WalletPanel extends Component {
         walletChosen={walletB.chosen}
         wallet={walletB.type}
         chooseWallet={this.props.waitForWallet}
+        connectWallet={this.props.waitForWalletInitialization}
         disconnectWallet={this.props.onWalletDisconnected}
         addresses={walletB.addresses}
         walletConnected={walletB.connected}
