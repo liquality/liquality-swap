@@ -28,11 +28,6 @@ class WalletConnectPopup extends Component {
     console.log(wallet)
     const { id, currency } = this.props
     this.props.connectWallet(id, currency, wallet)
-  } 
-
-  disconnectWallet () {
-    const { id } = this.props
-    this.props.disconnectWallet(id)
   }
 
   disconnectWallet () {

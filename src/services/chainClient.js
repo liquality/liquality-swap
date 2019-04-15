@@ -2,7 +2,6 @@
 
 import { Client, providers } from '@liquality/chainabstractionlayer/dist/index.umd.js'
 import config from '../config'
-import { wallets } from '../utils/wallets';
 
 function createBtcClient (asset, wallet) {
   const networks = providers.bitcoin.networks
@@ -14,7 +13,9 @@ function createBtcClient (asset, wallet) {
     localStorage.btcRpcPass || window.btcRpcPass || process.env.REACT_APP_BTC_RPC_PASS || btcConfig.rpc.password,
     btcConfig.feeNumberOfBlocks
   ))
-  btcClient.addProvider(new providers.bitcoin.BitcoinLedgerProvider({network: networks[btcConfig.network]}))
+  if (wallet === 'ledger') {
+    btcClient.addProvider(new providers.bitcoin.BitcoinLedgerProvider({network: networks[btcConfig.network]}))
+  }
   btcClient.addProvider(new providers.bitcoin.BitcoinSwapProvider({network: networks[btcConfig.network]}))
   return btcClient
 }
@@ -28,7 +29,7 @@ function createEthClient (asset, wallet) {
   ))
   if (wallet === 'metamask') {
     ethClient.addProvider(new providers.ethereum.EthereumMetaMaskProvider(web3.currentProvider, networks[ethConfig.network]))
-  } else {
+  } else if (wallet === 'ledger') {
     ethClient.addProvider(new providers.ethereum.EthereumLedgerProvider({network: networks[ethConfig.network]}))
   }
   ethClient.addProvider(new providers.ethereum.EthereumSwapProvider())
@@ -44,7 +45,7 @@ function createERC20Client (asset, wallet) {
   ))
   if (wallet === 'metamask') {
     erc20Client.addProvider(new providers.ethereum.EthereumMetaMaskProvider(web3.currentProvider, networks[assetConfig.network]))
-  } else {
+  } else if (wallet === 'ledger') {
     erc20Client.addProvider(new providers.ethereum.EthereumLedgerProvider({network: networks[assetConfig.network]}))
   }
   erc20Client.addProvider(new providers.ethereum.EthereumERC20Provider(assetConfig.contractAddress))

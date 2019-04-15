@@ -20,12 +20,30 @@ const wallets = {
     },
     troubleshootConnectionLink: 'https://support.ledger.com/hc/en-us/articles/115005195945'
   },
+  'bitcoin_node': {
+    icon: ledger,
+    name: 'Node',
+    connection: {
+      title: 'On your node',
+      description: 'Navigate to your Bitcoin account. Follow Ledger instructions to connect Bitcoin wallet'
+    },
+    troubleshootConnectionLink: 'https://support.ledger.com/hc/en-us/articles/115005195945'
+  },
+  'ethereum_node': {
+    icon: ledger,
+    name: 'Node',
+    connection: {
+      title: 'On your node',
+      description: 'Navigate to your Bitcoin account. Follow Ledger instructions to connect Bitcoin wallet'
+    },
+    troubleshootConnectionLink: 'https://support.ledger.com/hc/en-us/articles/115005195945'
+  }
 }
 
 const walletsByAsset = {
-  eth: ['metamask', 'ledger'],
-  btc: ['ledger'],
-  erc20: ['metamask', 'ledger']
+  eth: ['metamask', 'ledger', 'ethereum_node'],
+  btc: ['ledger', 'bitcoin_node'],
+  erc20: ['metamask', 'ledger', 'ethereum_node']
 }
 
 function getAssetWallets (asset) {

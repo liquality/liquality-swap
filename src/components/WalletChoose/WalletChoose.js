@@ -2,19 +2,21 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Button from '../../components/Button/Button'
+import WalletIcon from '../WalletDisplay/wallet-icon.svg'
 
 import { wallets } from '../../utils/wallets'
 import cryptoassets from '@liquality/cryptoassets'
-import { getNetworkByCurrency } from '../../utils/networks'
 
 import './WalletChoose.css'
 
 const WalletChoose = (props) => {
   const currency = cryptoassets[props.currency]
-  const network = getNetworkByCurrency(props.currency)
   return <div className='WalletChoose'>
+    <img className='WalletDisplay_icon'
+      src={wallets[props.type] ? wallets[props.type].icon : WalletIcon}
+      alt={wallets[props.type] ? wallets[props.type].name : 'Wallet'} />
     <h1>Select {currency.code} Wallet</h1>
-    <div className="WalletsContainer">
+    <div className='WalletsContainer'>
       {props.wallets.map((wallet) => (
         <div key={wallet} onClick={() => props.chooseWallet(wallet)}>
           <div className='WalletChoose_wallet'>
