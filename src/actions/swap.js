@@ -51,7 +51,6 @@ async function ensureWallet (party, dispatch, getState) {
     wallets,
     assets
   } = getState().swap
-  console.log(getState())
   const client = getClient(assets[party].currency, wallets[party].type)
   const walletSet = wallets[party].connected
   const walletAvailable = await client.isWalletAvailable()
@@ -184,7 +183,6 @@ async function findInitiateSwapTransaction (dispatch, getState) {
     secretParams,
     expiration
   } = getState().swap
-  console.log(type)
   const client = getClient(currency, type)
   const valueInUnit = cryptoassets[currency].currencyToUnit(value)
   const swapExpiration = getFundExpiration(expiration, 'b').time
