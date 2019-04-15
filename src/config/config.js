@@ -2,17 +2,15 @@ export default {
   assets: {
     eth: {
       rpc: {
-        url: 'https://rinkeby.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
-      },
-      network: 'rinkeby'
+        url: 'http://localhost:8545'
+      }
     },
     midman: {
       type: 'erc20',
       rpc: {
-        url: 'https://rinkeby.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
+        url: 'http://localhost:8545'
       },
-      contractAddress: '0x422950598Eb23877deAfF346dA0550Aa53482156', // Local ERC20 contract (18 decimals)
-      network: 'rinkeby'
+      contractAddress: '0x422950598Eb23877deAfF346dA0550Aa53482156' // Local ERC20 contract (18 decimals)
     },
     btc: {
       rpc: {
