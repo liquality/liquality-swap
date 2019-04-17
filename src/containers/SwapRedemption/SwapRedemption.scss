@@ -1,10 +1,15 @@
 @import '../../scss/variables.scss';
+@import '../../scss/mixins.scss';
 
 .SwapRedemption {
   text-align: center;
 
   &_terms {
     font-size: $h1-font-size;
+  }
+
+  &_errorMessage {
+    @include error-message;
   }
 
   .ExpirationDetails {
