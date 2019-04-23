@@ -25,7 +25,7 @@ const wallets = {
     name: 'Node',
     connection: {
       title: 'On your node',
-      description: 'Navigate to your Bitcoin account. Follow Ledger instructions to connect Bitcoin wallet'
+      description: 'Make sure your Bitcoin node is running and available.'
     },
     troubleshootConnectionLink: 'https://support.ledger.com/hc/en-us/articles/115005195945'
   },
@@ -34,7 +34,7 @@ const wallets = {
     name: 'Node',
     connection: {
       title: 'On your node',
-      description: 'Navigate to your Bitcoin account. Follow Ledger instructions to connect Bitcoin wallet'
+      description: 'Make sure your Ethereum node is running and available.'
     },
     troubleshootConnectionLink: 'https://support.ledger.com/hc/en-us/articles/115005195945'
   }
