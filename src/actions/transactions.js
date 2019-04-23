@@ -16,7 +16,7 @@ const types = {
 }
 
 async function setSecret (swap, party, tx, dispatch) {
-  const client = getClient(swap.assets[party === 'a' ? 'b' : 'a'].currency, swap.walets[party === 'a' ? 'b' : 'a'].type)
+  const client = getClient(swap.assets[party === 'a' ? 'b' : 'a'].currency, swap.wallets[party === 'a' ? 'b' : 'a'].type)
   const secret = await client.getSwapSecret(tx.hash)
   dispatch(secretActions.setSecret(secret))
 }

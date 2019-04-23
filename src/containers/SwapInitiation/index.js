@@ -1,5 +1,7 @@
 import { connect } from 'react-redux'
 import { actions } from '../../actions/swap'
+import { actions as walletActions } from '../../actions/wallets'
+
 import SwapInitiation from './SwapInitiation'
 
 const mapStateToProps = state => {
@@ -19,6 +21,7 @@ export default connect(
   {
     initiateSwap: actions.initiateSwap,
     confirmSwap: actions.confirmSwap,
-    switchSides: actions.switchSides
+    switchSides: actions.switchSides,
+    toggleWalletConnect: walletActions.toggleWalletConnect
   }
 )(SwapInitiation)
