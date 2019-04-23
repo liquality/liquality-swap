@@ -3,12 +3,14 @@ import BrandCard from '../../components/BrandCard/BrandCard'
 import Button from '../../components/Button/Button'
 import cryptoassets from '@liquality/cryptoassets'
 import { wallets } from '../../utils/wallets'
+import { getClaimErrors } from '../../utils/validation'
 import ExpirationDetails from '../../components/ExpirationDetails'
 
 import './SwapRedemption.css'
 
 class SwapRedemption extends Component {
   render () {
+    const errors = getClaimErrors(this.props.expiration, this.props.isPartyB)
     const wallet = wallets[this.props.wallets.b.type]
     const buttonLoadingMessage = wallet && `Confirm on ${wallet.name}`
 
@@ -21,7 +23,10 @@ class SwapRedemption extends Component {
         <p>Thanks to the <strong>Atomic Swap</strong> you don't need to trust the counterparty and avoid the middleman.</p>
       </div>
       <ExpirationDetails isClaim />
-      <p><Button wide primary loadingAfterClick loadingAfterClickMessage={buttonLoadingMessage} onClick={this.props.redeemSwap}>Claim your funds</Button></p>
+      <p>
+        {!errors.claim && <Button wide primary loadingAfterClick loadingAfterClickMessage={buttonLoadingMessage} onClick={this.props.redeemSwap}>Claim your funds</Button>}
+        {errors.claim && <div className='SwapRedemption_errorMessage'>{errors.claim}</div>}
+      </p>
     </BrandCard>
   }
 }
