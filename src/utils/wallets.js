@@ -27,7 +27,7 @@ const wallets = {
       title: 'On your node',
       description: 'Make sure your Bitcoin node is running and available.'
     },
-    troubleshootConnectionLink: 'https://support.ledger.com/hc/en-us/articles/115005195945'
+    troubleshootConnectionLink: 'https://github.com/bitpay/bitcore'
   },
   'ethereum_node': {
     icon: ledger,
@@ -36,7 +36,7 @@ const wallets = {
       title: 'On your node',
       description: 'Make sure your Ethereum node is running and available.'
     },
-    troubleshootConnectionLink: 'https://support.ledger.com/hc/en-us/articles/115005195945'
+    troubleshootConnectionLink: 'https://ethereum.gitbooks.io/frontier-guide/content/getting_a_client.html'
   }
 }
 
