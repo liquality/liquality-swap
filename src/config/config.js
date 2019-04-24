@@ -18,7 +18,7 @@ export default {
       rpc: {
         username: 'bitcoin',
         password: 'local321',
-        url: 'http://127.0.0.1:8332'
+        url: 'http://localhost:18332'
       },
       network: 'bitcoin_testnet',
       feeNumberOfBlocks: 2
