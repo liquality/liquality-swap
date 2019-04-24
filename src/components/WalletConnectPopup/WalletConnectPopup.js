@@ -19,13 +19,11 @@ class WalletConnectPopup extends Component {
   }
 
   chooseWallet (wallet) {
-    console.log(wallet)
     const { id, currency } = this.props
     this.props.chooseWallet(id, currency, wallet)
   }
 
   connectWallet (wallet) {
-    console.log(wallet)
     const { id, currency } = this.props
     this.props.connectWallet(id, currency, wallet)
   }

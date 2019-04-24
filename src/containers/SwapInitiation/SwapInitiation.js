@@ -16,20 +16,6 @@ import { APP_BASE_URL } from '../../utils/app-links'
 
 class SwapInitiation extends Component {
 
-  componentDidMount() {
-    this.forceWalletConnection()
-  }
-
-  forceWalletConnection () {
-    this.props.toggleWalletConnect('b')
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.wallets.b.connectOpen && !this.props.wallets.b.connectOpen && this.props.wallets.b.connected && !this.props.wallets.a.connected) {
-      this.props.toggleWalletConnect('a')
-    }
-  }
-
   render () {
     const wallet = wallets[this.props.wallets.a.type]
     const buttonLoadingMessage = wallet && `Confirm on ${wallet.name}`
