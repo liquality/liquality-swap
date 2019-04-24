@@ -126,15 +126,12 @@ function initiateSwap () {
   return async (dispatch, getState) => {
     dispatch(showErrors())
     dispatch(setExpiration(generateExpiration()))
-    let walletConnected = false
-    try {
-      walletConnected = await ensureWallet('a', dispatch, getState)
-    } catch (e) {
+    const walletConnected = await ensureWallet('a', dispatch, getState)
+    if (!walletConnected) {
       dispatch(walletActions.disconnectWallet('a'))
       dispatch(walletActions.toggleWalletConnect('a'))
       return
     }
-    if (!walletConnected) return
     const initiateValid = isInitiateValid(getState().swap)
     if (!initiateValid) return
     await ensureSecret(dispatch, getState)

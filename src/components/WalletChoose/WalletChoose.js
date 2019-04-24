@@ -16,7 +16,7 @@ const WalletChoose = (props) => {
       src={wallets[props.type] ? wallets[props.type].icon : WalletIcon}
       alt={wallets[props.type] ? wallets[props.type].name : 'Wallet'} />
     <h1>Select {currency.code} Wallet</h1>
-    <div className='WalletsContainer'>
+    <div className='WalletChoose_WalletsContainer'>
       {props.wallets.map((wallet) => (
         <div key={wallet} onClick={() => props.chooseWallet(wallet)}>
           <div className='WalletChoose_wallet'>
