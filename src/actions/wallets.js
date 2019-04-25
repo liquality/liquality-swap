@@ -4,6 +4,7 @@ import cryptoassets from '@liquality/cryptoassets'
 const types = {
   TOGGLE_WALLET_CONNECT: 'TOGGLE_WALLET_CONNECT',
   CHOOSE_WALLET: 'CHOOSE_WALLET',
+  START_CONNECTING_WALLET: 'START_CONNECTING_WALLET',
   CONNECT_WALLET: 'CONNECT_WALLET',
   DISCONNECT_WALLET: 'DISCONNECT_WALLET'
 }
@@ -21,7 +22,7 @@ function waitForWalletInitialization (party, currency, wallet) {
       wallets,
       isPartyB
     } = getState().swap
-
+    dispatch(startConnecting(party))
     const currencyCode = assets[party].currency
     const currency = cryptoassets[currencyCode]
     const client = getClient(currencyCode, wallet)
@@ -51,6 +52,10 @@ function toggleWalletConnect (party) {
 
 function chooseWallet (party, wallet) {
   return { type: types.CHOOSE_WALLET, party, wallet }
+}
+
+function startConnecting (party) {
+  return { type: types.START_CONNECTING_WALLET, party }
 }
 
 function connectWallet (party, addresses, balance) {

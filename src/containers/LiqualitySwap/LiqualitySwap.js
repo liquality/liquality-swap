@@ -38,20 +38,23 @@ class LiqualitySwap extends Component {
     return <CounterPartyLinkCard link={link} onNextClick={() => { this.props.waitForSwapConfirmation() }} />
   }
 
-  getConnectWallet() {
-    if (this.props.swap.wallets.b.connected && this.props.swap.wallets.a.connected) {
-      this.props.history.replace('/initiation')
-    }
-    const currentWallet = this.props.swap.wallets.b.connected ? 'a' : 'b'
+  getConnectWallet(currentWallet) {
+    const walletA = this.props.swap.wallets.a
+    const walletB = this.props.swap.wallets.b
     let closeAction = () => { this.props.history.replace('/') }
-    if (currentWallet === 'a') {
-      closeAction = () => { this.props.onWalletDisconnected('b') }
+    if (currentWallet === 'b' && walletB.connected) {
+      closeAction = () => { this.props.history.replace('/wallet/a') }
+    } else if (currentWallet === 'a' && walletA.connected) {
+      closeAction = () => { this.props.history.replace('/initiation') }
+    } else if (currentWallet === 'a') {
+      closeAction = () => { this.props.history.replace('/wallet/b') }
     }
     return <WalletConnectPopup
       open={true}
       id={currentWallet}
       currency={this.props.swap.assets[currentWallet].currency}
       walletChosen={this.props.swap.wallets[currentWallet].chosen}
+      walletConnecting={this.props.swap.wallets[currentWallet].connecting}
       wallet={this.props.swap.wallets[currentWallet].type}
       chooseWallet={this.props.waitForWallet}
       connectWallet={this.props.waitForWalletInitialization}
@@ -73,7 +76,8 @@ class LiqualitySwap extends Component {
         <div className='LiqualitySwap_wave' />
         <div className='LiqualitySwap_wrapper'>
           <Route exact path='/' component={this.props.swap.isPartyB ? SwapInitiation : AssetSelection} />
-          <Route path='/wallets' render={this.getConnectWallet} />
+          <Route path='/wallet/a' render={() => { return this.getConnectWallet('a') }} />
+          <Route path='/wallet/b' render={() => { return this.getConnectWallet('b') }} />
           <Route path='/initiation' component={SwapInitiation} />
           <Route path='/backupLink' render={this.getBackupLinkCard} />
           <Route path='/counterPartyLink' render={this.getCounterPartyLinkCard} />

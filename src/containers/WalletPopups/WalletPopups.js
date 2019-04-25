@@ -18,6 +18,7 @@ class WalletPanel extends Component {
         disconnectWallet={this.props.onWalletDisconnected}
         addresses={walletA.addresses}
         walletConnected={walletA.connected}
+        walletConnecting={walletA.connecting}
         handleClose={() => this.props.onToggleWalletConnect('a')}
       />
 
@@ -32,6 +33,7 @@ class WalletPanel extends Component {
         disconnectWallet={this.props.onWalletDisconnected}
         addresses={walletB.addresses}
         walletConnected={walletB.connected}
+        walletConnecting={walletB.connecting}
         handleClose={() => this.props.onToggleWalletConnect('b')}
       />
     </div>

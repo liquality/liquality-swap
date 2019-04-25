@@ -49,6 +49,14 @@ class WalletConnectPopup extends Component {
         />
 
       )
+    } else if (props.walletConnecting) {
+      walletConnectBody = (
+        <WalletConnecting
+          cancelText='Cancel'
+          cancelWallet={this.disconnectWallet}
+          currency={props.currency}
+          wallet={props.wallet} />
+      )
     } else if (props.walletChosen) {
       walletConnectBody = (
         <WalletConnect
@@ -57,14 +65,6 @@ class WalletConnectPopup extends Component {
           onCancel={this.disconnectWallet}
           currency={props.currency}
           connectWallet={this.connectWallet}
-          wallet={props.wallet} />
-      )
-    } else if (props.walletConnecting) {
-      walletConnectBody = (
-        <WalletConnecting
-          cancelText='Cancel'
-          cancelWallet={this.disconnectWallet}
-          currency={props.currency}
           wallet={props.wallet} />
       )
     } else {
