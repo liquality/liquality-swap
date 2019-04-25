@@ -38,7 +38,7 @@ class LiqualitySwap extends Component {
     return <CounterPartyLinkCard link={link} onNextClick={() => { this.props.waitForSwapConfirmation() }} />
   }
 
-  getConnectWallet(currentWallet) {
+  getConnectWallet (currentWallet) {
     const walletA = this.props.swap.wallets.a
     const walletB = this.props.swap.wallets.b
     let closeAction = () => { this.props.history.replace('/') }
@@ -50,7 +50,7 @@ class LiqualitySwap extends Component {
       closeAction = () => { this.props.history.replace('/wallet/b') }
     }
     return <WalletConnectPopup
-      open={true}
+      open
       id={currentWallet}
       currency={this.props.swap.assets[currentWallet].currency}
       walletChosen={this.props.swap.wallets[currentWallet].chosen}
@@ -62,7 +62,7 @@ class LiqualitySwap extends Component {
       addresses={this.props.swap.wallets[currentWallet].addresses}
       walletConnected={this.props.swap.wallets[currentWallet].connected}
       handleClose={closeAction}
-    /> 
+    />
   }
 
   render () {

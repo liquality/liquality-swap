@@ -51,7 +51,7 @@ function chooseWallet (state, action) {
 function startConnecting (state, action) {
   return update(state, {
     [action.party]: {
-      connecting: { $set: true },
+      connecting: { $set: true }
     }
   })
 }

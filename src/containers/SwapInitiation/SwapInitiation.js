@@ -15,7 +15,6 @@ import { getInitiationErrors } from '../../utils/validation'
 import { APP_BASE_URL } from '../../utils/app-links'
 
 class SwapInitiation extends Component {
-
   render () {
     const wallet = wallets[this.props.wallets.a.type]
     const buttonLoadingMessage = wallet && `Confirm on ${wallet.name}`
