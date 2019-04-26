@@ -41,6 +41,6 @@ deploy:
       branch: dev
   - provider: script
     skip_cleanup: true
-    script: mkdir -p /var/www/html/it/leep/dev/$TRAVIS_COMMIT/swap$SWAP_DIR_SUFFIX && rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/build/ $LIQUALITY_USER@$LIQUALITY_HOST:/var/www/html/it/leep/dev/$TRAVIS_COMMIT/swap$SWAP_DIR_SUFFIX
+    script: rsync -r --rsync-path="mkdir -p /var/www/html/it/leep/dev/$TRAVIS_COMMIT/swap$SWAP_DIR_SUFFIX && rsync" --delete-after --quiet $TRAVIS_BUILD_DIR/build/ $LIQUALITY_USER@$LIQUALITY_HOST:/var/www/html/it/leep/dev/$TRAVIS_COMMIT/swap$SWAP_DIR_SUFFIX
     on:
       all_branches: true
