@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import currencies from '../../utils/currencies'
-import { getClaimExpiration } from '../../utils/expiration'
+import cryptoassets from '@liquality/cryptoassets'
+import { getFundExpiration, getClaimExpiration } from '../../utils/expiration'
 import withCopyButton from '../withCopyButton'
 import ClockIcon from '../../icons/clock.svg'
 import CopyIcon from '../../icons/copy.svg'
@@ -32,7 +32,7 @@ class ExpirationDetails extends Component {
 
   getExpirationState () {
     const party = this.props.isPartyB ? 'b' : 'a'
-    const expiration = getClaimExpiration(this.props.expiration, party)
+    const expiration = this.props.isClaim ? getClaimExpiration(this.props.expiration, party) : getFundExpiration(this.props.expiration, party)
     return {
       start: expiration.start,
       duration: expiration.duration,
@@ -68,8 +68,8 @@ class ExpirationDetails extends Component {
       <div className='ExpirationDetails_center'>
         <div className='ExpirationDetails_top'>
           <div className='ExpirationDetails_terms'>
-            <em>Get {this.props.assets.b.value} {currencies[this.props.assets.b.currency].code}
-            &nbsp;for {this.props.assets.a.value} {currencies[this.props.assets.a.currency].code}</em>
+            <em>Get {this.props.assets.b.value} {cryptoassets[this.props.assets.b.currency].code}
+            &nbsp;for {this.props.assets.a.value} {cryptoassets[this.props.assets.a.currency].code}</em>
             &nbsp;Active for {moment.utc(left.asMilliseconds()).format('HH:mm')}hr {this.state.expiration.format('L LT')}
           </div>
           <div className='ExpirationDetails_link'>

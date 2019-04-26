@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
 
+import AssetSelection from '../AssetSelection'
 import SwapInitiation from '../SwapInitiation'
 import CounterPartyLinkCard from '../../components/CounterPartyLinkCard/CounterPartyLinkCard'
 import BackupLinkCard from '../../components/BackupLinkCard/BackupLinkCard'
@@ -45,7 +46,8 @@ class LiqualitySwap extends Component {
       <div className='LiqualitySwap_main'>
         <div className='LiqualitySwap_wave' />
         <div className='LiqualitySwap_wrapper'>
-          <Route exact path='/' component={SwapInitiation} />
+          <Route exact path='/' component={this.props.swap.isPartyB ? SwapInitiation : AssetSelection} />
+          <Route path='/initiation' component={SwapInitiation} />
           <Route path='/backupLink' render={this.getBackupLinkCard} />
           <Route path='/counterPartyLink' render={this.getCounterPartyLinkCard} />
           <Route path='/waiting' component={Waiting} />

@@ -1,6 +1,11 @@
 const types = {
+  SET_ASSET: 'SET_ASSET',
   CHANGE_AMOUNT: 'CHANGE_AMOUNT',
   CHANGE_RATE: 'CHANGE_RATE'
+}
+
+function setAsset (party, currency) {
+  return { type: types.SET_ASSET, party, currency }
 }
 
 function changeRate (newValue) {
@@ -40,6 +45,7 @@ function changeAmount (party, newValue) {
 }
 
 const actions = {
+  setAsset,
   changeAmount,
   changeRate
 }

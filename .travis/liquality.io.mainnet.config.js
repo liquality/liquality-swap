@@ -3,20 +3,30 @@ import { version } from '@liquality/chainabstractionlayer'
 const footerVersion = `${process.env.REACT_APP_TRAVIS_COMMIT || 'dev'}+${version}`
 
 export default {
-  eth: {
-    rpc: {
-      url: 'https://mainnet.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
+  assets: {
+    eth: {
+      rpc: {
+        url: 'https://mainnet.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
+      },
+      network: 'mainnet'
     },
-    network: 'mainnet'
-  },
-  btc: {
-    rpc: {
-      username: 'liquality',
-      password: 'liquality123',
-      url: 'https://liquality.io/bitcoinrpc/'
+    btc: {
+      rpc: {
+        username: 'liquality',
+        password: 'liquality123',
+        url: 'https://liquality.io/bitcoinrpc/'
+      },
+      feeNumberOfBlocks: 2,
+      network: 'bitcoin'
     },
-    feeNumberOfBlocks: 2,
-    network: 'bitcoin'
+    dai: {
+      type: 'erc20',
+      rpc: {
+        url: 'https://mainnet.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
+      },
+      contractAddress: '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359',
+      network: 'mainnet'
+    }
   },
   injectScript: `
   function addSentry () {
@@ -88,10 +98,22 @@ export default {
     })(window,document,window['_fs_namespace'],'script','user');
   }
 
+  function addHotJar () {
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:1260353,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+  }
+
   function addAnalytics () {
     addGA();
     addSentry();
     addFullStory();
+    addHotJar();
   }
 
   if (window.localStorage.getItem('enableAnalytics') == 'true') {

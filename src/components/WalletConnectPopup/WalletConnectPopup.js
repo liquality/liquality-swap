@@ -4,7 +4,7 @@ import Modal from '@material-ui/core/Modal'
 import WalletChoose from '../WalletChoose/WalletChoose'
 import WalletConnecting from '../WalletConnecting/WalletConnecting'
 import WalletConnected from '../WalletConnected/WalletConnected'
-import wallets from './Wallets'
+import { getAssetWallets } from '../../utils/wallets'
 
 import './WalletConnectPopup.css'
 
@@ -45,8 +45,6 @@ class WalletConnectPopup extends Component {
     } else if (props.walletChosen) {
       walletConnectBody = (
         <WalletConnecting
-          title={wallets[props.currency][props.wallet].connectTitle}
-          subtitle={wallets[props.currency][props.wallet].connectSubtitle}
           cancelText='Cancel'
           cancelWallet={this.disconnectWallet}
           currency={props.currency}
@@ -57,7 +55,7 @@ class WalletConnectPopup extends Component {
         <WalletChoose
           title='Liquality'
           subTitle=''
-          wallets={props.currency === 'eth' ? ['metamask'] : ['ledger']}
+          wallets={getAssetWallets(this.props.currency)}
           chooseWallet={this.chooseWallet}
           onCancel={this.props.handleClose}
           currency={props.currency} />

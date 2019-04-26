@@ -1,6 +1,8 @@
+import moment from 'moment'
 import config from '../config'
-import currencies from './currencies'
+import cryptoassets from '@liquality/cryptoassets'
 import { generateSwapState } from './app-links'
+import { getClaimExpiration } from './expiration'
 
 function getCurrencyInputErrors (assets) {
   const errors = {}
@@ -26,15 +28,14 @@ function getWalletErrors (wallets, isPartyB) {
 
 function getCounterPartyErrors (assets, counterParty) {
   const errors = {}
+  const { a: counterPartyA, b: counterPartyB } = counterParty
   const { a: assetA, b: assetB } = assets
-  const counterPartyA = counterParty[assetA.currency]
-  const counterPartyB = counterParty[assetB.currency]
-  if (!currencies[assetA.currency].isValidAddress(counterPartyA.address)) errors.counterPartyA = 'Address incomplete'
-  if (!currencies[assetB.currency].isValidAddress(counterPartyB.address)) errors.counterPartyB = 'Address incomplete'
+  if (!cryptoassets[assetA.currency].isValidAddress(counterPartyA.address)) errors.counterPartyA = 'Address incomplete'
+  if (!cryptoassets[assetB.currency].isValidAddress(counterPartyB.address)) errors.counterPartyB = 'Address incomplete'
   return errors
 }
 
-function getInitiationErrors (transactions, isVerified, isPartyB) {
+function getInitiationErrors (transactions, expiration, isVerified, isPartyB) {
   const errors = {}
   if (isPartyB) {
     if (!(isVerified && transactions.b.fund.confirmations >= config.minConfirmations)) {
@@ -43,6 +44,19 @@ function getInitiationErrors (transactions, isVerified, isPartyB) {
     if (!(isVerified && transactions.b.fund.hash)) {
       errors.initiation = 'Counterparty hasn\'t initiated'
     }
+    const safeConfirmTime = getClaimExpiration(expiration, isPartyB ? 'b' : 'a').time
+    if (moment().isAfter(safeConfirmTime)) {
+      errors.initiation = 'Offer expired.'
+    }
+  }
+  return errors
+}
+
+function getClaimErrors (expiration, isPartyB) {
+  const errors = {}
+  const safeClaimTime = getClaimExpiration(expiration, isPartyB ? 'b' : 'a').time
+  if (moment().isAfter(safeClaimTime)) {
+    errors.claim = 'Offer expired. Wait for refund.'
   }
   return errors
 }
@@ -52,7 +66,7 @@ function isInitiateValid (swap) {
     getCurrencyInputErrors(swap.assets),
     getWalletErrors(swap.wallets, swap.isPartyB),
     getCounterPartyErrors(swap.assets, swap.counterParty),
-    getInitiationErrors(swap.transactions, swap.isVerified, swap.isPArtyB)
+    getInitiationErrors(swap.transactions, swap.expiration, swap.isVerified, swap.isPartyB)
   ]
 
   const numErrors = errors.reduce((prev, next) => prev + Object.keys(next).length, 0)
@@ -60,4 +74,4 @@ function isInitiateValid (swap) {
   return numErrors === 0
 }
 
-export { getCurrencyInputErrors, getWalletErrors, getCounterPartyErrors, getInitiationErrors, isInitiateValid }
+export { getCurrencyInputErrors, getWalletErrors, getCounterPartyErrors, getInitiationErrors, getClaimErrors, isInitiateValid }

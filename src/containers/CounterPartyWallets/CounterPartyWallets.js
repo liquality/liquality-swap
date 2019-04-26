@@ -15,18 +15,18 @@ class CounterPartyWallets extends Component {
         <div className='col'>
           <h5 className='CounterPartyWallets_heading'>Send To</h5>
           <AddressInput currency={assetA.currency}
-            value={counterParty[assetA.currency].address}
+            value={counterParty.a.address}
             error={errors.counterPartyA}
-            onChange={newValue => this.props.onCounterPartyAddressChange(assetA.currency, newValue)}
+            onChange={newValue => this.props.onCounterPartyAddressChange('a', newValue)}
             tabIndex={5}
           />
         </div>
         <div className='col'>
           <h5 className='CounterPartyWallets_heading'>Receive From</h5>
           <AddressInput currency={assetB.currency}
-            value={counterParty[assetB.currency].address}
+            value={counterParty.b.address}
             error={errors.counterPartyB}
-            onChange={newValue => this.props.onCounterPartyAddressChange(assetB.currency, newValue)}
+            onChange={newValue => this.props.onCounterPartyAddressChange('b', newValue)}
             tabIndex={4}
           />
         </div>

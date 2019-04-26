@@ -36,6 +36,14 @@
     &_right {
       right: $asset-horizontal-padding;
     }
+
+    &_interactive {
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
   }
   
   &_labels {
@@ -59,6 +67,10 @@
       background: $color-primary-1;
       border-radius: $swap-panel-radius $swap-panel-radius $swap-panel-radius 0px;
       padding-left: $panel-horizontal-padding;
+
+      &#{&}_faded {
+        background: lighten($color-primary-1, 20%)
+      }
     }
     
     &_want {
@@ -67,6 +79,46 @@
       border-radius: $swap-panel-radius $swap-panel-radius 0 $swap-panel-radius;
       text-align: right;
       padding-right: $panel-horizontal-padding;
+
+      &#{&}_faded {
+        background: lighten($color-primary-2, 30%)
+      }
+    }
+  }
+
+  &_currency_labels {
+    width: 100%;
+    z-index: $layer-bottom;
+
+    > h4 {
+      line-height: normal;
+      width: 50%;
+      text-align: center;
+    }
+
+    &_have {
+      float: left;
+      padding-left: 190px;
+    }
+
+    &_want {
+      float: right;
+      padding-right: 190px;
+    }
+
+    &_interactive {
+      cursor: pointer;
+      color: $color-primary-1;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+
+    &::after {
+      content: "";
+      display: block;
+      clear: both;
     }
   }
 }

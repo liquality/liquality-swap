@@ -3,20 +3,30 @@ import { version } from '@liquality/chainabstractionlayer'
 const footerVersion = `${process.env.REACT_APP_TRAVIS_COMMIT || 'dev'}+${version}`
 
 export default {
-  eth: {
-    rpc: {
-      url: 'https://rinkeby.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
+  assets: {
+    eth: {
+      rpc: {
+        url: 'https://rinkeby.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
+      },
+      network: 'rinkeby'
     },
-    network: 'rinkeby'
-  },
-  btc: {
-    rpc: {
-      username: 'bitcoin',
-      password: 'local321',
-      url: 'https://liquality.io/bitcointestnetrpc/'
+    btc: {
+      rpc: {
+        username: 'bitcoin',
+        password: 'local321',
+        url: 'https://liquality.io/bitcointestnetrpc/'
+      },
+      feeNumberOfBlocks: 2,
+      network: 'bitcoin_testnet'
     },
-    feeNumberOfBlocks: 2,
-    network: 'bitcoin_testnet'
+    midman: {
+      type: 'erc20',
+      rpc: {
+        url: 'https://rinkeby.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
+      },
+      contractAddress: '0xcE2748BE67fB4346654B4500c4BB0642536365FC',
+      network: 'rinkeby'
+    }
   },
   minConfirmations: 0,
   injectScript: `

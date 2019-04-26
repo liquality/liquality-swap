@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Button from '../../components/Button/Button'
 import { shortenAddress } from '../../utils/address'
-import wallets from '../../utils/wallets'
+import { wallets } from '../../utils/wallets'
 
 import './WalletConnected.css'
 
