@@ -256,8 +256,9 @@ async function unlockFunds (dispatch, getState) {
 
 function redeemSwap () {
   return async (dispatch, getState) => {
-    if (!await ensureSecret(dispatch, getState))
+    if (!await ensureSecret(dispatch, getState)) {
       return false
+    }
     const walletConnected = await ensureWallet('b', dispatch, getState)
     if (!walletConnected) {
       dispatch(walletActions.disconnectWallet('b'))
