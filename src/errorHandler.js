@@ -1,4 +1,4 @@
-import { errors } from '@liquality/chainabstractionlayer/dist/index.umd.js'
+import { errors } from '@liquality/chainabstractionlayer'
 import { store } from './store'
 import { actions as errorActions } from './actions/errors'
 
