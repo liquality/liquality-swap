@@ -15,8 +15,10 @@ function createBtcClient (asset, wallet) {
   ))
   if (wallet === 'ledger') {
     btcClient.addProvider(new providers.bitcoin.BitcoinLedgerProvider({network: networks[btcConfig.network]}))
+    btcClient.addProvider(new providers.bitcoin.BitcoinSwapProvider({network: networks[btcConfig.network]}))
+  } else {
+    btcClient.addProvider(new providers.bitcoin.BitcoinJsLibSwapProvider({network: networks[btcConfig.network]}))
   }
-  btcClient.addProvider(new providers.bitcoin.BitcoinSwapProvider({network: networks[btcConfig.network]}))
   return btcClient
 }
 
