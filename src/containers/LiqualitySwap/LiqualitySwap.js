@@ -43,11 +43,11 @@ class LiqualitySwap extends Component {
     const walletB = this.props.swap.wallets.b
     let closeAction = () => { this.props.history.replace('/') }
     if (currentWallet === 'b' && walletB.connected) {
-      closeAction = () => { this.props.history.replace('/wallet/a') }
+      closeAction = () => { this.props.history.replace('/walletA') }
     } else if (currentWallet === 'a' && walletA.connected) {
       closeAction = () => { this.props.history.replace('/initiation') }
     } else if (currentWallet === 'a') {
-      closeAction = () => { this.props.history.replace('/wallet/b') }
+      closeAction = () => { this.props.history.replace('/walletB') }
     }
     return <WalletConnectPopup
       open
@@ -76,8 +76,8 @@ class LiqualitySwap extends Component {
         <div className='LiqualitySwap_wave' />
         <div className='LiqualitySwap_wrapper'>
           <Route exact path='/' component={this.props.swap.isPartyB ? SwapInitiation : AssetSelection} />
-          <Route path='/wallet/a' render={() => { return this.getConnectWallet('a') }} />
-          <Route path='/wallet/b' render={() => { return this.getConnectWallet('b') }} />
+          <Route path='/walletA' render={() => { return this.getConnectWallet('a') }} />
+          <Route path='/walletB' render={() => { return this.getConnectWallet('b') }} />
           <Route path='/initiation' component={SwapInitiation} />
           <Route path='/backupLink' render={this.getBackupLinkCard} />
           <Route path='/counterPartyLink' render={this.getCounterPartyLinkCard} />
