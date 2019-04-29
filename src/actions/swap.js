@@ -74,8 +74,6 @@ async function ensureSecret (dispatch, getState) {
   if (!isPartyB && !secretParams.secret) {
     const walletConnected = await ensureWallet('a', dispatch, getState)
     if (!walletConnected) {
-      dispatch(walletActions.disconnectWallet('a'))
-      dispatch(walletActions.toggleWalletConnect('a'))
       return false
     }
     const client = getClient(assets.a.currency, wallets.a.type)
@@ -132,8 +130,6 @@ function initiateSwap () {
     dispatch(setExpiration(generateExpiration()))
     const walletConnected = await ensureWallet('a', dispatch, getState)
     if (!walletConnected) {
-      dispatch(walletActions.disconnectWallet('a'))
-      dispatch(walletActions.toggleWalletConnect('a'))
       return
     }
     const initiateValid = isInitiateValid(getState().swap)
@@ -150,8 +146,6 @@ function confirmSwap () {
     dispatch(showErrors())
     const walletConnected = await ensureWallet('a', dispatch, getState)
     if (!walletConnected) {
-      dispatch(walletActions.disconnectWallet('a'))
-      dispatch(walletActions.toggleWalletConnect('a'))
       return
     }
     const initiateValid = isInitiateValid(getState().swap)
@@ -261,8 +255,6 @@ function redeemSwap () {
     }
     const walletConnected = await ensureWallet('b', dispatch, getState)
     if (!walletConnected) {
-      dispatch(walletActions.disconnectWallet('b'))
-      dispatch(walletActions.toggleWalletConnect('b'))
       return
     }
     await unlockFunds(dispatch, getState)
@@ -273,8 +265,6 @@ function refundSwap () {
   return async (dispatch, getState) => {
     const walletConnected = await ensureWallet('a', dispatch, getState)
     if (!walletConnected) {
-      dispatch(walletActions.disconnectWallet('a'))
-      dispatch(walletActions.toggleWalletConnect('a'))
       return
     }
 
