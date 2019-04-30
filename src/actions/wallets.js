@@ -19,10 +19,7 @@ function waitForWalletInitialization (party, currency, wallet) {
   return async (dispatch, getState) => {
     const {
       assets,
-      isPartyB,
-      counterParty,
-      wallets,
-      link
+      wallets
     } = getState().swap
     dispatch(startConnecting(party))
     const currencyCode = assets[party].currency
