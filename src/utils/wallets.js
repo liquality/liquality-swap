@@ -1,6 +1,7 @@
 import config from '../config'
 import metamask from '../icons/metamask.svg'
 import ledger from '../icons/ledger.svg'
+import node from '../icons/node.svg'
 
 const wallets = {
   'metamask': {
@@ -21,7 +22,7 @@ const wallets = {
     troubleshootConnectionLink: 'https://support.ledger.com/hc/en-us/articles/115005195945'
   },
   'bitcoin_node': {
-    icon: ledger,
+    icon: node,
     name: 'Node',
     connection: {
       title: 'On your node',
@@ -30,7 +31,7 @@ const wallets = {
     troubleshootConnectionLink: 'https://github.com/bitpay/bitcore'
   },
   'ethereum_node': {
-    icon: ledger,
+    icon: node,
     name: 'Node',
     connection: {
       title: 'On your node',
