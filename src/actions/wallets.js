@@ -20,7 +20,9 @@ function waitForWalletInitialization (party, currency, wallet) {
     const {
       assets,
       isPartyB,
-      counterParty
+      counterParty,
+      wallets,
+      link
     } = getState().swap
     dispatch(startConnecting(party))
     const currencyCode = assets[party].currency
@@ -32,8 +34,14 @@ function waitForWalletInitialization (party, currency, wallet) {
     allAddresses = [ ...new Set([ unusedAddress, ...allAddresses ].map(a => a.address)) ]
     allAddresses = allAddresses.map(currency.formatAddress)
     // Preserve the preset address for party B or A coming from a backup link
-    if (isPartyB || (!isPartyB && party === 'b' && counterParty.b.address)) {
+    if (!isPartyB && link && party === 'b' && counterParty.b.address) {
       const expectedAddress = counterParty[party].address
+      if (allAddresses.includes(expectedAddress)) {
+        allAddresses = [expectedAddress, ...allAddresses.filter(address => address !== expectedAddress)]
+      }
+    }
+    if (isPartyB) { // Preserve the preset address for party B
+      const expectedAddress = wallets[party].addresses[0]
       if (allAddresses.includes(expectedAddress)) {
         allAddresses = [expectedAddress, ...allAddresses.filter(address => address !== expectedAddress)]
       }
