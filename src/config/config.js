@@ -3,14 +3,16 @@ export default {
     eth: {
       rpc: {
         url: 'http://localhost:8545'
-      }
+      },
+      network: 'rinkeby'
     },
     midman: {
       type: 'erc20',
       rpc: {
         url: 'http://localhost:8545'
       },
-      contractAddress: '0x422950598Eb23877deAfF346dA0550Aa53482156' // Local ERC20 contract (18 decimals)
+      contractAddress: '0x422950598Eb23877deAfF346dA0550Aa53482156', // Local ERC20 contract (18 decimals),
+      network: 'rinkeby'
     },
     btc: {
       rpc: {

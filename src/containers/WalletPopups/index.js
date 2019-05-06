@@ -14,6 +14,7 @@ export default connect(
   {
     onToggleWalletConnect: actions.toggleWalletConnect,
     waitForWallet: actions.waitForWallet,
+    waitForWalletInitialization: actions.waitForWalletInitialization,
     onWalletConnected: actions.connectWallet,
     onWalletDisconnected: actions.disconnectWallet
   }

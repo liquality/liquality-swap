@@ -51,10 +51,13 @@ async function ensureWallet (party, dispatch, getState) {
     wallets,
     assets
   } = getState().swap
-  const client = getClient(assets[party].currency)
+  const client = getClient(assets[party].currency, wallets[party].type)
   const walletSet = wallets[party].connected
   const walletAvailable = await client.isWalletAvailable()
-  if (!walletSet || !walletAvailable) {
+  if (!walletSet) {
+    dispatch(walletActions.toggleWalletConnect(party))
+    return false
+  } else if (!walletAvailable) {
     dispatch(walletActions.disconnectWallet(party))
     dispatch(walletActions.toggleWalletConnect(party))
     return false
@@ -72,10 +75,10 @@ async function ensureSecret (dispatch, getState) {
     expiration
   } = getState().swap
   if (!isPartyB && !secretParams.secret) {
-    const walletConnected = await ensureWallet('a', dispatch, getState)
-    if (!walletConnected) return
-
-    const client = getClient(assets.a.currency)
+    if (!await ensureWallet('a', dispatch, getState)) {
+      return false
+    }
+    const client = getClient(assets.a.currency, wallets.a.type)
     const secretData = [
       assets.a.value,
       assets.a.currency,
@@ -91,6 +94,7 @@ async function ensureSecret (dispatch, getState) {
     const secret = await client.generateSecret(secretMsg)
     dispatch(secretActions.setSecret(secret))
   }
+  return true
 }
 
 async function lockFunds (dispatch, getState) {
@@ -102,7 +106,7 @@ async function lockFunds (dispatch, getState) {
     expiration,
     isPartyB
   } = getState().swap
-  const client = getClient(assets.a.currency)
+  const client = getClient(assets.a.currency, wallets.a.type)
 
   const swapExpiration = isPartyB ? getFundExpiration(expiration, 'b').time : expiration
 
@@ -126,8 +130,10 @@ function initiateSwap () {
   return async (dispatch, getState) => {
     dispatch(showErrors())
     dispatch(setExpiration(generateExpiration()))
-    const walletConnected = await ensureWallet('b', dispatch, getState)
-    if (!walletConnected) return
+    const walletConnected = await ensureWallet('a', dispatch, getState)
+    if (!walletConnected) {
+      return
+    }
     const initiateValid = isInitiateValid(getState().swap)
     if (!initiateValid) return
     await ensureSecret(dispatch, getState)
@@ -140,8 +146,10 @@ function initiateSwap () {
 function confirmSwap () {
   return async (dispatch, getState) => {
     dispatch(showErrors())
-    const walletConnected = await ensureWallet('b', dispatch, getState)
-    if (!walletConnected) return
+    const walletConnected = await ensureWallet('a', dispatch, getState)
+    if (!walletConnected) {
+      return
+    }
     const initiateValid = isInitiateValid(getState().swap)
     if (!initiateValid) return
     await lockFunds(dispatch, getState)
@@ -153,13 +161,13 @@ function confirmSwap () {
 async function verifyInitiateSwapTransaction (dispatch, getState) {
   const {
     assets: { b: { currency, value } },
-    wallets: { b: { addresses } },
+    wallets: { b: { addresses, type } },
     counterParty,
     secretParams,
     transactions,
     expiration
   } = getState().swap
-  const client = getClient(currency)
+  const client = getClient(currency, type)
   const valueInUnit = cryptoassets[currency].currencyToUnit(value)
   while (true) {
     try {
@@ -178,12 +186,12 @@ async function verifyInitiateSwapTransaction (dispatch, getState) {
 async function findInitiateSwapTransaction (dispatch, getState) {
   const {
     assets: { b: { currency, value } },
-    wallets: { b: { addresses } },
+    wallets: { b: { addresses, type } },
     counterParty,
     secretParams,
     expiration
   } = getState().swap
-  const client = getClient(currency)
+  const client = getClient(currency, type)
   const valueInUnit = cryptoassets[currency].currencyToUnit(value)
   const swapExpiration = getFundExpiration(expiration, 'b').time
   const initiateTransaction = await client.findInitiateSwapTransaction(valueInUnit, addresses[0], counterParty.b.address, secretParams.secretHash, swapExpiration.unix())
@@ -208,7 +216,7 @@ function waitForSwapClaim () {
       expiration,
       isPartyB
     } = getState().swap
-    const client = getClient(assets.a.currency)
+    const client = getClient(assets.a.currency, wallets.a.type)
     const swapExpiration = getFundExpiration(expiration, isPartyB ? 'b' : 'a').time
     const claimTransaction = await client.findClaimSwapTransaction(transactions.a.fund.hash, counterParty.a.address, wallets.a.addresses[0], secretParams.secretHash, swapExpiration.unix())
     dispatch(transactionActions.setTransaction('b', 'claim', claimTransaction))
@@ -225,8 +233,7 @@ async function unlockFunds (dispatch, getState) {
     isPartyB,
     expiration
   } = getState().swap
-
-  const client = getClient(assets.b.currency)
+  const client = getClient(assets.b.currency, wallets.b.type)
   const block = await client.getBlockHeight()
   const swapExpiration = getClaimExpiration(expiration, isPartyB ? 'b' : 'a').time
   const claimSwapParams = [
@@ -245,9 +252,12 @@ async function unlockFunds (dispatch, getState) {
 
 function redeemSwap () {
   return async (dispatch, getState) => {
-    await ensureSecret(dispatch, getState)
-    const walletConnected = await ensureWallet('b', dispatch, getState)
-    if (!walletConnected) return
+    if (!await ensureSecret(dispatch, getState)) {
+      return
+    }
+    if (!await ensureWallet('b', dispatch, getState)) {
+      return
+    }
     await unlockFunds(dispatch, getState)
   }
 }
@@ -255,7 +265,9 @@ function redeemSwap () {
 function refundSwap () {
   return async (dispatch, getState) => {
     const walletConnected = await ensureWallet('a', dispatch, getState)
-    if (!walletConnected) return
+    if (!walletConnected) {
+      return
+    }
 
     const {
       assets,
@@ -267,7 +279,7 @@ function refundSwap () {
       expiration
     } = getState().swap
 
-    const client = getClient(assets.a.currency)
+    const client = getClient(assets.a.currency, wallets.a.type)
     const swapExpiration = getFundExpiration(expiration, isPartyB ? 'b' : 'a').time
     await client.refundSwap(
       transactions.a.fund.hash,

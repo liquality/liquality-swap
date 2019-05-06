@@ -9,6 +9,7 @@ const initialState = {
     balance: null,
     connectOpen: false,
     connected: false,
+    connecting: false,
     chosen: false,
     type: ''
   },
@@ -17,6 +18,7 @@ const initialState = {
     balance: null,
     connectOpen: false,
     connected: false,
+    connecting: false,
     chosen: false,
     type: ''
   }
@@ -46,6 +48,14 @@ function chooseWallet (state, action) {
   })
 }
 
+function startConnecting (state, action) {
+  return update(state, {
+    [action.party]: {
+      connecting: { $set: true }
+    }
+  })
+}
+
 function connectWallet (state, action) {
   return update(state, {
     [action.party]: {
@@ -66,6 +76,7 @@ const reducers = {
   [swapTypes.SWITCH_SIDES]: switchSides,
   [walletTypes.TOGGLE_WALLET_CONNECT]: toggleWalletConnect,
   [walletTypes.CHOOSE_WALLET]: chooseWallet,
+  [walletTypes.START_CONNECTING_WALLET]: startConnecting,
   [walletTypes.CONNECT_WALLET]: connectWallet,
   [walletTypes.DISCONNECT_WALLET]: disconnectWallet
 }

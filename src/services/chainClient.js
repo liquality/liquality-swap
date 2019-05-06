@@ -3,7 +3,7 @@
 import { Client, providers } from '@liquality/chainabstractionlayer'
 import config from '../config'
 
-function createBtcClient () {
+function createBtcClient (asset, wallet) {
   const networks = providers.bitcoin.networks
   const btcConfig = config.assets.btc
   const btcClient = new Client()
@@ -13,31 +13,43 @@ function createBtcClient () {
     localStorage.btcRpcPass || window.btcRpcPass || process.env.REACT_APP_BTC_RPC_PASS || btcConfig.rpc.password,
     btcConfig.feeNumberOfBlocks
   ))
-  btcClient.addProvider(new providers.bitcoin.BitcoinLedgerProvider({network: networks[btcConfig.network]}))
-  btcClient.addProvider(new providers.bitcoin.BitcoinSwapProvider({network: networks[btcConfig.network]}))
+  if (wallet === 'ledger') {
+    btcClient.addProvider(new providers.bitcoin.BitcoinLedgerProvider({network: networks[btcConfig.network]}))
+    btcClient.addProvider(new providers.bitcoin.BitcoinSwapProvider({network: networks[btcConfig.network]}))
+  } else {
+    btcClient.addProvider(new providers.bitcoin.BitcoinJsLibSwapProvider({network: networks[btcConfig.network]}))
+  }
   return btcClient
 }
 
-function createEthClient () {
+function createEthClient (asset, wallet) {
   const networks = providers.ethereum.networks
   const ethConfig = config.assets.eth
   const ethClient = new Client()
   ethClient.addProvider(new providers.ethereum.EthereumRPCProvider(
     localStorage.ethRpc || window.ethRpc || process.env.REACT_APP_ETH_RPC || ethConfig.rpc.url
   ))
-  ethClient.addProvider(new providers.ethereum.EthereumMetaMaskProvider(web3.currentProvider, networks[ethConfig.network]))
+  if (wallet === 'metamask') {
+    ethClient.addProvider(new providers.ethereum.EthereumMetaMaskProvider(web3.currentProvider, networks[ethConfig.network]))
+  } else if (wallet === 'ledger') {
+    ethClient.addProvider(new providers.ethereum.EthereumLedgerProvider({network: networks[ethConfig.network]}))
+  }
   ethClient.addProvider(new providers.ethereum.EthereumSwapProvider())
   return ethClient
 }
 
-function createERC20Client (asset) {
+function createERC20Client (asset, wallet) {
   const networks = providers.ethereum.networks
   const assetConfig = config.assets[asset]
   const erc20Client = new Client()
   erc20Client.addProvider(new providers.ethereum.EthereumRPCProvider(
     localStorage.ethRpc || window.ethRpc || process.env.REACT_APP_ETH_RPC || assetConfig.rpc.url
   ))
-  erc20Client.addProvider(new providers.ethereum.EthereumMetaMaskProvider(web3.currentProvider, networks[assetConfig.network]))
+  if (wallet === 'metamask') {
+    erc20Client.addProvider(new providers.ethereum.EthereumMetaMaskProvider(web3.currentProvider, networks[assetConfig.network]))
+  } else if (wallet === 'ledger') {
+    erc20Client.addProvider(new providers.ethereum.EthereumLedgerProvider({network: networks[assetConfig.network]}))
+  }
   erc20Client.addProvider(new providers.ethereum.EthereumERC20Provider(assetConfig.contractAddress))
   erc20Client.addProvider(new providers.ethereum.EthereumERC20SwapProvider())
   return erc20Client
@@ -51,12 +63,15 @@ const clientCreators = {
 
 const clients = {}
 
-function getClient (asset) {
-  if (asset in clients) return clients[asset]
+function getClient (asset, wallet) {
+  if (!(asset in clients)) {
+    clients[asset] = {}
+  }
+  if (wallet in clients[asset]) return clients[asset][wallet]
   const assetConfig = config.assets[asset]
   const creator = clientCreators[asset] || clientCreators[assetConfig.type]
-  const client = creator(asset)
-  clients[asset] = client
+  const client = creator(asset, wallet)
+  clients[asset][wallet] = client
   return client
 }
 
