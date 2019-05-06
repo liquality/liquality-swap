@@ -1,6 +1,6 @@
 /* global web3, localStorage */
 
-import { Client, providers } from '@liquality/chainabstractionlayer/dist/index.umd.js'
+import { Client, providers } from '@liquality/chainabstractionlayer'
 import config from '../config'
 
 function createBtcClient (asset, wallet) {
