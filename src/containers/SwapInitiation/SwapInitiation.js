@@ -18,7 +18,7 @@ class SwapInitiation extends Component {
   render () {
     const wallet = wallets[this.props.wallets.a.type]
     const buttonLoadingMessage = wallet && `Confirm on ${wallet.name}`
-    const errors = getInitiationErrors(this.props.transactions, this.props.isVerified, this.props.isPartyB)
+    const errors = getInitiationErrors(this.props.transactions, this.props.expiration, this.props.isVerified, this.props.isPartyB)
 
     return <div className='SwapInitiation'>
       <SwapPairPanel

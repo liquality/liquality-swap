@@ -1,3 +1,7 @@
+import { version } from '@liquality/chainabstractionlayer'
+
+const footerVersion = `${process.env.REACT_APP_TRAVIS_COMMIT || 'dev'}+${version}`
+
 export default {
   assets: {
     eth: {
@@ -46,7 +50,10 @@ export default {
       t = document.getElementsByTagName('script')[0];
       t.parentNode.insertBefore(s, t);
     })('https://browser.sentry-cdn.com/4.6.4/bundle.min.js', function () {
-      Sentry.init({ dsn: 'https://12ddc74cff10472ebb8a940da86e12d9@sentry.io/1415462' })
+      Sentry.init({
+        dsn: 'https://12ddc74cff10472ebb8a940da86e12d9@sentry.io/1415462'
+        release: '${footerVersion}'
+      })
     });
   }
 
@@ -116,11 +123,12 @@ export default {
     }
   }
   `,
-  injectFooter: `<p style="text-align: center;">
+  injectFooter: `<p style="text-align: center; margin-bottom: 8px">
   <a href="https://liquality.io/terms-of-use/standalone.html" target="_blank">Terms of Use</a>
   &nbsp;|&nbsp;
   <a href="https://liquality.io/privacy-policy" target="_blank">Privacy Policy</a>
   </p>
+  <p style="text-align: center;font-size: 80%; color: #aaa">${footerVersion}</p>
   <style>
     #terms {
       width: 100%;
