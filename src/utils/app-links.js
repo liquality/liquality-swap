@@ -40,9 +40,6 @@ function generateLink (swap, counterparty = false) {
 
     isPartyB: counterparty === true
   }
-  if (counterparty) {
-    console.log('generate link', transactionsA.fund.hash, transactionsB.fund.hash)
-  }
   return `${APP_BASE_URL}#${queryString.stringify(urlParams)}`
 }
 
