@@ -32,5 +32,8 @@ export default combineReducers({
   showErrors: (state = false, action) => {
     return action.type === types.SET_SHOW_ERRORS ? action.showErrors : state
   },
+  loadingMessage: (state = null, action) => {
+    return action.type === types.SET_LOADING_MESSAGE ? action.loadingMessage : state
+  },
   isPartyB: (state = false) => state
 })
