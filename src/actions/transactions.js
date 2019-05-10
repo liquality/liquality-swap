@@ -18,10 +18,8 @@ const types = {
 async function setSecret (swap, party, tx, dispatch) {
   const currentParty = party === 'a' ? 'b' : 'a'
   const client = getClient(swap.assets[currentParty].currency, swap.wallets[currentParty].type)
-  if (await client.getTransactionByHash(tx.hash)) {
-    const secret = await client.getSwapSecret(tx.hash)
-    dispatch(secretActions.setSecret(secret))
-  }
+  const secret = await client.getSwapSecret(tx.hash)
+  dispatch(secretActions.setSecret(secret))
 }
 
 function setStep (transactions, isPartyB, dispatch) {
@@ -78,6 +76,9 @@ async function monitorTransaction (swap, party, kind, tx, dispatch, getState) {
     const updatedTransaction = await client.getTransactionByHash(tx.hash)
     if (updatedTransaction) {
       dispatch({ type: types.SET_TRANSACTION, party, kind, tx: updatedTransaction })
+      if (kind === 'claim') {
+        await setSecret(swap, party, updatedTransaction, dispatch)
+      }
     }
     let state = getState()
     setStep(state.swap.transactions, state.swap.isPartyB, dispatch)
@@ -91,10 +92,6 @@ function setTransaction (party, kind, tx) {
   return async (dispatch, getState) => {
     dispatch({ type: types.SET_TRANSACTION, party, kind, tx })
     let swap = getState().swap
-    if (kind === 'claim') {
-      await setSecret(swap, party, tx, dispatch)
-    }
-    swap = getState().swap
     if (!swap.link) {
       const link = generateLink(getState().swap)
       dispatch(swapActions.setLink(link))
