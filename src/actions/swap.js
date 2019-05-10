@@ -81,13 +81,13 @@ async function ensureSecret (dispatch, getState) {
   const {
     secretParams,
     assets,
-    wallets,
     counterParty,
     isPartyB,
     expiration
   } = getState().swap
   if (!isPartyB && !secretParams.secret) {
     await ensureWallet('a', dispatch, getState)
+    const { wallets } = getState().swap
     const client = getClient(assets.a.currency, wallets.a.type)
     const secretData = [
       assets.a.value,
