@@ -5,7 +5,6 @@ const APP_BASE_URL = `${window.location.protocol}//${window.location.host}${wind
 
 function generateLink (swap, counterparty = false) {
   let assetA, assetB, walletA, walletB, transactionsA, transactionsB, counterPartyA, counterPartyB
-
   if (counterparty) { // Switch around sides as this will be the state of the counter party
     ({ a: assetB, b: assetA } = swap.assets)
     ;({ a: walletB, b: walletA } = swap.wallets)
@@ -41,7 +40,6 @@ function generateLink (swap, counterparty = false) {
 
     isPartyB: counterparty === true
   }
-
   return `${APP_BASE_URL}#${queryString.stringify(urlParams)}`
 }
 

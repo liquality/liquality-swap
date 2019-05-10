@@ -13,7 +13,7 @@ function createBtcClient (asset, wallet) {
     localStorage.btcRpcPass || window.btcRpcPass || process.env.REACT_APP_BTC_RPC_PASS || btcConfig.rpc.password,
     btcConfig.feeNumberOfBlocks
   ))
-  if (wallet === 'ledger') {
+  if (wallet === 'bitcoin_ledger') {
     btcClient.addProvider(new providers.bitcoin.BitcoinLedgerProvider({network: networks[btcConfig.network]}))
     btcClient.addProvider(new providers.bitcoin.BitcoinSwapProvider({network: networks[btcConfig.network]}))
   } else {
@@ -31,7 +31,7 @@ function createEthClient (asset, wallet) {
   ))
   if (wallet === 'metamask') {
     ethClient.addProvider(new providers.ethereum.EthereumMetaMaskProvider(web3.currentProvider, networks[ethConfig.network]))
-  } else if (wallet === 'ledger') {
+  } else if (wallet === 'ethereum_ledger') {
     ethClient.addProvider(new providers.ethereum.EthereumLedgerProvider({network: networks[ethConfig.network]}))
   }
   ethClient.addProvider(new providers.ethereum.EthereumSwapProvider())
@@ -47,7 +47,7 @@ function createERC20Client (asset, wallet) {
   ))
   if (wallet === 'metamask') {
     erc20Client.addProvider(new providers.ethereum.EthereumMetaMaskProvider(web3.currentProvider, networks[assetConfig.network]))
-  } else if (wallet === 'ledger') {
+  } else if (wallet === 'ethereum_ledger') {
     erc20Client.addProvider(new providers.ethereum.EthereumLedgerProvider({network: networks[assetConfig.network]}))
   }
   erc20Client.addProvider(new providers.ethereum.EthereumERC20Provider(assetConfig.contractAddress))
