@@ -55,7 +55,7 @@ async function ensureWallet (party, dispatch, getState) {
   } = getState().swap
   const client = getClient(assets[party].currency, wallets[party].type)
   const walletSet = wallets[party].connected
-  const walletAvailable = await client.isWalletAvailable()
+  const walletAvailable = await client.wallet.isWalletAvailable()
   const w = watch(store.getState, `swap.wallets.${party}`)
 
   return new Promise((resolve) => {
@@ -101,7 +101,7 @@ async function ensureSecret (dispatch, getState) {
       expiration.unix()
     ]
     const secretMsg = secretData.join('')
-    const secret = await client.generateSecret(secretMsg)
+    const secret = await client.swap.generateSecret(secretMsg)
     dispatch(secretActions.setSecret(secret))
   }
 }
@@ -119,7 +119,7 @@ async function lockFunds (dispatch, getState) {
 
   const swapExpiration = isPartyB ? getFundExpiration(expiration, 'b').time : expiration
 
-  const block = await client.getBlockHeight()
+  const block = await client.chain.getBlockHeight()
   const valueInUnit = cryptoassets[assets.a.currency].currencyToUnit(assets.a.value)
   const initiateSwapParams = [
     valueInUnit,
@@ -131,7 +131,7 @@ async function lockFunds (dispatch, getState) {
   if (config.debug) { // TODO: enable debugging universally on all CAL functions (chainClient.js)
     console.log('Initiating Swap', initiateSwapParams)
   }
-  const txHash = await client.initiateSwap(...initiateSwapParams)
+  const txHash = await client.swap.initiateSwap(...initiateSwapParams)
   dispatch(transactionActions.setTransaction('a', 'fund', { hash: txHash, block }))
 }
 
@@ -177,7 +177,7 @@ async function verifyInitiateSwapTransaction (dispatch, getState) {
   const valueInUnit = cryptoassets[currency].currencyToUnit(value)
   while (true) {
     try {
-      const swapVerified = await client.verifyInitiateSwapTransaction(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty.b.address, secretParams.secretHash, expiration.unix())
+      const swapVerified = await client.swap.verifyInitiateSwapTransaction(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty.b.address, secretParams.secretHash, expiration.unix())
       if (swapVerified) {
         dispatch(setIsVerified(true))
         break
@@ -200,7 +200,7 @@ async function findInitiateSwapTransaction (dispatch, getState) {
   const client = getClient(currency, type)
   const valueInUnit = cryptoassets[currency].currencyToUnit(value)
   const swapExpiration = getFundExpiration(expiration, 'b').time
-  const initiateTransaction = await client.findInitiateSwapTransaction(valueInUnit, addresses[0], counterParty.b.address, secretParams.secretHash, swapExpiration.unix())
+  const initiateTransaction = await client.swap.findInitiateSwapTransaction(valueInUnit, addresses[0], counterParty.b.address, secretParams.secretHash, swapExpiration.unix())
   dispatch(transactionActions.setTransaction('b', 'fund', initiateTransaction))
 }
 
@@ -224,7 +224,7 @@ function waitForSwapClaim () {
     } = getState().swap
     const client = getClient(assets.a.currency, wallets.a.type)
     const swapExpiration = getFundExpiration(expiration, isPartyB ? 'b' : 'a').time
-    const claimTransaction = await client.findClaimSwapTransaction(transactions.a.fund.hash, counterParty.a.address, wallets.a.addresses[0], secretParams.secretHash, swapExpiration.unix())
+    const claimTransaction = await client.swap.findClaimSwapTransaction(transactions.a.fund.hash, counterParty.a.address, wallets.a.addresses[0], secretParams.secretHash, swapExpiration.unix())
     dispatch(transactionActions.setTransaction('b', 'claim', claimTransaction))
   }
 }
@@ -240,7 +240,7 @@ async function unlockFunds (dispatch, getState) {
     expiration
   } = getState().swap
   const client = getClient(assets.b.currency, wallets.b.type)
-  const block = await client.getBlockHeight()
+  const block = await client.chain.getBlockHeight()
   const swapExpiration = getClaimExpiration(expiration, isPartyB ? 'b' : 'a').time
   const claimSwapParams = [
     transactions.b.fund.hash,
@@ -252,7 +252,7 @@ async function unlockFunds (dispatch, getState) {
   if (config.debug) { // TODO: enable debugging universally on all CAL functions (chainClient.js)
     console.log('Claiming Swap', claimSwapParams)
   }
-  const txHash = await client.claimSwap(...claimSwapParams)
+  const txHash = await client.swap.claimSwap(...claimSwapParams)
   dispatch(transactionActions.setTransaction('a', 'claim', { hash: txHash, block }))
 }
 
@@ -280,7 +280,7 @@ function refundSwap () {
 
     const client = getClient(assets.a.currency, wallets.a.type)
     const swapExpiration = getFundExpiration(expiration, isPartyB ? 'b' : 'a').time
-    await client.refundSwap(
+    await client.swap.refundSwap(
       transactions.a.fund.hash,
       counterParty.a.address,
       wallets.a.addresses[0],

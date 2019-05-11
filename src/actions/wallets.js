@@ -26,8 +26,8 @@ function waitForWalletInitialization (party, currency, wallet) {
     const currency = cryptoassets[currencyCode]
     const client = getClient(currencyCode, wallet)
     const addressesPerCall = 100
-    const unusedAddress = await client.getUnusedAddress()
-    let allAddresses = await client.getUsedAddresses(addressesPerCall)
+    const unusedAddress = await client.wallet.getUnusedAddress()
+    let allAddresses = await client.wallet.getUsedAddresses(addressesPerCall)
     allAddresses = [ ...new Set([ unusedAddress, ...allAddresses ].map(a => a.address)) ]
     allAddresses = allAddresses.map(currency.formatAddress)
     if (!wallets[party].addresses[0] !== null) { // Preserve the preset address for party B
@@ -36,7 +36,7 @@ function waitForWalletInitialization (party, currency, wallet) {
         allAddresses = [expectedAddress, ...allAddresses.filter(address => address !== expectedAddress)]
       }
     }
-    const balance = await client.getBalance(allAddresses)
+    const balance = await client.chain.getBalance(allAddresses)
     const formattedBalance = currency.unitToCurrency(balance).toFixed(6)
     const otherParty = party === 'a' ? 'b' : 'a'
     const walletParty = getState().swap.assets[party].currency === currencyCode ? party : otherParty

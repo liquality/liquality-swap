@@ -1,4 +1,4 @@
-import { version } from '@liquality/chainabstractionlayer'
+import { version } from '@liquality/client'
 
 const footerVersion = `${process.env.REACT_APP_TRAVIS_COMMIT || 'dev'}+${version}`
 
