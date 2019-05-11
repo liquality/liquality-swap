@@ -1,6 +1,6 @@
-import { version } from '@liquality/client'
+import Client from '@liquality/client'
 
-const footerVersion = `${process.env.REACT_APP_TRAVIS_COMMIT || 'dev'}+${version}`
+const footerVersion = `${process.env.REACT_APP_TRAVIS_COMMIT || 'dev'}+${Client.version}`
 
 export default {
   assets: {
