@@ -7,6 +7,7 @@ import { actions as transactionActions } from './transactions'
 import { actions as secretActions } from './secretparams'
 import { actions as walletActions } from './wallets'
 import cryptoassets from '@liquality/cryptoassets'
+import { wallets as walletsConfig } from '../utils/wallets'
 import { sleep } from '../utils/async'
 import { getFundExpiration, getClaimExpiration, generateExpiration } from '../utils/expiration'
 import { isInitiateValid } from '../utils/validation'
@@ -17,7 +18,8 @@ const types = {
   SET_EXPIRATION: 'SET_EXPIRATION',
   SET_LINK: 'SET_LINK',
   SET_IS_VERIFIED: 'SET_IS_VERIFIED',
-  SET_SHOW_ERRORS: 'SET_SHOW_ERRORS'
+  SET_SHOW_ERRORS: 'SET_SHOW_ERRORS',
+  SET_LOADING_MESSAGE: 'SET_LOADING_MESSAGE'
 }
 
 function switchSides () {
@@ -46,6 +48,14 @@ function showErrors () {
 
 function hideErrors () {
   return { type: types.SET_SHOW_ERRORS, showErrors: false }
+}
+
+function setLoadingMessage (loadingMessage) {
+  return { type: types.SET_LOADING_MESSAGE, loadingMessage: loadingMessage }
+}
+
+function clearLoadingMessage () {
+  return { type: types.SET_LOADING_MESSAGE, loadingMessage: null }
 }
 
 async function ensureWallet (party, dispatch, getState) {
@@ -81,13 +91,13 @@ async function ensureSecret (dispatch, getState) {
   const {
     secretParams,
     assets,
-    wallets,
     counterParty,
     isPartyB,
     expiration
   } = getState().swap
   if (!isPartyB && !secretParams.secret) {
     await ensureWallet('a', dispatch, getState)
+    const { wallets } = getState().swap
     const client = getClient(assets.a.currency, wallets.a.type)
     const secretData = [
       assets.a.value,
@@ -101,8 +111,10 @@ async function ensureSecret (dispatch, getState) {
       expiration.unix()
     ]
     const secretMsg = secretData.join('')
-    const secret = await client.swap.generateSecret(secretMsg)
-    dispatch(secretActions.setSecret(secret))
+    await withLoadingMessage('a', dispatch, getState, async () => {
+      const secret = await client.swap.generateSecret(secretMsg)
+      dispatch(secretActions.setSecret(secret))
+    })
   }
 }
 
@@ -135,6 +147,17 @@ async function lockFunds (dispatch, getState) {
   dispatch(transactionActions.setTransaction('a', 'fund', { hash: txHash, block }))
 }
 
+async function withLoadingMessage (party, dispatch, getState, func) {
+  const wallets = getState().swap.wallets
+  const wallet = walletsConfig[wallets[party].type]
+  dispatch(setLoadingMessage(`Confirm on ${wallet.name}`))
+  try {
+    await func(dispatch, getState)
+  } finally {
+    dispatch(clearLoadingMessage())
+  }
+}
+
 function initiateSwap () {
   return async (dispatch, getState) => {
     dispatch(showErrors())
@@ -145,7 +168,9 @@ function initiateSwap () {
     const initiateValid = isInitiateValid(getState().swap)
     if (!initiateValid) return
     await ensureSecret(dispatch, getState)
-    await lockFunds(dispatch, getState)
+    await withLoadingMessage('a', dispatch, getState, async () => {
+      await lockFunds(dispatch, getState)
+    })
     dispatch(setIsVerified(true))
     dispatch(replace('/backupLink'))
   }
@@ -158,7 +183,7 @@ function confirmSwap () {
     await ensureWallet('b', dispatch, getState)
     const initiateValid = isInitiateValid(getState().swap)
     if (!initiateValid) return
-    await lockFunds(dispatch, getState)
+    await withLoadingMessage('a', dispatch, getState, lockFunds)
     dispatch(waitForSwapClaim())
     dispatch(replace('/backupLink'))
   }
@@ -260,7 +285,7 @@ function redeemSwap () {
   return async (dispatch, getState) => {
     await ensureSecret(dispatch, getState)
     await ensureWallet('b', dispatch, getState)
-    await unlockFunds(dispatch, getState)
+    await withLoadingMessage('b', dispatch, getState, unlockFunds)
   }
 }
 
@@ -280,13 +305,15 @@ function refundSwap () {
 
     const client = getClient(assets.a.currency, wallets.a.type)
     const swapExpiration = getFundExpiration(expiration, isPartyB ? 'b' : 'a').time
-    await client.swap.refundSwap(
-      transactions.a.fund.hash,
-      counterParty.a.address,
-      wallets.a.addresses[0],
-      secretParams.secretHash,
-      swapExpiration.unix()
-    )
+    await withLoadingMessage('a', dispatch, getState, async () => {
+      return client.swap.refundSwap(
+        transactions.a.fund.hash,
+        counterParty.a.address,
+        wallets.a.addresses[0],
+        secretParams.secretHash,
+        swapExpiration.unix()
+      )
+    })
   }
 }
 

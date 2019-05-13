@@ -12,7 +12,8 @@ const mapStateToProps = state => {
     assets: state.swap.assets,
     counterParty: state.swap.counterParty,
     transactions: state.swap.transactions,
-    isVerified: state.swap.isVerified
+    isVerified: state.swap.isVerified,
+    loadingMessage: state.swap.loadingMessage
   }
 }
 
