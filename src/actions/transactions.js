@@ -18,7 +18,7 @@ const types = {
 async function setSecret (swap, party, tx, dispatch) {
   const currentParty = party === 'a' ? 'b' : 'a'
   const client = getClient(swap.assets[currentParty].currency, swap.wallets[currentParty].type)
-  const secret = await client.getSwapSecret(tx.hash)
+  const secret = await client.swap.getSwapSecret(tx.hash)
   dispatch(secretActions.setSecret(secret))
 }
 
@@ -73,7 +73,7 @@ async function monitorTransaction (swap, party, kind, tx, dispatch, getState) {
     } else if (kind === 'fund') {
       client = getClient(swap.assets[party].currency, swap.wallets[party].type)
     }
-    const updatedTransaction = await client.getTransactionByHash(tx.hash)
+    const updatedTransaction = await client.chain.getTransactionByHash(tx.hash)
     if (updatedTransaction) {
       dispatch({ type: types.SET_TRANSACTION, party, kind, tx: updatedTransaction })
       if (kind === 'claim') {

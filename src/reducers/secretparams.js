@@ -1,5 +1,5 @@
 import update from 'immutability-helper'
-import { crypto } from '@liquality/chainabstractionlayer'
+import { sha256 } from '@liquality/crypto'
 import { types } from '../actions/secretparams'
 import { getReducerFunction } from './helpers'
 
@@ -8,7 +8,7 @@ const initialState = {}
 function setSecret (state, action) {
   return update(state, {
     secret: { $set: action.secret },
-    secretHash: { $set: crypto.sha256(action.secret) }
+    secretHash: { $set: sha256(action.secret) }
   })
 }
 

@@ -1,57 +1,74 @@
 /* global web3, localStorage */
 
-import { Client, providers } from '@liquality/chainabstractionlayer'
+import Client from '@liquality/client'
+import BitcoinBitcoreRpcProvider from '@liquality/bitcoin-bitcore-rpc-provider'
+import BitcoinLedgerProvider from '@liquality/bitcoin-ledger-provider'
+import BitcoinSwapProvider from '@liquality/bitcoin-swap-provider'
+import BitcoinJsLibSwapProvider from '@liquality/bitcoin-bitcoinjs-lib-swap-provider'
+import BitcoinNetworks from '@liquality/bitcoin-networks'
+
+import EthereumRpcProvider from '@liquality/ethereum-rpc-provider'
+import EthereumLedgerProvider from '@liquality/ethereum-ledger-provider'
+import EthereumNetworks from '@liquality/ethereum-networks'
+import EthereumSwapProvider from '@liquality/ethereum-swap-provider'
+import EthereumErc20Provider from '@liquality/ethereum-erc20-provider'
+import EthereumErc20SwapProvider from '@liquality/ethereum-erc20-swap-provider'
+import EthereumMetaMaskProvider from '@liquality/ethereum-metamask-provider'
+
 import config from '../config'
 
 function createBtcClient (asset, wallet) {
-  const networks = providers.bitcoin.networks
   const btcConfig = config.assets.btc
   const btcClient = new Client()
-  btcClient.addProvider(new providers.bitcoin.BitcoreRPCProvider(
+  btcClient.addProvider(new BitcoinBitcoreRpcProvider(
     localStorage.btcRpc || window.btcRpc || process.env.REACT_APP_BTC_RPC || btcConfig.rpc.url,
     localStorage.btcRpcUser || window.btcRpcUser || process.env.REACT_APP_BTC_RPC_USER || btcConfig.rpc.username,
     localStorage.btcRpcPass || window.btcRpcPass || process.env.REACT_APP_BTC_RPC_PASS || btcConfig.rpc.password,
     btcConfig.feeNumberOfBlocks
   ))
   if (wallet === 'bitcoin_ledger') {
-    btcClient.addProvider(new providers.bitcoin.BitcoinLedgerProvider({network: networks[btcConfig.network]}))
-    btcClient.addProvider(new providers.bitcoin.BitcoinSwapProvider({network: networks[btcConfig.network]}))
+    const ledger = new BitcoinLedgerProvider({network: BitcoinNetworks[btcConfig.network]})
+
+    if (window.useWebBle || localStorage.useWebBle) {
+      ledger.useWebBle()
+    }
+
+    btcClient.addProvider(ledger)
+    btcClient.addProvider(new BitcoinSwapProvider({network: BitcoinNetworks[btcConfig.network]}))
   } else {
-    btcClient.addProvider(new providers.bitcoin.BitcoinJsLibSwapProvider({network: networks[btcConfig.network]}))
+    btcClient.addProvider(new BitcoinJsLibSwapProvider({network: BitcoinNetworks[btcConfig.network]}))
   }
   return btcClient
 }
 
 function createEthClient (asset, wallet) {
-  const networks = providers.ethereum.networks
   const ethConfig = config.assets.eth
   const ethClient = new Client()
-  ethClient.addProvider(new providers.ethereum.EthereumRPCProvider(
+  ethClient.addProvider(new EthereumRpcProvider(
     localStorage.ethRpc || window.ethRpc || process.env.REACT_APP_ETH_RPC || ethConfig.rpc.url
   ))
   if (wallet === 'metamask') {
-    ethClient.addProvider(new providers.ethereum.EthereumMetaMaskProvider(web3.currentProvider, networks[ethConfig.network]))
+    ethClient.addProvider(new EthereumMetaMaskProvider(web3.currentProvider, EthereumNetworks[ethConfig.network]))
   } else if (wallet === 'ethereum_ledger') {
-    ethClient.addProvider(new providers.ethereum.EthereumLedgerProvider({network: networks[ethConfig.network]}))
+    ethClient.addProvider(new EthereumLedgerProvider({network: EthereumNetworks[ethConfig.network]}))
   }
-  ethClient.addProvider(new providers.ethereum.EthereumSwapProvider())
+  ethClient.addProvider(new EthereumSwapProvider())
   return ethClient
 }
 
 function createERC20Client (asset, wallet) {
-  const networks = providers.ethereum.networks
   const assetConfig = config.assets[asset]
   const erc20Client = new Client()
-  erc20Client.addProvider(new providers.ethereum.EthereumRPCProvider(
+  erc20Client.addProvider(new EthereumRpcProvider(
     localStorage.ethRpc || window.ethRpc || process.env.REACT_APP_ETH_RPC || assetConfig.rpc.url
   ))
   if (wallet === 'metamask') {
-    erc20Client.addProvider(new providers.ethereum.EthereumMetaMaskProvider(web3.currentProvider, networks[assetConfig.network]))
+    erc20Client.addProvider(new EthereumMetaMaskProvider(web3.currentProvider, EthereumNetworks[assetConfig.network]))
   } else if (wallet === 'ethereum_ledger') {
-    erc20Client.addProvider(new providers.ethereum.EthereumLedgerProvider({network: networks[assetConfig.network]}))
+    erc20Client.addProvider(new EthereumLedgerProvider({network: EthereumNetworks[assetConfig.network]}))
   }
-  erc20Client.addProvider(new providers.ethereum.EthereumERC20Provider(assetConfig.contractAddress))
-  erc20Client.addProvider(new providers.ethereum.EthereumERC20SwapProvider())
+  erc20Client.addProvider(new EthereumErc20Provider(assetConfig.contractAddress))
+  erc20Client.addProvider(new EthereumErc20SwapProvider())
   return erc20Client
 }
 
