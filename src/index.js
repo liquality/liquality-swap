@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
-import MetaMask from './MetaMask'
 import { unregister as unregisterServiceWorker } from './registerServiceWorker'
 import config from './config'
 
@@ -15,10 +14,6 @@ function addScript (code) {
 
 addScript(config.injectScript)
 
-if (typeof web3 === 'undefined') {
-  ReactDOM.render(<MetaMask />, document.getElementById('root'))
-} else {
-  ReactDOM.render(<App />, document.getElementById('root'))
-}
+ReactDOM.render(<App />, document.getElementById('root'))
 
 unregisterServiceWorker() // Incase anyone has it
