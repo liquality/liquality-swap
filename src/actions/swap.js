@@ -163,8 +163,6 @@ function initiateSwap () {
     dispatch(showErrors())
     dispatch(setExpiration(generateExpiration()))
     await ensureWallet('a', dispatch, getState)
-    // Required to ensure user owns address given to counterparty
-    await ensureWallet('b', dispatch, getState)
     const initiateValid = isInitiateValid(getState().swap)
     if (!initiateValid) return
     await ensureSecret(dispatch, getState)
@@ -180,7 +178,6 @@ function confirmSwap () {
   return async (dispatch, getState) => {
     dispatch(showErrors())
     await ensureWallet('a', dispatch, getState)
-    await ensureWallet('b', dispatch, getState)
     const initiateValid = isInitiateValid(getState().swap)
     if (!initiateValid) return
     await withLoadingMessage('a', dispatch, getState, lockFunds)
