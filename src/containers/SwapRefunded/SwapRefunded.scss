@@ -1,16 +1,19 @@
 @import '../../scss/variables.scss';
 
-.SwapRefund {
+.SwapRefunded {
   text-align: center;
 
   &_terms {
     font-size: $h1-font-size;
   }
 
+  &_button {
+    margin-top: 50px;
+  }
+
   &_expiredFrame {
     text-align: center;
     width: 100%;
-    background-color: #F7F8FA;
     color: #A4AAB6;
     margin-top: -20px;
     border-radius: 0px 0px 22px 22px;

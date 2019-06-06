@@ -42,14 +42,19 @@ function setStep (transactions, isPartyB, dispatch) {
 }
 
 function setLocation (swap, currentLocation, dispatch) {
-  const canNavigate = currentLocation.pathname !== '/backupLink' && currentLocation.pathname !== '/refund'
+  const hasRefunded = swap.transactions.a.refund && swap.transactions.a.refund.hash
+  const canNavigate = currentLocation.pathname !== '/backupLink' && (hasRefunded || currentLocation.pathname !== '/refund')
   if (canNavigate) {
     const hasInitiated = swap.transactions.a.fund.hash && swap.transactions.a.fund.confirmations > 0
     const canRefund = !swap.transactions.b.claim.hash || swap.transactions.b.claim.confirmations === 0
     const swapExpiration = getFundExpiration(swap.expiration, swap.isPartyB ? 'b' : 'a').time
     const swapExpired = moment().isAfter(swapExpiration)
     if (hasInitiated && canRefund && swapExpired) {
-      dispatch(replace('/refund'))
+      if (hasRefunded) {
+        dispatch(replace('/refunded'))
+      } else {
+        dispatch(replace('/refund'))
+      }
     } else if (swap.step === steps.AGREEMENT && currentLocation.pathname !== '/waiting') {
       if (swap.isPartyB || swap.transactions.b.fund.hash) {
         dispatch(replace('/waiting'))
@@ -71,6 +76,8 @@ async function monitorTransaction (swap, party, kind, tx, dispatch, getState) {
       const currentParty = party === 'a' ? 'b' : 'a'
       client = getClient(swap.assets[currentParty].currency, swap.wallets[currentParty].type)
     } else if (kind === 'fund') {
+      client = getClient(swap.assets[party].currency, swap.wallets[party].type)
+    } else if (kind === 'refund') {
       client = getClient(swap.assets[party].currency, swap.wallets[party].type)
     }
     const updatedTransaction = await client.chain.getTransactionByHash(tx.hash)
@@ -125,6 +132,11 @@ function loadTransactions () {
       const swapState = getState().swap
       if (swapState.transactions.a.fund.hash && !swapState.transactions.b.claim.hash) {
         dispatch(swapActions.waitForSwapClaim())
+      }
+      const swapExpiration = getFundExpiration(swapState.expiration, swapState.isPartyB ? 'b' : 'a').time
+      const swapExpired = moment().isAfter(swapExpiration)
+      if (swapState.transactions.a.fund.hash && swapExpired) {
+        dispatch(swapActions.waitForSwapRefund())
       }
     }
   }

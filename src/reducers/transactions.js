@@ -5,11 +5,13 @@ import { getReducerFunction } from './helpers'
 const initialState = {
   a: {
     fund: {},
-    claim: {}
+    claim: {},
+    refund: {}
   },
   b: {
     fund: {},
-    claim: {}
+    claim: {},
+    refund: {}
   }
 }
 
