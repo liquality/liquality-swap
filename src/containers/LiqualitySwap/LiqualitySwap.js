@@ -12,6 +12,7 @@ import WalletPopups from '../WalletPopups'
 import SwapRedemption from '../SwapRedemption'
 import SwapCompleted from '../SwapCompleted'
 import SwapRefund from '../SwapRefund'
+import SwapRefunded from '../SwapRefunded'
 import SwapProgressStepper from '../../components/SwapProgressStepper/SwapProgressStepper'
 import { generateLink } from '../../utils/app-links'
 import config from '../../config'
@@ -85,6 +86,7 @@ class LiqualitySwap extends Component {
           <Route path='/redeem' component={SwapRedemption} />
           <Route path='/completed' component={SwapCompleted} />
           <Route path='/refund' component={SwapRefund} />
+          <Route path='/refunded' component={SwapRefunded} />
           <WalletPopups />
         </div>
       </div>

@@ -251,6 +251,24 @@ function waitForSwapClaim () {
   }
 }
 
+function waitForSwapRefund () {
+  return async (dispatch, getState) => {
+    const {
+      assets,
+      wallets,
+      transactions,
+      counterParty,
+      secretParams,
+      expiration,
+      isPartyB
+    } = getState().swap
+    const client = getClient(assets.a.currency, wallets.a.type)
+    const swapExpiration = getFundExpiration(expiration, isPartyB ? 'a' : 'b').time
+    const refundTransaction = await client.swap.findRefundSwapTransaction(transactions.a.fund.hash, counterParty.a.address, wallets.a.addresses[0], secretParams.secretHash, swapExpiration.unix())
+    dispatch(transactionActions.setTransaction('a', 'refund', refundTransaction))
+  }
+}
+
 async function unlockFunds (dispatch, getState) {
   const {
     assets,
@@ -302,14 +320,16 @@ function refundSwap () {
 
     const client = getClient(assets.a.currency, wallets.a.type)
     const swapExpiration = getFundExpiration(expiration, isPartyB ? 'b' : 'a').time
+    const block = await client.chain.getBlockHeight()
     await withLoadingMessage('a', dispatch, getState, async () => {
-      return client.swap.refundSwap(
+      const refundTxHash = await client.swap.refundSwap(
         transactions.a.fund.hash,
         counterParty.a.address,
         wallets.a.addresses[0],
         secretParams.secretHash,
         swapExpiration.unix()
       )
+      dispatch(transactionActions.setTransaction('a', 'refund', { hash: refundTxHash, block }))
     })
   }
 }
@@ -328,6 +348,7 @@ const actions = {
   verifyInitiateSwapTransaction,
   waitForSwapConfirmation,
   waitForSwapClaim,
+  waitForSwapRefund,
   redeemSwap,
   refundSwap
 }
