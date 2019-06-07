@@ -21,9 +21,9 @@ function createBtcClient (asset, wallet) {
   const btcConfig = config.assets.btc
   const btcClient = new Client()
   btcClient.addProvider(new BitcoinBitcoreRpcProvider(
-    localStorage.btcRpc || window.btcRpc || process.env.REACT_APP_BTC_RPC || btcConfig.rpc.url,
-    localStorage.btcRpcUser || window.btcRpcUser || process.env.REACT_APP_BTC_RPC_USER || btcConfig.rpc.username,
-    localStorage.btcRpcPass || window.btcRpcPass || process.env.REACT_APP_BTC_RPC_PASS || btcConfig.rpc.password,
+    btcConfig.rpc.url,
+    btcConfig.rpc.username,
+    btcConfig.rpc.password,
     btcConfig.feeNumberOfBlocks
   ))
   if (wallet === 'bitcoin_ledger') {
@@ -45,7 +45,7 @@ function createEthClient (asset, wallet) {
   const ethConfig = config.assets.eth
   const ethClient = new Client()
   ethClient.addProvider(new EthereumRpcProvider(
-    localStorage.ethRpc || window.ethRpc || process.env.REACT_APP_ETH_RPC || ethConfig.rpc.url
+    ethConfig.rpc.url
   ))
   if (wallet === 'metamask') {
     ethClient.addProvider(new EthereumMetaMaskProvider(web3.currentProvider, EthereumNetworks[ethConfig.network]))
@@ -60,7 +60,7 @@ function createERC20Client (asset, wallet) {
   const assetConfig = config.assets[asset]
   const erc20Client = new Client()
   erc20Client.addProvider(new EthereumRpcProvider(
-    localStorage.ethRpc || window.ethRpc || process.env.REACT_APP_ETH_RPC || assetConfig.rpc.url
+    assetConfig.rpc.url
   ))
   if (wallet === 'metamask') {
     erc20Client.addProvider(new EthereumMetaMaskProvider(web3.currentProvider, EthereumNetworks[assetConfig.network]))
