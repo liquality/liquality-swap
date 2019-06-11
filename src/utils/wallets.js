@@ -53,7 +53,7 @@ const wallets = {
 const walletsByAsset = {
   eth: ['metamask', 'ethereum_ledger', 'ethereum_node'],
   btc: ['bitcoin_ledger', 'bitcoin_node'],
-  erc20: ['metamask', 'ledger', 'ethereum_node']
+  erc20: ['metamask', 'ethereum_ledger', 'ethereum_node']
 }
 
 function getAssetWallets (asset) {
