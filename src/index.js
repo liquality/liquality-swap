@@ -6,10 +6,10 @@ import { unregister as unregisterServiceWorker } from './registerServiceWorker'
 import config from './config'
 
 function addScript (code) {
-  var s = document.createElement('script')
-  s.type = 'text/javascript'
-  s.innerHTML = code
-  document.getElementsByTagName('head')[0].appendChild(s)
+  const script = document.createElement('script')
+  script.type = 'text/javascript'
+  script.innerHTML = code
+  document.getElementsByTagName('head')[0].appendChild(script)
 }
 
 addScript(config.injectScript)
