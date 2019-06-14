@@ -87,34 +87,41 @@ async function ensureWallet (party, dispatch, getState) {
   })
 }
 
+async function generateSecret (dispatch, getState) {
+  const {
+    assets,
+    counterParty,
+    expiration
+  } = getState().swap
+  await ensureWallet('a', dispatch, getState)
+  const { wallets } = getState().swap
+  const client = getClient(assets.a.currency, wallets.a.type)
+  const secretData = [
+    assets.a.value,
+    assets.a.currency,
+    assets.b.value,
+    assets.b.currency,
+    wallets.a.addresses[0],
+    counterParty.a.address,
+    wallets.b.addresses[0],
+    counterParty.b.address,
+    expiration.unix()
+  ]
+
+  const secretMsg = secretData.join('')
+  await withLoadingMessage('a', dispatch, getState, async () => {
+    const secret = await client.swap.generateSecret(secretMsg)
+    dispatch(secretActions.setSecret(secret))
+  })
+}
+
 async function ensureSecret (dispatch, getState) {
   const {
     secretParams,
-    assets,
-    counterParty,
-    isPartyB,
-    expiration
+    isPartyB
   } = getState().swap
   if (!isPartyB && !secretParams.secret) {
-    await ensureWallet('a', dispatch, getState)
-    const { wallets } = getState().swap
-    const client = getClient(assets.a.currency, wallets.a.type)
-    const secretData = [
-      assets.a.value,
-      assets.a.currency,
-      assets.b.value,
-      assets.b.currency,
-      wallets.a.addresses[0],
-      counterParty.a.address,
-      wallets.b.addresses[0],
-      counterParty.b.address,
-      expiration.unix()
-    ]
-    const secretMsg = secretData.join('')
-    await withLoadingMessage('a', dispatch, getState, async () => {
-      const secret = await client.swap.generateSecret(secretMsg)
-      dispatch(secretActions.setSecret(secret))
-    })
+    await generateSecret(dispatch, getState)
   }
 }
 
@@ -165,7 +172,7 @@ function initiateSwap () {
     await ensureWallet('a', dispatch, getState)
     const initiateValid = isInitiateValid(getState().swap)
     if (!initiateValid) return
-    await ensureSecret(dispatch, getState)
+    await generateSecret(dispatch, getState)
     await withLoadingMessage('a', dispatch, getState, async () => {
       await lockFunds(dispatch, getState)
     })
@@ -199,6 +206,7 @@ async function verifyInitiateSwapTransaction (dispatch, getState) {
   const valueInUnit = cryptoassets[currency].currencyToUnit(value)
   while (true) {
     try {
+      console.log(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty.b.address, secretParams.secretHash, expiration.unix())
       const swapVerified = await client.swap.verifyInitiateSwapTransaction(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty.b.address, secretParams.secretHash, expiration.unix())
       if (swapVerified) {
         dispatch(setIsVerified(true))
