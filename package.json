@@ -1,11 +1,11 @@
 {
   "name": "liquality-atomic-swap",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "dependencies": {
     "@liquality/bitcoin-bitcoinjs-lib-swap-provider": "^0.2.8",
     "@liquality/bitcoin-bitcore-rpc-provider": "^0.2.8",
-    "@liquality/bitcoin-ledger-provider": "^0.2.7",
+    "@liquality/bitcoin-ledger-provider": "^0.2.8",
     "@liquality/bitcoin-networks": "^0.2.8",
     "@liquality/bitcoin-swap-provider": "^0.2.8",
     "@liquality/client": "^0.2.8",
