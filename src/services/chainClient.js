@@ -35,8 +35,11 @@ function createBtcClient (asset, wallet) {
 
     btcClient.addProvider(ledger)
     btcClient.addProvider(new BitcoinSwapProvider({network: BitcoinNetworks[btcConfig.network]}))
-  } else {
+  } else if (wallet === 'bitcoin_node') {
     btcClient.addProvider(new BitcoinJsLibSwapProvider({network: BitcoinNetworks[btcConfig.network]}))
+  } else {
+    // Verify functions required when wallet not connected
+    btcClient.addProvider(new BitcoinSwapProvider({network: BitcoinNetworks[btcConfig.network]}))
   }
   return btcClient
 }
