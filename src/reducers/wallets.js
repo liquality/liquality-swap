@@ -67,8 +67,12 @@ function connectWallet (state, action) {
 }
 
 function disconnectWallet (state, action) {
+  const cleanState = initialState[action.party]
+  if (action.preserveAddress) {
+    delete cleanState.addresses
+  }
   return update(state, {
-    [action.party]: { $set: initialState[action.party] }
+    [action.party]: { $merge: cleanState }
   })
 }
 
