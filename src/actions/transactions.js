@@ -118,7 +118,9 @@ function loadTransactions () {
         'a.fund.hash',
         'b.fund.hash',
         'a.claim.hash',
-        'b.claim.hash'
+        'b.claim.hash',
+        'a.refund.hash',
+        'b.refund.hash'
       ]
       transactionPaths.forEach(path => {
         if (_.has(transactions, path)) {
