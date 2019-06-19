@@ -206,7 +206,6 @@ async function verifyInitiateSwapTransaction (dispatch, getState) {
   const valueInUnit = cryptoassets[currency].currencyToUnit(value)
   while (true) {
     try {
-      console.log(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty.b.address, secretParams.secretHash, expiration.unix())
       const swapVerified = await client.swap.verifyInitiateSwapTransaction(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty.b.address, secretParams.secretHash, expiration.unix())
       if (swapVerified) {
         dispatch(setIsVerified(true))
