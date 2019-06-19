@@ -42,30 +42,30 @@ function setStep (transactions, isPartyB, dispatch) {
 }
 
 function setLocation (swap, currentLocation, dispatch) {
+  // Do not navigate away from backup link
+  if (currentLocation.pathname === '/backupLink') return
+
+  const hasInitiated = swap.transactions.a.fund.hash && swap.transactions.a.fund.confirmations > 0
   const hasRefunded = swap.transactions.a.refund && swap.transactions.a.refund.hash
-  const canNavigate = currentLocation.pathname !== '/backupLink' && (hasRefunded || currentLocation.pathname !== '/refund')
-  if (canNavigate) {
-    const hasInitiated = swap.transactions.a.fund.hash && swap.transactions.a.fund.confirmations > 0
-    const canRefund = !swap.transactions.b.claim.hash || swap.transactions.b.claim.confirmations === 0
-    const swapExpiration = getFundExpiration(swap.expiration, swap.isPartyB ? 'b' : 'a').time
-    const swapExpired = moment().isAfter(swapExpiration)
-    if (hasInitiated && canRefund && swapExpired) {
-      if (hasRefunded) {
-        dispatch(replace('/refunded'))
-      } else {
-        dispatch(replace('/refund'))
-      }
-    } else if (swap.step === steps.AGREEMENT && currentLocation.pathname !== '/waiting') {
-      if (swap.isPartyB || swap.transactions.b.fund.hash) {
-        dispatch(replace('/waiting'))
-      } else {
-        dispatch(replace('/counterPartyLink'))
-      }
-    } else if (swap.step === steps.CLAIMING) {
-      dispatch(replace('/redeem'))
-    } else if (swap.step === steps.SETTLED) {
-      dispatch(replace('/completed'))
+  const canRefund = !swap.transactions.b.claim.hash || swap.transactions.b.claim.confirmations === 0
+  const swapExpiration = getFundExpiration(swap.expiration, swap.isPartyB ? 'b' : 'a').time
+  const swapExpired = moment().isAfter(swapExpiration)
+  if (hasInitiated && canRefund && swapExpired) {
+    if (hasRefunded) {
+      dispatch(replace('/refunded'))
+    } else {
+      dispatch(replace('/refund'))
     }
+  } else if (swap.step === steps.AGREEMENT && currentLocation.pathname !== '/waiting') {
+    if (swap.isPartyB || swap.transactions.b.fund.hash) {
+      dispatch(replace('/waiting'))
+    } else {
+      dispatch(replace('/counterPartyLink'))
+    }
+  } else if (swap.step === steps.CLAIMING) {
+    dispatch(replace('/redeem'))
+  } else if (swap.step === steps.SETTLED) {
+    dispatch(replace('/completed'))
   }
 }
 
