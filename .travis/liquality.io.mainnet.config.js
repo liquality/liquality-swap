@@ -1,18 +1,32 @@
+import Client from '@liquality/client'
+
+const footerVersion = `${process.env.REACT_APP_TRAVIS_COMMIT || 'dev'}+${Client.version}`
+
 export default {
-  eth: {
-    rpc: {
-      url: 'https://mainnet.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
+  assets: {
+    eth: {
+      rpc: {
+        url: 'https://mainnet.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
+      },
+      network: 'mainnet'
     },
-    network: 'mainnet'
-  },
-  btc: {
-    rpc: {
-      username: 'liquality',
-      password: 'liquality123',
-      url: 'https://liquality.io/bitcoinrpc/'
+    btc: {
+      rpc: {
+        username: 'liquality',
+        password: 'liquality123',
+        url: 'https://liquality.io/bitcoinrpc/'
+      },
+      feeNumberOfBlocks: 2,
+      network: 'bitcoin'
     },
-    feeNumberOfBlocks: 2,
-    network: 'bitcoin'
+    dai: {
+      type: 'erc20',
+      rpc: {
+        url: 'https://mainnet.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
+      },
+      contractAddress: '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359',
+      network: 'mainnet'
+    }
   },
   injectScript: `
   function addSentry () {
@@ -35,7 +49,10 @@ export default {
       t = document.getElementsByTagName('script')[0];
       t.parentNode.insertBefore(s, t);
     })('https://browser.sentry-cdn.com/4.6.4/bundle.min.js', function () {
-      Sentry.init({ dsn: 'https://12ddc74cff10472ebb8a940da86e12d9@sentry.io/1415462' })
+      Sentry.init({
+        dsn: 'https://12ddc74cff10472ebb8a940da86e12d9@sentry.io/1415462',
+        release: '${footerVersion}'
+      })
     });
   }
 
@@ -81,10 +98,22 @@ export default {
     })(window,document,window['_fs_namespace'],'script','user');
   }
 
+  function addHotJar () {
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:1260353,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+  }
+
   function addAnalytics () {
     addGA();
     addSentry();
     addFullStory();
+    addHotJar();
   }
 
   if (window.localStorage.getItem('enableAnalytics') == 'true') {
@@ -105,11 +134,12 @@ export default {
     }
   }
   `,
-  injectFooter: `<p style="text-align: center;">
+  injectFooter: `<p style="text-align: center; margin-bottom: 8px">
   <a href="https://liquality.io/terms-of-use/standalone.html" target="_blank">Terms of Use</a>
   &nbsp;|&nbsp;
   <a href="https://liquality.io/privacy-policy" target="_blank">Privacy Policy</a>
   </p>
+  <p style="text-align: center;font-size: 80%; color: #aaa">${footerVersion}</p>
   <style>
     #terms {
       width: 100%;

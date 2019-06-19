@@ -1,0 +1,40 @@
+@import '../../scss/variables.scss';
+
+.SwapRefunded {
+  text-align: center;
+
+  &_terms {
+    font-size: $h1-font-size;
+  }
+
+  &_button {
+    margin-top: 50px;
+  }
+
+  &_expiredFrame {
+    text-align: center;
+    width: 100%;
+    color: #A4AAB6;
+    margin-top: -20px;
+    border-radius: 0px 0px 22px 22px;
+    padding: 50px;
+
+    &_content {
+      margin-left: 30%;
+      width: 40%;
+      text-align: left;
+
+      &_title {
+        text-align: center;
+        color: #494949;
+      }
+
+      &_value {
+        color: #5F5F5F;
+      }
+    }
+   
+  }
+
+
+}

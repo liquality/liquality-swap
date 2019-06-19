@@ -4,29 +4,6 @@ import Spinner from './spinner.svg'
 import './Button.css'
 
 class Button extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      clickDisabled: false
-    }
-  }
-
-  onClickHandler (e) {
-    if (this.props.loadingAfterClickMessage) {
-      this.setState({
-        clickDisabled: true
-      })
-      this.timeout = setTimeout(() => {
-        this.setState({clickDisabled: false})
-      }, 20000)
-    }
-    this.props.onClick(e)
-  }
-
-  componentWillUnmount () {
-    clearTimeout(this.timeout)
-  }
-
   render () {
     const classes = ['Button', 'btn']
 
@@ -49,16 +26,15 @@ class Button extends Component {
       classes.push('Button_small')
     }
 
-    const showLoader = this.props.loadingAfterClick && this.state.clickDisabled
-    const disabled = this.state.clickDisabled || this.props.disabled
+    const showLoader = this.props.loadingMessage
+    const disabled = this.props.disabled || this.props.loadingMessage
 
-    return <button tabIndex={this.props.tabIndex} className={classes.join(' ')} disabled={disabled} onClick={e => this.onClickHandler(e)}>
+    return <button tabIndex={this.props.tabIndex} className={classes.join(' ')} disabled={disabled} onClick={e => this.props.onClick(e)}>
       {this.props.icon && <span className='Button_icon'><img src={this.props.icon} alt='' /></span>}
-      {showLoader &&
+      { showLoader &&
         <img className='Button_spinner' src={Spinner} alt='Loading...' />
       }
-      { this.props.loadingAfterClickMessage && this.state.clickDisabled
-        ? this.props.loadingAfterClickMessage : this.props.children }
+      { showLoader ? this.props.loadingMessage : this.props.children }
     </button>
   }
 }
@@ -73,8 +49,7 @@ Button.propTypes = {
   disabled: PropTypes.bool,
   icon: PropTypes.any,
   onClick: PropTypes.func,
-  loadingAfterClick: PropTypes.bool,
-  loadingAfterClickMessage: PropTypes.string,
+  loadingMessage: PropTypes.string,
   tabIndex: PropTypes.number
 }
 

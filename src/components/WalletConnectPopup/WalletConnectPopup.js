@@ -2,9 +2,10 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Modal from '@material-ui/core/Modal'
 import WalletChoose from '../WalletChoose/WalletChoose'
+import WalletConnect from '../WalletConnect/WalletConnect'
 import WalletConnecting from '../WalletConnecting/WalletConnecting'
 import WalletConnected from '../WalletConnected/WalletConnected'
-import wallets from './Wallets'
+import { getAssetWallets } from '../../utils/wallets'
 
 import './WalletConnectPopup.css'
 
@@ -13,12 +14,18 @@ class WalletConnectPopup extends Component {
     super(props)
 
     this.chooseWallet = this.chooseWallet.bind(this)
+    this.connectWallet = this.connectWallet.bind(this)
     this.disconnectWallet = this.disconnectWallet.bind(this)
   }
 
   chooseWallet (wallet) {
     const { id, currency } = this.props
     this.props.chooseWallet(id, currency, wallet)
+  }
+
+  connectWallet (wallet) {
+    const { id, currency } = this.props
+    this.props.connectWallet(id, currency, wallet)
   }
 
   disconnectWallet () {
@@ -42,14 +49,22 @@ class WalletConnectPopup extends Component {
         />
 
       )
-    } else if (props.walletChosen) {
+    } else if (props.walletConnecting) {
       walletConnectBody = (
         <WalletConnecting
-          title={wallets[props.currency][props.wallet].connectTitle}
-          subtitle={wallets[props.currency][props.wallet].connectSubtitle}
           cancelText='Cancel'
           cancelWallet={this.disconnectWallet}
           currency={props.currency}
+          wallet={props.wallet} />
+      )
+    } else if (props.walletChosen) {
+      walletConnectBody = (
+        <WalletConnect
+          cancelText='Cancel'
+          title='Liquality'
+          onCancel={this.disconnectWallet}
+          currency={props.currency}
+          connectWallet={this.connectWallet}
           wallet={props.wallet} />
       )
     } else {
@@ -57,7 +72,7 @@ class WalletConnectPopup extends Component {
         <WalletChoose
           title='Liquality'
           subTitle=''
-          wallets={props.currency === 'eth' ? ['metamask'] : ['ledger']}
+          wallets={getAssetWallets(this.props.currency)}
           chooseWallet={this.chooseWallet}
           onCancel={this.props.handleClose}
           currency={props.currency} />

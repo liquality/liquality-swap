@@ -10,14 +10,12 @@ import CurrencyInputs from '../CurrencyInputs'
 import InitiatorExpirationInfo from '../InitiatorExpirationInfo'
 import WalletPanel from '../WalletPanel'
 import './SwapInitiation.css'
-import wallets from '../../utils/wallets'
 import { getInitiationErrors } from '../../utils/validation'
+import { APP_BASE_URL } from '../../utils/app-links'
 
 class SwapInitiation extends Component {
   render () {
-    const wallet = wallets[this.props.wallets.a.type]
-    const buttonLoadingMessage = wallet && `Confirm on ${wallet.name}`
-    const errors = getInitiationErrors(this.props.transactions, this.props.isVerified, this.props.isPartyB)
+    const errors = getInitiationErrors(this.props.transactions, this.props.expiration, this.props.isVerified, this.props.isPartyB)
 
     return <div className='SwapInitiation'>
       <SwapPairPanel
@@ -37,9 +35,11 @@ class SwapInitiation extends Component {
         { this.props.isPartyB
           ? <ExpirationDetails />
           : <InitiatorExpirationInfo /> }
-        {!errors.initiation && !this.props.isPartyB && <Button wide primary loadingAfterClick loadingAfterClickMessage={buttonLoadingMessage} onClick={this.props.initiateSwap}>Next</Button>}
-        {!errors.initiation && this.props.isPartyB && <Button wide primary loadingAfterClick loadingAfterClickMessage={buttonLoadingMessage} onClick={this.props.confirmSwap}>Confirm Terms</Button>}
-        {errors.initiation && <div class='SwapInitiation_errorMessage'>{errors.initiation}</div>}
+        {!errors.initiation && !this.props.isPartyB && <Button wide primary loadingMessage={this.props.loadingMessage} onClick={this.props.initiateSwap}>Initiate Swap</Button>}
+        {!errors.initiation && this.props.isPartyB && <Button wide primary loadingMessage={this.props.loadingMessage} onClick={this.props.confirmSwap}>Confirm Terms</Button>}
+        {errors.initiation && <Button primary disabled>{ errors.initiation }</Button>}<br />
+        {/* TODO: Do actual resetting of app state instead of refresh. */}
+        <Button wide link onClick={() => window.location.replace(APP_BASE_URL)}>{ this.props.isPartyB ? 'Abandon Swap' : 'Cancel' }</Button>
       </div>
     </div>
   }

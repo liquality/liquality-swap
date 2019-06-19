@@ -4,28 +4,29 @@ import moment from 'moment'
 const APP_BASE_URL = `${window.location.protocol}//${window.location.host}${window.location.pathname}`
 
 function generateLink (swap, counterparty = false) {
-  let assetA, assetB, walletA, walletB, transactionsA, transactionsB
-
+  let assetA, assetB, walletA, walletB, transactionsA, transactionsB, counterPartyA, counterPartyB
   if (counterparty) { // Switch around sides as this will be the state of the counter party
     ({ a: assetB, b: assetA } = swap.assets)
     ;({ a: walletB, b: walletA } = swap.wallets)
     ;({ a: transactionsB, b: transactionsA } = swap.transactions)
+    ;({ a: counterPartyB, b: counterPartyA } = swap.counterParty)
   } else {
     ({ a: assetA, b: assetB } = swap.assets)
     ;({ a: walletA, b: walletB } = swap.wallets)
     ;({ a: transactionsA, b: transactionsB } = swap.transactions)
+    ;({ a: counterPartyA, b: counterPartyB } = swap.counterParty)
   }
 
   const urlParams = {
     ccy1: assetA.currency,
     ccy1v: assetA.value,
-    ccy1Addr: counterparty ? swap.counterParty[assetA.currency].address : walletA.addresses[0],
-    ccy1CounterPartyAddr: counterparty ? walletA.addresses[0] : swap.counterParty[assetA.currency].address,
+    ccy1Addr: counterparty ? counterPartyA.address : walletA.addresses[0],
+    ccy1CounterPartyAddr: counterparty ? walletA.addresses[0] : counterPartyA.address,
 
     ccy2: assetB.currency,
     ccy2v: assetB.value,
-    ccy2Addr: counterparty ? swap.counterParty[assetB.currency].address : walletB.addresses[0],
-    ccy2CounterPartyAddr: counterparty ? walletB.addresses[0] : swap.counterParty[assetB.currency].address,
+    ccy2Addr: counterparty ? counterPartyB.address : walletB.addresses[0],
+    ccy2CounterPartyAddr: counterparty ? walletB.addresses[0] : counterPartyB.address,
 
     aFundHash: transactionsA.fund.hash,
     bFundHash: transactionsB.fund.hash,
@@ -39,7 +40,6 @@ function generateLink (swap, counterparty = false) {
 
     isPartyB: counterparty === true
   }
-
   return `${APP_BASE_URL}#${queryString.stringify(urlParams)}`
 }
 
@@ -57,8 +57,8 @@ function generateSwapState (location) {
       b: { addresses: [urlParams.ccy2Addr] }
     },
     counterParty: {
-      [urlParams.ccy1]: { address: urlParams.ccy1CounterPartyAddr },
-      [urlParams.ccy2]: { address: urlParams.ccy2CounterPartyAddr }
+      a: { address: urlParams.ccy1CounterPartyAddr },
+      b: { address: urlParams.ccy2CounterPartyAddr }
     },
     transactions: {
       a: { fund: { hash: urlParams.aFundHash, block: urlParams.aFundBlock }, claim: {} },

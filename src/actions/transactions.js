@@ -16,8 +16,9 @@ const types = {
 }
 
 async function setSecret (swap, party, tx, dispatch) {
-  const client = getClient(swap.assets[party === 'a' ? 'b' : 'a'].currency)
-  const secret = await client.getSwapSecret(tx.hash)
+  const currentParty = party === 'a' ? 'b' : 'a'
+  const client = getClient(swap.assets[currentParty].currency, swap.wallets[currentParty].type)
+  const secret = await client.swap.getSwapSecret(tx.hash)
   dispatch(secretActions.setSecret(secret))
 }
 
@@ -41,25 +42,30 @@ function setStep (transactions, isPartyB, dispatch) {
 }
 
 function setLocation (swap, currentLocation, dispatch) {
-  const canNavigate = currentLocation.pathname !== '/backupLink' && currentLocation.pathname !== '/refund'
-  if (canNavigate) {
-    const hasInitiated = swap.transactions.a.fund.hash && swap.transactions.a.fund.confirmations > 0
-    const canRefund = !swap.transactions.b.claim.hash || swap.transactions.b.claim.confirmations === 0
-    const swapExpiration = getFundExpiration(swap.expiration, swap.isPartyB ? 'b' : 'a').time
-    const swapExpired = moment().isAfter(swapExpiration)
-    if (hasInitiated && canRefund && swapExpired) {
+  // Do not navigate away from backup link
+  if (currentLocation.pathname === '/backupLink') return
+
+  const hasInitiated = swap.transactions.a.fund.hash && swap.transactions.a.fund.confirmations > 0
+  const hasRefunded = swap.transactions.a.refund && swap.transactions.a.refund.hash
+  const canRefund = !swap.transactions.b.claim.hash || swap.transactions.b.claim.confirmations === 0
+  const swapExpiration = getFundExpiration(swap.expiration, swap.isPartyB ? 'b' : 'a').time
+  const swapExpired = moment().isAfter(swapExpiration)
+  if (hasInitiated && canRefund && swapExpired) {
+    if (hasRefunded) {
+      dispatch(replace('/refunded'))
+    } else {
       dispatch(replace('/refund'))
-    } else if (swap.step === steps.AGREEMENT && currentLocation.pathname !== '/waiting') {
-      if (swap.isPartyB || swap.transactions.b.fund.hash) {
-        dispatch(replace('/waiting'))
-      } else {
-        dispatch(replace('/counterPartyLink'))
-      }
-    } else if (swap.step === steps.CLAIMING) {
-      dispatch(replace('/redeem'))
-    } else if (swap.step === steps.SETTLED) {
-      dispatch(replace('/completed'))
     }
+  } else if (swap.step === steps.AGREEMENT && currentLocation.pathname !== '/waiting') {
+    if (swap.isPartyB || swap.transactions.b.fund.hash) {
+      dispatch(replace('/waiting'))
+    } else {
+      dispatch(replace('/counterPartyLink'))
+    }
+  } else if (swap.step === steps.CLAIMING) {
+    dispatch(replace('/redeem'))
+  } else if (swap.step === steps.SETTLED) {
+    dispatch(replace('/completed'))
   }
 }
 
@@ -67,12 +73,20 @@ async function monitorTransaction (swap, party, kind, tx, dispatch, getState) {
   while (true) {
     let client
     if (kind === 'claim') {
-      client = getClient(swap.assets[party === 'a' ? 'b' : 'a'].currency)
+      const currentParty = party === 'a' ? 'b' : 'a'
+      client = getClient(swap.assets[currentParty].currency, swap.wallets[currentParty].type)
     } else if (kind === 'fund') {
-      client = getClient(swap.assets[party].currency)
+      client = getClient(swap.assets[party].currency, swap.wallets[party].type)
+    } else if (kind === 'refund') {
+      client = getClient(swap.assets[party].currency, swap.wallets[party].type)
     }
-    const updatedTransaction = await client.getTransactionByHash(tx.hash)
-    dispatch({ type: types.SET_TRANSACTION, party, kind, tx: updatedTransaction })
+    const updatedTransaction = await client.chain.getTransactionByHash(tx.hash)
+    if (updatedTransaction) {
+      dispatch({ type: types.SET_TRANSACTION, party, kind, tx: updatedTransaction })
+      if (kind === 'claim') {
+        await setSecret(swap, party, updatedTransaction, dispatch)
+      }
+    }
     let state = getState()
     setStep(state.swap.transactions, state.swap.isPartyB, dispatch)
     state = getState()
@@ -85,10 +99,6 @@ function setTransaction (party, kind, tx) {
   return async (dispatch, getState) => {
     dispatch({ type: types.SET_TRANSACTION, party, kind, tx })
     let swap = getState().swap
-    if (kind === 'claim') {
-      await setSecret(swap, party, tx, dispatch)
-    }
-    swap = getState().swap
     if (!swap.link) {
       const link = generateLink(getState().swap)
       dispatch(swapActions.setLink(link))
@@ -108,7 +118,9 @@ function loadTransactions () {
         'a.fund.hash',
         'b.fund.hash',
         'a.claim.hash',
-        'b.claim.hash'
+        'b.claim.hash',
+        'a.refund.hash',
+        'b.refund.hash'
       ]
       transactionPaths.forEach(path => {
         if (_.has(transactions, path)) {
@@ -122,6 +134,11 @@ function loadTransactions () {
       const swapState = getState().swap
       if (swapState.transactions.a.fund.hash && !swapState.transactions.b.claim.hash) {
         dispatch(swapActions.waitForSwapClaim())
+      }
+      const swapExpiration = getFundExpiration(swapState.expiration, swapState.isPartyB ? 'b' : 'a').time
+      const swapExpired = moment().isAfter(swapExpiration)
+      if (swapState.transactions.a.fund.hash && swapExpired) {
+        dispatch(swapActions.waitForSwapRefund())
       }
     }
   }

@@ -1,10 +1,10 @@
-import { errors } from '@liquality/chainabstractionlayer/dist/index.umd.js'
+import { NodeError, WalletError } from '@liquality/errors'
 import { store } from './store'
 import { actions as errorActions } from './actions/errors'
 
 function errorHandler (e) {
-  if (e instanceof errors.WalletError ||
-      e instanceof errors.NodeError) {
+  if (e instanceof WalletError ||
+      e instanceof NodeError) {
     store.dispatch(errorActions.setError(e))
   } else {
     throw e

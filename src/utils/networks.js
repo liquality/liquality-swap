@@ -1,14 +1,18 @@
-import { providers } from '@liquality/chainabstractionlayer/dist/index.umd.js'
+import BitcoinNetworks from '@liquality/bitcoin-networks'
+import EthereumNetworks from '@liquality/ethereum-networks'
 import config from '../config'
 
-const networksByCurrency = {
-  btc: providers.bitcoin.networks,
-  eth: providers.ethereum.networks
+const networksMap = {
+  btc: BitcoinNetworks,
+  eth: EthereumNetworks,
+  erc20: EthereumNetworks
 }
 
-function getNetworkByCurrency (currency) {
-  const networkId = config[currency].network
-  return networksByCurrency[currency][networkId]
+function getNetworkByCurrency (asset) {
+  const assetConfig = config.assets[asset]
+  const networkId = assetConfig.network
+  const networks = networksMap[asset] || networksMap[assetConfig.type]
+  return networks[networkId]
 }
 
 export { getNetworkByCurrency }
