@@ -1,3 +1,5 @@
+/* global alert */
+
 import { replace } from 'connected-react-router'
 import watch from 'redux-watch'
 import { store } from '../store'
@@ -151,6 +153,9 @@ async function lockFunds (dispatch, getState) {
     console.log('Initiating Swap', initiateSwapParams)
   }
   const txHash = await client.swap.initiateSwap(...initiateSwapParams)
+  if (wallets.a.type === 'metamask') { // TODO: fix properly
+    alert('Please do not use the "Speed up" function to bump the priority of the transaction as this is not yet supported.')
+  }
   dispatch(transactionActions.setTransaction('a', 'fund', { hash: txHash, block }))
 }
 
