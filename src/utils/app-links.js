@@ -50,7 +50,8 @@ function generateSwapState (location) {
   return {
     assets: {
       a: { currency: urlParams.ccy1, value: parseFloat(urlParams.ccy1v) },
-      b: { currency: urlParams.ccy2, value: parseFloat(urlParams.ccy2v) }
+      b: { currency: urlParams.ccy2, value: parseFloat(urlParams.ccy2v) },
+      rate: urlParams.rate ? urlParams.rate : undefined
     },
     wallets: {
       a: { addresses: [urlParams.ccy1Addr] },

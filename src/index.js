@@ -4,6 +4,7 @@ import './index.css'
 import App from './App'
 import { unregister as unregisterServiceWorker } from './registerServiceWorker'
 import config from './config'
+import { registerProtocolHandler } from './utils/protocolHandler'
 
 function addScript (code) {
   const script = document.createElement('script')
@@ -27,3 +28,5 @@ addScript(config.injectScript)
 ReactDOM.render(isMobileOrTablet() ? <MobileView /> : <App />, document.getElementById('root'))
 
 unregisterServiceWorker() // Incase anyone has it
+
+registerProtocolHandler()
