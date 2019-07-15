@@ -76,7 +76,7 @@ class LiqualitySwap extends Component {
       <div className='LiqualitySwap_main'>
         <div className='LiqualitySwap_wave' />
         <div className='LiqualitySwap_wrapper'>
-          <Route exact path='/' component={this.props.swap.isPartyB ? SwapInitiation : AssetSelection} />
+          <Route exact path='/' component={this.props.swap.link ? SwapInitiation : AssetSelection} />
           <Route path='/walletA' render={() => { return this.getConnectWallet('a') }} />
           <Route path='/walletB' render={() => { return this.getConnectWallet('b') }} />
           <Route path='/initiation' component={SwapInitiation} />
