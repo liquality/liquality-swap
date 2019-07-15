@@ -8,7 +8,7 @@ function registerProtocolHandler () {
 function handleProtocolURI () {
   if (window.location.hash.includes('uri=')) {
     const protocolUri = decodeURIComponent(window.location.hash.replace('#uri=', ''))
-    const uri = protocolUri.replace('web+swap://', '')
+    const uri = protocolUri.replace('web+swap:', '')
     const urlParams = queryString.parse(uri)
     const swapState = {
       ccy1: urlParams.from,
