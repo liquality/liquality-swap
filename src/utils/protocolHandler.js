@@ -11,8 +11,8 @@ function handleProtocolURI () {
     const uri = protocolUri.replace('web+swap:', '')
     const urlParams = queryString.parse(uri)
     const swapState = {
-      ccy1: urlParams.from,
-      ccy2: urlParams.to,
+      ccy1: urlParams.from.toLowerCase(),
+      ccy2: urlParams.to.toLowerCase(),
       rate: urlParams.rate,
       ccy1CounterPartyAddr: urlParams.fromCounterPartyAddress,
       ccy2CounterPartyAddr: urlParams.toCounterPartyAddress
