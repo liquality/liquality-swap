@@ -65,9 +65,9 @@ async function ensureWallet (party, dispatch, getState) {
     wallets,
     assets
   } = getState().swap
-  const client = getClient(assets[party].currency, wallets[party].type)
+  const client = wallets[party].type ? getClient(assets[party].currency, wallets[party].type) : null
   const walletSet = wallets[party].connected
-  const walletAvailable = await client.wallet.isWalletAvailable()
+  const walletAvailable = client ? await client.wallet.isWalletAvailable() : false
   const w = watch(store.getState, `swap.wallets.${party}`)
 
   return new Promise((resolve) => {

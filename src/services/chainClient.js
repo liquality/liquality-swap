@@ -2,6 +2,7 @@
 
 import Client from '@liquality/client'
 import BitcoinBitcoreRpcProvider from '@liquality/bitcoin-bitcore-rpc-provider'
+import BitcoinRpcProvider from '@liquality/bitcoin-rpc-provider'
 import BitcoinLedgerProvider from '@liquality/bitcoin-ledger-provider'
 import BitcoinSwapProvider from '@liquality/bitcoin-swap-provider'
 import BitcoinJsLibSwapProvider from '@liquality/bitcoin-bitcoinjs-lib-swap-provider'
@@ -20,12 +21,6 @@ import config from '../config'
 function createBtcClient (asset, wallet) {
   const btcConfig = config.assets.btc
   const btcClient = new Client()
-  btcClient.addProvider(new BitcoinBitcoreRpcProvider(
-    btcConfig.rpc.url,
-    btcConfig.rpc.username,
-    btcConfig.rpc.password,
-    btcConfig.feeNumberOfBlocks
-  ))
   if (wallet === 'bitcoin_ledger') {
     const ledger = new BitcoinLedgerProvider({network: BitcoinNetworks[btcConfig.network]})
 
@@ -33,13 +28,16 @@ function createBtcClient (asset, wallet) {
       ledger.useWebBle()
     }
 
+    btcClient.addProvider(new BitcoinBitcoreRpcProvider(btcConfig.rpc.url, btcConfig.rpc.username, btcConfig.rpc.password, btcConfig.feeNumberOfBlocks))
     btcClient.addProvider(ledger)
     btcClient.addProvider(new BitcoinSwapProvider({network: BitcoinNetworks[btcConfig.network]}))
   } else if (wallet === 'bitcoin_node') {
+    btcClient.addProvider(new BitcoinRpcProvider(btcConfig.rpc.url, btcConfig.rpc.username, btcConfig.rpc.password, btcConfig.feeNumberOfBlocks))
     btcClient.addProvider(new BitcoinJsLibSwapProvider({network: BitcoinNetworks[btcConfig.network]}))
   } else {
     // Verify functions required when wallet not connected
-    btcClient.addProvider(new BitcoinSwapProvider({network: BitcoinNetworks[btcConfig.network]}))
+    btcClient.addProvider(new BitcoinRpcProvider(btcConfig.rpc.url, btcConfig.rpc.username, btcConfig.rpc.password, btcConfig.feeNumberOfBlocks))
+    btcClient.addProvider(new BitcoinJsLibSwapProvider({network: BitcoinNetworks[btcConfig.network]}))
   }
   return btcClient
 }
