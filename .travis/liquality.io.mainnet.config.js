@@ -26,6 +26,14 @@ export default {
       },
       contractAddress: '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359',
       network: 'mainnet'
+    },
+    usdt: {
+      type: 'erc20',
+      rpc: {
+        url: 'https://mainnet.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
+      },
+      contractAddress: '0xdac17f958d2ee523a2206206994597c13d831ec7',
+      network: 'mainnet'
     }
   },
   injectScript: `
