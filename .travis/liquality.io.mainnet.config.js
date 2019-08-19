@@ -11,10 +11,8 @@ export default {
       network: 'mainnet'
     },
     btc: {
-      rpc: {
-        username: 'liquality',
-        password: 'liquality123',
-        url: 'https://liquality.io/bitcoinrpc/'
+      api: {
+        url: 'https://blockstream.info/testnet/api'
       },
       feeNumberOfBlocks: 2,
       network: 'bitcoin'

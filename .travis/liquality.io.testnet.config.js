@@ -11,10 +11,8 @@ export default {
       network: 'rinkeby'
     },
     btc: {
-      rpc: {
-        username: 'bitcoin',
-        password: 'local321',
-        url: 'https://liquality.io/bitcointestnetrpc/'
+      api: {
+        url: 'https://blockstream.info/testnet/api'
       },
       feeNumberOfBlocks: 2,
       network: 'bitcoin_testnet'
