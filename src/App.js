@@ -22,7 +22,9 @@ window.addEventListener('error', errorHandler)
 window.addEventListener('unhandledrejection', e => errorHandler(e.reason))
 
 if (initialAppState.swap) {
-  store.dispatch(transactionActions.loadTransactions())
+  store.dispatch(transactionActions.setTransaction(
+    'a', 'fund', initialAppState.swap.transactions.a.fund
+  ))
   if (initialAppState.swap.isPartyB) {
     // Need to use action to kick off tx monitoring
     store.dispatch(transactionActions.setTransaction(

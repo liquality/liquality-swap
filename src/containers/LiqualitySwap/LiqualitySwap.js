@@ -36,7 +36,7 @@ class LiqualitySwap extends Component {
 
   getCounterPartyLinkCard () {
     const link = generateLink(this.props.swap, true)
-    return <CounterPartyLinkCard link={link} onNextClick={() => { this.props.waitForSwapConfirmation() }} />
+    return <CounterPartyLinkCard link={link} onNextClick={() => { this.props.history.replace('/waiting') }} />
   }
 
   getConnectWallet (currentWallet) {
