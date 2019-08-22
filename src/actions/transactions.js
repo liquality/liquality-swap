@@ -1,5 +1,4 @@
 import { replace } from 'connected-react-router'
-import _ from 'lodash'
 import moment from 'moment'
 import config from '../config'
 import { actions as swapActions } from './swap'
@@ -9,10 +8,10 @@ import { getClient } from '../services/chainClient'
 import { sleep } from '../utils/async'
 import { getFundExpiration } from '../utils/expiration'
 import { generateLink } from '../utils/app-links'
-import storage from '../utils/storage'
 
 const types = {
-  SET_TRANSACTION: 'SET_TRANSACTION'
+  SET_TRANSACTION: 'SET_TRANSACTION',
+  SET_START_BLOCK: 'SET_START_BLOCK'
 }
 
 async function setSecret (swap, party, tx, dispatch) {
@@ -50,18 +49,17 @@ function setLocation (swap, currentLocation, dispatch) {
   const canRefund = !swap.transactions.b.claim.hash || swap.transactions.b.claim.confirmations === 0
   const swapExpiration = getFundExpiration(swap.expiration, swap.isPartyB ? 'b' : 'a').time
   const swapExpired = moment().isAfter(swapExpiration)
-  if (hasInitiated && canRefund && swapExpired) {
+
+  if (hasInitiated && swapExpired) {
     if (hasRefunded) {
       dispatch(replace('/refunded'))
-    } else {
+    } else if (canRefund) {
       dispatch(replace('/refund'))
     }
   } else if (swap.step === steps.AGREEMENT && currentLocation.pathname !== '/waiting') {
-    if (swap.isPartyB || swap.transactions.b.fund.hash) {
-      dispatch(replace('/waiting'))
-    } else {
-      dispatch(replace('/counterPartyLink'))
-    }
+    if (swap.isPartyB) dispatch(replace('/waiting'))
+    else if (swap.transactions.b.fund.hash) dispatch(replace('/waiting'))
+    else dispatch(replace('/counterPartyLink'))
   } else if (swap.step === steps.CLAIMING) {
     dispatch(replace('/redeem'))
   } else if (swap.step === steps.SETTLED) {
@@ -99,54 +97,28 @@ function setTransaction (party, kind, tx) {
   return async (dispatch, getState) => {
     dispatch({ type: types.SET_TRANSACTION, party, kind, tx })
     let swap = getState().swap
-    if (!swap.link) {
-      const link = generateLink(getState().swap)
-      dispatch(swapActions.setLink(link))
+    const link = generateLink(getState().swap)
+    dispatch(swapActions.setLink(link))
+    if (tx.hash) { // Only start monitoring when a hash is available
+      swap = getState().swap
+      if (party === 'a' && kind === 'fund') {
+        dispatch(swapActions.waitForSwapConfirmation())
+        dispatch(swapActions.waitForSwapClaim('a'))
+        dispatch(swapActions.waitForSwapClaim('b'))
+        dispatch(swapActions.waitForSwapRefund())
+      }
+      await monitorTransaction(swap, party, kind, tx, dispatch, getState)
     }
-    swap = getState().swap
-    storage.update({ transactions: { [party]: { [kind]: { hash: tx.hash } } } })
-    await monitorTransaction(swap, party, kind, tx, dispatch, getState)
   }
 }
 
-function loadTransactions () {
-  return async (dispatch, getState) => {
-    const data = storage.get()
-    if (data && data.transactions) {
-      const transactions = data.transactions
-      const transactionPaths = [
-        'a.fund.hash',
-        'b.fund.hash',
-        'a.claim.hash',
-        'b.claim.hash',
-        'a.refund.hash',
-        'b.refund.hash'
-      ]
-      transactionPaths.forEach(path => {
-        if (_.has(transactions, path)) {
-          const parts = path.split('.')
-          const party = parts[0]
-          const kind = parts[1]
-          const txHash = _.get(transactions, path)
-          dispatch(setTransaction(party, kind, { hash: txHash }))
-        }
-      })
-      const swapState = getState().swap
-      if (swapState.transactions.a.fund.hash && !swapState.transactions.b.claim.hash) {
-        dispatch(swapActions.waitForSwapClaim())
-      }
-      const swapExpiration = getFundExpiration(swapState.expiration, swapState.isPartyB ? 'b' : 'a').time
-      const swapExpired = moment().isAfter(swapExpiration)
-      if (swapState.transactions.a.fund.hash && swapExpired) {
-        dispatch(swapActions.waitForSwapRefund())
-      }
-    }
-  }
+function setStartBlock (party, blockNumber) {
+  return { type: types.SET_START_BLOCK, party, blockNumber }
 }
 
 const actions = {
   setTransaction,
-  loadTransactions
+  setStartBlock
 }
 
 export { types, actions }

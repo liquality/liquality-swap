@@ -1,4 +1,4 @@
-/* global alert */
+/* global alert, localStorage */
 
 import { replace } from 'connected-react-router'
 import watch from 'redux-watch'
@@ -37,6 +37,7 @@ function setExpiration (expiration) {
 }
 
 function setLink (link) {
+  localStorage.setItem(link, '')
   return { type: types.SET_LINK, link }
 }
 
@@ -140,7 +141,7 @@ async function lockFunds (dispatch, getState) {
 
   const swapExpiration = isPartyB ? getFundExpiration(expiration, 'b').time : expiration
 
-  const block = await client.chain.getBlockHeight()
+  const blockNumber = await client.chain.getBlockHeight()
   const valueInUnit = cryptoassets[assets.a.currency].currencyToUnit(assets.a.value)
   const initiateSwapParams = [
     valueInUnit,
@@ -156,7 +157,8 @@ async function lockFunds (dispatch, getState) {
   if (wallets.a.type === 'metamask') { // TODO: fix properly
     alert('Please do not use the "Speed up" function to bump the priority of the transaction as this is not yet supported.')
   }
-  dispatch(transactionActions.setTransaction('a', 'fund', { hash: txHash, block }))
+  dispatch(transactionActions.setTransaction('a', 'fund', { hash: txHash }))
+  dispatch(transactionActions.setStartBlock('a', blockNumber))
 }
 
 async function withLoadingMessage (party, dispatch, getState, func) {
@@ -170,6 +172,16 @@ async function withLoadingMessage (party, dispatch, getState, func) {
   }
 }
 
+async function setCounterPartyStartBlock (dispatch, getState) {
+  const {
+    assets: { b: { currency } },
+    wallets: { b: { type } }
+  } = getState().swap
+  const client = getClient(currency, type)
+  const blockNumber = await client.chain.getBlockHeight()
+  dispatch(transactionActions.setStartBlock('b', blockNumber))
+}
+
 function initiateSwap () {
   return async (dispatch, getState) => {
     dispatch(showErrors())
@@ -181,6 +193,7 @@ function initiateSwap () {
     await withLoadingMessage('a', dispatch, getState, async () => {
       await lockFunds(dispatch, getState)
     })
+    await setCounterPartyStartBlock(dispatch, getState)
     dispatch(setIsVerified(true))
     dispatch(replace('/backupLink'))
   }
@@ -193,7 +206,6 @@ function confirmSwap () {
     const initiateValid = isInitiateValid(getState().swap)
     if (!initiateValid) return
     await withLoadingMessage('a', dispatch, getState, lockFunds)
-    dispatch(waitForSwapClaim())
     dispatch(replace('/backupLink'))
   }
 }
@@ -223,29 +235,29 @@ async function verifyInitiateSwapTransaction (dispatch, getState) {
   }
 }
 
-async function findInitiateSwapTransaction (dispatch, getState) {
+async function findInitiateSwapTransaction (party, dispatch, getState) {
   const {
-    assets: { b: { currency, value } },
-    wallets: { b: { addresses, type } },
+    assets: { [party]: { currency, value } },
+    wallets: { [party]: { addresses, type } },
+    transactions: { [party]: { fund: { blockNumber: fundBlock } } },
     counterParty,
     secretParams,
     expiration
   } = getState().swap
   const client = getClient(currency, type)
   const valueInUnit = cryptoassets[currency].currencyToUnit(value)
-  const swapExpiration = getFundExpiration(expiration, 'b').time
-  const initiateTransaction = await client.swap.findInitiateSwapTransaction(valueInUnit, addresses[0], counterParty.b.address, secretParams.secretHash, swapExpiration.unix())
-  dispatch(transactionActions.setTransaction('b', 'fund', initiateTransaction))
+  const swapExpiration = getFundExpiration(expiration, party).time
+  const initiateTransaction = await client.swap.findInitiateSwapTransaction(valueInUnit, addresses[0], counterParty[party].address, secretParams.secretHash, swapExpiration.unix(), fundBlock)
+  dispatch(transactionActions.setTransaction(party, 'fund', initiateTransaction))
 }
 
 function waitForSwapConfirmation () {
   return async (dispatch, getState) => {
-    dispatch(replace('/waiting'))
-    await findInitiateSwapTransaction(dispatch, getState)
+    await findInitiateSwapTransaction('b', dispatch, getState)
   }
 }
 
-function waitForSwapClaim () {
+function waitForSwapClaim (party) {
   return async (dispatch, getState) => {
     const {
       assets,
@@ -253,13 +265,14 @@ function waitForSwapClaim () {
       transactions,
       counterParty,
       secretParams,
-      expiration,
-      isPartyB
+      expiration
     } = getState().swap
-    const client = getClient(assets.a.currency, wallets.a.type)
-    const swapExpiration = getFundExpiration(expiration, isPartyB ? 'b' : 'a').time
-    const claimTransaction = await client.swap.findClaimSwapTransaction(transactions.a.fund.hash, counterParty.a.address, wallets.a.addresses[0], secretParams.secretHash, swapExpiration.unix())
-    dispatch(transactionActions.setTransaction('b', 'claim', claimTransaction))
+    const client = getClient(assets[party].currency, wallets[party].type)
+    const swapExpiration = getFundExpiration(expiration, party).time
+    const startBlock = transactions[party].startBlock
+    const claimTransaction = await client.swap.findClaimSwapTransaction(transactions[party].fund.hash, counterParty[party].address, wallets[party].addresses[0], secretParams.secretHash, swapExpiration.unix(), startBlock)
+    const oppositeParty = party === 'a' ? 'b' : 'a'
+    dispatch(transactionActions.setTransaction(oppositeParty, 'claim', claimTransaction))
   }
 }
 
@@ -275,8 +288,9 @@ function waitForSwapRefund () {
       isPartyB
     } = getState().swap
     const client = getClient(assets.a.currency, wallets.a.type)
-    const swapExpiration = getFundExpiration(expiration, isPartyB ? 'a' : 'b').time
-    const refundTransaction = await client.swap.findRefundSwapTransaction(transactions.a.fund.hash, counterParty.a.address, wallets.a.addresses[0], secretParams.secretHash, swapExpiration.unix())
+    const swapExpiration = isPartyB ? getFundExpiration(expiration, 'b').time : expiration
+    const startBlock = transactions.a.startBlock
+    const refundTransaction = await client.swap.findRefundSwapTransaction(transactions.a.fund.hash, counterParty.a.address, wallets.a.addresses[0], secretParams.secretHash, swapExpiration.unix(), startBlock)
     dispatch(transactionActions.setTransaction('a', 'refund', refundTransaction))
   }
 }
@@ -292,7 +306,7 @@ async function unlockFunds (dispatch, getState) {
     expiration
   } = getState().swap
   const client = getClient(assets.b.currency, wallets.b.type)
-  const block = await client.chain.getBlockHeight()
+  const blockNumber = await client.chain.getBlockHeight()
   const swapExpiration = getClaimExpiration(expiration, isPartyB ? 'b' : 'a').time
   const claimSwapParams = [
     transactions.b.fund.hash,
@@ -305,7 +319,7 @@ async function unlockFunds (dispatch, getState) {
     console.log('Claiming Swap', claimSwapParams)
   }
   const txHash = await client.swap.claimSwap(...claimSwapParams)
-  dispatch(transactionActions.setTransaction('a', 'claim', { hash: txHash, block }))
+  dispatch(transactionActions.setTransaction('a', 'claim', { hash: txHash, blockNumber }))
 }
 
 function redeemSwap () {
@@ -332,16 +346,18 @@ function refundSwap () {
 
     const client = getClient(assets.a.currency, wallets.a.type)
     const swapExpiration = getFundExpiration(expiration, isPartyB ? 'b' : 'a').time
-    const block = await client.chain.getBlockHeight()
+    const blockNumber = await client.chain.getBlockHeight()
+    const refundSwapParams = [
+      transactions.a.fund.hash,
+      counterParty.a.address,
+      wallets.a.addresses[0],
+      secretParams.secretHash,
+      swapExpiration.unix()
+    ]
+    console.log('Refunding Swap', refundSwapParams)
     await withLoadingMessage('a', dispatch, getState, async () => {
-      const refundTxHash = await client.swap.refundSwap(
-        transactions.a.fund.hash,
-        counterParty.a.address,
-        wallets.a.addresses[0],
-        secretParams.secretHash,
-        swapExpiration.unix()
-      )
-      dispatch(transactionActions.setTransaction('a', 'refund', { hash: refundTxHash, block }))
+      const refundTxHash = await client.swap.refundSwap(...refundSwapParams)
+      dispatch(transactionActions.setTransaction('a', 'refund', { hash: refundTxHash, blockNumber }))
     })
   }
 }
