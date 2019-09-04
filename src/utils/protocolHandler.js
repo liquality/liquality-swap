@@ -14,8 +14,11 @@ function handleProtocolURI () {
       ccy1: urlParams.from.toLowerCase(),
       ccy2: urlParams.to.toLowerCase(),
       rate: urlParams.rate,
+      ccy1v: urlParams.fromAmount,
+      ccy2v: urlParams.toAmount,
       ccy1CounterPartyAddr: urlParams.fromCounterPartyAddress,
-      ccy2CounterPartyAddr: urlParams.toCounterPartyAddress
+      ccy2CounterPartyAddr: urlParams.toCounterPartyAddress,
+      initiationCallback: urlParams.initiationCallback
     }
     window.history.replaceState(null, null, `#${queryString.stringify(swapState)}`)
   }

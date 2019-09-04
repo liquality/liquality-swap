@@ -72,6 +72,7 @@ function generateSwapState (location) {
     },
     expiration: moment.unix(urlParams.expiration),
     isPartyB: urlParams.isPartyB === 'true',
+    initiationCallback: urlParams.initiationCallback,
     link: location.href
   }
 }

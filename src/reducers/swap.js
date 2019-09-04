@@ -35,5 +35,6 @@ export default combineReducers({
   loadingMessage: (state = null, action) => {
     return action.type === types.SET_LOADING_MESSAGE ? action.loadingMessage : state
   },
+  initiationCallback: (state = null) => state,
   isPartyB: (state = false) => state
 })

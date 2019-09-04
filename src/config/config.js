@@ -2,26 +2,27 @@ export default {
   assets: {
     eth: {
       rpc: {
-        url: 'http://localhost:8545'
-      },
-      network: 'rinkeby'
+        url: 'http://localhost:7545'
+      }
     },
     midman: {
       type: 'erc20',
       rpc: {
-        url: 'http://localhost:8545'
+        url: 'http://localhost:7545'
       },
-      contractAddress: '0x422950598Eb23877deAfF346dA0550Aa53482156', // Local ERC20 contract (18 decimals),
-      network: 'rinkeby'
+      contractAddress: '0x422950598Eb23877deAfF346dA0550Aa53482156'
     },
     btc: {
       rpc: {
         username: 'bitcoin',
         password: 'local321',
-        url: 'http://localhost:18332'
+        url: 'http://localhost:17772'
       },
-      network: 'bitcoin_testnet',
-      feeNumberOfBlocks: 2
+      api: {
+        url: 'https://blockstream.info/testnet/api'
+      },
+      network: 'bitcoin_regtest',
+      feeNumberOfBlocks: 9
     }
   },
   debug: true,

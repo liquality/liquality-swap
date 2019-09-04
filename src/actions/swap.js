@@ -13,6 +13,7 @@ import { wallets as walletsConfig } from '../utils/wallets'
 import { sleep } from '../utils/async'
 import { getFundExpiration, getClaimExpiration, generateExpiration } from '../utils/expiration'
 import { isInitiateValid } from '../utils/validation'
+import Axios from 'axios';
 
 const types = {
   SWITCH_SIDES: 'SWITCH_SIDES',
@@ -182,6 +183,34 @@ async function setCounterPartyStartBlock (dispatch, getState) {
   dispatch(transactionActions.setStartBlock('b', blockNumber))
 }
 
+function sendCallback() {
+  return async (dispatch, getState) => {
+    const {
+      assets,
+      wallets,
+      transactions,
+      counterParty,
+      secretParams,
+      expiration,
+      isPartyB,
+      initiationCallback
+    } = getState().swap
+    const client = getClient(assets.a.currency, wallets.a.type)
+
+    const swapExpiration = isPartyB ? getFundExpiration(expiration, 'b').time : expiration
+
+    const blockNumber = await client.chain.getBlockHeight()
+    Axios.post(initiationCallback, {
+      amount: assets.a.value,
+      fromAddress: wallets.a.addresses[0],
+      toAddress: wallets.b.addresses[0],
+      fromFundHash: transactions.a.fund.hash,
+      secretHash: secretParams.secretHash,
+      swapExpiration: swapExpiration.unix()
+    })
+  }
+}
+
 function initiateSwap () {
   return async (dispatch, getState) => {
     dispatch(showErrors())
@@ -194,6 +223,7 @@ function initiateSwap () {
       await lockFunds(dispatch, getState)
     })
     await setCounterPartyStartBlock(dispatch, getState)
+    dispatch(sendCallback())
     dispatch(setIsVerified(true))
     dispatch(replace('/backupLink'))
   }
