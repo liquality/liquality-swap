@@ -113,7 +113,11 @@ function setTransaction (party, kind, tx) {
 }
 
 function setStartBlock (party, blockNumber) {
-  return { type: types.SET_START_BLOCK, party, blockNumber }
+  return async (dispatch, getState) => {
+    dispatch({type: types.SET_START_BLOCK, party, blockNumber})
+    const link = generateLink(getState().swap)
+    dispatch(swapActions.setLink(link))
+  }
 }
 
 const actions = {
