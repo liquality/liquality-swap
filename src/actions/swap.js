@@ -239,7 +239,7 @@ async function findInitiateSwapTransaction (party, dispatch, getState) {
   const {
     assets: { [party]: { currency, value } },
     wallets: { [party]: { addresses, type } },
-    transactions: { [party]: { fund: { blockNumber: fundBlock } } },
+    transactions: { [party]: { startBlock } },
     counterParty,
     secretParams,
     expiration
@@ -247,7 +247,7 @@ async function findInitiateSwapTransaction (party, dispatch, getState) {
   const client = getClient(currency, type)
   const valueInUnit = cryptoassets[currency].currencyToUnit(value)
   const swapExpiration = getFundExpiration(expiration, party).time
-  const initiateTransaction = await client.swap.findInitiateSwapTransaction(valueInUnit, addresses[0], counterParty[party].address, secretParams.secretHash, swapExpiration.unix(), fundBlock)
+  const initiateTransaction = await client.swap.findInitiateSwapTransaction(valueInUnit, addresses[0], counterParty[party].address, secretParams.secretHash, swapExpiration.unix(), startBlock)
   dispatch(transactionActions.setTransaction(party, 'fund', initiateTransaction))
 }
 
