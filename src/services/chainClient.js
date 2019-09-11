@@ -30,22 +30,22 @@ function createBtcClient (asset, wallet) {
   const btcConfig = config.assets.btc
   const btcClient = new Client()
   if (wallet === 'bitcoin_ledger') {
-    const ledger = new BitcoinLedgerProvider({network: BitcoinNetworks[btcConfig.network]})
+    const ledger = new BitcoinLedgerProvider({network: BitcoinNetworks[btcConfig.network]}, btcConfig.addressType)
 
     if (window.useWebBle || localStorage.useWebBle) {
       ledger.useWebBle()
     }
     btcClient.addProvider(getBitcoinDataProvider(btcConfig))
     btcClient.addProvider(ledger)
-    btcClient.addProvider(new BitcoinSwapProvider({network: BitcoinNetworks[btcConfig.network]}))
+    btcClient.addProvider(new BitcoinSwapProvider({network: BitcoinNetworks[btcConfig.network]}, btcConfig.swapMode))
   } else if (wallet === 'bitcoin_node') {
     btcClient.addProvider(new BitcoinRpcProvider(btcConfig.rpc.url, btcConfig.rpc.username, btcConfig.rpc.password, btcConfig.feeNumberOfBlocks))
-    btcClient.addProvider(new BitcoinNodeWalletProvider(BitcoinNetworks[btcConfig.network], btcConfig.rpc.url, btcConfig.rpc.username, btcConfig.rpc.password))
-    btcClient.addProvider(new BitcoinSwapProvider({network: BitcoinNetworks[btcConfig.network]}))
+    btcClient.addProvider(new BitcoinNodeWalletProvider(BitcoinNetworks[btcConfig.network], btcConfig.rpc.url, btcConfig.rpc.username, btcConfig.rpc.password, btcConfig.addressType))
+    btcClient.addProvider(new BitcoinSwapProvider({network: BitcoinNetworks[btcConfig.network]}, btcConfig.swapMode))
   } else {
     // Verify functions required when wallet not connected
     btcClient.addProvider(getBitcoinDataProvider(btcConfig))
-    btcClient.addProvider(new BitcoinSwapProvider({network: BitcoinNetworks[btcConfig.network]}))
+    btcClient.addProvider(new BitcoinSwapProvider({network: BitcoinNetworks[btcConfig.network]}, btcConfig.swapMode))
   }
   return btcClient
 }
