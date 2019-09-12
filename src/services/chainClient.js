@@ -28,6 +28,11 @@ function getBitcoinDataProvider (btcConfig) {
 
 function createBtcClient (asset, wallet) {
   const btcConfig = config.assets.btc
+
+  if (btcConfig.addressType === 'p2sh-segwit') {
+    throw new Error('Wrapped segwit addresses (p2sh-segwit) are currently unsupported.')
+  }
+
   const btcClient = new Client()
   if (wallet === 'bitcoin_ledger') {
     const ledger = new BitcoinLedgerProvider({network: BitcoinNetworks[btcConfig.network]}, btcConfig.addressType)
