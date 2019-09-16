@@ -20,7 +20,9 @@ export default {
         password: 'local321',
         url: 'http://localhost:18332'
       },
-      network: 'bitcoin_testnet',
+      network: 'bitcoin_regtest',
+      addressType: 'bech32',
+      swapMode: 'p2wsh',
       feeNumberOfBlocks: 2
     }
   },
