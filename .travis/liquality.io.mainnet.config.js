@@ -12,7 +12,7 @@ export default {
     },
     btc: {
       api: {
-        url: 'https://blockstream.info/testnet/api'
+        url: 'https://blockstream.info/api'
       },
       feeNumberOfBlocks: 2,
       network: 'bitcoin'
