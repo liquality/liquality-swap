@@ -15,7 +15,7 @@ class CurrencyInputs extends Component {
           <CurrencyInput
             currency={assetA.currency}
             value={assetA.value}
-            disabled={this.props.disabled}
+            disabled={this.props.inputsDisabled}
             error={errors.assetA}
             onChange={newValue => this.props.onAmountChange('a', newValue)}
             tabIndex={1} />
@@ -24,7 +24,7 @@ class CurrencyInputs extends Component {
           <CurrencyInput
             currency={assetB.currency}
             value={assetB.value}
-            disabled={this.props.disabled}
+            disabled={this.props.inputsDisabled}
             error={errors.assetB}
             onChange={newValue => this.props.onAmountChange('b', newValue)}
             tabIndex={3} />
@@ -35,7 +35,7 @@ class CurrencyInputs extends Component {
               currencyA={assetA.currency}
               currencyB={assetB.currency}
               value={assetRate}
-              disabled={this.props.disabled}
+              disabled={this.props.rateDisabled}
               error={errors.rate}
               onChange={newValueA => this.props.onRateChange(newValueA)}
               tabIndex={2}
@@ -48,7 +48,8 @@ class CurrencyInputs extends Component {
 }
 
 CurrencyInputs.propTypes = {
-  disabled: PropTypes.bool,
+  inputsDisabled: PropTypes.bool,
+  rateDisabled: PropTypes.bool,
   showRate: PropTypes.bool
 }
 

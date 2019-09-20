@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
 
+import CounterPartySelection from '../CounterPartySelection'
 import AssetSelection from '../AssetSelection'
 import SwapInitiation from '../SwapInitiation'
 import CounterPartyLinkCard from '../../components/CounterPartyLinkCard/CounterPartyLinkCard'
@@ -27,6 +28,18 @@ class LiqualitySwap extends Component {
     this.getCounterPartyLinkCard = this.getCounterPartyLinkCard.bind(this)
     this.getBackupLinkCard = this.getBackupLinkCard.bind(this)
     this.getConnectWallet = this.getConnectWallet.bind(this)
+  }
+
+  getStartingScreen () {
+    if (this.props.swap.link) {
+      return <SwapInitiation />
+    } else {
+      if (config.hostAgent) {
+        return <CounterPartySelection />
+      } else {
+        return <AssetSelection />
+      }
+    }
   }
 
   getBackupLinkCard () {
@@ -76,7 +89,8 @@ class LiqualitySwap extends Component {
       <div className='LiqualitySwap_main'>
         <div className='LiqualitySwap_wave' />
         <div className='LiqualitySwap_wrapper'>
-          <Route exact path='/' component={this.props.swap.link ? SwapInitiation : AssetSelection} />
+          <Route exact path='/' render={this.getStartingScreen.bind(this)} />
+          <Route path='/assetSelection' component={AssetSelection} />
           <Route path='/walletA' render={() => { return this.getConnectWallet('a') }} />
           <Route path='/walletB' render={() => { return this.getConnectWallet('b') }} />
           <Route path='/initiation' component={SwapInitiation} />
