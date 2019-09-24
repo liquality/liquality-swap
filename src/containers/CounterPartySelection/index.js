@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { actions as counterPartyActions } from '../../actions/counterparty'
+import { actions as agentActions } from '../../actions/agent'
 import CounterPartySelection from './CounterPartySelection'
 
 const mapStateToProps = state => {
@@ -13,6 +13,6 @@ const mapStateToProps = state => {
 export default withRouter(connect(
   mapStateToProps,
   {
-    setAgent: counterPartyActions.setAgent
+    retrieveAgentQuote: agentActions.retrieveAgentQuote
   }
 )(CounterPartySelection))

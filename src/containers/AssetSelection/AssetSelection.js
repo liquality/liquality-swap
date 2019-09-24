@@ -21,9 +21,6 @@ class AssetSelection extends Component {
   }
 
   handleNextClick () {
-    if (this.props.counterParty.agent) {
-      this.props.retrieveAgentQuote()
-    }
     this.props.history.replace('/walletB')
   }
 

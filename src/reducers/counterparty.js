@@ -23,12 +23,6 @@ function changeCounterPartyAddress (state, action) {
   })
 }
 
-function setAgent (state, action) {
-  return update(state, {
-    agent: { $set: action.agent }
-  })
-}
-
 function setCounterPartyVisible (state, action) {
   return update(state, {
     visible: { $set: action.visible }
@@ -38,7 +32,6 @@ function setCounterPartyVisible (state, action) {
 const reducers = {
   [swapTypes.SWITCH_SIDES]: switchSides,
   [counterPartyTypes.CHANGE_COUNTER_PARTY_ADDRESS]: changeCounterPartyAddress,
-  [counterPartyTypes.SET_AGENT]: setAgent,
   [counterPartyTypes.SET_COUNTER_PARTY_VISIBLE]: setCounterPartyVisible
 }
 

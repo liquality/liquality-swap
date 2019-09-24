@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom'
 import { actions as assetSelectorActions } from '../../actions/assetSelector'
 import { actions as assetActions } from '../../actions/assets'
 import { actions as swapActions } from '../../actions/swap'
-import { actions as counterPartyActions } from '../../actions/counterparty'
 import AssetSelection from './AssetSelection'
 
 const mapStateToProps = state => {
@@ -21,7 +20,6 @@ export default withRouter(connect(
     openAssetSelector: assetSelectorActions.openAssetSelector,
     closeAssetSelector: assetSelectorActions.closeAssetSelector,
     setAssetSelectorSearch: assetSelectorActions.setAssetSelectorSearch,
-    setAsset: assetActions.setAsset,
-    retrieveAgentQuote: counterPartyActions.retrieveAgentQuote
+    setAsset: assetActions.setAsset
   }
 )(AssetSelection))
