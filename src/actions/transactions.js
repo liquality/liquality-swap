@@ -47,10 +47,11 @@ function setLocation (swap, currentLocation, dispatch) {
   const hasInitiated = swap.transactions.a.fund.hash && swap.transactions.a.fund.confirmations > 0
   const hasRefunded = swap.transactions.a.refund && swap.transactions.a.refund.hash
   const canRefund = !swap.transactions.b.claim.hash || swap.transactions.b.claim.confirmations === 0
+  const canClaim = (!swap.transactions.a.claim.hash || swap.transactions.a.claim.confirmations === 0) && swap.secretParams.secret
   const swapExpiration = getFundExpiration(swap.expiration, swap.isPartyB ? 'b' : 'a').time
   const swapExpired = moment().isAfter(swapExpiration)
 
-  if (hasInitiated && swapExpired) {
+  if (hasInitiated && swapExpired && !canClaim) {
     if (hasRefunded) {
       dispatch(replace('/refunded'))
     } else if (canRefund) {
