@@ -64,8 +64,8 @@ function generateSwapState (location) {
       b: { address: urlParams.ccy2CounterPartyAddr }
     },
     transactions: {
-      a: { fund: { hash: urlParams.aFundHash }, claim: {}, startBlock: parseInt(urlParams.aStartBlock) },
-      b: { fund: { hash: urlParams.bFundHash }, claim: {}, startBlock: parseInt(urlParams.bStartBlock) }
+      a: { fund: { hash: urlParams.aFundHash }, claim: {}, refund: {}, startBlock: parseInt(urlParams.aStartBlock) },
+      b: { fund: { hash: urlParams.bFundHash }, claim: {}, refund: {}, startBlock: parseInt(urlParams.bStartBlock) }
     },
     secretParams: {
       secretHash: urlParams.secretHash

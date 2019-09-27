@@ -9,6 +9,7 @@ import counterParty from './counterparty'
 import transactions from './transactions'
 import secretParams from './secretparams'
 import assetSelector from './assetSelector'
+import sync from './sync'
 
 export default combineReducers({
   assets,
@@ -17,6 +18,7 @@ export default combineReducers({
   transactions,
   secretParams,
   assetSelector,
+  sync,
   step: (state = steps.INITIATION, action) => {
     return action.type === types.SET_STEP ? action.step : state
   },

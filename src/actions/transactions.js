@@ -102,12 +102,6 @@ function setTransaction (party, kind, tx) {
     dispatch(swapActions.setLink(link))
     if (tx.hash) { // Only start monitoring when a hash is available
       swap = getState().swap
-      if (party === 'a' && kind === 'fund') {
-        dispatch(swapActions.waitForSwapConfirmation())
-        dispatch(swapActions.waitForSwapClaim('a'))
-        dispatch(swapActions.waitForSwapClaim('b'))
-        dispatch(swapActions.waitForSwapRefund())
-      }
       await monitorTransaction(swap, party, kind, tx, dispatch, getState)
     }
   }
