@@ -13,7 +13,6 @@ const mapStateToProps = state => ({
 export default withRouter(connect(
   mapStateToProps,
   {
-    waitForSwapConfirmation: swapActions.waitForSwapConfirmation,
     waitForSwapClaim: swapActions.waitForSwapClaim,
     waitForSwapRefund: swapActions.waitForSwapRefund,
     clearError: errorActions.clearError,

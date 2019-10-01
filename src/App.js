@@ -7,7 +7,7 @@ import { store, initialAppState } from './store'
 import history from './history'
 import errorHandler from './errorHandler'
 
-import { actions as swapActions } from './actions/swap'
+import { actions as syncActions } from './actions/sync'
 import { actions as transactionActions } from './actions/transactions'
 import { actions as assetActions } from './actions/assets'
 import { actions as counterPartyActions } from './actions/counterparty'
@@ -31,11 +31,12 @@ if (initialAppState.swap) {
     store.dispatch(transactionActions.setTransaction(
       'b', 'fund', initialAppState.swap.transactions.b.fund
     ))
-    store.dispatch(swapActions.verifyInitiateSwapTransaction)
     store.dispatch(assetActions.changeAmount('b', initialAppState.swap.assets.b.value)) // Trigger rate calc
     store.dispatch(assetActions.lockRate())
     store.dispatch(counterPartyActions.setCounterPartyVisible(false))
   }
+  store.dispatch(syncActions.sync('a'))
+  store.dispatch(syncActions.sync('b'))
 }
 
 class App extends Component {
