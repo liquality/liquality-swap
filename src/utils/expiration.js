@@ -5,6 +5,11 @@ const expirationDurations = {
   b: moment.duration(6, 'h')
 }
 
+function getExpirationForParty (expiration, party, isPartyB) {
+  const oppositeParty = party === 'a' ? 'b' : 'a'
+  return isPartyB ? getFundExpiration(expiration, oppositeParty) : getFundExpiration(expiration, party)
+}
+
 function getFundExpiration (expiration, party) {
   let start, duration, time
 
@@ -35,4 +40,4 @@ function generateExpiration () {
   return moment().add(expirationDurations.a)
 }
 
-export { expirationDurations, getFundExpiration, getClaimExpiration, generateExpiration }
+export { expirationDurations, getExpirationForParty, getFundExpiration, getClaimExpiration, generateExpiration }

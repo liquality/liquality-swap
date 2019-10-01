@@ -3,14 +3,15 @@ import { getClient } from '../services/chainClient'
 import { sleep } from '../utils/async'
 import { actions as transactionActions } from './transactions'
 import { actions as swapActions } from './swap'
-import { getFundExpiration } from '../utils/expiration'
+import { getFundExpiration, getExpirationForParty } from '../utils/expiration'
+import config from '../config'
 
 const types = {
   SET_CURRENT_BLOCK: 'SET_CURRENT_BLOCK',
   SET_SYNCED: 'SET_SYNCED'
 }
 
-const CHECK_INTERVAL = 5000 // TODO: config per chain?
+const DEFAULT_SYNC_INTERVAL = 5000
 
 function setCurrentBlock (party, blockNumber) {
   return { type: types.SET_CURRENT_BLOCK, party, blockNumber }
@@ -44,15 +45,15 @@ async function findClaimSwapTransaction (party, blockNumber, dispatch, getState)
     transactions,
     counterParty,
     secretParams,
-    expiration
+    expiration,
+    isPartyB
   } = getState().swap
-  const client = getClient(assets[party].currency, wallets[party].type)
-  const swapExpiration = getFundExpiration(expiration, party).time
-  console.log('finding claim', transactions[party].fund.hash, counterParty[party].address, wallets[party].addresses[0], secretParams.secretHash, swapExpiration.unix(), blockNumber)
-  const claimTransaction = await client.swap.findClaimSwapTransaction(transactions[party].fund.hash, counterParty[party].address, wallets[party].addresses[0], secretParams.secretHash, swapExpiration.unix(), blockNumber)
+  const oppositeParty = party === 'a' ? 'b' : 'a'
+  const client = getClient(assets[oppositeParty].currency, wallets[oppositeParty].type)
+  const swapExpiration = getExpirationForParty(expiration, oppositeParty, isPartyB).time
+  const claimTransaction = await client.swap.findClaimSwapTransaction(transactions[oppositeParty].fund.hash, counterParty[oppositeParty].address, wallets[oppositeParty].addresses[0], secretParams.secretHash, swapExpiration.unix(), blockNumber)
   if (claimTransaction) {
-    const oppositeParty = party === 'a' ? 'b' : 'a'
-    dispatch(transactionActions.setTransaction(oppositeParty, 'claim', claimTransaction))
+    dispatch(transactionActions.setTransaction(party, 'claim', claimTransaction))
   }
 }
 
@@ -101,7 +102,8 @@ function sync (party) {
     const { transactions, assets, wallets } = getState().swap
     const startBlock = transactions[party].startBlock
     const client = getClient(assets[party].currency, wallets[party].type)
-    dispatch(setCurrentBlock(startBlock))
+    const assetConfig = config.assets[assets[party].currency]
+    dispatch(setCurrentBlock(party, startBlock))
 
     let blockNumber = startBlock
     do {
@@ -110,12 +112,12 @@ function sync (party) {
         if (!swap.transactions[party].fund.hash) {
           await findInitiateSwapTransaction(party, blockNumber, dispatch, getState)
         } else {
-          if (!swap.isVerified) {
+          if (party === 'b' && !swap.isVerified) {
             await verifyInitiateSwapTransaction(dispatch, getState)
           }
           const oppositeParty = party === 'a' ? 'b' : 'a'
           if (!swap.transactions[oppositeParty].claim.hash) {
-            await findClaimSwapTransaction(party, blockNumber, dispatch, getState)
+            await findClaimSwapTransaction(oppositeParty, blockNumber, dispatch, getState)
           }
           if (!swap.transactions[party].refund.hash) {
             await findRefundSwapTransaction(party, blockNumber, dispatch, getState)
@@ -127,9 +129,12 @@ function sync (party) {
         blockNumber++
         dispatch(setCurrentBlock(party, blockNumber))
         dispatch(setSynced(party, false))
+        if (config.syncDelay > 0) {
+          await sleep(config.syncDelay)
+        }
       } else {
         dispatch(setSynced(party, true))
-        await sleep(CHECK_INTERVAL)
+        await sleep(assetConfig.syncInterval || DEFAULT_SYNC_INTERVAL)
       }
     }
     while (true)
