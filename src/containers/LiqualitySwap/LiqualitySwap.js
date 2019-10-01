@@ -18,6 +18,7 @@ import { generateLink } from '../../utils/app-links'
 import config from '../../config'
 
 import LiqualityLogo from '../../logo-text.png'
+import Spinner from './spinner.svg'
 import './LiqualitySwap.css'
 
 class LiqualitySwap extends Component {
@@ -66,11 +67,24 @@ class LiqualitySwap extends Component {
     />
   }
 
+  isSnycing () {
+    const syncStarted = this.props.swap.sync['a'].currentBlock && this.props.swap.sync['b'].currentBlock
+    const syncing = !this.props.swap.sync['a'].synced || !this.props.swap.sync['b'].synced
+    return syncStarted && syncing
+  }
+
+  getSyncBar () {
+    if (this.isSnycing()) {
+      return <div className='LiqualitySwap_sync'><img src={Spinner} alt='Spinner' />&nbsp;&nbsp;Syncing...</div>
+    }
+  }
+
   render () {
     return <div className='LiqualitySwap'>
       <div className='LiqualitySwap_bar' />
       <div className='LiqualitySwap_header'>
         <img className='LiqualitySwap_logo' src={LiqualityLogo} alt='Liquality Logo' />
+        { this.getSyncBar() }
         <SwapProgressStepper state={this.props.swap.step} />
       </div>
       <div className='LiqualitySwap_main'>

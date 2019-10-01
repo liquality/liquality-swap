@@ -8,9 +8,9 @@ import { getClient } from '../services/chainClient'
 import { actions as transactionActions } from './transactions'
 import { actions as secretActions } from './secretparams'
 import { actions as walletActions } from './wallets'
+import { actions as syncActions } from './sync'
 import cryptoassets from '@liquality/cryptoassets'
 import { wallets as walletsConfig } from '../utils/wallets'
-import { sleep } from '../utils/async'
 import { getFundExpiration, getClaimExpiration, generateExpiration } from '../utils/expiration'
 import { isInitiateValid } from '../utils/validation'
 
@@ -195,6 +195,8 @@ function initiateSwap () {
     })
     await setCounterPartyStartBlock(dispatch, getState)
     dispatch(setIsVerified(true))
+    dispatch(syncActions.sync('a'))
+    dispatch(syncActions.sync('b'))
     dispatch(replace('/backupLink'))
   }
 }
@@ -207,91 +209,6 @@ function confirmSwap () {
     if (!initiateValid) return
     await withLoadingMessage('a', dispatch, getState, lockFunds)
     dispatch(replace('/backupLink'))
-  }
-}
-
-async function verifyInitiateSwapTransaction (dispatch, getState) {
-  const {
-    assets: { b: { currency, value } },
-    wallets: { b: { addresses, type } },
-    counterParty,
-    secretParams,
-    transactions,
-    expiration
-  } = getState().swap
-  const client = getClient(currency, type)
-  const valueInUnit = cryptoassets[currency].currencyToUnit(value)
-  while (true) {
-    try {
-      const swapVerified = await client.swap.verifyInitiateSwapTransaction(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty.b.address, secretParams.secretHash, expiration.unix())
-      if (swapVerified) {
-        dispatch(setIsVerified(true))
-        break
-      }
-    } catch (e) {
-      console.error(e)
-    }
-    await sleep(5000)
-  }
-}
-
-async function findInitiateSwapTransaction (party, dispatch, getState) {
-  const {
-    assets: { [party]: { currency, value } },
-    wallets: { [party]: { addresses, type } },
-    transactions: { [party]: { startBlock } },
-    counterParty,
-    secretParams,
-    expiration
-  } = getState().swap
-  const client = getClient(currency, type)
-  const valueInUnit = cryptoassets[currency].currencyToUnit(value)
-  const swapExpiration = getFundExpiration(expiration, party).time
-  const initiateTransaction = await client.swap.findInitiateSwapTransaction(valueInUnit, addresses[0], counterParty[party].address, secretParams.secretHash, swapExpiration.unix(), startBlock)
-  dispatch(transactionActions.setTransaction(party, 'fund', initiateTransaction))
-}
-
-function waitForSwapConfirmation () {
-  return async (dispatch, getState) => {
-    await findInitiateSwapTransaction('b', dispatch, getState)
-  }
-}
-
-function waitForSwapClaim (party) {
-  return async (dispatch, getState) => {
-    const {
-      assets,
-      wallets,
-      transactions,
-      counterParty,
-      secretParams,
-      expiration
-    } = getState().swap
-    const client = getClient(assets[party].currency, wallets[party].type)
-    const swapExpiration = getFundExpiration(expiration, party).time
-    const startBlock = transactions[party].startBlock
-    const claimTransaction = await client.swap.findClaimSwapTransaction(transactions[party].fund.hash, counterParty[party].address, wallets[party].addresses[0], secretParams.secretHash, swapExpiration.unix(), startBlock)
-    const oppositeParty = party === 'a' ? 'b' : 'a'
-    dispatch(transactionActions.setTransaction(oppositeParty, 'claim', claimTransaction))
-  }
-}
-
-function waitForSwapRefund () {
-  return async (dispatch, getState) => {
-    const {
-      assets,
-      wallets,
-      transactions,
-      counterParty,
-      secretParams,
-      expiration,
-      isPartyB
-    } = getState().swap
-    const client = getClient(assets.a.currency, wallets.a.type)
-    const swapExpiration = isPartyB ? getFundExpiration(expiration, 'b').time : expiration
-    const startBlock = transactions.a.startBlock
-    const refundTransaction = await client.swap.findRefundSwapTransaction(transactions.a.fund.hash, counterParty.a.address, wallets.a.addresses[0], secretParams.secretHash, swapExpiration.unix(), startBlock)
-    dispatch(transactionActions.setTransaction('a', 'refund', refundTransaction))
   }
 }
 
@@ -372,11 +289,6 @@ const actions = {
   hideErrors,
   initiateSwap,
   confirmSwap,
-  findInitiateSwapTransaction,
-  verifyInitiateSwapTransaction,
-  waitForSwapConfirmation,
-  waitForSwapClaim,
-  waitForSwapRefund,
   redeemSwap,
   refundSwap
 }
