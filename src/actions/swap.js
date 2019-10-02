@@ -189,7 +189,6 @@ async function submitOrder (dispatch, getState) {
     await agent.submitOrder(
       swap.agent.quote.id,
       swap.transactions.a.fund.hash,
-      swap.assets.a.value,
       swap.wallets.a.addresses[0],
       swap.wallets.b.addresses[0],
       swap.secretParams.secretHash,

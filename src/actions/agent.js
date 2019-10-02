@@ -1,5 +1,6 @@
 import { actions as assetActions } from './assets'
 import { actions as counterPartyActions } from './counterparty'
+import cryptoassets from '@liquality/cryptoassets'
 import agent from '../services/agentClient'
 
 const types = {
@@ -16,9 +17,12 @@ function retrieveAgentQuote (from, to, min) {
     dispatch(assetActions.setAsset('a', from.toLowerCase()))
     dispatch(assetActions.setAsset('b', to.toLowerCase()))
     dispatch(setQuote(quote))
-    dispatch(assetActions.changeRate(quote.rate))
+
+    dispatch(assetActions.changeAmount('a', cryptoassets[from.toLowerCase()].unitToCurrency(quote.fromAmount)))
+    dispatch(assetActions.changeAmount('b', cryptoassets[to.toLowerCase()].unitToCurrency(quote.toAmount)))
+    dispatch(assetActions.changeAmount('b', cryptoassets[to.toLowerCase()].unitToCurrency(quote.toAmount)))
+
     dispatch(assetActions.lockRate())
-    dispatch(assetActions.changeAmount('a', quote.amount))
     dispatch(counterPartyActions.changeCounterPartyAddress('a', quote.fromCounterPartyAddress))
     dispatch(counterPartyActions.changeCounterPartyAddress('b', quote.toCounterPartyAddress))
     dispatch(counterPartyActions.setCounterPartyVisible(false))

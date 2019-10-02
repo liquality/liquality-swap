@@ -12,22 +12,24 @@ class CurrencyInputs extends Component {
     return <div className='CurrencyInputs'>
       <div className='row justify-content-between no-gutters'>
         <div className='col CurrencyInputs_left'>
-          <CurrencyInput
+          { this.props.showInputs && <CurrencyInput
             currency={assetA.currency}
             value={assetA.value}
             disabled={this.props.inputsDisabled}
             error={errors.assetA}
             onChange={newValue => this.props.onAmountChange('a', newValue)}
             tabIndex={1} />
+          }
         </div>
         <div className='col CurrencyInputs_right'>
-          <CurrencyInput
+          { this.props.showInputs && <CurrencyInput
             currency={assetB.currency}
             value={assetB.value}
             disabled={this.props.inputsDisabled}
             error={errors.assetB}
             onChange={newValue => this.props.onAmountChange('b', newValue)}
             tabIndex={3} />
+          }
         </div>
         { this.props.showRate &&
           <div className='CurrencyInputs_centre'>
@@ -50,7 +52,8 @@ class CurrencyInputs extends Component {
 CurrencyInputs.propTypes = {
   inputsDisabled: PropTypes.bool,
   rateDisabled: PropTypes.bool,
-  showRate: PropTypes.bool
+  showRate: PropTypes.bool,
+  showInputs: PropTypes.bool
 }
 
 export default CurrencyInputs

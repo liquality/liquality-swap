@@ -1,9 +1,22 @@
 @import '../../scss/variables.scss';
 
 .CounterPartySelection {
+  width: 850px;
 
-  h2 {
-    padding: 20px 0 20px 40px;
+  &_offers {
+    margin: 0 80px;
+    background: #fafcfe;
+    border-radius: 22px;
+    padding: 0 8px;
+    
+    h2 {
+      padding: 31px 41px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  &_table_wrapper {
+    padding: 10px 20px 20px 20px;
   }
 
   &_table {
@@ -20,11 +33,12 @@
     }
 
     td, th {
-      padding: 10px;
+      padding: 10px 10px;
     }
 
     td.button {
-      width: 200px;
+      width: 160px;
+      padding: 0 10px;
 
       button {
         width: 100%;
@@ -34,5 +48,6 @@
 
   &_buttons {
     text-align: center;
+    padding-top: 40px;
   }
 }

@@ -14,6 +14,7 @@ import SwapRedemption from '../SwapRedemption'
 import SwapCompleted from '../SwapCompleted'
 import SwapRefund from '../SwapRefund'
 import SwapRefunded from '../SwapRefunded'
+import SwapOfferConfirmation from '../SwapOfferConfirmation'
 import SwapProgressStepper from '../../components/SwapProgressStepper/SwapProgressStepper'
 import { generateLink } from '../../utils/app-links'
 import config from '../../config'
@@ -104,6 +105,7 @@ class LiqualitySwap extends Component {
         <div className='LiqualitySwap_wave' />
         <div className='LiqualitySwap_wrapper'>
           <Route exact path='/' render={this.getStartingScreen.bind(this)} />
+          <Route path='/offerConfirmation' component={SwapOfferConfirmation} />
           <Route path='/assetSelection' component={AssetSelection} />
           <Route path='/walletA' render={() => { return this.getConnectWallet('a') }} />
           <Route path='/walletB' render={() => { return this.getConnectWallet('b') }} />

@@ -12,17 +12,16 @@ class Agent {
     return response.data
   }
 
-  async getQuote (from, to, amount) {
+  async getQuote (from, to, fromAmount) {
     const response = await this._axios.post('/api/swap/order', {
-      from, to, amount
+      from, to, fromAmount
     })
     return response.data
   }
 
-  async submitOrder (quoteId, fundHash, amount, fromAddress, toAddress, secretHash, expiration) {
+  async submitOrder (quoteId, fundHash, fromAddress, toAddress, secretHash, expiration) {
     const response = await this._axios.post(`/api/swap/order/${quoteId}`, {
       fromFundHash: fundHash,
-      amount,
       fromAddress,
       toAddress,
       secretHash,

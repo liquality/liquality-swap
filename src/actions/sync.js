@@ -30,7 +30,7 @@ async function findInitiateSwapTransaction (party, blockNumber, dispatch, getSta
     expiration
   } = getState().swap
   const client = getClient(currency, type)
-  const valueInUnit = cryptoassets[currency].currencyToUnit(value)
+  const valueInUnit = Math.floor(cryptoassets[currency].currencyToUnit(value))
   const swapExpiration = getFundExpiration(expiration, party).time
   const initiateTransaction = await client.swap.findInitiateSwapTransaction(valueInUnit, addresses[0], counterParty[party].address, secretParams.secretHash, swapExpiration.unix(), blockNumber)
   if (initiateTransaction) {
