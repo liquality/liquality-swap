@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Button from '../../components/Button/Button'
 import BrandCard from '../../components/BrandCard/BrandCard'
 import agent from '../../services/agentClient'
+import cryptoassets from '@liquality/cryptoassets'
 
 import './CounterPartySelection.css'
 
@@ -13,12 +14,26 @@ class CounterPartySelection extends Component {
 
   componentDidMount () {
     agent.getMarketInfo().then((marketInfo) => {
-      this.setState({ marketInfo })
+      const convertedUnits = marketInfo.map(m => {
+        const convertedMin = cryptoassets[m.from.toLowerCase()].unitToCurrency(m.min)
+        const convertedMax = cryptoassets[m.from.toLowerCase()].unitToCurrency(m.max)
+        return {
+          ...m,
+          min: convertedMin,
+          max: convertedMax
+        }
+      })
+      this.setState({ marketInfo: convertedUnits })
     })
   }
 
+  handleAmountChange (from, to, amount) {
+    this.setState({[from + to]: amount})
+  }
+
   handleAcceptOffer (from, to, min) {
-    this.props.retrieveAgentQuote(from, to, min)
+    const amount = cryptoassets[from.toLowerCase()].currencyToUnit(this.state[from + to])
+    this.props.retrieveAgentQuote(from, to, amount)
     this.props.history.replace('/offerConfirmation')
   }
 
@@ -30,6 +45,7 @@ class CounterPartySelection extends Component {
           <table class='CounterPartySelection_table'>
             <thead>
               <tr>
+                <th />
                 <th>Have</th>
                 <th>Want</th>
                 <th>Estimated Rate</th>
@@ -40,6 +56,7 @@ class CounterPartySelection extends Component {
             </thead>
             <tbody>
               { this.state.marketInfo.map(market => <tr>
+                <td><input type='text' className='amountInput' onChange={(e) => this.handleAmountChange(market.from, market.to, e.target.value)} /></td>
                 <th>{market.from}</th>
                 <td>{market.to}</td>
                 <td>{market.rate}</td>

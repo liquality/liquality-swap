@@ -11,9 +11,9 @@ function setQuote (quote) {
   return { type: types.SET_QUOTE, quote }
 }
 
-function retrieveAgentQuote (from, to, min) {
+function retrieveAgentQuote (from, to, amount) {
   return async (dispatch, getState) => {
-    const quote = await agent.getQuote(from, to, min)
+    const quote = await agent.getQuote(from, to, amount)
     dispatch(assetActions.setAsset('a', from.toLowerCase()))
     dispatch(assetActions.setAsset('b', to.toLowerCase()))
     dispatch(setQuote(quote))
