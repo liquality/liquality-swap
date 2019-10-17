@@ -17,7 +17,7 @@ export default {
       rpc: {
         username: 'bitcoin',
         password: 'local321',
-        url: 'http://localhost:17772'
+        url: 'http://localhost:18332'
       },
       network: 'bitcoin_regtest',
       addressType: 'bech32',

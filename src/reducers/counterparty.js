@@ -6,7 +6,6 @@ import { getReducerFunction } from './helpers'
 const initialState = {
   a: { address: '', valid: false },
   b: { address: '', valid: false },
-  agent: null,
   visible: true
 }
 
