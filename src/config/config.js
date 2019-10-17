@@ -1,5 +1,4 @@
 export default {
-  hostName: 'Liquality',
   hostAgent: 'http://localhost:3030',
   assets: {
     eth: {
