@@ -1,18 +1,17 @@
 export default {
+  hostAgent: 'http://localhost:3030',
   assets: {
     eth: {
       rpc: {
-        url: 'http://localhost:8545'
-      },
-      network: 'rinkeby'
+        url: 'http://localhost:7545'
+      }
     },
     midman: {
       type: 'erc20',
       rpc: {
         url: 'http://localhost:8545'
       },
-      contractAddress: '0x422950598Eb23877deAfF346dA0550Aa53482156', // Local ERC20 contract (18 decimals),
-      network: 'rinkeby'
+      contractAddress: '0x422950598Eb23877deAfF346dA0550Aa53482156'
     },
     btc: {
       rpc: {

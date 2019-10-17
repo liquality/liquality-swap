@@ -1,0 +1,57 @@
+@import '../../scss/variables.scss';
+
+.CounterPartySelection {
+  width: 850px;
+
+  &_offers {
+    margin: 0 80px;
+    background: #fafcfe;
+    border-radius: 22px;
+    padding: 0 8px;
+    
+    h2 {
+      padding: 31px 41px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  &_table_wrapper {
+    padding: 10px 20px 20px 20px;
+  }
+
+  &_table {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 20px;
+
+    thead {
+      font-size: 16px;
+    }
+
+    tr {
+      padding: 0 10px;
+    }
+
+    td, th {
+      padding: 10px 10px;
+    }
+
+    td.button {
+      width: 160px;
+      padding: 0 10px;
+
+      button {
+        width: 100%;
+      }
+    }
+
+    .amountInput {
+      width: 50px;
+    }
+  }
+
+  &_buttons {
+    text-align: center;
+    padding-top: 40px;
+  }
+}

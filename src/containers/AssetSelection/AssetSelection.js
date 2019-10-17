@@ -20,6 +20,10 @@ class AssetSelection extends Component {
     }
   }
 
+  handleNextClick () {
+    this.props.history.replace('/walletB')
+  }
+
   render () {
     const { a: assetA, b: assetB } = this.props.assets
     return <div className='AssetSelection'>
@@ -41,7 +45,7 @@ class AssetSelection extends Component {
             onSearchChange={value => this.props.setAssetSelectorSearch(value)}
             onClose={() => this.props.closeAssetSelector()} /> }
         { !this.props.assetSelector.open && <div className='AssetSelection_bottom'>
-          <Button wide primary onClick={() => this.props.history.replace('/walletB')}>Next</Button>
+          <Button wide primary onClick={() => this.handleNextClick()}>Next</Button>
         </div> }
       </div>
     </div>

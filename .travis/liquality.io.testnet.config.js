@@ -26,6 +26,7 @@ export default {
       network: 'rinkeby'
     }
   },
+  hostAgent: 'https://liquality.io/agenttestnet',
   minConfirmations: 0,
   injectScript: `
   function addSentry () {

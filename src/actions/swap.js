@@ -5,6 +5,7 @@ import watch from 'redux-watch'
 import { store } from '../store'
 import config from '../config'
 import { getClient } from '../services/chainClient'
+import agent from '../services/agentClient'
 import { actions as transactionActions } from './transactions'
 import { actions as secretActions } from './secretparams'
 import { actions as walletActions } from './wallets'
@@ -182,6 +183,20 @@ async function setCounterPartyStartBlock (dispatch, getState) {
   dispatch(transactionActions.setStartBlock('b', blockNumber))
 }
 
+async function submitOrder (dispatch, getState) {
+  const swap = getState().swap
+  if (swap.agent.quote) {
+    await agent.submitOrder(
+      swap.agent.quote.id,
+      swap.transactions.a.fund.hash,
+      swap.wallets.a.addresses[0],
+      swap.wallets.b.addresses[0],
+      swap.secretParams.secretHash,
+      swap.expiration.unix()
+    )
+  }
+}
+
 function initiateSwap () {
   return async (dispatch, getState) => {
     dispatch(showErrors())
@@ -194,6 +209,7 @@ function initiateSwap () {
       await lockFunds(dispatch, getState)
     })
     await setCounterPartyStartBlock(dispatch, getState)
+    await submitOrder(dispatch, getState)
     dispatch(setIsVerified(true))
     dispatch(syncActions.sync('a'))
     dispatch(syncActions.sync('b'))

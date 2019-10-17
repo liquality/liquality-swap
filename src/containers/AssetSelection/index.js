@@ -8,6 +8,7 @@ import AssetSelection from './AssetSelection'
 const mapStateToProps = state => {
   return {
     assets: state.swap.assets,
+    counterParty: state.swap.counterParty,
     assetSelector: state.swap.assetSelector
   }
 }

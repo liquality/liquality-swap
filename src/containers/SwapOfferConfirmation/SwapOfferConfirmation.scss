@@ -1,0 +1,44 @@
+@import '../../scss/variables.scss';
+@import '../../scss/mixins.scss';
+
+.SwapOfferConfirmation {
+  position: relative;
+  top: -10px;
+
+  .SwapPairPanel {
+    z-index: $layer-top;
+  }
+  
+  .Rate {
+    top: 90px;
+  }
+  
+  &_top {
+    $panel-spacing: 80px;
+
+    position: absolute;
+    width: 100%;
+    top: $panel-spacing;
+    padding: 130px 0 28px 0;
+    box-shadow: 0px 2px 14px $color-shadow;
+    border-radius: 0 0 $swap-panel-radius $swap-panel-radius;
+    background: $color-bg-primary;
+  }
+
+  &_bottom {
+    text-align: center;
+    background: #F7F8F9;
+    margin-top: 20px;
+    padding-top: 150px;
+    min-height: 210px;
+    border-radius: 0 0 7px 7px;
+  }
+
+  &_errorMessage {
+    @include error-message;
+  }
+
+  .CounterPartyWallets, .ExpirationDetails, .InitiatorExpirationInfo {
+    margin-bottom: 30px;
+  }
+}
