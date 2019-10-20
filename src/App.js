@@ -26,11 +26,13 @@ if (initialAppState.swap) {
   store.dispatch(transactionActions.setTransaction(
     'a', 'fund', initialAppState.swap.transactions.a.fund
   ))
-  if (initialAppState.swap.isPartyB) {
-    // Need to use action to kick off tx monitoring
+  if (initialAppState.swap.transactions.b.fund) {
     store.dispatch(transactionActions.setTransaction(
       'b', 'fund', initialAppState.swap.transactions.b.fund
     ))
+  }
+  if (initialAppState.swap.isPartyB) {
+    // Need to use action to kick off tx monitoring
     store.dispatch(assetActions.changeAmount('b', initialAppState.swap.assets.b.value)) // Trigger rate calc
     store.dispatch(assetActions.lockRate())
     store.dispatch(counterPartyActions.setCounterPartyVisible(false))
