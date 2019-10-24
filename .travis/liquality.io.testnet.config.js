@@ -17,7 +17,7 @@ export default {
       feeNumberOfBlocks: 2,
       network: 'bitcoin_testnet'
     },
-    midman: {
+    dai: {
       type: 'erc20',
       rpc: {
         url: 'https://rinkeby.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
