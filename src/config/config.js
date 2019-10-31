@@ -6,7 +6,7 @@ export default {
         url: 'http://localhost:7545'
       }
     },
-    midman: {
+    dai: {
       type: 'erc20',
       rpc: {
         url: 'http://localhost:8545'
@@ -17,10 +17,10 @@ export default {
       rpc: {
         username: 'bitcoin',
         password: 'local321',
-        url: 'http://localhost:18332'
+        url: 'http://localhost:18332',
+        addressType: 'bech32'
       },
       network: 'bitcoin_regtest',
-      addressType: 'bech32',
       swapMode: 'p2wsh',
       feeNumberOfBlocks: 2
     }

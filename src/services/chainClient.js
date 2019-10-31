@@ -29,13 +29,15 @@ function getBitcoinDataProvider (btcConfig) {
 function createBtcClient (asset, wallet) {
   const btcConfig = config.assets.btc
 
-  if (btcConfig.addressType === 'p2sh-segwit') {
-    throw new Error('Wrapped segwit addresses (p2sh-segwit) are currently unsupported.')
-  }
-
   const btcClient = new Client()
-  if (wallet === 'bitcoin_ledger') {
-    const ledger = new BitcoinLedgerProvider({network: BitcoinNetworks[btcConfig.network]}, btcConfig.addressType)
+  if (wallet.includes('bitcoin_ledger')) {
+    let addressType
+    if (wallet === 'bitcoin_ledger_legacy') {
+      addressType = 'legacy'
+    } else if (wallet === 'bitcoin_ledger_nagive_segwit') {
+      addressType = 'bech32'
+    }
+    const ledger = new BitcoinLedgerProvider({network: BitcoinNetworks[btcConfig.network]}, addressType)
 
     if (window.useWebBle || localStorage.useWebBle) {
       ledger.useWebBle()
@@ -44,8 +46,11 @@ function createBtcClient (asset, wallet) {
     btcClient.addProvider(ledger)
     btcClient.addProvider(new BitcoinSwapProvider({network: BitcoinNetworks[btcConfig.network]}, btcConfig.swapMode))
   } else if (wallet === 'bitcoin_node') {
+    if (btcConfig.rpc.addressType === 'p2sh-segwit') {
+      throw new Error('Wrapped segwit addresses (p2sh-segwit) are currently unsupported.')
+    }
     btcClient.addProvider(new BitcoinRpcProvider(btcConfig.rpc.url, btcConfig.rpc.username, btcConfig.rpc.password, btcConfig.feeNumberOfBlocks))
-    btcClient.addProvider(new BitcoinNodeWalletProvider(BitcoinNetworks[btcConfig.network], btcConfig.rpc.url, btcConfig.rpc.username, btcConfig.rpc.password, btcConfig.addressType))
+    btcClient.addProvider(new BitcoinNodeWalletProvider(BitcoinNetworks[btcConfig.network], btcConfig.rpc.url, btcConfig.rpc.username, btcConfig.rpc.password, btcConfig.rpc.addressType))
     btcClient.addProvider(new BitcoinSwapProvider({network: BitcoinNetworks[btcConfig.network]}, btcConfig.swapMode))
   } else {
     // Verify functions required when wallet not connected

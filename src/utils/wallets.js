@@ -12,9 +12,18 @@ const wallets = {
     },
     troubleshootConnectionLink: 'https://metamask.zendesk.com/hc/en-us/articles/360015489531-Getting-Started-With-MetaMask-Part-1-'
   },
-  'bitcoin_ledger': {
+  'bitcoin_ledger_legacy': {
     icon: ledger,
-    name: 'Ledger',
+    name: 'Ledger (Legacy)',
+    connection: {
+      title: 'On your ledger',
+      description: 'Navigate to your Bitcoin account. Follow Ledger instructions to connect Bitcoin wallet'
+    },
+    troubleshootConnectionLink: 'https://support.ledger.com/hc/en-us/articles/115005195945'
+  },
+  'bitcoin_ledger_native_segwit': {
+    icon: ledger,
+    name: 'Ledger (Native Segwit)',
     connection: {
       title: 'On your ledger',
       description: 'Navigate to your Bitcoin account. Follow Ledger instructions to connect Bitcoin wallet'
@@ -52,7 +61,7 @@ const wallets = {
 
 const walletsByAsset = {
   eth: ['metamask', 'ethereum_ledger', 'ethereum_node'],
-  btc: ['bitcoin_ledger', 'bitcoin_node'],
+  btc: ['bitcoin_ledger_legacy', 'bitcoin_ledger_native_segwit', 'bitcoin_node'],
   erc20: ['metamask', 'ethereum_ledger', 'ethereum_node']
 }
 
