@@ -49,6 +49,8 @@ jobs:
   include:
     -
       stage: test
+      before_install: 
+        - sudo apt-get install -y libusb-1.0-0 libusb-1.0-0-dev libudev-dev
       before_script:
         - npm install serve-https -g
         - cp ./src/test/integration/environment/config.js ./src/config/config.js
