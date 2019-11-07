@@ -1,0 +1,19 @@
+version: '3'
+services:
+  bitcoin:
+    image: ruimarinho/bitcoin-core
+    ports:
+      - "18443:18443"
+    command:
+      -regtest=1
+      -rpcuser=bitcoin
+      -rpcpassword=local321
+      -rpcallowip=0.0.0.0/0
+      -rpcbind=0.0.0.0
+      -server
+  ethereum:
+    image: trufflesuite/ganache-cli
+    ports:
+      - "8545:8545"
+    command:
+      -m="piece effort bind that embrace enrich remind powder sudden patient legend group"
