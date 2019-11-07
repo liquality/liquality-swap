@@ -33,6 +33,7 @@
     "moment": "^2.22.2",
     "npm": "^6.10.3",
     "prop-types": "^15.6.2",
+    "puppeteer": "^2.0.0",
     "qs": "^6.8.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
@@ -53,7 +54,8 @@
     "build-js": "react-scripts build",
     "build-js-deuglify": "npm-run-all deuglify-bitcoinjslib build-js",
     "build": "npm-run-all build-css build-js-deuglify",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test --env=jsdom --testPathIgnorePatterns=test/integration",
+    "test:integration": "react-scripts test --env=jsdom --testPathPattern=test/integration",
     "eject": "react-scripts eject",
     "lint": "standard",
     "lint-fix": "standard --fix"
