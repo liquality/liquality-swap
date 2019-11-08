@@ -52,7 +52,7 @@ jobs:
       before_install: 
         - sudo apt-get install -y libusb-1.0-0 libusb-1.0-0-dev libudev-dev
       before_script:
-        - npm install serve-https -g
+        - npm install serve-https@1 -g # serve-https@2 is broken
         - cp ./src/test/integration/environment/config.js ./src/config/config.js
         - CI=false npm run build
         - docker-compose -f ./src/test/integration/environment/docker-compose.yaml up -d
