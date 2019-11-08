@@ -56,7 +56,8 @@ jobs:
         - cp ./src/test/integration/environment/config.js ./src/config/config.js
         - CI=false npm run build
         - docker-compose -f ./src/test/integration/environment/docker-compose.yaml up -d
-        - serve-https -p 3000 -d ./build/
+        - nohup serve-https -p 3000 -d ./build/ > srv-output.log &
+        - sleep 2
       script:
         - npm run test:integration
     - <<: *deploy_app
