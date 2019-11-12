@@ -3,7 +3,7 @@ import puppeteer from 'puppeteer'
 
 let partyA = {}
 
-jest.setTimeout(300000);
+jest.setTimeout(300000)
 
 beforeEach(async () => {
   partyA.browser = await puppeteer.launch({ignoreHTTPSErrors: true})
@@ -23,13 +23,11 @@ it('swap', async () => {
   await partyA.page.waitForSelector('.WalletConnected', { timeout: 20000 })
   await partyA.page.click('.btn-primary')
 
-  
-
   await partyA.page.click('.WalletChoose_WalletsContainer div:nth-child(3)')
   await partyA.page.click('.btn-primary')
   await partyA.page.waitForSelector('.WalletConnected')
   await partyA.page.click('.btn-primary')
-  
+
   await partyA.page.type('.CurrencyInputs_left .CurrencyInput_input', '0.01')
   await partyA.page.type('.Rate_input', '1')
   const element = await partyA.page.$('.CurrencyInputs_right .CurrencyInput .CurrencyInput_input')
@@ -47,7 +45,7 @@ it('swap', async () => {
 
   // Initiate
   await partyA.page.click('.btn-primary')
-  
+
   await partyA.page.waitForSelector('.BackupLinkCard')
   await partyA.page.click('.btn-primary')
 
