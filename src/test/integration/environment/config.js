@@ -2,7 +2,7 @@ export default {
   assets: {
     eth: {
       rpc: {
-        url: 'http://localhost:7545'
+        url: 'http://localhost:8545'
       }
     },
     btc: {
