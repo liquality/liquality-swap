@@ -16,8 +16,6 @@ deploy_app: &deploy_app
     - ssh-add /tmp/deploy_rsa
     - sudo apt-get install -y libusb-1.0-0 libusb-1.0-0-dev libudev-dev
     - cp $APP_CONFIG ./src/config/config.js
-  before_script:
-    - npm run lint
   script:
     - CI=false npm run build
   deploy:
@@ -52,6 +50,7 @@ jobs:
       before_install: 
         - sudo apt-get install -y libusb-1.0-0 libusb-1.0-0-dev libudev-dev
       before_script:
+        - npm run lint
         - npm install serve-https@1 -g # serve-https@2 is broken
         - cp ./src/test/integration/environment/config.js ./src/config/config.js
         - CI=false npm run build
