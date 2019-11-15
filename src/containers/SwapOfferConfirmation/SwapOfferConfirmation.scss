@@ -2,8 +2,6 @@
 @import '../../scss/mixins.scss';
 
 .SwapOfferConfirmation {
-  position: relative;
-  top: -10px;
 
   .SwapPairPanel {
     z-index: $layer-top;
@@ -12,24 +10,30 @@
   .Rate {
     top: 90px;
   }
-  
-  &_top {
-    $panel-spacing: 80px;
 
-    position: absolute;
-    width: 100%;
-    top: $panel-spacing;
-    padding: 130px 0 28px 0;
-    box-shadow: 0px 2px 14px $color-shadow;
-    border-radius: 0 0 $swap-panel-radius $swap-panel-radius;
-    background: $color-bg-primary;
+  .OfferExpirationTimer {
+    margin: 0 auto;
+  }
+
+  &_terms {
+    padding-top: 40px;
+    text-align: center;
+    font-size: $h1-font-size;
+  }
+
+  &_rate {
+    margin-top: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: $h4-font-size;
+    color: $color-text-2;
   }
 
   &_bottom {
     text-align: center;
     background: #F7F8F9;
     margin-top: 20px;
-    padding-top: 150px;
+    padding-top: 40px;
     min-height: 210px;
     border-radius: 0 0 7px 7px;
   }

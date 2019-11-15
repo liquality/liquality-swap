@@ -8,12 +8,15 @@ import './CurrencyInput.css'
 const CurrencyInput = (props) => {
   return <div className='CurrencyInput'>
     <h3 className='CurrencyInput_heading'>{cryptoassets[props.currency].code}</h3>
-    <div className='CurrencyInput_inputWrapper'>
+    <div className={classNames('CurrencyInput_inputWrapper', { 'disabled': props.disabled })}>
       <input type='number' readOnly={props.disabled} value={props.value}
         className={classNames('CurrencyInput_input', { 'error': props.error })} placeholder='0.00'
         onChange={e => props.onChange(e.target.value)} tabIndex={props.tabIndex} />
     </div>
-    <div className='CurrencyInput_errorMessage'>{ props.error && props.error }</div>
+    <div className={classNames('CurrencyInput_label', { 'CurrencyInput_errorMessage': props.error })}>
+      { props.error && props.error }
+      { props.helpText && props.helpText }
+    </div>
   </div>
 }
 
@@ -24,7 +27,8 @@ CurrencyInput.propTypes = {
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
   tabIndex: PropTypes.number,
-  error: PropTypes.string
+  error: PropTypes.string,
+  helpText: PropTypes.string
 }
 
 CurrencyInput.defaultProps = {

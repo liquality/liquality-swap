@@ -16,7 +16,7 @@ import { APP_BASE_URL } from '../../utils/app-links'
 class SwapInitiation extends Component {
   render () {
     const errors = getInitiationErrors(this.props.transactions, this.props.expiration, this.props.isVerified, this.props.isPartyB)
-
+    const inputsDisabled = this.props.isPartyB || this.props.quote
     return <div className='SwapInitiation'>
       <SwapPairPanel
         haveCurrency={this.props.assets.a.currency}
@@ -24,13 +24,13 @@ class SwapInitiation extends Component {
         icon={this.props.isPartyB ? undefined : SwapIcon}
         onIconClick={() => this.props.switchSides()} />
       <div className='SwapInitiation_top'>
-        <CurrencyInputs showInputs inputsDisabled={this.props.isPartyB} rateDisabled={this.props.assets.rateLocked} showRate />
+        <CurrencyInputs showInputs leftInputDisabled={inputsDisabled} rightInputDisabled={inputsDisabled} rateDisabled={this.props.assets.rateLocked} showRate />
       </div>
       <WalletPanel />
       <div className='SwapInitiation_bottom'>
         { this.props.isPartyB
           ? <span className='SwapInitiation_handshake'><img src={HandshakeIcon} alt='Agree' /></span>
-          : <h5 className='SwapInitiation_counterPartyLabel'>Counter party wallets</h5> }
+          : this.props.counterParty.visible && <h5 className='SwapInitiation_counterPartyLabel'>Counter party wallets</h5> }
         { this.props.counterParty.visible && <CounterPartyWallets /> }
         { this.props.isPartyB
           ? <ExpirationDetails />
