@@ -30,7 +30,7 @@ function createBtcClient (asset, wallet) {
   const btcConfig = config.assets.btc
 
   const btcClient = new Client()
-  if (wallet.includes('bitcoin_ledger')) {
+  if (wallet && wallet.includes('bitcoin_ledger')) {
     let addressType
     if (wallet === 'bitcoin_ledger_legacy') {
       addressType = 'legacy'
