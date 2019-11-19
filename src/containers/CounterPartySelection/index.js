@@ -13,6 +13,6 @@ const mapStateToProps = state => {
 export default withRouter(connect(
   mapStateToProps,
   {
-    retrieveAgentQuote: agentActions.retrieveAgentQuote
+    connectAgent: agentActions.connectAgent
   }
 )(CounterPartySelection))

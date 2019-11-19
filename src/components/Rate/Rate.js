@@ -8,7 +8,7 @@ import './Rate.css'
 const Rate = (props) => (
   <div className={classNames('Rate', { error: props.error })}>
     <div className='Rate_circle'>
-      <h5 className='Rate_heading'>Rate</h5>
+      <h5 className='Rate_heading'>{ props.title }</h5>
       <h5 className='Rate_stable'><strong>1 {cryptoassets[props.currencyA].code}</strong></h5>
       <h4 className='Rate_equal'>=</h4>
       <h6>
@@ -23,6 +23,7 @@ const Rate = (props) => (
 )
 
 Rate.propTypes = {
+  title: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
@@ -31,6 +32,7 @@ Rate.propTypes = {
 }
 
 Rate.defaultProps = {
+  title: 'Rate',
   value: 0,
   tabIndex: -1
 }

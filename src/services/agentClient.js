@@ -14,7 +14,7 @@ class Agent {
 
   async getQuote (from, to, fromAmount) {
     const response = await this._axios.post('/api/swap/order', {
-      from, to, fromAmount
+      from: from.toUpperCase(), to: to.toUpperCase(), fromAmount
     })
     return response.data
   }

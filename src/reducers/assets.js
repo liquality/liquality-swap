@@ -2,14 +2,15 @@ import update from 'immutability-helper'
 import { types as assetTypes } from '../actions/assets'
 import { types as swapTypes } from '../actions/swap'
 import { getReducerFunction } from './helpers'
+import config from '../config'
 
 const initialState = {
   a: {
-    currency: 'eth',
+    currency: Object.keys(config.assets)[0],
     value: ''
   },
   b: {
-    currency: 'btc',
+    currency: Object.keys(config.assets)[1],
     value: ''
   },
   rate: '',
