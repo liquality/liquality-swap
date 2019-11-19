@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { shortenAddress } from '../../utils/address'
 
 import './OfferExpirationTimer.css'
 
@@ -9,7 +8,7 @@ class OfferExpirationTimer extends Component {
     const percentage = (this.props.currentTime - this.props.startTime) / (this.props.endTime - this.props.startTime) * 100
     const timeLeft = this.props.endTime - this.props.currentTime
     return <div class='OfferExpirationTimer'>
-      <div class='OfferExpirationTimer_timeline'></div>
+      <div class='OfferExpirationTimer_timeline' />
       <div class='OfferExpirationTimer_current' style={{background: '#2CD2CF', left: `${percentage}%`}}>{timeLeft}s</div>
     </div>
   }

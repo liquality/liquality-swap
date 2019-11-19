@@ -60,6 +60,7 @@ function setLocation (swap, currentLocation, dispatch) {
   } else if (swap.step === steps.AGREEMENT && currentLocation.pathname !== '/waiting') {
     if (swap.isPartyB) dispatch(replace('/waiting'))
     else if (swap.transactions.b.fund.hash) dispatch(replace('/waiting'))
+    else if (swap.agent.quote) dispatch(replace('/waiting'))
     else dispatch(replace('/counterPartyLink'))
   } else if (swap.step === steps.CLAIMING) {
     dispatch(replace('/redeem'))

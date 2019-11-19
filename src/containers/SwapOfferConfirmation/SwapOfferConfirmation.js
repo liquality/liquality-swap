@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import Button from '../../components/Button/Button'
-import SwapPairPanel from '../../components/SwapPairPanel/SwapPairPanel'
-import CurrencyInputs from '../CurrencyInputs'
 import assets from '@liquality/cryptoassets'
 import { APP_BASE_URL } from '../../utils/app-links'
 import './SwapOfferConfirmation.css'
 import BrandCard from '../../components/BrandCard/BrandCard'
-import OfferExpirationTimer from '../../components/OfferExpirationTimer/OfferExpirationTimer'
 
 class SwapOfferConfirmation extends Component {
   handleAcceptRate () {

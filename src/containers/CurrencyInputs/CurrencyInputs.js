@@ -36,6 +36,7 @@ class CurrencyInputs extends Component {
         { this.props.showRate &&
           <div className='CurrencyInputs_centre'>
             <Rate
+              title={this.props.rateTitle}
               currencyA={assetA.currency}
               currencyB={assetB.currency}
               value={assetRate}
@@ -57,6 +58,7 @@ CurrencyInputs.propTypes = {
   leftHelpText: PropTypes.string,
   rightHelpText: PropTypes.string,
   rateDisabled: PropTypes.bool,
+  rateTitle: PropTypes.string,
   showRate: PropTypes.bool,
   showInputs: PropTypes.bool
 }

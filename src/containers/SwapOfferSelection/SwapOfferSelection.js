@@ -1,16 +1,12 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
-import cryptoassets from '@liquality/cryptoassets'
-
 import Button from '../../components/Button/Button'
 import SwapPairPanel from '../../components/SwapPairPanel/SwapPairPanel'
 import AssetSelector from '../../components/AssetSelector/AssetSelector'
 import CurrencyInputs from '../CurrencyInputs'
-import SwapIcon from '../../icons/switch.svg'
 import './SwapOfferSelection.css'
 import { APP_BASE_URL } from '../../utils/app-links'
-import agent from '../../services/agentClient'
-import config from '../../config/config'
+import config from '../../config'
 
 class SwapOfferSelection extends Component {
   handleSelectAsset (asset) {
@@ -52,7 +48,7 @@ class SwapOfferSelection extends Component {
 
   render () {
     const { a: assetA, b: assetB } = this.props.assets
-    console.log(this.props.markets)
+    const amountEntered = !_.isEmpty(assetA.value)
     const selectorAssets = this.getSelectorAssets()
 
     return <div className='SwapOfferSelection'>
@@ -76,10 +72,11 @@ class SwapOfferSelection extends Component {
         <CurrencyInputs
           rightInputDisabled
           showInputs
-          showRate
+          showRate={amountEntered}
           rateDisabled
+          rateTitle='Estimated Rate'
           leftHelpText={`Min: ${this.props.market.min}   Max: ${this.props.market.max}`} />
-        {/* <span className='SwapOfferSelection_host'>Trade with <img src={config.hostIcon} alt={config.hostName} /></span> */}
+        { !amountEntered && <span className='SwapOfferSelection_host'>Trade with <br /><img src={config.hostIcon} alt={config.hostName} /></span> }
       </div> }
       { !this.props.assetSelector.open && <div className='SwapOfferSelection_bottom'>
         <Button wide primary onClick={this.props.retrieveAgentQuote}>See Offer</Button><br />

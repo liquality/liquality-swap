@@ -16,7 +16,7 @@
   }
 
   &_terms {
-    padding-top: 40px;
+    padding-top: 60px;
     text-align: center;
     font-size: $h1-font-size;
   }
@@ -31,7 +31,6 @@
 
   &_bottom {
     text-align: center;
-    background: #F7F8F9;
     margin-top: 20px;
     padding-top: 40px;
     min-height: 210px;
@@ -40,9 +39,5 @@
 
   &_errorMessage {
     @include error-message;
-  }
-
-  .CounterPartyWallets, .ExpirationDetails, .InitiatorExpirationInfo {
-    margin-bottom: 30px;
   }
 }
