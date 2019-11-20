@@ -8,7 +8,7 @@ import './CurrencyInputs.css'
 class CurrencyInputs extends Component {
   render () {
     const { a: assetA, b: assetB, rate: assetRate } = this.props.assets
-    const errors = this.props.showErrors ? getCurrencyInputErrors(this.props.assets) : {}
+    const errors = this.props.showErrors ? getCurrencyInputErrors(this.props.assets, this.props.agent) : {}
     return <div className='CurrencyInputs'>
       <div className='row justify-content-between no-gutters'>
         <div className='col CurrencyInputs_left'>

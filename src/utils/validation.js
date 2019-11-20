@@ -1,15 +1,18 @@
 import moment from 'moment'
+import _ from 'lodash'
 import config from '../config'
 import cryptoassets from '@liquality/cryptoassets'
 import { generateSwapState } from './app-links'
 import { getClaimExpiration } from './expiration'
 
-function getCurrencyInputErrors (assets) {
+function getCurrencyInputErrors (assets, agent) {
   const errors = {}
   const { a: assetA, b: assetB, rate: assetRate } = assets
-  if (!(assetA.value > 0)) errors.assetA = 'Amount not set'
-  if (!(assetB.value > 0)) errors.assetB = 'Amount not set'
+  if (_.isEmpty(assetA.value)) errors.assetA = 'Amount not set'
+  if (_.isEmpty(assetB.value)) errors.assetB = 'Amount not set'
   if (!(assetRate > 0)) errors.rate = 'Please select the conversion rate'
+  if (agent.market && !_.isEmpty(assetA.value) && (assetA.value > agent.market.max)) errors.assetA = 'Amount over max'
+  if (agent.market && !_.isEmpty(assetA.value) && (assetA.value < agent.market.min)) errors.assetA = 'Amount under max'
   return errors
 }
 
@@ -76,4 +79,22 @@ function isInitiateValid (swap) {
   return numErrors === 0
 }
 
-export { getCurrencyInputErrors, getWalletErrors, getCounterPartyErrors, getInitiationErrors, getClaimErrors, isInitiateValid }
+function isAgentRequestValid (swap) {
+  let errors = [
+    getCurrencyInputErrors(swap.assets, swap.agent)
+  ]
+
+  const numErrors = errors.reduce((prev, next) => prev + Object.keys(next).length, 0)
+
+  return numErrors === 0
+}
+
+export {
+  getCurrencyInputErrors,
+  getWalletErrors,
+  getCounterPartyErrors,
+  getInitiationErrors,
+  getClaimErrors,
+  isInitiateValid,
+  isAgentRequestValid
+}

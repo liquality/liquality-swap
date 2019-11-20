@@ -15,7 +15,7 @@ const CurrencyInput = (props) => {
     </div>
     <div className={classNames('CurrencyInput_label', { 'CurrencyInput_errorMessage': props.error })}>
       { props.error && props.error }
-      { props.helpText && props.helpText }
+      { props.helpText && !props.error && props.helpText }
     </div>
   </div>
 }

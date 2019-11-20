@@ -29,7 +29,6 @@ class SwapOfferSelection extends Component {
   }
 
   getSelectorAssets () {
-    console.log('themarkets', this.props.markets)
     const { a: assetA, b: assetB } = this.props.assets
     let assets = []
     if (this.props.assetSelector.party === 'a') {
@@ -41,8 +40,6 @@ class SwapOfferSelection extends Component {
     }
     const currentSelectedAsset = this.props.assetSelector.party === 'a' ? assetA.currency : assetB.currency
     assets = assets.filter(asset => asset !== currentSelectedAsset)
-    console.log(currentSelectedAsset)
-    console.log('assets', assets)
     return assets
   }
 
@@ -72,6 +69,7 @@ class SwapOfferSelection extends Component {
         <CurrencyInputs
           rightInputDisabled
           showInputs
+          showErrors
           showRate={amountEntered}
           rateDisabled
           rateTitle='Estimated Rate'
