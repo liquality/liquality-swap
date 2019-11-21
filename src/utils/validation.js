@@ -8,7 +8,6 @@ import { getClaimExpiration } from './expiration'
 function getCurrencyInputErrors (assets, agent) {
   const errors = {}
   const { a: assetA, b: assetB, rate: assetRate } = assets
-  console.log(assets)
   if (!(assetA.value > 0)) errors.assetA = 'Amount not set'
   if (!(assetB.value > 0)) errors.assetB = 'Amount not set'
   if (!(assetRate > 0)) errors.rate = 'Please select the conversion rate'
