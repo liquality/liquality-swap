@@ -8,11 +8,12 @@ import { getClaimExpiration } from './expiration'
 function getCurrencyInputErrors (assets, agent) {
   const errors = {}
   const { a: assetA, b: assetB, rate: assetRate } = assets
-  if (_.isEmpty(assetA.value)) errors.assetA = 'Amount not set'
-  if (_.isEmpty(assetB.value)) errors.assetB = 'Amount not set'
+  console.log(assets)
+  if (!(assetA.value > 0)) errors.assetA = 'Amount not set'
+  if (!(assetB.value > 0)) errors.assetB = 'Amount not set'
   if (!(assetRate > 0)) errors.rate = 'Please select the conversion rate'
-  if (agent.market && !_.isEmpty(assetA.value) && (assetA.value > agent.market.max)) errors.assetA = 'Amount over max'
-  if (agent.market && !_.isEmpty(assetA.value) && (assetA.value < agent.market.min)) errors.assetA = 'Amount under max'
+  if (agent && agent.market && !_.isEmpty(assetA.value) && (assetA.value > agent.market.max)) errors.assetA = 'Amount over max'
+  if (agent && agent.market && !_.isEmpty(assetA.value) && (assetA.value < agent.market.min)) errors.assetA = 'Amount under min'
   return errors
 }
 
