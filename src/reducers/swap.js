@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux'
 
 import { types } from '../actions/swap'
-import { steps } from '../components/SwapProgressStepper/steps'
 
 import assets from './assets'
 import wallets from './wallets'
@@ -21,7 +20,7 @@ export default combineReducers({
   assetSelector,
   agent,
   sync,
-  step: (state = steps.INITIATION, action) => {
+  step: (state = null, action) => {
     return action.type === types.SET_STEP ? action.step : state
   },
   expiration: (state = null, action) => {

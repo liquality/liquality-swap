@@ -21,7 +21,7 @@ class SwapInitiation extends Component {
       <SwapPairPanel
         haveCurrency={this.props.assets.a.currency}
         wantCurrency={this.props.assets.b.currency}
-        icon={this.props.isPartyB ? undefined : SwapIcon}
+        icon={inputsDisabled ? undefined : SwapIcon}
         onIconClick={() => this.props.switchSides()} />
       <div className='SwapInitiation_top'>
         <CurrencyInputs showInputs leftInputDisabled={inputsDisabled} rightInputDisabled={inputsDisabled} rateDisabled={this.props.assets.rateLocked} showRate />

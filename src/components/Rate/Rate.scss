@@ -21,7 +21,6 @@
     border-radius: 50%;
     padding: 30px 10px;
     background: $color-bg-primary;
-    text-transform: uppercase;
   }
 
   &.error &_circle {
@@ -38,9 +37,11 @@
     -moz-appearance:textfield;
   }
 
-  strong {
-    color: #333;
-    font-weight: bold;
+  &.strong {
+    .Rate_stable, .Rate_equal, .Rate_amount {
+      font-weight: bold;
+      color: $color-text-1;
+    }
   }
 
   &_heading {

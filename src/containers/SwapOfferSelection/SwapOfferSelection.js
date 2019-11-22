@@ -4,6 +4,7 @@ import Button from '../../components/Button/Button'
 import SwapPairPanel from '../../components/SwapPairPanel/SwapPairPanel'
 import AssetSelector from '../../components/AssetSelector/AssetSelector'
 import CurrencyInputs from '../CurrencyInputs'
+import SwapIcon from '../../icons/switch.svg'
 import './SwapOfferSelection.css'
 import { APP_BASE_URL } from '../../utils/app-links'
 import config from '../../config'
@@ -47,6 +48,7 @@ class SwapOfferSelection extends Component {
     const { a: assetA, b: assetB } = this.props.assets
     const amountEntered = !_.isEmpty(assetA.value)
     const selectorAssets = this.getSelectorAssets()
+    const switchSidesAvailable = this.props.markets.find(market => market.from === assetB.currency && market.to === assetA.currency)
 
     return <div className='SwapOfferSelection'>
       <SwapPairPanel
@@ -55,7 +57,10 @@ class SwapOfferSelection extends Component {
         showCurrencyLabels
         focusSide={this.props.assetSelector.party && (this.props.assetSelector.party === 'a' ? 'have' : 'want')}
         onHaveClick={() => this.handlePairPanelAssetClick('a')}
-        onWantClick={() => this.handlePairPanelAssetClick('b')} />
+        onWantClick={() => this.handlePairPanelAssetClick('b')}
+        icon={SwapIcon}
+        iconDisabled={!switchSidesAvailable}
+        onIconClick={() => this.props.switchSides()} />
       <div className='SwapOfferSelection_assetSelector'>
         { this.props.assetSelector.open &&
           <AssetSelector
@@ -72,6 +77,7 @@ class SwapOfferSelection extends Component {
           showErrors
           showRate={amountEntered}
           rateDisabled
+          rateStrong
           rateTitle='Estimated Rate'
           leftHelpText={`Min: ${this.props.market.min}   Max: ${this.props.market.max}`} />
         { !amountEntered && <span className='SwapOfferSelection_host'>Trade with <br /><img src={config.hostIcon} alt={config.hostName} /></span> }

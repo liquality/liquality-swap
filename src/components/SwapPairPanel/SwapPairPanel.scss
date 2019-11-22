@@ -17,6 +17,11 @@
     top: 123px;
     left: 0;
     right: 0;
+
+    &.disabled {
+      filter: gray;
+      -webkit-filter: grayscale(100%);
+    }
   }
   
   &_assetContainer {

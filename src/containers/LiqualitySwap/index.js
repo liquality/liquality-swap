@@ -15,6 +15,7 @@ export default withRouter(connect(
   {
     waitForSwapClaim: swapActions.waitForSwapClaim,
     waitForSwapRefund: swapActions.waitForSwapRefund,
+    setStep: swapActions.setStep,
     clearError: errorActions.clearError,
     waitForWallet: walletsActions.waitForWallet,
     waitForWalletInitialization: walletsActions.waitForWalletInitialization,

@@ -20,6 +20,7 @@ import SwapProgressStepper from '../../components/SwapProgressStepper/SwapProgre
 import { generateLink } from '../../utils/app-links'
 import config from '../../config'
 
+import { steps } from '../../components/SwapProgressStepper/steps'
 import LiqualityLogo from '../../logo-text.png'
 import Spinner from './spinner.svg'
 import './LiqualitySwap.css'
@@ -63,7 +64,10 @@ class LiqualitySwap extends Component {
     if (currentWallet === 'b' && walletB.connected) {
       closeAction = () => { this.props.history.replace('/walletA') }
     } else if (currentWallet === 'a' && walletA.connected) {
-      closeAction = () => { this.props.history.replace('/initiation') }
+      closeAction = () => {
+        this.props.history.replace('/initiation')
+        this.props.setStep(steps.INITIATION)
+      }
     } else if (currentWallet === 'a') {
       closeAction = () => { this.props.history.replace('/walletB') }
     }
@@ -101,7 +105,7 @@ class LiqualitySwap extends Component {
       <div className='LiqualitySwap_header'>
         <img className='LiqualitySwap_logo' src={LiqualityLogo} alt='Liquality Logo' />
         { this.getSyncBar() }
-        <SwapProgressStepper state={this.props.swap.step} />
+        { this.props.swap.step && <SwapProgressStepper state={this.props.swap.step} /> }
       </div>
       <div className='LiqualitySwap_main'>
         <div className='LiqualitySwap_wave' />

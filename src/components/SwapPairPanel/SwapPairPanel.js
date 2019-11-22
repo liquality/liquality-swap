@@ -33,7 +33,10 @@ class SwapPairPanel extends Component {
           alt={wantCurrency.code}
           onClick={this.props.onWantClick} />}
         <img src={AssetsBG} className='SwapPairPanel_assetsBG' alt='' />
-        {this.props.icon && <img src={this.props.icon} className='SwapPairPanel_icon' onClick={(e) => this.props.onIconClick(e)} alt='' />}
+        {this.props.icon && <img
+          src={this.props.icon} alt=''
+          className={classNames('SwapPairPanel_icon', { 'disabled': this.props.iconDisabled })}
+          onClick={e => !this.props.iconDisabled && this.props.onIconClick(e)} />}
       </div>
       <div className='SwapPairPanel_labels'>
         <h1 className={classNames(
@@ -71,6 +74,7 @@ SwapPairPanel.propTypes = {
   wantLabel: PropTypes.string.isRequired,
   onWantClick: PropTypes.func,
   icon: PropTypes.any,
+  iconDisabled: PropTypes.bool,
   onIconClick: PropTypes.func,
   showCurrencyLabels: PropTypes.bool,
   focusSide: PropTypes.oneOf(['have', 'want'])
