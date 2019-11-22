@@ -5,6 +5,13 @@ class Agent {
   constructor (url) {
     this._url = url
     this._axios = axios.create({baseURL: this._url})
+    this._axios.interceptors.response.use(function (response) {
+      return response
+    }, function (e) {
+      if (e.response.data && e.response.data.error) {
+        throw new Error(`Agent: ${e.response.data.error}`)
+      } else return e
+    })
   }
 
   async getMarketInfo () {
