@@ -15,6 +15,7 @@ import EthereumSwapProvider from '@liquality/ethereum-swap-provider'
 import EthereumErc20Provider from '@liquality/ethereum-erc20-provider'
 import EthereumErc20SwapProvider from '@liquality/ethereum-erc20-swap-provider'
 import EthereumMetaMaskProvider from '@liquality/ethereum-metamask-provider'
+import EthereumWalletConnectProvider from '@walletconnect/web3-provider'
 
 import config from '../config'
 
@@ -70,6 +71,8 @@ function createEthClient (asset, wallet) {
     ethClient.addProvider(new EthereumMetaMaskProvider(web3.currentProvider, EthereumNetworks[ethConfig.network]))
   } else if (wallet === 'ethereum_ledger') {
     ethClient.addProvider(new EthereumLedgerProvider({network: EthereumNetworks[ethConfig.network]}))
+  } else if (wallet === 'walletconnect') {
+    ethClient.addProvider(new EthereumWalletConnectProvider({rpc: {1: ethConfig.rpc.url }}))
   }
   ethClient.addProvider(new EthereumSwapProvider())
   return ethClient
@@ -85,6 +88,8 @@ function createERC20Client (asset, wallet) {
     erc20Client.addProvider(new EthereumMetaMaskProvider(web3.currentProvider, EthereumNetworks[assetConfig.network]))
   } else if (wallet === 'ethereum_ledger') {
     erc20Client.addProvider(new EthereumLedgerProvider({network: EthereumNetworks[assetConfig.network]}))
+  } else if (wallet === 'walletconnect') {
+    erc20Client.addProvider(new EthereumWalletConnectProvider({rpc: {1: ethConfig.rpc.url }}))
   }
   erc20Client.addProvider(new EthereumErc20Provider(assetConfig.contractAddress))
   erc20Client.addProvider(new EthereumErc20SwapProvider())

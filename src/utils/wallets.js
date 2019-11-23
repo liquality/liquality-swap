@@ -2,6 +2,7 @@ import config from '../config'
 import metamask from '../icons/metamask.svg'
 import ledger from '../icons/ledger.svg'
 import node from '../icons/node.svg'
+import walletconnect from '../icons/walletconnect.svg'
 
 const wallets = {
   'metamask': {
@@ -56,13 +57,22 @@ const wallets = {
       description: 'Navigate to your Ethereum account. Follow Ledger instructions to connect Ethereum wallet'
     },
     troubleshootConnectionLink: 'https://support.ledger.com/hc/en-us/articles/115005195945'
+  },
+  'walletconnect': {
+    icon: walletconnect,
+    name: 'WalletConnect',
+    connection: {
+      title: 'Scan with WalletConnect',
+      description: 'Connect with your WalletConnect-compatible mobile wallet'
+    },
+    troubleshootConnectionLink: ''
   }
 }
 
 const walletsByAsset = {
-  eth: ['metamask', 'ethereum_ledger', 'ethereum_node'],
+  eth: ['metamask', 'walletconnect', 'ethereum_ledger', 'ethereum_node'],
   btc: ['bitcoin_ledger_legacy', 'bitcoin_ledger_native_segwit', 'bitcoin_node'],
-  erc20: ['metamask', 'ethereum_ledger', 'ethereum_node']
+  erc20: ['metamask', 'walletconnect', 'ethereum_ledger', 'ethereum_node']
 }
 
 function getAssetWallets (asset) {
