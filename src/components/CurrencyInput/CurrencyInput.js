@@ -6,12 +6,16 @@ import cryptoassets from '@liquality/cryptoassets'
 import './CurrencyInput.css'
 
 const CurrencyInput = (props) => {
+  const preventNegative = (e) => {
+    if (e.key === '-' || e.key === 'e') e.preventDefault()
+  }
+
   return <div className='CurrencyInput'>
     <h3 className='CurrencyInput_heading'>{cryptoassets[props.currency].code}</h3>
     <div className={classNames('CurrencyInput_inputWrapper', { 'disabled': props.disabled })}>
-      <input type='number' readOnly={props.disabled} value={props.value}
+      <input type='number' min='0' readOnly={props.disabled} value={props.value}
         className={classNames('CurrencyInput_input', { 'error': props.error })} placeholder='0.00'
-        onChange={e => props.onChange(e.target.value)} tabIndex={props.tabIndex} />
+        onChange={e => props.onChange(e.target.value)} onKeyDown={preventNegative} tabIndex={props.tabIndex} />
     </div>
     <div className={classNames('CurrencyInput_label', { 'CurrencyInput_errorMessage': props.error })}>
       { props.error && props.error }
