@@ -8,9 +8,9 @@ class Agent {
     this._axios.interceptors.response.use(function (response) {
       return response
     }, function (e) {
-      if (e.response.data && e.response.data.error) {
-        throw new Error(`Agent: ${e.response.data.error}`)
-      } else return e
+      let error = ''
+      if (e.response && e.response.data && e.response.data.error) error = '. ' + e.response.data.error
+      throw new Error(`Agent: ${e.message}${error}`)
     })
   }
 
