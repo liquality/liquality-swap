@@ -30,7 +30,7 @@ function waitForWalletInitialization (party, currency, wallet) {
     let allAddresses = await client.wallet.getUsedAddresses(addressesPerCall)
     allAddresses = [ ...new Set([ unusedAddress, ...allAddresses ].map(a => a.address)) ]
     allAddresses = allAddresses.map(currency.formatAddress)
-    if (!wallets[party].addresses[0] !== null) { // Preserve the preset address for party B
+    if (wallets[party].addresses[0] !== null) { // Preserve the preset address for party B
       const expectedAddress = wallets[party].addresses[0]
       if (allAddresses.includes(expectedAddress)) {
         allAddresses = [expectedAddress, ...allAddresses.filter(address => address !== expectedAddress)]
