@@ -29,6 +29,12 @@ class SwapOfferSelection extends Component {
     }
   }
 
+  handleSwitchSides () {
+    const { a: assetA, b: assetB } = this.props.assets
+    const market = this.props.markets.find(market => market.from === assetB.currency && market.to === assetA.currency)
+    this.props.setMarket(market)
+  }
+
   getSelectorAssets () {
     const { a: assetA, b: assetB } = this.props.assets
     let assets = []
@@ -60,7 +66,7 @@ class SwapOfferSelection extends Component {
         onWantClick={() => this.handlePairPanelAssetClick('b')}
         icon={SwapIcon}
         iconDisabled={!switchSidesAvailable}
-        onIconClick={() => this.props.switchSides()} />
+        onIconClick={() => this.handleSwitchSides()} />
       <div className='SwapOfferSelection_assetSelector'>
         { this.props.assetSelector.open &&
           <AssetSelector
