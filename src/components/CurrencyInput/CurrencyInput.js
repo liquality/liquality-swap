@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import BigNumber from 'bignumber.js'
 
 import cryptoassets from '@liquality/cryptoassets'
 import './CurrencyInput.css'
-import BigNumber from 'bignumber.js'
 
 const CurrencyInput = (props) => {
   const asset = cryptoassets[props.currency]
@@ -14,7 +14,15 @@ const CurrencyInput = (props) => {
   }
 
   const restrictNumber = (num) => {
-    return BigNumber(BigNumber(num).toFixed(asset.decimals)).toString()
+    if (num.includes('.') && num.split('.')[1].length > asset.decimals) {
+      return BigNumber(BigNumber(num).toFixed(asset.decimals, BigNumber.ROUND_DOWN)).toString()
+    }
+
+    return num
+  }
+
+  const onChange = (e) => {
+    props.onChange(restrictNumber(e.target.value))
   }
 
   return <div className='CurrencyInput'>
@@ -22,7 +30,7 @@ const CurrencyInput = (props) => {
     <div className={classNames('CurrencyInput_inputWrapper', { 'disabled': props.disabled })}>
       <input type='number' min='0' readOnly={props.disabled} value={restrictNumber(props.value)}
         className={classNames('CurrencyInput_input', { 'error': props.error })} placeholder='0.00'
-        onChange={e => props.onChange(e.target.value)} onKeyDown={preventNegative} tabIndex={props.tabIndex} />
+        onChange={onChange} onKeyDown={preventNegative} tabIndex={props.tabIndex} />
     </div>
     <div className={classNames('CurrencyInput_label', { 'CurrencyInput_errorMessage': props.error })}>
       { props.error && props.error }
