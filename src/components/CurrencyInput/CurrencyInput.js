@@ -14,7 +14,7 @@ const CurrencyInput = (props) => {
   }
 
   const restrictNumber = (num) => {
-    if (num.includes('.') && num.split('.')[1].length > asset.decimals) {
+    if (typeof num === 'string' && num.includes('.') && num.split('.')[1].length > asset.decimals) {
       return BigNumber(BigNumber(num).toFixed(asset.decimals, BigNumber.ROUND_DOWN)).toString()
     }
 
