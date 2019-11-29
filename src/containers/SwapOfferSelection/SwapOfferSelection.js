@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
+import BigNumber from 'bignumber.js'
 import Button from '../../components/Button/Button'
 import SwapPairPanel from '../../components/SwapPairPanel/SwapPairPanel'
 import AssetSelector from '../../components/AssetSelector/AssetSelector'
@@ -56,6 +57,10 @@ class SwapOfferSelection extends Component {
     const selectorAssets = this.getSelectorAssets()
     const switchSidesAvailable = this.props.markets.find(market => market.from === assetB.currency && market.to === assetA.currency)
 
+    const minString = BigNumber(this.props.market.min).toFixed()
+    const maxString = BigNumber(this.props.market.max).toFixed()
+    const minMaxLabel = `Min: ${minString} Max: ${maxString}`
+
     return <div className='SwapOfferSelection'>
       <SwapPairPanel
         haveCurrency={assetA.currency}
@@ -85,7 +90,7 @@ class SwapOfferSelection extends Component {
           rateDisabled
           rateStrong
           rateTitle='Estimated Rate'
-          leftHelpText={`Min: ${this.props.market.min}   Max: ${this.props.market.max}`} />
+          leftHelpText={minMaxLabel} />
         { !amountEntered && <span className='SwapOfferSelection_host'>Trade with <br /><img src={config.hostIcon} alt={config.hostName} /></span> }
       </div> }
       { !this.props.assetSelector.open && <div className='SwapOfferSelection_bottom'>
