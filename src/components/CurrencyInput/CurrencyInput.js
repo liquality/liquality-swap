@@ -4,16 +4,23 @@ import classNames from 'classnames'
 
 import cryptoassets from '@liquality/cryptoassets'
 import './CurrencyInput.css'
+import BigNumber from 'bignumber.js'
 
 const CurrencyInput = (props) => {
+  const asset = cryptoassets[props.currency]
+
   const preventNegative = (e) => {
     if (e.key === '-' || e.key === 'e') e.preventDefault()
   }
 
+  const restrictNumber = (num) => {
+    return BigNumber(BigNumber(num).toFixed(asset.decimals)).toString()
+  }
+
   return <div className='CurrencyInput'>
-    <h3 className='CurrencyInput_heading'>{cryptoassets[props.currency].code}</h3>
+    <h3 className='CurrencyInput_heading'>{asset.code}</h3>
     <div className={classNames('CurrencyInput_inputWrapper', { 'disabled': props.disabled })}>
-      <input type='number' min='0' readOnly={props.disabled} value={props.value}
+      <input type='number' min='0' readOnly={props.disabled} value={restrictNumber(props.value)}
         className={classNames('CurrencyInput_input', { 'error': props.error })} placeholder='0.00'
         onChange={e => props.onChange(e.target.value)} onKeyDown={preventNegative} tabIndex={props.tabIndex} />
     </div>
