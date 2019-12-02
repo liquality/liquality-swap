@@ -32,9 +32,11 @@ const CurrencyInput = (props) => {
         className={classNames('CurrencyInput_input', { 'error': props.error })} placeholder='0.00'
         onChange={onChange} onKeyDown={preventNegative} tabIndex={props.tabIndex} />
     </div>
-    <div className={classNames('CurrencyInput_label', { 'CurrencyInput_errorMessage': props.error })}>
-      { props.error && props.error }
-      { props.helpText && !props.error && props.helpText }
+    { props.error && <div className={classNames('CurrencyInput_label', { 'CurrencyInput_errorMessage': props.error })}>
+      { props.error }
+    </div> }
+    <div className='CurrencyInput_label'>
+      { props.helpText && props.helpText }
     </div>
   </div>
 }

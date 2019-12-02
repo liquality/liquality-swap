@@ -45,8 +45,10 @@
 
   &_label {
     height: 20px;
+    padding-top: 1px;
     font-size: $font-size-sm;
     text-align: center;
+    color: #747E8D;
   }
 
   &_errorMessage {

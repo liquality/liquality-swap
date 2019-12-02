@@ -37,8 +37,12 @@
     -moz-appearance:textfield;
   }
 
+  .Rate_stable {
+    font-weight: bold;
+  }
+
   &.strong {
-    .Rate_stable, .Rate_equal, .Rate_amount {
+    .Rate_equal, .Rate_amount {
       font-weight: bold;
       color: $color-text-1;
     }
