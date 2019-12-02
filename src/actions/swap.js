@@ -39,6 +39,7 @@ function setExpiration (expiration) {
 
 function setLink (link) {
   localStorage.setItem(link, '')
+  window.location = link
   return { type: types.SET_LINK, link }
 }
 
