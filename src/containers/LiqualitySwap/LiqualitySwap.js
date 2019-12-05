@@ -60,7 +60,9 @@ class LiqualitySwap extends Component {
   getConnectWallet (currentWallet) {
     const walletA = this.props.swap.wallets.a
     const walletB = this.props.swap.wallets.b
-    let closeAction = () => { this.props.history.replace('/') }
+    let closeAction = () => {
+      this.props.history.replace(this.props.swap.agent.quote ? '/offerConfirmation' : '/assetSelection')
+    }
     if (currentWallet === 'b' && walletB.connected) {
       closeAction = () => { this.props.history.replace('/walletA') }
     } else if (currentWallet === 'a' && walletA.connected) {
