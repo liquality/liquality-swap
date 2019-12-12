@@ -4,6 +4,7 @@ import assets from '@liquality/cryptoassets'
 import { APP_BASE_URL } from '../../utils/app-links'
 import './SwapOfferConfirmation.css'
 import BrandCard from '../../components/BrandCard/BrandCard'
+import TimeProgressBar from '../../components/TimeProgressBar/TimeProgressBar'
 
 class SwapOfferConfirmation extends Component {
   handleAcceptRate () {
@@ -16,6 +17,7 @@ class SwapOfferConfirmation extends Component {
   }
   render () {
     return <BrandCard className='SwapOfferConfirmation' title='Offer'>
+      <TimeProgressBar startTime={this.props.quote.retrievedAt} endTime={this.props.quote.expiresAt} />
       <div class='SwapOfferConfirmation_terms'>Get {this.props.assets.b.value} {assets[this.props.assets.b.currency].code} <br />
       for<br />
         {this.props.assets.a.value} {assets[this.props.assets.a.currency].code}</div>

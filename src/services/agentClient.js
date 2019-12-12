@@ -23,7 +23,10 @@ class Agent {
     const response = await this._axios.post('/api/swap/order', {
       from: from.toUpperCase(), to: to.toUpperCase(), fromAmount
     })
-    return response.data
+    return {
+      ...response.data,
+      retrievedAt: Date.now()
+    }
   }
 
   async submitOrder (quoteId, fundHash, fromAddress, toAddress, secretHash, expiration) {

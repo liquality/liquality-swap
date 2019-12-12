@@ -10,10 +10,7 @@
   }
 
   &_assetSelector {
-    position: absolute;
-    width: 100%;
-    top: 80px;
-    padding: 130px 0 28px 0;
+    padding-top: 20px;
     box-shadow: 0px 2px 14px $color-shadow;
     border-radius: 0 0 $swap-panel-radius $swap-panel-radius;
     background: $color-bg-primary;
@@ -21,12 +18,9 @@
   }
   
   &_top {
-    $panel-spacing: 80px;
-
-    position: absolute;
+    position: relative;
     width: 100%;
-    top: 140px; // NORMALLY $panel-spacing
-    padding: $panel-spacing 0 28px 0;
+    padding-bottom: 28px;
     box-shadow: 0px 2px 14px $color-shadow;
     border-radius: 0 0 $swap-panel-radius $swap-panel-radius;
     background: $color-bg-primary;
@@ -35,8 +29,9 @@
 
   &_bottom {
     position: relative;
+    top: -40px;
     text-align: center;
-    padding: 240px 30px 20px;
+    padding: 160px 30px 20px;
     background: $color-bg-secondary;
     box-shadow: 0px -2px 14px $color-shadow;
     border-radius: $swap-panel-radius;

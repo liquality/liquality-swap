@@ -2,21 +2,12 @@
 @import '../../scss/mixins.scss';
 
 .SwapOfferConfirmation {
-
-  .SwapPairPanel {
-    z-index: $layer-top;
-  }
-  
-  .Rate {
-    top: 90px;
-  }
-
-  .OfferExpirationTimer {
-    margin: 0 auto;
+  .TimeProgressBar {
+    margin: 20px;
   }
 
   &_terms {
-    padding-top: 60px;
+    padding-top: 30px;
     text-align: center;
     font-size: $h1-font-size;
   }

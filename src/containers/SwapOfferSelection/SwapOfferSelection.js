@@ -72,15 +72,14 @@ class SwapOfferSelection extends Component {
         icon={SwapIcon}
         iconDisabled={!switchSidesAvailable}
         onIconClick={() => this.handleSwitchSides()} />
-      <div className='SwapOfferSelection_assetSelector'>
-        { this.props.assetSelector.open &&
-          <AssetSelector
-            search={this.props.assetSelector.search}
-            assets={selectorAssets}
-            onSelectAsset={asset => this.handleSelectAsset(asset)}
-            onSearchChange={value => this.props.setAssetSelectorSearch(value)}
-            onClose={() => this.props.closeAssetSelector()} /> }
-      </div>
+      { this.props.assetSelector.open && <div className='SwapOfferSelection_assetSelector'>
+        <AssetSelector
+          search={this.props.assetSelector.search}
+          assets={selectorAssets}
+          onSelectAsset={asset => this.handleSelectAsset(asset)}
+          onSearchChange={value => this.props.setAssetSelectorSearch(value)}
+          onClose={() => this.props.closeAssetSelector()} />
+      </div> }
       { !this.props.assetSelector.open && <div className='SwapOfferSelection_top'>
         <CurrencyInputs
           rightInputDisabled

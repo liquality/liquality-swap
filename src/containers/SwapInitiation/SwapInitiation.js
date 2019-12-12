@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import Button from '../../components/Button/Button'
 import ExpirationDetails from '../../components/ExpirationDetails'
 import SwapPairPanel from '../../components/SwapPairPanel/SwapPairPanel'
+import TimeProgressBar from '../../components/TimeProgressBar/TimeProgressBar'
 import HandshakeIcon from '../../icons/handshake.png'
 import SwapIcon from '../../icons/switch.svg'
 import CounterPartyWallets from '../CounterPartyWallets'
@@ -24,6 +25,7 @@ class SwapInitiation extends Component {
         icon={inputsDisabled ? undefined : SwapIcon}
         onIconClick={() => this.props.switchSides()} />
       <div className='SwapInitiation_top'>
+        {this.props.quote && <div className='SwapInitiation_quoteTimer'><TimeProgressBar startTime={this.props.quote.retrievedAt} endTime={this.props.quote.expiresAt} /></div>}
         <CurrencyInputs showInputs leftInputDisabled={inputsDisabled} rightInputDisabled={inputsDisabled} rateDisabled={this.props.assets.rateLocked} showRate />
       </div>
       <WalletPanel />

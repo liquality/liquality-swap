@@ -2,14 +2,8 @@
 @import '../../scss/mixins.scss';
 
 .Rate {
-  position: absolute;
   display: block;
-  margin: 0 auto;
-  top: 106px;
-  left: 0;
-  right: 0;
   text-align: center;
-  z-index: $layer-bottom;
   width: 250px;
 
   &_circle {

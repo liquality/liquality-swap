@@ -14,29 +14,32 @@ class SwapPairPanel extends Component {
     const showWant = (!this.props.focusSide || this.props.focusSide === 'want')
     return <div className='SwapPairPanel'>
       <div className='SwapPairPanel_assetContainer'>
-        {showHave && <img
-          src={assetUtils.getIcon(haveCurrency.code)}
-          className={classNames(
-            'SwapPairPanel_asset',
-            'SwapPairPanel_asset_left',
-            {'SwapPairPanel_asset_interactive': this.props.onHaveClick}
-          )}
-          alt={haveCurrency.code}
-          onClick={this.props.onHaveClick} />}
-        {showWant && <img
-          src={assetUtils.getIcon(wantCurrency.code)}
-          className={classNames(
-            'SwapPairPanel_asset',
-            'SwapPairPanel_asset_right',
-            {'SwapPairPanel_asset_interactive': this.props.onHaveClick}
-          )}
-          alt={wantCurrency.code}
-          onClick={this.props.onWantClick} />}
-        <img src={AssetsBG} className='SwapPairPanel_assetsBG' alt='' />
-        {this.props.icon && <img
-          src={this.props.icon} alt=''
-          className={classNames('SwapPairPanel_icon', { 'disabled': this.props.iconDisabled })}
-          onClick={e => !this.props.iconDisabled && this.props.onIconClick(e)} />}
+        <div className='SwapPairPanel_assetContainer_main'>
+          {showHave && <img
+            src={assetUtils.getIcon(haveCurrency.code)}
+            className={classNames(
+              'SwapPairPanel_asset',
+              'SwapPairPanel_asset_left',
+              {'SwapPairPanel_asset_interactive': this.props.onHaveClick}
+            )}
+            alt={haveCurrency.code}
+            onClick={this.props.onHaveClick} />}
+          {showWant && <img
+            src={assetUtils.getIcon(wantCurrency.code)}
+            className={classNames(
+              'SwapPairPanel_asset',
+              'SwapPairPanel_asset_right',
+              {'SwapPairPanel_asset_interactive': this.props.onHaveClick}
+            )}
+            alt={wantCurrency.code}
+            onClick={this.props.onWantClick} />}
+          <img src={AssetsBG} className='SwapPairPanel_assetsBG' alt='' />
+          {this.props.icon && <img
+            src={this.props.icon} alt=''
+            className={classNames('SwapPairPanel_icon', { 'disabled': this.props.iconDisabled })}
+            onClick={e => !this.props.iconDisabled && this.props.onIconClick(e)} />}
+        </div>
+        <div className='SwapPairPanel_filler' />
       </div>
       <div className='SwapPairPanel_labels'>
         <h1 className={classNames(

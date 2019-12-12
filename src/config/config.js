@@ -3,6 +3,12 @@ export default {
   hostIcon: 'https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png',
   hostAgent: 'http://localhost:3030',
   assets: {
+    bcbc: {
+      rpc: {
+        url: 'https://rpc.bogart.network'
+      },
+      network: 'bogart'
+    },
     eth: {
       rpc: {
         url: 'http://localhost:8545'

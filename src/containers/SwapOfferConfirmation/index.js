@@ -3,7 +3,8 @@ import SwapOfferConfirmation from './SwapOfferConfirmation'
 
 const mapStateToProps = state => {
   return {
-    assets: state.swap.assets
+    assets: state.swap.assets,
+    quote: state.swap.agent.quote
   }
 }
 
