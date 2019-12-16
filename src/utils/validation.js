@@ -55,13 +55,10 @@ function getInitiationErrors (transactions, expiration, isVerified, isPartyB) {
   return errors
 }
 
-function getClaimErrors (expiration, isPartyB) {
+function getClaimErrors (transactions, isPartyB) {
   const errors = {}
-  if (!isPartyB) {
-    const safeClaimTime = getClaimExpiration(expiration, 'a').time
-    if (moment().isAfter(safeClaimTime)) {
-      errors.claim = 'Offer expired. Wait for refund.'
-    }
+  if (!isPartyB && transactions.b.refund.hash) {
+    errors.claim = 'Offer expired. Wait for refund.'
   }
   return errors
 }

@@ -9,7 +9,7 @@ import './SwapRedemption.css'
 
 class SwapRedemption extends Component {
   render () {
-    const errors = getClaimErrors(this.props.expiration, this.props.isPartyB)
+    const errors = getClaimErrors(this.props.transactions, this.props.isPartyB)
 
     return <BrandCard className='SwapRedemption' title='Claim Funds'>
       <div className='SwapRedemption_confirmation'>
