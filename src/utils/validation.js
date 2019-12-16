@@ -38,7 +38,7 @@ function getCounterPartyErrors (assets, counterParty) {
   return errors
 }
 
-function getInitiationErrors (transactions, expiration, isVerified, isPartyB) {
+function getInitiationErrors (transactions, expiration, isVerified, isPartyB, quote) {
   const errors = {}
   if (isPartyB) {
     if (!(isVerified && transactions.b.fund.confirmations >= config.minConfirmations)) {
@@ -50,6 +50,10 @@ function getInitiationErrors (transactions, expiration, isVerified, isPartyB) {
     const safeConfirmTime = getClaimExpiration(expiration, isPartyB ? 'b' : 'a').time
     if (moment().isAfter(safeConfirmTime)) {
       errors.initiation = 'Offer expired.'
+    }
+  } else if (quote) {
+    if (Date.now() > quote.expiresAt) {
+      errors.initiation = 'Quote expired.'
     }
   }
   return errors
@@ -68,7 +72,7 @@ function isInitiateValid (swap) {
     getCurrencyInputErrors(swap.assets),
     getWalletErrors(swap.wallets, swap.isPartyB),
     getCounterPartyErrors(swap.assets, swap.counterParty),
-    getInitiationErrors(swap.transactions, swap.expiration, swap.isVerified, swap.isPartyB)
+    getInitiationErrors(swap.transactions, swap.expiration, swap.isVerified, swap.isPartyB, swap.agent.quote)
   ]
 
   const numErrors = errors.reduce((prev, next) => prev + Object.keys(next).length, 0)

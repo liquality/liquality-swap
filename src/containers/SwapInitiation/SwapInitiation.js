@@ -16,7 +16,7 @@ import { APP_BASE_URL } from '../../utils/app-links'
 
 class SwapInitiation extends Component {
   render () {
-    const errors = getInitiationErrors(this.props.transactions, this.props.expiration, this.props.isVerified, this.props.isPartyB)
+    const errors = getInitiationErrors(this.props.transactions, this.props.expiration, this.props.isVerified, this.props.isPartyB, this.props.quote)
     const inputsDisabled = this.props.isPartyB || this.props.quote
     return <div className='SwapInitiation'>
       <SwapPairPanel
