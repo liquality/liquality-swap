@@ -8,15 +8,16 @@ import './CurrencyInputs.css'
 class CurrencyInputs extends Component {
   render () {
     const { a: assetA, b: assetB, rate: assetRate } = this.props.assets
-    const errors = this.props.showErrors ? getCurrencyInputErrors(this.props.assets) : {}
+    const errors = this.props.showErrors ? getCurrencyInputErrors(this.props.assets, this.props.agent) : {}
     return <div className='CurrencyInputs'>
       <div className='row justify-content-between no-gutters'>
         <div className='col CurrencyInputs_left'>
           { this.props.showInputs && <CurrencyInput
             currency={assetA.currency}
             value={assetA.value}
-            disabled={this.props.inputsDisabled}
+            disabled={this.props.leftInputDisabled}
             error={errors.assetA}
+            helpText={this.props.leftHelpText}
             onChange={newValue => this.props.onAmountChange('a', newValue)}
             tabIndex={1} />
           }
@@ -25,8 +26,9 @@ class CurrencyInputs extends Component {
           { this.props.showInputs && <CurrencyInput
             currency={assetB.currency}
             value={assetB.value}
-            disabled={this.props.inputsDisabled}
+            disabled={this.props.rightInputDisabled}
             error={errors.assetB}
+            helpText={this.props.rightHelpText}
             onChange={newValue => this.props.onAmountChange('b', newValue)}
             tabIndex={3} />
           }
@@ -34,11 +36,13 @@ class CurrencyInputs extends Component {
         { this.props.showRate &&
           <div className='CurrencyInputs_centre'>
             <Rate
+              title={this.props.rateTitle}
               currencyA={assetA.currency}
               currencyB={assetB.currency}
               value={assetRate}
               disabled={this.props.rateDisabled}
               error={errors.rate}
+              strong={this.props.rateStrong}
               onChange={newValueA => this.props.onRateChange(newValueA)}
               tabIndex={2}
             />
@@ -50,8 +54,13 @@ class CurrencyInputs extends Component {
 }
 
 CurrencyInputs.propTypes = {
-  inputsDisabled: PropTypes.bool,
+  leftInputDisabled: PropTypes.bool,
+  rightInputDisabled: PropTypes.bool,
+  leftHelpText: PropTypes.string,
+  rightHelpText: PropTypes.string,
   rateDisabled: PropTypes.bool,
+  rateTitle: PropTypes.string,
+  rateStrong: PropTypes.bool,
   showRate: PropTypes.bool,
   showInputs: PropTypes.bool
 }

@@ -3,6 +3,10 @@
 .Waiting {
   text-align: center;
 
+  &_quoteTimer {
+    padding: 14px;
+  }
+
   &_status {
     color: $primary;
     font-size: $font-size-lg;

@@ -9,10 +9,10 @@ import './AssetSelector.css'
 
 class AssetSelector extends Component {
   render () {
-    const configuredAssets = Object.keys(config.assets)
+    const userDefinedAssets = Object.keys(config.assets)
     const displayedAssets = Object.entries(cryptoassets)
-      .filter(([id]) => configuredAssets.includes(id))
-      .filter(([id]) => id !== this.props.excludeAsset)
+      .filter(([id]) => this.props.assets.includes(id))
+      .filter(([id]) => userDefinedAssets.includes(id))
       .filter(([, currency]) =>
         currency.code.toLowerCase().includes(this.props.search.toLowerCase()) ||
         currency.name.toLowerCase().includes(this.props.search.toLowerCase())
@@ -41,14 +41,15 @@ class AssetSelector extends Component {
 
 AssetSelector.propTypes = {
   search: PropTypes.string,
-  excludeAsset: PropTypes.oneOf(Object.keys(cryptoassets)),
+  assets: PropTypes.arrayOf(PropTypes.oneOf(Object.keys(cryptoassets))),
   onSearchChange: PropTypes.func.isRequired,
   onSelectAsset: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired
 }
 
 AssetSelector.defaultProps = {
-  search: ''
+  search: '',
+  assets: [Object.keys(cryptoassets)]
 }
 
 export default AssetSelector

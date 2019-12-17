@@ -1,7 +1,7 @@
 @import '../../scss/variables.scss';
 @import '../../scss/mixins.scss';
 
-.CurrencyInput {
+.OfferCurrencyInput {
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
       -webkit-appearance: none;
@@ -23,10 +23,6 @@
   &_inputWrapper {
     border-bottom: 1px solid #31E4C3;
     padding-bottom: 1px;
-
-    &.disabled {
-      border: none;
-    }
   }
 
   &_input {
@@ -41,17 +37,14 @@
     &.error {
       border: 1px solid $danger;
     }
-  }
 
-  &_label {
-    height: 20px;
-    padding-top: 1px;
-    font-size: $font-size-sm;
-    text-align: center;
-    color: #747E8D;
+    &[readonly] {
+      border: none;
+    }
   }
 
   &_errorMessage {
+    height: 20px;
     @include error-message;
   }
 }

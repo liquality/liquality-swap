@@ -1,0 +1,34 @@
+@import '../../scss/variables.scss';
+
+.TimeProgressBar {
+  color: #FFFFFF;
+  background: #616161;
+  height: 25px;
+  border-radius: 20px;
+  font-size: $font-size-sm;
+  line-height: 1.7rem;
+  position: relative;
+
+  span {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+  }
+
+  // &_timeline {
+  //   width: 100%;
+  //   height: 4px;
+  //   background: linear-gradient(270deg, #FC806F 0%, #DC729D 24.49%, #B35FD5 51.39%, #2CD2CA 72.67%);
+  //   border-radius: 4px;
+  // }
+
+  // &_current {
+  //   width: 113px;
+  //   height: 24px;
+  //   border-radius: 8px;
+  //   position: absolute;
+  //   top: -10px;
+  //   text-align: center;
+  //   color: #FFFFFF;
+  // }
+}

@@ -1,57 +1,31 @@
 @import '../../scss/variables.scss';
 
 .CounterPartySelection {
-  width: 850px;
+  width: 460px;
+  margin: 100px auto;
+  background: #ffffff;
+  text-align: center;
+  padding: 56px 30px;
+  background-color: white;
+  border-radius: 5%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background-position: bottom;
+  background-repeat: no-repeat;
+  -webkit-background-size: 100% 9px;
+  -moz-background-size: 100% 9px;
+  background-size: 100% 9px;
+  background-image: webkit-linear-gradient(left, #8f60ee 0%,#719cd8 51%,#6fdec6 100%);
+  background-image: -moz-linear-gradient(left, #8f60ee 0%, #719cd8 51%, #6fdec6 100%);
+  background-image: -o-linear-gradient(left, #8f60ee 0%, #719cd8 51%, #6fdec6 100%);
+  background-image: linear-gradient(to right, #8f60ee 0%,#719cd8 51%,#6fdec6 100%);
 
-  &_offers {
-    margin: 0 80px;
-    background: #fafcfe;
-    border-radius: 22px;
-    padding: 0 8px;
-    
-    h2 {
-      padding: 31px 41px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    }
-  }
-
-  &_table_wrapper {
-    padding: 10px 20px 20px 20px;
-  }
-
-  &_table {
-    text-align: center;
-    width: 100%;
-    margin-bottom: 20px;
-
-    thead {
-      font-size: 16px;
-    }
-
-    tr {
-      padding: 0 10px;
-    }
-
-    td, th {
-      padding: 10px 10px;
-    }
-
-    td.button {
-      width: 160px;
-      padding: 0 10px;
-
-      button {
-        width: 100%;
-      }
-    }
-
-    .amountInput {
-      width: 50px;
-    }
+  h1 {
+    margin-bottom: 30px;
   }
 
   &_buttons {
-    text-align: center;
-    padding-top: 40px;
+    margin-top: 60px;
   }
 }

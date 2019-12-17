@@ -17,17 +17,35 @@
     top: 123px;
     left: 0;
     right: 0;
+
+    &.disabled {
+      filter: gray;
+      -webkit-filter: grayscale(100%);
+    }
   }
   
   &_assetContainer {
     position: relative;
-    z-index: $layer-top;
+    
+    &_main {
+      position: relative;
+      z-index: $layer-top;
+    }
+  }
+
+  &_filler {
+    position: absolute;
+    width: 100%;
+    height: 72px;
+    background: #ffffff;
+    bottom: 0;
+    z-index: $layer-bottom;
   }
 
   &_asset {
     position: absolute;
     height: 48px;
-    margin-top: 64px;
+    margin-top: 50px;
     
     &_left {
       left: $asset-horizontal-padding;
@@ -48,7 +66,7 @@
   
   &_labels {
     position: absolute;
-    top: 45px;
+    top: 33px;
     width: 100%;
     z-index: $layer-bottom;
     text-transform: uppercase;
@@ -88,7 +106,9 @@
 
   &_currency_labels {
     width: 100%;
+    padding-top: 14px;
     z-index: $layer-bottom;
+    background: #ffffff;
 
     > h4 {
       line-height: normal;

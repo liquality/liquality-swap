@@ -1,6 +1,7 @@
 @import '../../scss/variables.scss';
 
 .CurrencyInputs {
+  position: relative;
   $panel-spacing: 60px;
   width: 100%;
 
@@ -13,5 +14,14 @@
     .CurrencyInput {
       float: right;
     }
+  }
+
+  .Rate {
+    position: absolute;
+    margin: 0 auto;
+    top: 24px;
+    left: 0;
+    right: 0;
+    z-index: $layer-bottom;
   }
 }

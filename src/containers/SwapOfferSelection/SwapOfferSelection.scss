@@ -1,0 +1,62 @@
+@import '../../scss/variables.scss';
+@import '../../scss/mixins.scss';
+
+.SwapOfferSelection {
+  position: relative;
+
+  .SwapPairPanel {
+    z-index: $layer-top;
+  }
+
+  &_assetSelector {
+    padding-top: 20px;
+    box-shadow: 0px 2px 14px $color-shadow;
+    border-radius: 0 0 $swap-panel-radius $swap-panel-radius;
+    background: $color-bg-primary;
+    z-index: $layer-middle;
+  }
+  
+  &_top {
+    position: relative;
+    width: 100%;
+    padding-bottom: 28px;
+    box-shadow: 0px 2px 14px $color-shadow;
+    border-radius: 0 0 $swap-panel-radius $swap-panel-radius;
+    background: $color-bg-primary;
+    z-index: $layer-middle;
+  }
+
+  &_bottom {
+    position: relative;
+    top: -40px;
+    text-align: center;
+    padding: 160px 30px 20px;
+    background: $color-bg-secondary;
+    box-shadow: 0px -2px 14px $color-shadow;
+    border-radius: $swap-panel-radius;
+    z-index: $layer-bottom;
+  }
+
+  &_host {
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    background: $color-bg-primary;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    bottom: -70px;
+    border-radius: 50%;
+    text-align: center;
+    padding-top: 40px;
+
+    img {
+      height: 52px;
+      margin: 10px auto 0 auto;
+    }
+  }
+
+  &_errorMessage {
+    @include error-message;
+  }
+}

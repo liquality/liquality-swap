@@ -43,6 +43,7 @@ function setStep (transactions, isPartyB, dispatch) {
 function setLocation (swap, currentLocation, dispatch) {
   // Do not navigate away from backup link
   if (currentLocation.pathname === '/backupLink') return
+  if (currentLocation.pathname === '/counterPartyLink') return
 
   const hasInitiated = swap.transactions.a.fund.hash && swap.transactions.a.fund.confirmations > 0
   const hasRefunded = swap.transactions.a.refund && swap.transactions.a.refund.hash
@@ -57,10 +58,8 @@ function setLocation (swap, currentLocation, dispatch) {
     } else if (canRefund) {
       dispatch(replace('/refund'))
     }
-  } else if (swap.step === steps.AGREEMENT && currentLocation.pathname !== '/waiting') {
-    if (swap.isPartyB) dispatch(replace('/waiting'))
-    else if (swap.transactions.b.fund.hash) dispatch(replace('/waiting'))
-    else dispatch(replace('/counterPartyLink'))
+  } else if (swap.step === steps.AGREEMENT) {
+    dispatch(replace('/waiting'))
   } else if (swap.step === steps.CLAIMING) {
     dispatch(replace('/redeem'))
   } else if (swap.step === steps.SETTLED) {
