@@ -29,7 +29,7 @@ async function connectNodeWallet (page) {
 }
 
 async function claim (page) {
-  await page.waitForSelector('.SwapRedemption', { timeout: 20000 })
+  await page.waitForSelector('.SwapRedemption', { timeout: 40000 })
   await page.click('.btn-primary')
   await page.waitForSelector('.SwapCompleted')
 }
