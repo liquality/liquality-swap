@@ -3,15 +3,10 @@ export default {
   hostIcon: 'https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png',
   hostAgent: 'http://localhost:3030',
   assets: {
-    bcbc: {
-      rpc: {
-        url: 'https://rpc.bogart.network'
-      },
-      network: 'bogart'
-    },
     eth: {
       rpc: {
-        url: 'http://localhost:8545'
+        url: 'http://localhost:8545',
+        wallet: true
       }
     },
     btc: {
@@ -19,7 +14,8 @@ export default {
         username: 'bitcoin',
         password: 'local321',
         url: 'http://localhost:18443',
-        addressType: 'bech32'
+        addressType: 'bech32',
+        wallet: true
       },
       network: 'bitcoin_regtest',
       swapMode: 'p2wsh',
@@ -28,7 +24,8 @@ export default {
     dai: {
       type: 'erc20',
       rpc: {
-        url: 'http://localhost:8545'
+        url: 'http://localhost:8545',
+        wallet: true
       },
       contractAddress: '0x422950598Eb23877deAfF346dA0550Aa53482156'
     }
