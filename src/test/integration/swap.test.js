@@ -1,24 +1,25 @@
 /* eslint-env jest */
 import puppeteer from 'puppeteer'
 
+let browser
 let partyA = {}
 let partyB = {}
 
 jest.setTimeout(300000)
 
 beforeEach(async () => {
-  partyA.browser = await puppeteer.launch({ignoreHTTPSErrors: true})
-  partyA.page = await partyA.browser.newPage()
+  browser = await puppeteer.launch({ignoreHTTPSErrors: true, defaultViewport: { width: 1100, height: 1000 }})
+  partyA.page = await browser.newPage()
 
   // allow clipboard read
-  const context = partyA.browser.defaultBrowserContext()
+  const context = browser.defaultBrowserContext()
   context.clearPermissionOverrides()
   context.overridePermissions('https://localhost:3000', ['clipboard-read'])
   await partyA.page.goto('https://localhost:3000')
 })
 
 afterEach(async () => {
-  await partyA.browser.close()
+  await browser.close()
 })
 
 async function connectNodeWallet (page) {
@@ -29,7 +30,7 @@ async function connectNodeWallet (page) {
 }
 
 async function claim (page) {
-  await page.waitForSelector('.SwapRedemption', { timeout: 40000 })
+  await page.waitForSelector('.SwapRedemption', { timeout: 20000 })
   await page.click('.btn-primary')
   await page.waitForSelector('.SwapCompleted')
 }
@@ -41,8 +42,7 @@ async function partyAPath () {
 }
 
 async function partyBPath (counterPartyLink) {
-  partyB.browser = await puppeteer.launch({ignoreHTTPSErrors: true})
-  partyB.page = await partyB.browser.newPage()
+  partyB.page = await browser.newPage()
   await partyB.page.goto(counterPartyLink)
   await partyB.page.click('.WalletPanel_left .btn-primary')
   await connectNodeWallet(partyB.page)
@@ -51,6 +51,7 @@ async function partyBPath (counterPartyLink) {
 
   // Confirm
   await partyB.page.click('.btn-primary')
+  await partyB.page.screenshot({path: 'screenshot.png'})
   await partyB.page.waitForSelector('.BackupLinkCard')
   await partyB.page.click('.btn-primary')
   await partyB.page.waitForSelector('.Waiting')
