@@ -56,15 +56,9 @@ jobs:
         - CI=false npm run build
         - docker-compose -f ./src/test/integration/environment/docker-compose.yaml up -d
         - nohup serve-https -p 3000 -d ./build/ > srv-output.log &
-        - sleep 2
+        - sleep 20 # Wait for environment to be steady (mined bitcoin blocks)
       script:
         - npm run test:integration
-      after_failure:
-        - openssl aes-256-cbc -K $encrypted_a1bc936c4a1a_key -iv $encrypted_a1bc936c4a1a_iv -in ./.travis/deploy_rsa.enc -out /tmp/deploy_rsa -d
-        - eval "$(ssh-agent -s)"
-        - chmod 600 /tmp/deploy_rsa
-        - ssh-add /tmp/deploy_rsa
-        - rsync ./screenshot.png $LIQUALITY_USER@$LIQUALITY_HOST:~/screenshot.png
     - <<: *deploy_app
       env:
         - REACT_APP_TRAVIS_COMMIT=$TRAVIS_COMMIT APP_CONFIG=./.travis/liquality.io.mainnet.config.js DESTINATION_PATH=/var/www/html/it/leep/swap SWAP_DIR_SUFFIX=
