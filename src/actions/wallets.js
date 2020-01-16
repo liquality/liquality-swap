@@ -1,4 +1,5 @@
 import { getClient } from '../services/chainClient'
+import { steps } from '../components/SwapProgressStepper/steps'
 import cryptoassets from '@liquality/cryptoassets'
 
 const types = {
@@ -65,7 +66,8 @@ function connectWallet (party, addresses, balance) {
 
 function disconnectWallet (party) {
   return async (dispatch, getState) => {
-    dispatch({ type: types.DISCONNECT_WALLET, party, preserveAddress: getState().swap.isPartyB })
+    const swap = getState().swap
+    dispatch({ type: types.DISCONNECT_WALLET, party, preserveAddress: swap.isPartyB || swap.step !== steps.INITIATION })
   }
 }
 

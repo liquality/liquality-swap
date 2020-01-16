@@ -6,9 +6,13 @@ export default {
   assets: {
     eth: {
       rpc: {
-        url: 'https://rinkeby.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
+        url: 'https://kovan.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
       },
-      network: 'rinkeby'
+      api: {
+        type: 'blockscout',
+        url: 'https://blockscout.com/eth/kovan/api'
+      },
+      network: 'kovan'
     },
     btc: {
       api: {
@@ -26,6 +30,7 @@ export default {
       network: 'rinkeby'
     }
   },
+  minConfirmations: 0,
   hostName: 'Liquality',
   hostIcon: 'https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png',
   hostAgent: 'https://liquality.io/agenttestnet',
