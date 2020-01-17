@@ -13,7 +13,8 @@ import EthereumRpcProvider from '@liquality/ethereum-rpc-provider'
 import EthereumLedgerProvider from '@liquality/ethereum-ledger-provider'
 import EthereumNetworks from '@liquality/ethereum-networks'
 import EthereumSwapProvider from '@liquality/ethereum-swap-provider'
-import EthereumMementoSwapFindProvider from '@liquality/ethereum-blockscout-swap-find-provider'
+import EthereumBlockscoutSwapFindProvider from '@liquality/ethereum-blockscout-swap-find-provider'
+import EthereumScraperSwapFindProvider from '@liquality/ethereum-scraper-swap-find-provider'
 import EthereumErc20Provider from '@liquality/ethereum-erc20-provider'
 import EthereumErc20SwapProvider from '@liquality/ethereum-erc20-swap-provider'
 import EthereumMetaMaskProvider from '@liquality/ethereum-metamask-provider'
@@ -77,7 +78,8 @@ function createEthClient (asset, wallet) {
   }
   ethClient.addProvider(new EthereumSwapProvider())
   if (ethConfig.api) {
-    if (ethConfig.api.type === 'blockscout') ethClient.addProvider(new EthereumMementoSwapFindProvider(ethConfig.api.url))
+    if (ethConfig.api.type === 'blockscout') ethClient.addProvider(new EthereumBlockscoutSwapFindProvider(ethConfig.api.url))
+    if (ethConfig.api.type === 'scraper') ethClient.addProvider(new EthereumScraperSwapFindProvider(ethConfig.api.url))
   }
   return ethClient
 }
