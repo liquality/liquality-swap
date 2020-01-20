@@ -6,13 +6,13 @@ export default {
   assets: {
     eth: {
       rpc: {
-        url: 'https://kovan.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
+        url: 'https://rinkeby.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
       },
       api: {
-        type: 'blockscout',
-        url: 'https://blockscout.com/eth/kovan/api'
+        type: 'scraper',
+        url: 'https://liquality.io/eth-rinkeby-api'
       },
-      network: 'kovan'
+      network: 'rinkeby'
     },
     btc: {
       api: {
