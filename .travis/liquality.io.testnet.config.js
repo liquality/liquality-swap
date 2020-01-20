@@ -8,6 +8,10 @@ export default {
       rpc: {
         url: 'https://rinkeby.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
       },
+      api: {
+        type: 'scraper',
+        url: 'https://liquality.io/eth-rinkeby-api'
+      },
       network: 'rinkeby'
     },
     btc: {
@@ -26,6 +30,7 @@ export default {
       network: 'rinkeby'
     }
   },
+  minConfirmations: 0,
   hostName: 'Liquality',
   hostIcon: 'https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png',
   hostAgent: 'https://liquality.io/agenttestnet',

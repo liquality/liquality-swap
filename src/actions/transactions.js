@@ -78,7 +78,12 @@ async function monitorTransaction (swap, party, kind, tx, dispatch, getState) {
     } else if (kind === 'refund') {
       client = getClient(swap.assets[party].currency, swap.wallets[party].type)
     }
-    const updatedTransaction = await client.chain.getTransactionByHash(tx.hash)
+    let updatedTransaction
+    try {
+      updatedTransaction = await client.chain.getTransactionByHash(tx.hash)
+    } catch (e) {
+      console.error(`Getting transaction ${tx.hash} failed. Trying again later.`)
+    }
     if (updatedTransaction) {
       dispatch({ type: types.SET_TRANSACTION, party, kind, tx: updatedTransaction })
       if (kind === 'claim') {

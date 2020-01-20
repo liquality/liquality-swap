@@ -112,7 +112,7 @@ function sync (party) {
         if (!swap.transactions[party].fund.hash) {
           await findInitiateSwapTransaction(party, blockNumber, dispatch, getState)
         } else {
-          if (party === 'b' && !swap.isVerified) {
+          if (party === 'b' && swap.isPartyB && !swap.isVerified) {
             await verifyInitiateSwapTransaction(dispatch, getState)
           }
           const oppositeParty = party === 'a' ? 'b' : 'a'
@@ -124,16 +124,23 @@ function sync (party) {
           }
         }
       }
-      const currentBlock = await client.chain.getBlockHeight()
-      if (currentBlock > blockNumber) {
-        blockNumber++
-        dispatch(setCurrentBlock(party, blockNumber))
-        dispatch(setSynced(party, false))
-        if (config.syncDelay > 0) {
-          await sleep(config.syncDelay)
+
+      const assetClient = getClient(assets[party].currency, wallets[party].type)
+
+      if (assetClient.swap.doesBlockScan) {
+        const currentBlock = await client.chain.getBlockHeight()
+        if (currentBlock > blockNumber) {
+          blockNumber++
+          dispatch(setCurrentBlock(party, blockNumber))
+          dispatch(setSynced(party, false))
+          if (config.syncDelay > 0) {
+            await sleep(config.syncDelay)
+          }
+        } else {
+          dispatch(setSynced(party, true))
+          await sleep(assetConfig.syncInterval || DEFAULT_SYNC_INTERVAL)
         }
       } else {
-        dispatch(setSynced(party, true))
         await sleep(assetConfig.syncInterval || DEFAULT_SYNC_INTERVAL)
       }
     }

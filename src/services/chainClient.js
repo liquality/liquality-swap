@@ -2,6 +2,7 @@
 
 import Client from '@liquality/client'
 import BitcoinEsploraApiProvider from '@liquality/bitcoin-esplora-api-provider'
+import BitcoinEsploraSwapFindProvider from '@liquality/bitcoin-esplora-swap-find-provider'
 import BitcoinRpcProvider from '@liquality/bitcoin-rpc-provider'
 import BitcoinLedgerProvider from '@liquality/bitcoin-ledger-provider'
 import BitcoinSwapProvider from '@liquality/bitcoin-swap-provider'
@@ -12,6 +13,8 @@ import EthereumRpcProvider from '@liquality/ethereum-rpc-provider'
 import EthereumLedgerProvider from '@liquality/ethereum-ledger-provider'
 import EthereumNetworks from '@liquality/ethereum-networks'
 import EthereumSwapProvider from '@liquality/ethereum-swap-provider'
+import EthereumBlockscoutSwapFindProvider from '@liquality/ethereum-blockscout-swap-find-provider'
+import EthereumScraperSwapFindProvider from '@liquality/ethereum-scraper-swap-find-provider'
 import EthereumErc20Provider from '@liquality/ethereum-erc20-provider'
 import EthereumErc20SwapProvider from '@liquality/ethereum-erc20-swap-provider'
 import EthereumMetaMaskProvider from '@liquality/ethereum-metamask-provider'
@@ -45,6 +48,7 @@ function createBtcClient (asset, wallet) {
     btcClient.addProvider(getBitcoinDataProvider(btcConfig))
     btcClient.addProvider(ledger)
     btcClient.addProvider(new BitcoinSwapProvider({network: BitcoinNetworks[btcConfig.network]}, btcConfig.swapMode))
+    if (btcConfig.api) btcClient.addProvider(new BitcoinEsploraSwapFindProvider(btcConfig.api.url))
   } else if (wallet === 'bitcoin_node') {
     if (btcConfig.rpc.addressType === 'p2sh-segwit') {
       throw new Error('Wrapped segwit addresses (p2sh-segwit) are currently unsupported.')
@@ -56,6 +60,7 @@ function createBtcClient (asset, wallet) {
     // Verify functions required when wallet not connected
     btcClient.addProvider(getBitcoinDataProvider(btcConfig))
     btcClient.addProvider(new BitcoinSwapProvider({network: BitcoinNetworks[btcConfig.network]}, btcConfig.swapMode))
+    if (btcConfig.api) btcClient.addProvider(new BitcoinEsploraSwapFindProvider(btcConfig.api.url))
   }
   return btcClient
 }
@@ -72,6 +77,10 @@ function createEthClient (asset, wallet) {
     ethClient.addProvider(new EthereumLedgerProvider({network: EthereumNetworks[ethConfig.network]}))
   }
   ethClient.addProvider(new EthereumSwapProvider())
+  if (ethConfig.api) {
+    if (ethConfig.api.type === 'blockscout') ethClient.addProvider(new EthereumBlockscoutSwapFindProvider(ethConfig.api.url))
+    if (ethConfig.api.type === 'scraper') ethClient.addProvider(new EthereumScraperSwapFindProvider(ethConfig.api.url))
+  }
   return ethClient
 }
 
