@@ -45,20 +45,20 @@ deploy_app: &deploy_app
 
 jobs:
   include:
-    -
-      stage: test
-      before_install: 
-        - sudo apt-get install -y libusb-1.0-0 libusb-1.0-0-dev libudev-dev
-      before_script:
-        - npm run lint
-        - npm install serve-https@1 -g # serve-https@2 is broken
-        - cp ./src/test/integration/environment/config.js ./src/config/config.js
-        - CI=false npm run build
-        - docker-compose -f ./src/test/integration/environment/docker-compose.yaml up -d
-        - nohup serve-https -p 3000 -d ./build/ > srv-output.log &
-        - sleep 20 # Wait for environment to be steady (mined bitcoin blocks)
-      script:
-        - npm run test:integration
+    # -
+    #   stage: test
+    #   before_install: 
+    #     - sudo apt-get install -y libusb-1.0-0 libusb-1.0-0-dev libudev-dev
+    #   before_script:
+    #     - npm run lint
+    #     - npm install serve-https@1 -g # serve-https@2 is broken
+    #     - cp ./src/test/integration/environment/config.js ./src/config/config.js
+    #     - CI=false npm run build
+    #     - docker-compose -f ./src/test/integration/environment/docker-compose.yaml up -d
+    #     - nohup serve-https -p 3000 -d ./build/ > srv-output.log &
+    #     - sleep 20 # Wait for environment to be steady (mined bitcoin blocks)
+    #   script:
+    #     - npm run test:integration
     - <<: *deploy_app
       env:
         - REACT_APP_TRAVIS_COMMIT=$TRAVIS_COMMIT APP_CONFIG=./.travis/liquality.io.mainnet.config.js DESTINATION_PATH=/var/www/html/it/leep/swap SWAP_DIR_SUFFIX=
