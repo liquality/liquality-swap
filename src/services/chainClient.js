@@ -22,10 +22,10 @@ import EthereumMetaMaskProvider from '@liquality/ethereum-metamask-provider'
 import config from '../config'
 
 function getBitcoinDataProvider (btcConfig) {
-  if (btcConfig.rpc) {
-    return new BitcoinRpcProvider(btcConfig.rpc.url, btcConfig.rpc.username, btcConfig.rpc.password, btcConfig.feeNumberOfBlocks)
-  } else if (btcConfig.api) {
+  if (btcConfig.api) {
     return new BitcoinEsploraApiProvider(btcConfig.api.url, btcConfig.feeNumberOfBlocks)
+  } else if (btcConfig.rpc) {
+    return new BitcoinRpcProvider(btcConfig.rpc.url, btcConfig.rpc.username, btcConfig.rpc.password, btcConfig.feeNumberOfBlocks)
   }
 }
 
@@ -48,11 +48,11 @@ function createBtcClient (asset, wallet) {
     btcClient.addProvider(getBitcoinDataProvider(btcConfig))
     btcClient.addProvider(ledger)
     btcClient.addProvider(new BitcoinSwapProvider({network: BitcoinNetworks[btcConfig.network]}, btcConfig.swapMode))
-    if (btcConfig.api) btcClient.addProvider(new BitcoinEsploraSwapFindProvider(btcConfig.api.url))
   } else if (wallet === 'bitcoin_node') {
     if (btcConfig.rpc.addressType === 'p2sh-segwit') {
       throw new Error('Wrapped segwit addresses (p2sh-segwit) are currently unsupported.')
     }
+    if (btcConfig.api) btcClient.addProvider(new BitcoinEsploraApiProvider(btcConfig.api.url, btcConfig.feeNumberOfBlocks))
     btcClient.addProvider(new BitcoinRpcProvider(btcConfig.rpc.url, btcConfig.rpc.username, btcConfig.rpc.password, btcConfig.feeNumberOfBlocks))
     btcClient.addProvider(new BitcoinNodeWalletProvider(BitcoinNetworks[btcConfig.network], btcConfig.rpc.url, btcConfig.rpc.username, btcConfig.rpc.password, btcConfig.rpc.addressType))
     btcClient.addProvider(new BitcoinSwapProvider({network: BitcoinNetworks[btcConfig.network]}, btcConfig.swapMode))
@@ -60,8 +60,9 @@ function createBtcClient (asset, wallet) {
     // Verify functions required when wallet not connected
     btcClient.addProvider(getBitcoinDataProvider(btcConfig))
     btcClient.addProvider(new BitcoinSwapProvider({network: BitcoinNetworks[btcConfig.network]}, btcConfig.swapMode))
-    if (btcConfig.api) btcClient.addProvider(new BitcoinEsploraSwapFindProvider(btcConfig.api.url))
   }
+  if (btcConfig.api) btcClient.addProvider(new BitcoinEsploraSwapFindProvider(btcConfig.api.url))
+
   return btcClient
 }
 
