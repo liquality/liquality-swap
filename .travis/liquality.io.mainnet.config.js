@@ -8,6 +8,10 @@ export default {
       rpc: {
         url: 'https://mainnet.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
       },
+      api: {
+        type: 'scraper',
+        url: 'https://liquality.io/eth-mainnet-api'
+      },
       network: 'mainnet'
     },
     btc: {
@@ -29,6 +33,10 @@ export default {
       type: 'erc20',
       rpc: {
         url: 'https://mainnet.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
+      },
+      api: {
+        type: 'scraper',
+        url: 'https://liquality.io/eth-mainnet-api'
       },
       contractAddress: '0xdac17f958d2ee523a2206206994597c13d831ec7',
       network: 'mainnet'

@@ -26,6 +26,10 @@ export default {
       rpc: {
         url: 'https://rinkeby.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
       },
+      api: {
+        type: 'scraper',
+        url: 'https://liquality.io/eth-rinkeby-api'
+      },
       contractAddress: '0xcE2748BE67fB4346654B4500c4BB0642536365FC',
       network: 'rinkeby'
     }
