@@ -17,6 +17,7 @@ import EthereumBlockscoutSwapFindProvider from '@liquality/ethereum-blockscout-s
 import EthereumScraperSwapFindProvider from '@liquality/ethereum-scraper-swap-find-provider'
 import EthereumErc20Provider from '@liquality/ethereum-erc20-provider'
 import EthereumErc20SwapProvider from '@liquality/ethereum-erc20-swap-provider'
+import EthereumErc20ScraperSwapFindProvider from '@liquality/ethereum-erc20-scraper-swap-find-provider'
 import EthereumMetaMaskProvider from '@liquality/ethereum-metamask-provider'
 
 import config from '../config'
@@ -98,6 +99,9 @@ function createERC20Client (asset, wallet) {
   }
   erc20Client.addProvider(new EthereumErc20Provider(assetConfig.contractAddress))
   erc20Client.addProvider(new EthereumErc20SwapProvider())
+  if (assetConfig.api) {
+    if (assetConfig.api.type === 'scraper') erc20Client.addProvider(new EthereumErc20ScraperSwapFindProvider(assetConfig.api.url))
+  }
   return erc20Client
 }
 
