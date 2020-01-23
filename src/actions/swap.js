@@ -192,8 +192,7 @@ async function submitOrder (dispatch, getState) {
       swap.transactions.a.fund.hash,
       swap.wallets.a.addresses[0],
       swap.wallets.b.addresses[0],
-      swap.secretParams.secretHash,
-      swap.expiration.unix()
+      swap.secretParams.secretHash
     )
   }
 }
@@ -201,7 +200,9 @@ async function submitOrder (dispatch, getState) {
 function initiateSwap () {
   return async (dispatch, getState) => {
     dispatch(showErrors())
-    dispatch(setExpiration(generateExpiration()))
+    const quote = getState().swap.agent.quote
+    const expiration = quote ? quote.swapExpiration : generateExpiration()
+    dispatch(setExpiration(expiration))
     await ensureWallet('a', dispatch, getState)
     const initiateValid = isInitiateValid(getState().swap)
     if (!initiateValid) return

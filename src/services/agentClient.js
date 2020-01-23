@@ -1,3 +1,4 @@
+import moment from 'moment'
 import axios from 'axios'
 import config from '../config'
 
@@ -25,17 +26,17 @@ class Agent {
     })
     return {
       ...response.data,
+      swapExpiration: moment.unix(response.data.swapExpiration),
       retrievedAt: Date.now()
     }
   }
 
-  async submitOrder (quoteId, fundHash, fromAddress, toAddress, secretHash, expiration) {
+  async submitOrder (quoteId, fundHash, fromAddress, toAddress, secretHash) {
     const response = await this._axios.post(`/api/swap/order/${quoteId}`, {
       fromFundHash: fundHash,
       fromAddress,
       toAddress,
-      secretHash,
-      swapExpiration: expiration
+      secretHash
     })
     return response.data
   }
