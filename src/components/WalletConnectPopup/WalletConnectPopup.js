@@ -62,6 +62,7 @@ class WalletConnectPopup extends Component {
         <WalletConnect
           cancelText='Cancel'
           title='Liquality'
+          receive={props.id === 'b'}
           onCancel={this.disconnectWallet}
           currency={props.currency}
           connectWallet={this.connectWallet}
