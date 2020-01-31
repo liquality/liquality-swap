@@ -10,7 +10,7 @@ import ErrorIcon from './error.svg'
 const AddressInput = (props) => {
   const currency = cryptoassets[props.currency]
   const valid = currency.isValidAddress(props.value)
-  const formattedAddress = props.value && currency.formatAddress(props.value)
+  const formattedAddress = props.value && currency.isValidAddress(props.value) ? currency.formatAddress(props.value) : props.value
   return <div className={classNames('AddressInput', { error: props.error })}>
     <div className='AddressInput_wrapper'>
       <div className='AddressInput_box'>

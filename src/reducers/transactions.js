@@ -6,12 +6,14 @@ const initialState = {
   a: {
     fund: {},
     claim: {},
-    refund: {}
+    refund: {},
+    startBlock: null
   },
   b: {
     fund: {},
     claim: {},
-    refund: {}
+    refund: {},
+    startBlock: null
   }
 }
 
@@ -21,8 +23,15 @@ function setTransaction (state, action) {
   })
 }
 
+function setStartBlock (state, action) {
+  return update(state, {
+    [action.party]: { startBlock: { $set: action.blockNumber } }
+  })
+}
+
 const reducers = {
-  [types.SET_TRANSACTION]: setTransaction
+  [types.SET_TRANSACTION]: setTransaction,
+  [types.SET_START_BLOCK]: setStartBlock
 }
 
 const counterParty = getReducerFunction(reducers, initialState)

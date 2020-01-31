@@ -6,6 +6,7 @@ import SwapInitiation from './SwapInitiation'
 
 const mapStateToProps = state => {
   return {
+    quote: state.swap.agent.quote,
     expiration: state.swap.expiration,
     isPartyB: state.swap.isPartyB,
     wallets: state.swap.wallets,

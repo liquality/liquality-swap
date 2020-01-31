@@ -1,0 +1,50 @@
+@import '../../scss/variables.scss';
+@import '../../scss/mixins.scss';
+
+.OfferCurrencyInput {
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+  }
+
+  input[type='number'] {
+    -moz-appearance:textfield;
+  }
+
+  width: 130px;
+
+  &_heading {
+    display: block;
+    text-align: center;
+    margin-bottom: 0;
+  }
+
+  &_inputWrapper {
+    border-bottom: 1px solid #31E4C3;
+    padding-bottom: 1px;
+  }
+
+  &_input {
+    @include blank-input;
+    display: block;
+    width: 130px;
+    height: 32px;
+    text-align: center;
+    font-size: $h1-font-size;
+    font-weight: 500;
+
+    &.error {
+      border: 1px solid $danger;
+    }
+
+    &[readonly] {
+      border: none;
+    }
+  }
+
+  &_errorMessage {
+    height: 20px;
+    @include error-message;
+  }
+}

@@ -7,9 +7,10 @@ import { store, initialAppState } from './store'
 import history from './history'
 import errorHandler from './errorHandler'
 
-import { actions as swapActions } from './actions/swap'
+import { actions as syncActions } from './actions/sync'
 import { actions as transactionActions } from './actions/transactions'
 import { actions as assetActions } from './actions/assets'
+import { actions as counterPartyActions } from './actions/counterparty'
 
 import LiqualitySwap from './containers/LiqualitySwap'
 import './App.css'
@@ -22,15 +23,22 @@ window.addEventListener('error', errorHandler)
 window.addEventListener('unhandledrejection', e => errorHandler(e.reason))
 
 if (initialAppState.swap) {
-  store.dispatch(transactionActions.loadTransactions())
-  if (initialAppState.swap.isPartyB) {
-    // Need to use action to kick off tx monitoring
+  store.dispatch(transactionActions.setTransaction(
+    'a', 'fund', initialAppState.swap.transactions.a.fund
+  ))
+  if (initialAppState.swap.transactions.b.fund) {
     store.dispatch(transactionActions.setTransaction(
       'b', 'fund', initialAppState.swap.transactions.b.fund
     ))
-    store.dispatch(swapActions.verifyInitiateSwapTransaction)
-    store.dispatch(assetActions.changeAmount('b', initialAppState.swap.assets.b.value)) // Trigger rate calc
   }
+  if (initialAppState.swap.isPartyB) {
+    // Need to use action to kick off tx monitoring
+    store.dispatch(assetActions.changeAmount('b', initialAppState.swap.assets.b.value)) // Trigger rate calc
+    store.dispatch(assetActions.lockRate())
+    store.dispatch(counterPartyActions.setCounterPartyVisible(false))
+  }
+  store.dispatch(syncActions.sync('a'))
+  store.dispatch(syncActions.sync('b'))
 }
 
 class App extends Component {

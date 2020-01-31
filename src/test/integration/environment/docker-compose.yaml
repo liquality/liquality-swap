@@ -1,0 +1,42 @@
+version: '3'
+services:
+  bitcoin:
+    image: ruimarinho/bitcoin-core
+    command:
+      -regtest=1
+      -txindex
+      -deprecatedrpc=generate
+      -rpcuser=bitcoin
+      -rpcpassword=local321
+      -rpcallowip=0.0.0.0/0
+      -rpcbind=0.0.0.0
+      -server
+  ethereum:
+    image: trufflesuite/ganache-cli
+    ports:
+      - "8545:8545"
+    command:
+      -m="piece effort bind that embrace enrich remind powder sudden patient legend group"
+  bitcoin-cors-proxy:
+    build:
+      context: .
+      dockerfile: proxy.Dockerfile
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "18443:18443"
+    environment:
+      - TARGET_HOST=bitcoin
+      - TARGET_PORT=18443
+      - SERVER_PORT=18443
+    depends_on:
+      - bitcoin
+  bitcoin-miner:
+    build:
+      context: .
+      dockerfile: miner.Dockerfile
+    environment:
+      - TARGET_HOST=bitcoin
+      - TARGET_PORT=18443
+    depends_on:
+      - bitcoin

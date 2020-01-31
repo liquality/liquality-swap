@@ -1,5 +1,5 @@
-import { createBrowserHistory } from 'history'
+import { createMemoryHistory } from 'history'
 
-const history = createBrowserHistory({basename: window.location.pathname})
+const history = createMemoryHistory()
 
 export default history

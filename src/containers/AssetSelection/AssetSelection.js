@@ -3,6 +3,7 @@ import SwapPairPanel from '../../components/SwapPairPanel/SwapPairPanel'
 import AssetSelector from '../../components/AssetSelector/AssetSelector'
 import Button from '../../components/Button/Button'
 import SwapIcon from '../../icons/switch.svg'
+import config from '../../config'
 
 import './AssetSelection.css'
 
@@ -20,8 +21,15 @@ class AssetSelection extends Component {
     }
   }
 
+  handleNextClick () {
+    this.props.history.replace('/walletB')
+  }
+
   render () {
     const { a: assetA, b: assetB } = this.props.assets
+    const selectedAsset = this.props.assetSelector.party === 'a' ? assetA.currency : assetB.currency
+    const configuredAssets = Object.keys(config.assets)
+    const assets = configuredAssets.filter(asset => asset !== selectedAsset)
     return <div className='AssetSelection'>
       <SwapPairPanel
         haveCurrency={assetA.currency}
@@ -36,12 +44,12 @@ class AssetSelection extends Component {
         { this.props.assetSelector.open &&
           <AssetSelector
             search={this.props.assetSelector.search}
-            excludeAsset={this.props.assetSelector.party === 'a' ? assetA.currency : assetB.currency}
+            assets={assets}
             onSelectAsset={asset => this.handleSelectAsset(asset)}
             onSearchChange={value => this.props.setAssetSelectorSearch(value)}
             onClose={() => this.props.closeAssetSelector()} /> }
         { !this.props.assetSelector.open && <div className='AssetSelection_bottom'>
-          <Button wide primary onClick={() => this.props.history.replace('/walletB')}>Next</Button>
+          <Button wide primary onClick={() => this.handleNextClick()}>Next</Button>
         </div> }
       </div>
     </div>

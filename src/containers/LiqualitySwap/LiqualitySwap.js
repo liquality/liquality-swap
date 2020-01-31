@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
 
+import CounterPartySelection from '../CounterPartySelection'
 import AssetSelection from '../AssetSelection'
 import SwapInitiation from '../SwapInitiation'
 import CounterPartyLinkCard from '../../components/CounterPartyLinkCard/CounterPartyLinkCard'
@@ -13,11 +14,15 @@ import SwapRedemption from '../SwapRedemption'
 import SwapCompleted from '../SwapCompleted'
 import SwapRefund from '../SwapRefund'
 import SwapRefunded from '../SwapRefunded'
+import SwapOfferSelection from '../SwapOfferSelection'
+import SwapOfferConfirmation from '../SwapOfferConfirmation'
 import SwapProgressStepper from '../../components/SwapProgressStepper/SwapProgressStepper'
 import { generateLink } from '../../utils/app-links'
 import config from '../../config'
 
+import { steps } from '../../components/SwapProgressStepper/steps'
 import LiqualityLogo from '../../logo-text.png'
+import Spinner from './spinner.svg'
 import './LiqualitySwap.css'
 
 class LiqualitySwap extends Component {
@@ -29,24 +34,42 @@ class LiqualitySwap extends Component {
     this.getConnectWallet = this.getConnectWallet.bind(this)
   }
 
+  getStartingScreen () {
+    if (this.props.swap.link) {
+      return <SwapInitiation />
+    } else {
+      if (config.hostAgent) {
+        return <CounterPartySelection />
+      } else {
+        return <AssetSelection />
+      }
+    }
+  }
+
   getBackupLinkCard () {
     const link = this.props.swap.link
-    return <BackupLinkCard link={link} onNextClick={() => this.props.history.replace(this.props.swap.isPartyB ? '/waiting' : '/counterPartyLink')} />
+    const skipCounterParty = this.props.swap.isPartyB || this.props.swap.agent.quote
+    return <BackupLinkCard link={link} onNextClick={() => this.props.history.replace(skipCounterParty ? '/waiting' : '/counterPartyLink')} />
   }
 
   getCounterPartyLinkCard () {
     const link = generateLink(this.props.swap, true)
-    return <CounterPartyLinkCard link={link} onNextClick={() => { this.props.waitForSwapConfirmation() }} />
+    return <CounterPartyLinkCard link={link} onNextClick={() => { this.props.history.replace('/waiting') }} />
   }
 
   getConnectWallet (currentWallet) {
     const walletA = this.props.swap.wallets.a
     const walletB = this.props.swap.wallets.b
-    let closeAction = () => { this.props.history.replace('/') }
+    let closeAction = () => {
+      this.props.history.replace(this.props.swap.agent.quote ? '/offerConfirmation' : '/assetSelection')
+    }
     if (currentWallet === 'b' && walletB.connected) {
       closeAction = () => { this.props.history.replace('/walletA') }
     } else if (currentWallet === 'a' && walletA.connected) {
-      closeAction = () => { this.props.history.replace('/initiation') }
+      closeAction = () => {
+        this.props.history.replace('/initiation')
+        this.props.setStep(steps.INITIATION)
+      }
     } else if (currentWallet === 'a') {
       closeAction = () => { this.props.history.replace('/walletB') }
     }
@@ -66,17 +89,33 @@ class LiqualitySwap extends Component {
     />
   }
 
+  isSnycing () {
+    const syncStarted = this.props.swap.sync['a'].currentBlock && this.props.swap.sync['b'].currentBlock
+    const syncing = !this.props.swap.sync['a'].synced || !this.props.swap.sync['b'].synced
+    return syncStarted && syncing
+  }
+
+  getSyncBar () {
+    if (this.isSnycing()) {
+      return <div className='LiqualitySwap_sync'><img src={Spinner} alt='Spinner' />&nbsp;&nbsp;Syncing...</div>
+    }
+  }
+
   render () {
     return <div className='LiqualitySwap'>
       <div className='LiqualitySwap_bar' />
       <div className='LiqualitySwap_header'>
         <img className='LiqualitySwap_logo' src={LiqualityLogo} alt='Liquality Logo' />
-        <SwapProgressStepper state={this.props.swap.step} />
+        { this.getSyncBar() }
+        { this.props.swap.step && <SwapProgressStepper state={this.props.swap.step} /> }
       </div>
       <div className='LiqualitySwap_main'>
         <div className='LiqualitySwap_wave' />
         <div className='LiqualitySwap_wrapper'>
-          <Route exact path='/' component={this.props.swap.isPartyB ? SwapInitiation : AssetSelection} />
+          <Route exact path='/' render={this.getStartingScreen.bind(this)} />
+          <Route path='/offerSelection' component={SwapOfferSelection} />
+          <Route path='/offerConfirmation' component={SwapOfferConfirmation} />
+          <Route path='/assetSelection' component={AssetSelection} />
           <Route path='/walletA' render={() => { return this.getConnectWallet('a') }} />
           <Route path='/walletB' render={() => { return this.getConnectWallet('b') }} />
           <Route path='/initiation' component={SwapInitiation} />

@@ -1,4 +1,5 @@
 import { getClient } from '../services/chainClient'
+import { steps } from '../components/SwapProgressStepper/steps'
 import cryptoassets from '@liquality/cryptoassets'
 
 const types = {
@@ -30,7 +31,7 @@ function waitForWalletInitialization (party, currency, wallet) {
     let allAddresses = await client.wallet.getUsedAddresses(addressesPerCall)
     allAddresses = [ ...new Set([ unusedAddress, ...allAddresses ].map(a => a.address)) ]
     allAddresses = allAddresses.map(currency.formatAddress)
-    if (!wallets[party].addresses[0] !== null) { // Preserve the preset address for party B
+    if (wallets[party].addresses[0] !== null) { // Preserve the preset address for party B
       const expectedAddress = wallets[party].addresses[0]
       if (allAddresses.includes(expectedAddress)) {
         allAddresses = [expectedAddress, ...allAddresses.filter(address => address !== expectedAddress)]
@@ -65,7 +66,8 @@ function connectWallet (party, addresses, balance) {
 
 function disconnectWallet (party) {
   return async (dispatch, getState) => {
-    dispatch({ type: types.DISCONNECT_WALLET, party, preserveAddress: getState().swap.isPartyB })
+    const swap = getState().swap
+    dispatch({ type: types.DISCONNECT_WALLET, party, preserveAddress: swap.isPartyB || swap.step !== steps.INITIATION })
   }
 }
 

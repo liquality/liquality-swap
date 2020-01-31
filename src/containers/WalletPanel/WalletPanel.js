@@ -14,6 +14,7 @@ class WalletPanel extends Component {
       <div className='row justify-content-between no-gutters'>
         <div className='col WalletPanel_left'>
           <WalletDisplay
+            spendable
             currency={assetA.currency}
             type={walletA.type}
             balance={walletA.balance}

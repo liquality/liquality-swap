@@ -24,7 +24,7 @@ const WalletDisplay = (props) => {
       }
       { props.balance &&
         <div>
-          <p>Spendable</p>
+          <p>{props.spendable ? 'Spendable' : 'Balance'}</p>
           <p className='WalletDisplay_balance'>{props.balance} {currency.code}</p>
         </div>
       }

@@ -8,27 +8,36 @@ export default {
       rpc: {
         url: 'https://rinkeby.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
       },
+      api: {
+        type: 'scraper',
+        url: 'https://liquality.io/eth-rinkeby-api'
+      },
       network: 'rinkeby'
     },
     btc: {
-      rpc: {
-        username: 'bitcoin',
-        password: 'local321',
-        url: 'https://liquality.io/bitcointestnetrpc/'
+      api: {
+        url: 'https://blockstream.info/testnet/api'
       },
       feeNumberOfBlocks: 2,
       network: 'bitcoin_testnet'
     },
-    midman: {
+    dai: {
       type: 'erc20',
       rpc: {
         url: 'https://rinkeby.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
+      },
+      api: {
+        type: 'scraper',
+        url: 'https://liquality.io/eth-rinkeby-api'
       },
       contractAddress: '0xcE2748BE67fB4346654B4500c4BB0642536365FC',
       network: 'rinkeby'
     }
   },
   minConfirmations: 0,
+  hostName: 'Liquality',
+  hostIcon: 'https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png',
+  hostAgent: 'https://liquality.io/agenttestnet',
   injectScript: `
   function addSentry () {
     (function loadScript(src, callback) {

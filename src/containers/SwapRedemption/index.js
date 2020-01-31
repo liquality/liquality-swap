@@ -5,6 +5,7 @@ import SwapRedemption from './SwapRedemption'
 const mapStateToProps = state => {
   return {
     assets: state.swap.assets,
+    transactions: state.swap.transactions,
     wallets: state.swap.wallets,
     expiration: state.swap.expiration,
     isPartyB: state.swap.isPartyB,

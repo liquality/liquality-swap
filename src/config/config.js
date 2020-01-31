@@ -1,27 +1,33 @@
 export default {
+  hostName: 'Liquality',
+  hostIcon: 'https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png',
+  hostAgent: 'http://localhost:3030',
   assets: {
     eth: {
       rpc: {
-        url: 'http://localhost:8545'
-      },
-      network: 'rinkeby'
-    },
-    midman: {
-      type: 'erc20',
-      rpc: {
-        url: 'http://localhost:8545'
-      },
-      contractAddress: '0x422950598Eb23877deAfF346dA0550Aa53482156', // Local ERC20 contract (18 decimals),
-      network: 'rinkeby'
+        url: 'http://localhost:8545',
+        wallet: true
+      }
     },
     btc: {
       rpc: {
         username: 'bitcoin',
         password: 'local321',
-        url: 'http://localhost:18332'
+        url: 'http://localhost:18443',
+        addressType: 'bech32',
+        wallet: true
       },
-      network: 'bitcoin_testnet',
+      network: 'bitcoin_regtest',
+      swapMode: 'p2wsh',
       feeNumberOfBlocks: 2
+    },
+    dai: {
+      type: 'erc20',
+      rpc: {
+        url: 'http://localhost:8545',
+        wallet: true
+      },
+      contractAddress: '0x422950598Eb23877deAfF346dA0550Aa53482156'
     }
   },
   debug: true,

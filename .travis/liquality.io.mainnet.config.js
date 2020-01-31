@@ -8,13 +8,15 @@ export default {
       rpc: {
         url: 'https://mainnet.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
       },
+      api: {
+        type: 'scraper',
+        url: 'https://liquality.io/eth-mainnet-api'
+      },
       network: 'mainnet'
     },
     btc: {
-      rpc: {
-        username: 'liquality',
-        password: 'liquality123',
-        url: 'https://liquality.io/bitcoinrpc/'
+      api: {
+        url: 'https://blockstream.info/api'
       },
       feeNumberOfBlocks: 2,
       network: 'bitcoin'
@@ -24,10 +26,29 @@ export default {
       rpc: {
         url: 'https://mainnet.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
       },
-      contractAddress: '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359',
+      api: {
+        type: 'scraper',
+        url: 'https://liquality.io/eth-mainnet-api'
+      },
+      contractAddress: '0x6b175474e89094c44da98b954eedeac495271d0f',
+      network: 'mainnet'
+    },
+    usdt: {
+      type: 'erc20',
+      rpc: {
+        url: 'https://mainnet.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
+      },
+      api: {
+        type: 'scraper',
+        url: 'https://liquality.io/eth-mainnet-api'
+      },
+      contractAddress: '0xdac17f958d2ee523a2206206994597c13d831ec7',
       network: 'mainnet'
     }
   },
+  hostName: 'Liquality',
+  hostIcon: 'https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png',
+  hostAgent: 'https://liquality.io/agent',
   injectScript: `
   function addSentry () {
     (function loadScript(src, callback) {
@@ -54,6 +75,13 @@ export default {
         release: '${footerVersion}'
       })
     });
+  }
+
+  function addIntercom () {
+    window.intercomSettings = {
+      app_id: "hzt4o9u6"
+    };
+    (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/hzt4o9u6';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
   }
 
   function addGA () {
@@ -111,6 +139,7 @@ export default {
 
   function addAnalytics () {
     addGA();
+    addIntercom();
     addSentry();
     addFullStory();
     addHotJar();

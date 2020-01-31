@@ -23,6 +23,13 @@
   &_logo {
     height: 25px;
   }
+  
+  &_sync {
+    float: right;
+    img {
+      width: 20px;
+    }
+  }
 
   &_main {
     flex: 1;

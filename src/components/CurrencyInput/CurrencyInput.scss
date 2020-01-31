@@ -23,6 +23,10 @@
   &_inputWrapper {
     border-bottom: 1px solid #31E4C3;
     padding-bottom: 1px;
+
+    &.disabled {
+      border: none;
+    }
   }
 
   &_input {
@@ -37,14 +41,17 @@
     &.error {
       border: 1px solid $danger;
     }
+  }
 
-    &[readonly] {
-      border: none;
-    }
+  &_label {
+    height: 20px;
+    padding-top: 1px;
+    font-size: $font-size-sm;
+    text-align: center;
+    color: #747E8D;
   }
 
   &_errorMessage {
-    height: 20px;
     @include error-message;
   }
 }

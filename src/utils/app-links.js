@@ -17,6 +17,8 @@ function generateLink (swap, counterparty = false) {
     ;({ a: counterPartyA, b: counterPartyB } = swap.counterParty)
   }
 
+  const isPartyB = swap.isPartyB ? true : counterparty
+
   const urlParams = {
     ccy1: assetA.currency,
     ccy1v: assetA.value,
@@ -31,14 +33,14 @@ function generateLink (swap, counterparty = false) {
     aFundHash: transactionsA.fund.hash,
     bFundHash: transactionsB.fund.hash,
 
-    aFundBlock: transactionsA.fund.block,
-    bFundBlock: transactionsB.fund.block,
+    aStartBlock: transactionsA.startBlock,
+    bStartBlock: transactionsB.startBlock,
 
     secretHash: swap.secretParams.secretHash,
 
     expiration: swap.expiration.unix(),
 
-    isPartyB: counterparty === true
+    isPartyB
   }
   return `${APP_BASE_URL}#${queryString.stringify(urlParams)}`
 }
@@ -50,7 +52,8 @@ function generateSwapState (location) {
   return {
     assets: {
       a: { currency: urlParams.ccy1, value: parseFloat(urlParams.ccy1v) },
-      b: { currency: urlParams.ccy2, value: parseFloat(urlParams.ccy2v) }
+      b: { currency: urlParams.ccy2, value: parseFloat(urlParams.ccy2v) },
+      rate: urlParams.rate ? urlParams.rate : undefined
     },
     wallets: {
       a: { addresses: [urlParams.ccy1Addr] },
@@ -61,8 +64,8 @@ function generateSwapState (location) {
       b: { address: urlParams.ccy2CounterPartyAddr }
     },
     transactions: {
-      a: { fund: { hash: urlParams.aFundHash, block: urlParams.aFundBlock }, claim: {} },
-      b: { fund: { hash: urlParams.bFundHash, block: urlParams.bFundBlock }, claim: {} }
+      a: { fund: { hash: urlParams.aFundHash }, claim: {}, refund: {}, startBlock: parseInt(urlParams.aStartBlock) },
+      b: { fund: { hash: urlParams.bFundHash }, claim: {}, refund: {}, startBlock: parseInt(urlParams.bStartBlock) }
     },
     secretParams: {
       secretHash: urlParams.secretHash
