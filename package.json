@@ -1,6 +1,6 @@
 {
   "name": "liquality-atomic-swap",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
     "@liquality/bitcoin-esplora-api-provider": "^0.4.17",
