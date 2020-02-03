@@ -12,7 +12,7 @@
     "@liquality/bitcoin-swap-provider": "^0.4.17",
     "@liquality/client": "^0.4.17",
     "@liquality/crypto": "^0.4.17",
-    "@liquality/cryptoassets": "^0.0.8",
+    "@liquality/cryptoassets": "^0.0.9",
     "@liquality/errors": "^0.4.17",
     "@liquality/ethereum-blockscout-swap-find-provider": "^0.4.17",
     "@liquality/ethereum-erc20-provider": "^0.4.17",
