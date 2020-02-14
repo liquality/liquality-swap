@@ -19,14 +19,6 @@ deploy_app: &deploy_app
   script:
     - CI=false npm run build
   deploy:
-    - provider: pages
-      skip-cleanup: true
-      github-token: "$GITHUB_TOKEN"
-      keep-history: false
-      target-branch: gh-pages
-      local-dir: "./build"
-      on:
-        branch: master
     - provider: script
       skip_cleanup: true
       script: rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/build/ $LIQUALITY_USER@$LIQUALITY_HOST:$DESTINATION_PATH/
@@ -42,6 +34,14 @@ deploy_app: &deploy_app
       script: rsync -r --rsync-path="mkdir -p /var/www/html/it/leep/dev/$TRAVIS_COMMIT/swap$SWAP_DIR_SUFFIX && rsync" --delete-after --quiet $TRAVIS_BUILD_DIR/build/ $LIQUALITY_USER@$LIQUALITY_HOST:/var/www/html/it/leep/dev/$TRAVIS_COMMIT/swap$SWAP_DIR_SUFFIX
       on:
         all_branches: true
+    - provider: pages
+      skip-cleanup: true
+      github-token: "$GITHUB_TOKEN"
+      keep-history: false
+      target-branch: gh-pages
+      local-dir: "./build"
+      on:
+        branch: master
 
 jobs:
   include:
