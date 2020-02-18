@@ -1,8 +1,17 @@
 .BackupLinkCard {
   text-align: center;
 
+  h3 {
+    @import '../../scss/variables.scss';
+    font-weight: bold;
+    color: $color-text-1;
+    padding-top: 35px;
+  }
+
   &_description {
-    margin: 40px 0; 
+    margin: 40px auto;
+    width: 500px;
+    text-align: left;
   }
 
   &_icon {

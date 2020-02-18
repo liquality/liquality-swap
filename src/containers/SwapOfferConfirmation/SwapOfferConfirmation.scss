@@ -9,15 +9,31 @@
   &_terms {
     padding-top: 30px;
     text-align: center;
-    font-size: $h1-font-size;
+    font-weight: bold;
+    font-size: $h3-font-size;
   }
 
   &_rate {
     margin-top: 10px;
     text-align: center;
     font-weight: bold;
-    font-size: $h4-font-size;
+    font-size: $font-size-lg;
     color: $color-text-2;
+  }
+
+  &_info {
+    width: 630px;
+    margin: 0 auto;
+    border-top: 1px solid #bababa;
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 30px;
+
+    ul {
+      font-weight: bold;
+      list-style-position: inside;
+      padding: 0;
+    }
   }
 
   &_bottom {

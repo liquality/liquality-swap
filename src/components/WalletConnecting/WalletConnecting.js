@@ -15,7 +15,7 @@ const WalletConnecting = (props) => {
       <img src={wallet.icon} className='WalletPanel_walletImg' alt={`${wallet.name} Icon`} />
       <h5>{wallet.name}</h5>
     </div>
-    <Button wide primary onClick={props.cancelWallet}>{props.cancelText}</Button>
+    <Button wide link onClick={props.cancelWallet}>{props.cancelText}</Button>
   </div>
 }
 

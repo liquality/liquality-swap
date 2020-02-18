@@ -42,7 +42,8 @@ class WalletConnectPopup extends Component {
         <WalletConnected
           addresses={props.addresses}
           currency={props.currency}
-          disconnectText='Disconnect'
+          disconnectText='Cancel'
+          receive={props.id === 'b'}
           disconnectWallet={this.disconnectWallet}
           onOk={this.props.handleClose}
           wallet={props.wallet}
@@ -61,7 +62,6 @@ class WalletConnectPopup extends Component {
       walletConnectBody = (
         <WalletConnect
           cancelText='Cancel'
-          title='Liquality'
           receive={props.id === 'b'}
           onCancel={this.disconnectWallet}
           currency={props.currency}
@@ -74,6 +74,7 @@ class WalletConnectPopup extends Component {
           title='Liquality'
           subTitle=''
           wallets={getAssetWallets(this.props.currency)}
+          receive={props.id === 'b'}
           chooseWallet={this.chooseWallet}
           onCancel={this.props.handleClose}
           currency={props.currency} />
