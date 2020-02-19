@@ -17,10 +17,10 @@ class Waiting extends Component {
         }
       } else {
         if (!this.props.transactions.b.fund.hash) {
-          if (this.props.quote) {
-            return ['Pending Confirmation', `Initial Transaction Pending Confirmation On The Blockchain...`]
-          } else {
+          if (this.props.transactions.a.fund.confirmations > 0) {
             return ['Pending Partner Transaction', 'Waiting For Trade Partner To Send Their Transaction...']
+          } else {
+            return ['Pending Confirmation', `Initial Transaction Pending Confirmation On The Blockchain...`]
           }
         }
         if (!this.props.transactions.b.fund.confirmations > 0) {
