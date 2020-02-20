@@ -16,7 +16,7 @@ class SwapOfferConfirmation extends Component {
     // TODO: instead clear the quote from the state and navigate to counterparty selection?
   }
   render () {
-    return <BrandCard className='SwapOfferConfirmation' title='Accept Swap Offer'>
+    return <BrandCard className='SwapOfferConfirmation' title='Accept Quote'>
       <TimeProgressBar startTime={this.props.quote.retrievedAt} endTime={this.props.quote.expiresAt} />
       <div className='SwapOfferConfirmation_terms'>Get {this.props.assets.b.value} {assets[this.props.assets.b.currency].code} <br />
       for<br />
@@ -30,7 +30,7 @@ class SwapOfferConfirmation extends Component {
         </ul>
       </div>
       <div className='SwapOfferConfirmation_bottom'>
-        <Button wide primary onClick={() => this.handleAcceptRate()}>Connect Wallets To Accept Offer</Button><br />
+        <Button wide primary onClick={() => this.handleAcceptRate()}>Connect Wallets To Accept Quote</Button><br />
         <Button wide link onClick={() => this.handleCancel()}>Go Back</Button>
       </div>
     </BrandCard>

@@ -25,7 +25,7 @@ class SwapRedemption extends Component {
         <p>After launching your wallet application, press the button below to connect and sign this transaction.</p>
       </div>
       <p>
-        {!errors.claim && <Button wide primary loadingMessage={this.props.loadingMessage} onClick={this.props.redeemSwap}>Claim Your Funds</Button>}
+        {!errors.claim && <Button wide primary loadingMessage={this.props.loadingMessage} onClick={this.props.redeemSwap}>Claim Your {claimCurrency.code}</Button>}
         {errors.claim && <div className='SwapRedemption_errorMessage'>{errors.claim}</div>}
       </p>
     </BrandCard>

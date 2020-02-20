@@ -6,6 +6,11 @@
     font-weight: bold;
     color: $color-text-1;
     padding-top: 35px;
+    
+    img {
+      width: 32px;
+      margin-bottom: 10px;
+    }
   }
 
   &_description {
