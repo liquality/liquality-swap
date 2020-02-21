@@ -31,7 +31,7 @@ class SwapOfferConfirmation extends Component {
       </div>
       <div className='SwapOfferConfirmation_bottom'>
         <Button wide primary onClick={() => this.handleAcceptRate()}>Connect Wallets To Accept Quote</Button><br />
-        <Button wide link onClick={() => this.handleCancel()}>Go Back</Button>
+        <Button wide link onClick={() => this.handleCancel()}>Cancel</Button>
       </div>
     </BrandCard>
   }

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import CurrencyInputs from '../CurrencyInputs'
 import SwapPairPanel from '../../components/SwapPairPanel/SwapPairPanel'
 import Button from '../../components/Button/Button'
-import CompletedIcon from '../../icons/completed.svg'
+import TickIcon from '../../icons/tick.svg'
 import HandshakeIcon from '../../icons/handshake.png'
 
 import config from '../../config'
@@ -18,7 +18,7 @@ class SwapCompleted extends Component {
         wantCurrency={this.props.assets.b.currency}
         haveLabel='Sent'
         wantLabel='Received'
-        icon={CompletedIcon}
+        icon={TickIcon}
         onIconClick={() => this.props.switchSides()} />
       <div className='SwapCompleted_top'>
         <CurrencyInputs showInputs leftInputDisabled rightInputDisabled />

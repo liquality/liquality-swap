@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Stepper, Step, StepLabel, StepConnector } from '@material-ui/core'
 import { steps, stepData } from './steps'
 
-import CompletedIcon from '../../icons/completed.svg'
+import TickIcon from '../../icons/tick.svg'
 import './SwapProgressStepper.css'
 
 class SwapProgressStepper extends Component {
@@ -29,7 +29,7 @@ class SwapProgressStepper extends Component {
           }
         }
         if (index < activeStep) {
-          stepIconProps.icon = <img src={CompletedIcon} alt='Completed' />
+          stepIconProps.icon = <img src={TickIcon} alt='Completed' />
         }
         return <Step key={step.id}>
           <StepLabel classes={{

@@ -12,7 +12,7 @@ class SwapRedemption extends Component {
     const errors = getClaimErrors(this.props.transactions, this.props.isPartyB)
     const claimCurrency = cryptoassets[this.props.assets.b.currency]
 
-    return <BrandCard className='SwapRedemption' title={`Claim your ${claimCurrency.code}`}>
+    return <BrandCard className='SwapRedemption' title='Claiming'>
       <div className='SwapRedemption_confirmation'>
         <p className='SwapRedemption_terms'>
           Get <strong>{this.props.assets.b.value} {cryptoassets[this.props.assets.b.currency].code}</strong>
