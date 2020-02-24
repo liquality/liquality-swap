@@ -12,10 +12,8 @@ import './WalletConnect.css'
 const WalletConnect = (props) => {
   const currency = cryptoassets[props.currency]
   const network = getNetworkByCurrency(props.currency)
-  const term = props.receive ? 'Receive' : 'Pay with'
+  const term = props.receive ? 'Receive' : 'Send'
   return <div className='WalletConnect'>
-    <h1>{props.title}</h1>
-    <p>By connecting you understand that you are on your own trusting a cutting-edge technology without need to trust your trading partner.</p>
     {props.subTitle && <p>{props.subTitle}</p>}
     <h2>{term} {currency.name}</h2>
     <div className='WalletConnect_wallet'>
@@ -34,7 +32,6 @@ WalletConnect.propTypes = {
   connectWallet: PropTypes.func,
   onCancel: PropTypes.func,
   currency: PropTypes.string,
-  title: PropTypes.string,
   subTitle: PropTypes.string,
   wallet: PropTypes.string
 }

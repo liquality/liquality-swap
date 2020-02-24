@@ -5,7 +5,14 @@
   text-align: center;
 
   &_terms {
-    font-size: $h1-font-size;
+    font-size: $h3-font-size;
+    margin: 30px 0;
+  }
+
+  &_info {
+    width: 350px;
+    margin: 0 auto 30px auto;
+    text-align: left;
   }
 
   &_errorMessage {

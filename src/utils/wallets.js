@@ -8,7 +8,8 @@ const wallets = {
     icon: metamask,
     name: 'MetaMask',
     connection: {
-      title: 'Login to MetaMask'
+      title: 'Login to MetaMask',
+      description: 'Look for the MetaMask window in your browser (or a prompt to accept the MetaMask pop-up).'
     },
     troubleshootConnectionLink: 'https://metamask.zendesk.com/hc/en-us/articles/360015489531-Getting-Started-With-MetaMask-Part-1-'
   },
@@ -17,7 +18,7 @@ const wallets = {
     name: 'Ledger (Legacy)',
     connection: {
       title: 'On your ledger',
-      description: 'Navigate to your Bitcoin account. Follow Ledger instructions to connect Bitcoin wallet'
+      description: 'Navigate to your Bitcoin account on your Ledger device.'
     },
     troubleshootConnectionLink: 'https://support.ledger.com/hc/en-us/articles/115005195945'
   },
@@ -26,7 +27,7 @@ const wallets = {
     name: 'Ledger (Native Segwit)',
     connection: {
       title: 'On your ledger',
-      description: 'Navigate to your Bitcoin account. Follow Ledger instructions to connect Bitcoin wallet'
+      description: 'Navigate to your Bitcoin account on your Ledger device.'
     },
     troubleshootConnectionLink: 'https://support.ledger.com/hc/en-us/articles/115005195945'
   },
@@ -53,7 +54,7 @@ const wallets = {
     name: 'Ledger',
     connection: {
       title: 'On your ledger',
-      description: 'Navigate to your Ethereum account. Follow Ledger instructions to connect Ethereum wallet'
+      description: 'Navigate to your Ethereum account on your Ledger device.'
     },
     troubleshootConnectionLink: 'https://support.ledger.com/hc/en-us/articles/115005195945'
   }

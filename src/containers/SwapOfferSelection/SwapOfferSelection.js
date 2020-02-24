@@ -88,12 +88,12 @@ class SwapOfferSelection extends Component {
           showRate={amountEntered}
           rateDisabled
           rateStrong
-          rateTitle='Estimated Rate'
+          rateTitle='Estimated Quote'
           leftHelpText={minMaxLabel} />
         { !amountEntered && <span className='SwapOfferSelection_host'>Trade with <br /><img src={config.hostIcon} alt={config.hostName} /></span> }
       </div> }
       { !this.props.assetSelector.open && <div className='SwapOfferSelection_bottom'>
-        <Button wide primary onClick={this.props.retrieveAgentQuote}>See Offer</Button><br />
+        <Button wide primary onClick={this.props.retrieveAgentQuote}>See Quote</Button><br />
         <Button wide link onClick={() => window.location.replace(APP_BASE_URL)}>Cancel</Button>
       </div> }
     </div>

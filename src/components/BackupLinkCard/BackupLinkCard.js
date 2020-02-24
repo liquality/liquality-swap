@@ -2,18 +2,17 @@ import React, { Component } from 'react'
 import BrandCard from '../BrandCard/BrandCard'
 import Button from '../Button/Button'
 import withCopyButton from '../withCopyButton'
-import CompletedIcon from '../../icons/completed.svg'
 import CopyIcon from '../../icons/copy.svg'
+import WarningIcon from '../../icons/warning.png'
 import './BackupLinkCard.css'
 
 class BackupLinkCard extends Component {
   render () {
-    return <BrandCard className='BackupLinkCard' title='Backup'>
-      <img className='BackupLinkCard_icon' src={CompletedIcon} alt='Completed' />
-      <p className='BackupLinkCard_description'>You need this link to claim your funds if your browser closes.</p>
-      <p>Please copy this link by clicking the button below. Save it in a safe place.</p>
-      <p><Button wide secondary onClick={() => this.props.onCopyClick()} icon={CopyIcon}>Backup Link</Button></p>
-      <p><Button wide primary onClick={this.props.onNextClick}>Next</Button></p>
+    return <BrandCard className='BackupLinkCard' title='Copy Backup Link'>
+      <h3><img src={WarningIcon} /><br />Copy This Link!</h3>
+      <p className='BackupLinkCard_description'>If your browser closes you will need this link to claim your funds.<br />Save it where you can retrieve it should the browser close. Additionally, you can bookmark this page.</p>
+      <p><Button wide secondary onClick={() => this.props.onCopyClick()} icon={CopyIcon}>Copy Link</Button></p>
+      <p><Button wide primary onClick={this.props.onNextClick}>Continue</Button></p>
     </BrandCard>
   }
 }
