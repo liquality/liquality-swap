@@ -2,7 +2,7 @@
 
 import { replace } from 'connected-react-router'
 import watch from 'redux-watch'
-import { store } from '../store'
+import { store, initialAppState as canonicalAppState } from '../store'
 import config from '../config'
 import { getClient } from '../services/chainClient'
 import agent from '../services/agentClient'
@@ -95,21 +95,21 @@ async function ensureWallet (party, dispatch, getState) {
 async function generateSecret (dispatch, getState) {
   const {
     assets,
-    counterParty,
     expiration
   } = getState().swap
   await ensureWallet('a', dispatch, getState)
   const { wallets } = getState().swap
+  const { wallets: canonicalWallets, counterParty: canonicalCounterParty } = canonicalAppState.swap || getState().swap
   const client = getClient(assets.a.currency, wallets.a.type)
   const secretData = [
     assets.a.value,
     assets.a.currency,
     assets.b.value,
     assets.b.currency,
-    wallets.a.addresses[0],
-    counterParty.a.address,
-    wallets.b.addresses[0],
-    counterParty.b.address,
+    canonicalWallets.a.addresses[0],
+    canonicalCounterParty.a.address,
+    canonicalWallets.b.addresses[0],
+    canonicalCounterParty.b.address,
     expiration.unix()
   ]
 
@@ -134,11 +134,11 @@ async function lockFunds (dispatch, getState) {
   const {
     assets,
     wallets,
-    counterParty,
     secretParams,
     expiration,
     isPartyB
   } = getState().swap
+  const { wallets: canonicalWallets, counterParty: canonicalCounterParty } = canonicalAppState.swap || getState().swap
   const client = getClient(assets.a.currency, wallets.a.type)
 
   const swapExpiration = isPartyB ? getFundExpiration(expiration, 'b').time : expiration
@@ -147,8 +147,8 @@ async function lockFunds (dispatch, getState) {
   const valueInUnit = cryptoassets[assets.a.currency].currencyToUnit(assets.a.value)
   const initiateSwapParams = [
     valueInUnit,
-    counterParty.a.address,
-    wallets.a.addresses[0],
+    canonicalCounterParty.a.address,
+    canonicalWallets.a.addresses[0],
     secretParams.secretHash,
     swapExpiration.unix()
   ]
@@ -234,19 +234,19 @@ async function unlockFunds (dispatch, getState) {
   const {
     assets,
     wallets,
-    counterParty,
     transactions,
     secretParams,
     isPartyB,
     expiration
   } = getState().swap
+  const { wallets: canonicalWallets, counterParty: canonicalCounterParty } = canonicalAppState.swap || getState().swap
   const client = getClient(assets.b.currency, wallets.b.type)
   const blockNumber = await client.chain.getBlockHeight()
   const swapExpiration = getClaimExpiration(expiration, isPartyB ? 'b' : 'a').time
   const claimSwapParams = [
     transactions.b.fund.hash,
-    wallets.b.addresses[0],
-    counterParty.b.address,
+    canonicalWallets.b.addresses[0],
+    canonicalCounterParty.b.address,
     secretParams.secret,
     swapExpiration.unix()
   ]
@@ -272,20 +272,20 @@ function refundSwap () {
     const {
       assets,
       wallets,
-      counterParty,
       transactions,
       secretParams,
       isPartyB,
       expiration
     } = getState().swap
+    const { wallets: canonicalWallets, counterParty: canonicalCounterParty } = canonicalAppState.swap || getState().swap
 
     const client = getClient(assets.a.currency, wallets.a.type)
     const swapExpiration = getFundExpiration(expiration, isPartyB ? 'b' : 'a').time
     const blockNumber = await client.chain.getBlockHeight()
     const refundSwapParams = [
       transactions.a.fund.hash,
-      counterParty.a.address,
-      wallets.a.addresses[0],
+      canonicalCounterParty.a.address,
+      canonicalWallets.a.addresses[0],
       secretParams.secretHash,
       swapExpiration.unix()
     ]
