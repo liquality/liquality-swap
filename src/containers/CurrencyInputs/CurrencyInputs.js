@@ -17,7 +17,11 @@ class CurrencyInputs extends Component {
             value={assetA.value}
             disabled={this.props.leftInputDisabled}
             error={errors.assetA}
-            helpText={this.props.leftHelpText}
+            limits={this.props.leftInputLimits && {
+              min: this.props.leftInputLimits.min,
+              max: this.props.leftInputLimits.max,
+              onClick: value => this.props.onAmountChange('a', value)
+            }}
             onChange={newValue => this.props.onAmountChange('a', newValue)}
             tabIndex={1} />
           }
@@ -28,7 +32,11 @@ class CurrencyInputs extends Component {
             value={assetB.value}
             disabled={this.props.rightInputDisabled}
             error={errors.assetB}
-            helpText={this.props.rightHelpText}
+            limits={this.props.rightInputLimits && {
+              min: this.props.rightInputLimits.min,
+              max: this.props.rightInputLimits.max,
+              onClick: value => this.props.onAmountChange('b', value)
+            }}
             onChange={newValue => this.props.onAmountChange('b', newValue)}
             tabIndex={3} />
           }
@@ -56,8 +64,8 @@ class CurrencyInputs extends Component {
 CurrencyInputs.propTypes = {
   leftInputDisabled: PropTypes.bool,
   rightInputDisabled: PropTypes.bool,
-  leftHelpText: PropTypes.string,
-  rightHelpText: PropTypes.string,
+  leftInputLimits: CurrencyInput.propTypes.limits,
+  rightInputLimits: CurrencyInput.propTypes.limits,
   rateDisabled: PropTypes.bool,
   rateTitle: PropTypes.string,
   rateStrong: PropTypes.bool,

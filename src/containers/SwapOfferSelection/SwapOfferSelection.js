@@ -57,10 +57,6 @@ class SwapOfferSelection extends Component {
     const selectorAssets = this.getSelectorAssets()
     const switchSidesAvailable = this.props.markets.find(market => market.from === assetB.currency && market.to === assetA.currency)
 
-    const minString = BigNumber(this.props.market.min).toFixed()
-    const maxString = BigNumber(this.props.market.max).toFixed()
-    const minMaxLabel = `Min: ${minString} Max: ${maxString}`
-
     return <div className='SwapOfferSelection'>
       <SwapPairPanel
         haveCurrency={assetA.currency}
@@ -89,11 +85,14 @@ class SwapOfferSelection extends Component {
           rateDisabled
           rateStrong
           rateTitle='Estimated Quote'
-          leftHelpText={minMaxLabel} />
+          leftInputLimits={{
+            min: this.props.market.min,
+            max: this.props.market.max
+          }} />
         { !amountEntered && <span className='SwapOfferSelection_host'>Trade with <br /><img src={config.hostIcon} alt={config.hostName} /></span> }
       </div> }
       { !this.props.assetSelector.open && <div className='SwapOfferSelection_bottom'>
-        <Button wide primary onClick={this.props.retrieveAgentQuote}>See Quote</Button><br />
+        <Button wide primary onClick={this.props.retrieveAgentQuote}>Get Quote</Button><br />
         <Button wide link onClick={() => window.location.replace(APP_BASE_URL)}>Cancel</Button>
       </div> }
     </div>

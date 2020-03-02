@@ -25,6 +25,15 @@ const CurrencyInput = (props) => {
     props.onChange(restrictNumber(e.target.value))
   }
 
+  const getLimits = () => {
+    const minString = BigNumber(props.limits.min).toFixed()
+    const maxString = BigNumber(props.limits.max).toFixed()
+    return <span>
+      Min: <a href='javascript:void(0)' onClick={() => props.limits.onClick(props.limits.min)}>{minString}</a>&nbsp;
+      Max: <a href='javascript:void(0)' onClick={() => props.limits.onClick(props.limits.max)}>{maxString}</a>
+    </span>
+  }
+
   return <div className='CurrencyInput'>
     <h3 className='CurrencyInput_heading'>{asset.code}</h3>
     <div className={classNames('CurrencyInput_inputWrapper', { 'disabled': props.disabled })}>
@@ -36,7 +45,7 @@ const CurrencyInput = (props) => {
       { props.error }
     </div> }
     <div className='CurrencyInput_label'>
-      { props.helpText && props.helpText }
+      { props.limits && getLimits() }
     </div>
   </div>
 }
@@ -49,7 +58,11 @@ CurrencyInput.propTypes = {
   onChange: PropTypes.func,
   tabIndex: PropTypes.number,
   error: PropTypes.string,
-  helpText: PropTypes.string
+  limits: PropTypes.shape({
+    min: PropTypes.number,
+    max: PropTypes.number,
+    onClick: PropTypes.func
+  })
 }
 
 CurrencyInput.defaultProps = {

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
 
-import CounterPartySelection from '../CounterPartySelection'
 import AssetSelection from '../AssetSelection'
 import SwapInitiation from '../SwapInitiation'
 import CounterPartyLinkCard from '../../components/CounterPartyLinkCard/CounterPartyLinkCard'
@@ -39,7 +38,7 @@ class LiqualitySwap extends Component {
       return <SwapInitiation />
     } else {
       if (config.hostAgent) {
-        return <CounterPartySelection />
+        return <div /> // TODO: Loading until markets retrieved.
       } else {
         return <AssetSelection />
       }
@@ -89,16 +88,24 @@ class LiqualitySwap extends Component {
     />
   }
 
-  isSnycing () {
-    const syncStarted = this.props.swap.sync['a'].currentBlock && this.props.swap.sync['b'].currentBlock
-    const syncing = !this.props.swap.sync['a'].synced || !this.props.swap.sync['b'].synced
-    return syncStarted && syncing
-  }
-
-  getSyncBar () {
-    if (this.isSnycing()) {
-      return <div className='LiqualitySwap_sync'><img src={Spinner} alt='Spinner' />&nbsp;&nbsp;Syncing...</div>
+  getNav () {
+    const botLink = {}
+    const otcLink = {}
+    if (this.props.location.pathname === '/assetSelection') {
+      botLink.href = 'javascript:void(0)'
+      botLink.onClick = () => {
+        this.props.history.replace('/offerSelection')
+      }
+    } else if (this.props.location.pathname === '/offerSelection') {
+      otcLink.href = 'javascript:void(0)'
+      otcLink.onClick = () => {
+        this.props.history.replace('/assetSelection')
+      }
     }
+    const swapLinks = <span><a {...botLink}>Bot Swap</a>&nbsp;|&nbsp;<a {...otcLink}>OTC Swap</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    const showSwapLinks = this.props.swap.step === null
+
+    return <div className='LiqualitySwap_nav'>{showSwapLinks && swapLinks}<a href='https://liquality.io/faqs.html' target='_blank'>Help</a></div>
   }
 
   render () {
@@ -106,7 +113,7 @@ class LiqualitySwap extends Component {
       <div className='LiqualitySwap_bar' />
       <div className='LiqualitySwap_header'>
         <img className='LiqualitySwap_logo' src={LiqualityLogo} alt='Liquality Logo' />
-        { this.getSyncBar() }
+        { this.getNav() }
         { this.props.swap.step && <SwapProgressStepper state={this.props.swap.step} /> }
       </div>
       <div className='LiqualitySwap_main'>
