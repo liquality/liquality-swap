@@ -12,14 +12,16 @@ export default {
         type: 'scraper',
         url: 'https://liquality.io/eth-mainnet-api'
       },
-      network: 'mainnet'
+      network: 'mainnet',
+      explorerPath: 'https://etherscan.io/tx/0x'
     },
     btc: {
       api: {
         url: 'https://blockstream.info/api'
       },
       feeNumberOfBlocks: 2,
-      network: 'bitcoin'
+      network: 'bitcoin',
+      explorerPath: 'https://blockstream.info/tx/'
     },
     dai: {
       type: 'erc20',
@@ -31,7 +33,8 @@ export default {
         url: 'https://liquality.io/eth-mainnet-api'
       },
       contractAddress: '0x6b175474e89094c44da98b954eedeac495271d0f',
-      network: 'mainnet'
+      network: 'mainnet',
+      explorerPath: 'https://etherscan.io/tx/0x'
     },
     usdt: {
       type: 'erc20',
@@ -43,7 +46,8 @@ export default {
         url: 'https://liquality.io/eth-mainnet-api'
       },
       contractAddress: '0xdac17f958d2ee523a2206206994597c13d831ec7',
-      network: 'mainnet'
+      network: 'mainnet',
+      explorerPath: 'https://etherscan.io/tx/0x'
     }
   },
   hostName: 'Liquality',
