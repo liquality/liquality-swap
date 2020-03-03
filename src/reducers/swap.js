@@ -11,7 +11,7 @@ import assetSelector from './assetSelector'
 import agent from './agent'
 import sync from './sync'
 
-export default combineReducers({
+const swapReducer = combineReducers({
   assets,
   wallets,
   counterParty,
@@ -40,3 +40,11 @@ export default combineReducers({
   },
   isPartyB: (state = false) => state
 })
+
+export default (state, action) => {
+  if (action.type === types.RESET) {
+    state = undefined
+  }
+
+  return swapReducer(state, action)
+}

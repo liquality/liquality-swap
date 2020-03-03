@@ -38,7 +38,7 @@ class LiqualitySwap extends Component {
       return <SwapInitiation />
     } else {
       if (config.hostAgent) {
-        return <div /> // TODO: Loading until markets retrieved.
+        return <SwapOfferSelection />
       } else {
         return <AssetSelection />
       }
@@ -94,11 +94,14 @@ class LiqualitySwap extends Component {
     if (this.props.location.pathname === '/assetSelection') {
       botLink.href = 'javascript:void(0)'
       botLink.onClick = () => {
+        this.props.resetSwap()
+        this.props.connectAgent()
         this.props.history.replace('/offerSelection')
       }
     } else if (this.props.location.pathname === '/offerSelection') {
       otcLink.href = 'javascript:void(0)'
       otcLink.onClick = () => {
+        this.props.resetSwap()
         this.props.history.replace('/assetSelection')
       }
     }

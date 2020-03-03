@@ -16,6 +16,8 @@ function changeRate (newValue) {
     const a = {type: 'a', value: assets.a.value || 0}
     const rate = assets.rate || 0
 
+    if (a.value === 0) return ''
+
     let newVal = +(parseFloat(a.value) * parseFloat(rate)).toFixed(6)
     dispatch({ type: types.CHANGE_AMOUNT, party: 'b', newValue: newVal.toString() })
   }

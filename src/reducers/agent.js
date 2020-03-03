@@ -32,6 +32,6 @@ const reducers = {
   [agentTypes.SET_QUOTE]: setQuote
 }
 
-const counterParty = getReducerFunction(reducers, initialState)
+const agent = getReducerFunction(reducers, initialState)
 
-export default counterParty
+export default agent

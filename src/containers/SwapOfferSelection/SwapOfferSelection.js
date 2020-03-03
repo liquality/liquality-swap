@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
-import BigNumber from 'bignumber.js'
 import Button from '../../components/Button/Button'
 import SwapPairPanel from '../../components/SwapPairPanel/SwapPairPanel'
 import AssetSelector from '../../components/AssetSelector/AssetSelector'
@@ -85,7 +84,7 @@ class SwapOfferSelection extends Component {
           rateDisabled
           rateStrong
           rateTitle='Estimated Quote'
-          leftInputLimits={{
+          leftInputLimits={this.props.market && {
             min: this.props.market.min,
             max: this.props.market.max
           }} />
