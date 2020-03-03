@@ -48,6 +48,19 @@ export default {
       contractAddress: '0xdac17f958d2ee523a2206206994597c13d831ec7',
       network: 'mainnet',
       explorerPath: 'https://etherscan.io/tx/0x'
+    },
+    usdc: {
+      type: 'erc20',
+      rpc: {
+        url: 'https://mainnet.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
+      },
+      api: {
+        type: 'scraper',
+        url: 'https://liquality.io/eth-mainnet-api'
+      },
+      contractAddress: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+      network: 'mainnet',
+      explorerPath: 'https://etherscan.io/tx/0x'
     }
   },
   hostName: 'Liquality',
