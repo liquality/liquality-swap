@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 
 import AssetSelection from '../AssetSelection'
 import SwapInitiation from '../SwapInitiation'
@@ -21,7 +21,6 @@ import config from '../../config'
 
 import { steps } from '../../components/SwapProgressStepper/steps'
 import LiqualityLogo from '../../logo-text.png'
-import Spinner from './spinner.svg'
 import './LiqualitySwap.css'
 
 class LiqualitySwap extends Component {
@@ -37,12 +36,9 @@ class LiqualitySwap extends Component {
     if (this.props.swap.link) {
       return <SwapInitiation />
     } else {
-      if (config.hostAgent) {
-        return <SwapOfferSelection />
-      } else {
-        return <AssetSelection />
-      }
+      if (config.hostAgent) return <SwapOfferSelection />
     }
+    return <AssetSelection />
   }
 
   getBackupLinkCard () {
@@ -98,7 +94,7 @@ class LiqualitySwap extends Component {
         this.props.connectAgent()
         this.props.history.replace('/offerSelection')
       }
-    } else if (this.props.location.pathname === '/offerSelection') {
+    } else if (this.props.swap.agent.markets) {
       otcLink.href = 'javascript:void(0)'
       otcLink.onClick = () => {
         this.props.resetSwap()
@@ -122,6 +118,7 @@ class LiqualitySwap extends Component {
       <div className='LiqualitySwap_main'>
         <div className='LiqualitySwap_wave' />
         <div className='LiqualitySwap_wrapper'>
+          { window.location.hash === '#otcswap' && <Redirect to='/assetSelection' /> }
           <Route exact path='/' render={this.getStartingScreen.bind(this)} />
           <Route path='/offerSelection' component={SwapOfferSelection} />
           <Route path='/offerConfirmation' component={SwapOfferConfirmation} />
