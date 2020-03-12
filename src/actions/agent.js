@@ -46,7 +46,6 @@ function connectAgent () {
     dispatch({ type: types.SET_MARKETS, markets: validMarkets })
     const defaultMarket = validMarkets[0]
     dispatch(setMarket(defaultMarket))
-    dispatch(replace('/offerSelection'))
   }
 }
 

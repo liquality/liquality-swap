@@ -5,7 +5,7 @@ node_js:
   - "8"
 addons:
   ssh_known_hosts:
-    - liquality.io
+    - 40.71.224.69
 
 deploy_app: &deploy_app
   stage: deploy

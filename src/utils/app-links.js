@@ -46,7 +46,7 @@ function generateLink (swap, counterparty = false) {
 }
 
 function generateSwapState (location) {
-  if (!location.hash) return undefined // no state
+  if (!location.hash || !location.hash.includes('ccy1')) return undefined // no state
   const urlParams = queryString.parse(location.hash.replace('#', ''))
 
   return {

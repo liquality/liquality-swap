@@ -21,8 +21,7 @@ class SwapRedemption extends Component {
       </div>
       <ExpirationDetails isClaim />
       <div className='SwapRedemption_info'>
-        <p><strong>To claim your {cryptoassets[this.props.assets.b.currency].code}, you will need to connect the wallet and {cryptoassets[this.props.assets.b.currency].code} account you used to create the swap.</strong></p>
-        <p>After launching your wallet application, press the button below to connect and sign this transaction.</p>
+        <p><strong>Connect the wallet and {cryptoassets[this.props.assets.b.currency].code} account you used to create the swap.<br />Then press the button below to sign the transaction.</strong></p>
       </div>
       <p>
         {!errors.claim && <Button wide primary loadingMessage={this.props.loadingMessage} onClick={this.props.redeemSwap}>Claim Your {claimCurrency.code}</Button>}

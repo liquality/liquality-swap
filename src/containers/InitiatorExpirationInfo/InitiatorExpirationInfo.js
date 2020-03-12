@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { generateExpiration, expirationDurations } from '../../utils/expiration'
 
-import LockIcon from '../../icons/lock.svg'
 import ClockIcon from '../../icons/clock.svg'
 import './InitiatorExpirationInfo.css'
 
@@ -28,9 +27,8 @@ class InitiatorExpirationInfo extends Component {
   render () {
     return <div className='InitiatorExpirationInfo'>
       <div className='row justify-content-center'>
-        <div><img src={LockIcon} className='InitiatorExpirationInfo_icon' alt='Lock Icon' />Funds Locked {expirationDurations.a.asHours().toFixed(2)} HRS</div>
-        <div><img src={ClockIcon} className='InitiatorExpirationInfo_icon' alt='Clock Icon' />Offer Active {expirationDurations.b.asHours().toFixed(2)} HRS</div>
-        <div><strong>~ {this.state.expiration.format('L LT')}</strong></div>
+        <strong>What happens when you swap?</strong>
+        <p><img src={ClockIcon} className='InitiatorExpirationInfo_icon' alt='Clock Icon' />If the swap doesn't complete within {Number(expirationDurations.b.asHours().toFixed(2))} hours, your funds will be released from escrow in {Number(expirationDurations.a.asHours().toFixed(2))} hours at {this.state.expiration.format('LT')}.</p>
       </div>
     </div>
   }

@@ -6,11 +6,13 @@ import { ConnectedRouter } from 'connected-react-router'
 import { store, initialAppState } from './store'
 import history from './history'
 import errorHandler from './errorHandler'
+import config from './config'
 
 import { actions as syncActions } from './actions/sync'
 import { actions as transactionActions } from './actions/transactions'
 import { actions as assetActions } from './actions/assets'
 import { actions as counterPartyActions } from './actions/counterparty'
+import { actions as agentActions } from './actions/agent'
 
 import LiqualitySwap from './containers/LiqualitySwap'
 import './App.css'
@@ -39,6 +41,10 @@ if (initialAppState.swap) {
   }
   store.dispatch(syncActions.sync('a'))
   store.dispatch(syncActions.sync('b'))
+} else {
+  if (config.hostAgent) {
+    store.dispatch(agentActions.connectAgent())
+  }
 }
 
 class App extends Component {

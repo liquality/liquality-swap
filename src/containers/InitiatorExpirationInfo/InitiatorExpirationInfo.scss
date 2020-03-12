@@ -1,13 +1,6 @@
 @import '../../scss/variables.scss';
 
 .InitiatorExpirationInfo {
-  display: flex;
-  justify-content: center;
-
-  div {
-    margin: 0 40px;
-  }
-
   &_icon {
     height: 25px;
     margin-right: 10px;

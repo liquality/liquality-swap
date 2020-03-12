@@ -12,14 +12,16 @@ export default {
         type: 'scraper',
         url: 'https://liquality.io/eth-rinkeby-api'
       },
-      network: 'rinkeby'
+      network: 'rinkeby',
+      explorerPath: 'https://rinkeby.etherscan.io/tx/0x'
     },
     btc: {
       api: {
         url: 'https://blockstream.info/testnet/api'
       },
       feeNumberOfBlocks: 2,
-      network: 'bitcoin_testnet'
+      network: 'bitcoin_testnet',
+      explorerPath: 'https://blockstream.info/testnet/tx/'
     },
     dai: {
       type: 'erc20',
@@ -31,7 +33,8 @@ export default {
         url: 'https://liquality.io/eth-rinkeby-api'
       },
       contractAddress: '0xcE2748BE67fB4346654B4500c4BB0642536365FC',
-      network: 'rinkeby'
+      network: 'rinkeby',
+      explorerPath: 'https://rinkeby.etherscan.io/tx/0x'
     }
   },
   minConfirmations: 0,

@@ -18,7 +18,7 @@ class Waiting extends Component {
       } else {
         if (!this.props.transactions.b.fund.hash) {
           if (this.props.transactions.a.fund.confirmations > 0) {
-            return ['Swap In Progress', 'Waiting for transaction...']
+            return ['Swap In Progress', 'Confirming terms...']
           } else {
             if (this.props.quote) {
               return ['Awaiting Confirmation', `Once the transaction is confirmed, the quote is locked and the assets can be securely swapped.`]
