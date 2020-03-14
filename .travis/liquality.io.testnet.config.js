@@ -62,8 +62,12 @@ export default {
       t = document.getElementsByTagName('script')[0];
       t.parentNode.insertBefore(s, t);
     })('https://browser.sentry-cdn.com/5.14.2/bundle.min.js', function () {
+      var dsn = window.location.pathname.indexOf('-dev') !== -1
+        ? 'https://47837321894a4befa9211cf8754587dc@sentry.io/4694007'
+        : 'https://d9929a726dba4e929d6fded47f4b3fb4@sentry.io/4693957'
+
       Sentry.init({
-        dsn: 'https://12ddc74cff10472ebb8a940da86e12d9@sentry.io/1415462',
+        dsn: dsn,
         release: '${footerVersion}'
       })
     });
