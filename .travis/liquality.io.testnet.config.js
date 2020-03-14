@@ -61,7 +61,7 @@ export default {
       };
       t = document.getElementsByTagName('script')[0];
       t.parentNode.insertBefore(s, t);
-    })('https://browser.sentry-cdn.com/4.6.4/bundle.min.js', function () {
+    })('https://browser.sentry-cdn.com/5.14.2/bundle.min.js', function () {
       Sentry.init({
         dsn: 'https://12ddc74cff10472ebb8a940da86e12d9@sentry.io/1415462',
         release: '${footerVersion}'
