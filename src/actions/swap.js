@@ -22,7 +22,8 @@ const types = {
   SET_LINK: 'SET_LINK',
   SET_IS_VERIFIED: 'SET_IS_VERIFIED',
   SET_SHOW_ERRORS: 'SET_SHOW_ERRORS',
-  SET_LOADING_MESSAGE: 'SET_LOADING_MESSAGE'
+  SET_LOADING_MESSAGE: 'SET_LOADING_MESSAGE',
+  RESET: 'RESET'
 }
 
 function switchSides () {
@@ -61,6 +62,10 @@ function setLoadingMessage (loadingMessage) {
 
 function clearLoadingMessage () {
   return { type: types.SET_LOADING_MESSAGE, loadingMessage: null }
+}
+
+function reset () {
+  return { type: types.RESET, loadingMessage: null }
 }
 
 async function ensureWallet (party, dispatch, getState) {
@@ -305,6 +310,7 @@ const actions = {
   setIsVerified,
   showErrors,
   hideErrors,
+  reset,
   initiateSwap,
   confirmSwap,
   redeemSwap,

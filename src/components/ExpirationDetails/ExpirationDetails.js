@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import cryptoassets from '@liquality/cryptoassets'
+import config from '../../config'
 import { getFundExpiration, getClaimExpiration } from '../../utils/expiration'
 import withCopyButton from '../withCopyButton'
 import ClockIcon from '../../icons/clock.svg'
@@ -14,25 +15,37 @@ class ExpirationDetails extends Component {
     this.state = this.getExpirationState()
   }
 
+  getExplorerLink (tx, asset) {
+    const assetConfig = config.assets[asset]
+    return `${assetConfig.explorerPath}${tx.hash}`
+  }
+
   getTransaction () {
     const transactions = this.props.transactions
+
     const displayOrder = [
-      transactions.b.claim,
-      transactions.a.claim
+      { party: 'b', kind: 'claim' },
+      { party: 'a', kind: 'claim' }
     ]
 
     if (this.props.isPartyB) {
-      displayOrder.push(transactions.a.fund, transactions.b.fund)
+      displayOrder.push({ party: 'a', kind: 'fund' }, { party: 'b', kind: 'fund' })
     } else {
-      displayOrder.push(transactions.b.fund, transactions.a.fund)
+      displayOrder.push({ party: 'b', kind: 'fund' }, { party: 'a', kind: 'fund' })
     }
 
-    return displayOrder.find(tx => tx.hash) || {}
+    const selectedTransaction = displayOrder.find(tx => transactions[tx.party][tx.kind].hash) || {}
+    const tx = transactions[selectedTransaction.party][selectedTransaction.kind]
+    const asset = this.props.assets[selectedTransaction.party].currency
+    const explorerLink = tx && this.getExplorerLink(tx, asset)
+    tx.explorerLink = explorerLink
+    return tx
   }
 
   getExpirationState () {
     const party = this.props.isPartyB ? 'b' : 'a'
     const expiration = this.props.isClaim ? getClaimExpiration(this.props.expiration, party) : getFundExpiration(this.props.expiration, party)
+
     return {
       start: expiration.start,
       duration: expiration.duration,
@@ -81,7 +94,7 @@ class ExpirationDetails extends Component {
         </div>
         <div className='ExpirationDetails_bottom'>
           <div className='ExpirationDetails_transaction'>
-            <strong>Transaction ID: </strong> {this.state.transaction.hash}
+            <strong>Transaction ID: </strong> <a href={this.state.transaction.explorerLink} target='_blank'>{this.state.transaction.hash}</a>
           </div>
           <div className='ExpirationDetails_confirmations'>
             Confirmations: {this.state.transaction.confirmations}

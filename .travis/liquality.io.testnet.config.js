@@ -12,14 +12,16 @@ export default {
         type: 'scraper',
         url: 'https://liquality.io/eth-rinkeby-api'
       },
-      network: 'rinkeby'
+      network: 'rinkeby',
+      explorerPath: 'https://rinkeby.etherscan.io/tx/0x'
     },
     btc: {
       api: {
         url: 'https://blockstream.info/testnet/api'
       },
       feeNumberOfBlocks: 2,
-      network: 'bitcoin_testnet'
+      network: 'bitcoin_testnet',
+      explorerPath: 'https://blockstream.info/testnet/tx/'
     },
     dai: {
       type: 'erc20',
@@ -31,13 +33,14 @@ export default {
         url: 'https://liquality.io/eth-rinkeby-api'
       },
       contractAddress: '0xcE2748BE67fB4346654B4500c4BB0642536365FC',
-      network: 'rinkeby'
+      network: 'rinkeby',
+      explorerPath: 'https://rinkeby.etherscan.io/tx/0x'
     }
   },
   minConfirmations: 0,
   hostName: 'Liquality',
   hostIcon: 'https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png',
-  hostAgent: 'https://liquality.io/agenttestnet',
+  hostAgent: 'agent',
   injectScript: `
   function addSentry () {
     (function loadScript(src, callback) {
@@ -58,9 +61,13 @@ export default {
       };
       t = document.getElementsByTagName('script')[0];
       t.parentNode.insertBefore(s, t);
-    })('https://browser.sentry-cdn.com/4.6.4/bundle.min.js', function () {
+    })('https://browser.sentry-cdn.com/5.14.2/bundle.min.js', function () {
+      var dsn = window.location.pathname.indexOf('-dev') !== -1
+        ? 'https://47837321894a4befa9211cf8754587dc@sentry.io/4694007'
+        : 'https://d9929a726dba4e929d6fded47f4b3fb4@sentry.io/4693957'
+
       Sentry.init({
-        dsn: 'https://12ddc74cff10472ebb8a940da86e12d9@sentry.io/1415462',
+        dsn: dsn,
         release: '${footerVersion}'
       })
     });

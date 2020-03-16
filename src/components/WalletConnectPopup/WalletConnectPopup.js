@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Modal from '@material-ui/core/Modal'
 import WalletChoose from '../WalletChoose/WalletChoose'
-import WalletConnect from '../WalletConnect/WalletConnect'
 import WalletConnecting from '../WalletConnecting/WalletConnecting'
 import WalletConnected from '../WalletConnected/WalletConnected'
 import { getAssetWallets } from '../../utils/wallets'
@@ -21,6 +20,7 @@ class WalletConnectPopup extends Component {
   chooseWallet (wallet) {
     const { id, currency } = this.props
     this.props.chooseWallet(id, currency, wallet)
+    this.connectWallet(wallet)
   }
 
   connectWallet (wallet) {
@@ -56,16 +56,6 @@ class WalletConnectPopup extends Component {
           cancelText='Cancel'
           cancelWallet={this.disconnectWallet}
           currency={props.currency}
-          wallet={props.wallet} />
-      )
-    } else if (props.walletChosen) {
-      walletConnectBody = (
-        <WalletConnect
-          cancelText='Cancel'
-          receive={props.id === 'b'}
-          onCancel={this.disconnectWallet}
-          currency={props.currency}
-          connectWallet={this.connectWallet}
           wallet={props.wallet} />
       )
     } else {

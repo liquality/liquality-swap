@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 
-import CounterPartySelection from '../CounterPartySelection'
 import AssetSelection from '../AssetSelection'
 import SwapInitiation from '../SwapInitiation'
 import CounterPartyLinkCard from '../../components/CounterPartyLinkCard/CounterPartyLinkCard'
@@ -22,7 +21,6 @@ import config from '../../config'
 
 import { steps } from '../../components/SwapProgressStepper/steps'
 import LiqualityLogo from '../../logo-text.png'
-import Spinner from './spinner.svg'
 import './LiqualitySwap.css'
 
 class LiqualitySwap extends Component {
@@ -38,12 +36,9 @@ class LiqualitySwap extends Component {
     if (this.props.swap.link) {
       return <SwapInitiation />
     } else {
-      if (config.hostAgent) {
-        return <CounterPartySelection />
-      } else {
-        return <AssetSelection />
-      }
+      if (config.hostAgent) return <SwapOfferSelection />
     }
+    return <AssetSelection />
   }
 
   getBackupLinkCard () {
@@ -89,16 +84,27 @@ class LiqualitySwap extends Component {
     />
   }
 
-  isSnycing () {
-    const syncStarted = this.props.swap.sync['a'].currentBlock && this.props.swap.sync['b'].currentBlock
-    const syncing = !this.props.swap.sync['a'].synced || !this.props.swap.sync['b'].synced
-    return syncStarted && syncing
-  }
-
-  getSyncBar () {
-    if (this.isSnycing()) {
-      return <div className='LiqualitySwap_sync'><img src={Spinner} alt='Spinner' />&nbsp;&nbsp;Syncing...</div>
+  getNav () {
+    const botLink = {}
+    const otcLink = {}
+    if (this.props.location.pathname === '/assetSelection') {
+      botLink.href = 'javascript:void(0)'
+      botLink.onClick = () => {
+        this.props.resetSwap()
+        this.props.connectAgent()
+        this.props.history.replace('/offerSelection')
+      }
+    } else if (this.props.swap.agent.markets) {
+      otcLink.href = 'javascript:void(0)'
+      otcLink.onClick = () => {
+        this.props.resetSwap()
+        this.props.history.replace('/assetSelection')
+      }
     }
+    const swapLinks = <span><a {...botLink}>Bot Swap</a>&nbsp;|&nbsp;<a {...otcLink}>OTC Swap</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    const showSwapLinks = this.props.swap.step === null
+
+    return <div className='LiqualitySwap_nav'>{showSwapLinks && swapLinks}<a href='https://liquality.io/faqs.html' target='_blank'>Help</a></div>
   }
 
   render () {
@@ -106,12 +112,13 @@ class LiqualitySwap extends Component {
       <div className='LiqualitySwap_bar' />
       <div className='LiqualitySwap_header'>
         <img className='LiqualitySwap_logo' src={LiqualityLogo} alt='Liquality Logo' />
-        { this.getSyncBar() }
+        { this.getNav() }
         { this.props.swap.step && <SwapProgressStepper state={this.props.swap.step} /> }
       </div>
       <div className='LiqualitySwap_main'>
         <div className='LiqualitySwap_wave' />
         <div className='LiqualitySwap_wrapper'>
+          { window.location.hash === '#otcswap' && <Redirect to='/assetSelection' /> }
           <Route exact path='/' render={this.getStartingScreen.bind(this)} />
           <Route path='/offerSelection' component={SwapOfferSelection} />
           <Route path='/offerConfirmation' component={SwapOfferConfirmation} />

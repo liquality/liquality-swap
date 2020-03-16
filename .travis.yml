@@ -66,6 +66,3 @@ jobs:
     - <<: *deploy_app
       env:
         - REACT_APP_TRAVIS_COMMIT=$TRAVIS_COMMIT APP_CONFIG=./.travis/liquality.io.testnet.config.js DESTINATION_PATH=/var/www/html/it/leep/swap-testnet SWAP_DIR_SUFFIX=-testnet
-    - <<: *deploy_app
-      env:
-        - REACT_APP_TRAVIS_COMMIT=$TRAVIS_COMMIT APP_CONFIG=./.travis/liquality.io.denver.config.js DESTINATION_PATH=/var/www/html/it/leep/swap-denver SWAP_DIR_SUFFIX=-denver

@@ -12,14 +12,16 @@ export default {
         type: 'scraper',
         url: 'https://liquality.io/eth-mainnet-api'
       },
-      network: 'mainnet'
+      network: 'mainnet',
+      explorerPath: 'https://etherscan.io/tx/0x'
     },
     btc: {
       api: {
         url: 'https://blockstream.info/api'
       },
       feeNumberOfBlocks: 2,
-      network: 'bitcoin'
+      network: 'bitcoin',
+      explorerPath: 'https://blockstream.info/tx/'
     },
     dai: {
       type: 'erc20',
@@ -31,9 +33,10 @@ export default {
         url: 'https://liquality.io/eth-mainnet-api'
       },
       contractAddress: '0x6b175474e89094c44da98b954eedeac495271d0f',
-      network: 'mainnet'
+      network: 'mainnet',
+      explorerPath: 'https://etherscan.io/tx/0x'
     },
-    usdt: {
+    usdc: {
       type: 'erc20',
       rpc: {
         url: 'https://mainnet.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
@@ -42,13 +45,14 @@ export default {
         type: 'scraper',
         url: 'https://liquality.io/eth-mainnet-api'
       },
-      contractAddress: '0xdac17f958d2ee523a2206206994597c13d831ec7',
-      network: 'mainnet'
+      contractAddress: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+      network: 'mainnet',
+      explorerPath: 'https://etherscan.io/tx/0x'
     }
   },
   hostName: 'Liquality',
   hostIcon: 'https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png',
-  hostAgent: 'https://liquality.io/agent',
+  hostAgent: 'agent',
   injectScript: `
   function addSentry () {
     (function loadScript(src, callback) {
@@ -69,9 +73,13 @@ export default {
       };
       t = document.getElementsByTagName('script')[0];
       t.parentNode.insertBefore(s, t);
-    })('https://browser.sentry-cdn.com/4.6.4/bundle.min.js', function () {
+    })('https://browser.sentry-cdn.com/5.14.2/bundle.min.js', function () {
+      var dsn = window.location.pathname.indexOf('-dev') !== -1
+        ? 'https://816ae35527f34f4fbde7165d34046382@sentry.io/4693986'
+        : 'https://8ecc6862378646dd819d160876b47f75@sentry.io/4693923'
+
       Sentry.init({
-        dsn: 'https://12ddc74cff10472ebb8a940da86e12d9@sentry.io/1415462',
+        dsn: dsn,
         release: '${footerVersion}'
       })
     });
