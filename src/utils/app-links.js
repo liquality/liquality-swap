@@ -4,17 +4,19 @@ import moment from 'moment'
 const APP_BASE_URL = `${window.location.protocol}//${window.location.host}${window.location.pathname}`
 
 function generateLink (swap, counterparty = false) {
-  let assetA, assetB, walletA, walletB, transactionsA, transactionsB, counterPartyA, counterPartyB
+  let assetA, assetB, walletA, walletB, transactionsA, transactionsB, counterPartyA, counterPartyB, expirationA, expirationB
   if (counterparty) { // Switch around sides as this will be the state of the counter party
     ({ a: assetB, b: assetA } = swap.assets)
     ;({ a: walletB, b: walletA } = swap.wallets)
     ;({ a: transactionsB, b: transactionsA } = swap.transactions)
     ;({ a: counterPartyB, b: counterPartyA } = swap.counterParty)
+    ;({ a: expirationB, b: expirationA } = swap.expiration)
   } else {
     ({ a: assetA, b: assetB } = swap.assets)
     ;({ a: walletA, b: walletB } = swap.wallets)
     ;({ a: transactionsA, b: transactionsB } = swap.transactions)
     ;({ a: counterPartyA, b: counterPartyB } = swap.counterParty)
+    ;({ a: expirationA, b: expirationB } = swap.expiration)
   }
 
   const isPartyB = swap.isPartyB ? true : counterparty
@@ -38,7 +40,8 @@ function generateLink (swap, counterparty = false) {
 
     secretHash: swap.secretParams.secretHash,
 
-    expiration: swap.expiration.unix(),
+    aExpiration: expirationA.unix(),
+    bExpiration: expirationB.unix(),
 
     isPartyB
   }
@@ -70,7 +73,10 @@ function generateSwapState (location) {
     secretParams: {
       secretHash: urlParams.secretHash
     },
-    expiration: moment.unix(urlParams.expiration),
+    expiration: {
+      a: moment.unix(urlParams.aExpiration),
+      b: moment.unix(urlParams.bExpiration)
+    },
     isPartyB: urlParams.isPartyB === 'true',
     link: location.href
   }

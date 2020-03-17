@@ -12,7 +12,7 @@ import { actions as walletActions } from './wallets'
 import { actions as syncActions } from './sync'
 import cryptoassets from '@liquality/cryptoassets'
 import { wallets as walletsConfig } from '../utils/wallets'
-import { getFundExpiration, getClaimExpiration, generateExpiration } from '../utils/expiration'
+import { generateExpiration, getQuoteExpiration } from '../utils/expiration'
 import { isInitiateValid } from '../utils/validation'
 
 const types = {
@@ -115,7 +115,7 @@ async function generateSecret (dispatch, getState) {
     canonicalCounterParty.a.address,
     canonicalWallets.b.addresses[0],
     canonicalCounterParty.b.address,
-    expiration.unix()
+    expiration.a.unix()
   ]
 
   const secretMsg = secretData.join('')
@@ -140,13 +140,10 @@ async function lockFunds (dispatch, getState) {
     assets,
     wallets,
     secretParams,
-    expiration,
-    isPartyB
+    expiration
   } = getState().swap
   const { wallets: canonicalWallets, counterParty: canonicalCounterParty } = canonicalAppState.swap || getState().swap
   const client = getClient(assets.a.currency, wallets.a.type)
-
-  const swapExpiration = isPartyB ? getFundExpiration(expiration, 'b').time : expiration
 
   const blockNumber = await client.chain.getBlockHeight()
   const valueInUnit = cryptoassets[assets.a.currency].currencyToUnit(assets.a.value)
@@ -155,7 +152,7 @@ async function lockFunds (dispatch, getState) {
     canonicalCounterParty.a.address,
     canonicalWallets.a.addresses[0],
     secretParams.secretHash,
-    swapExpiration.unix()
+    expiration.a.unix()
   ]
   if (config.debug) { // TODO: enable debugging universally on all CAL functions (chainClient.js)
     console.log('Initiating Swap', initiateSwapParams)
@@ -206,7 +203,7 @@ function initiateSwap () {
   return async (dispatch, getState) => {
     dispatch(showErrors())
     const quote = getState().swap.agent.quote
-    const expiration = quote ? quote.swapExpiration : generateExpiration()
+    const expiration = quote ? getQuoteExpiration(quote) : generateExpiration()
     dispatch(setExpiration(expiration))
     await ensureWallet('a', dispatch, getState)
     const initiateValid = isInitiateValid(getState().swap)
@@ -241,19 +238,17 @@ async function unlockFunds (dispatch, getState) {
     wallets,
     transactions,
     secretParams,
-    isPartyB,
     expiration
   } = getState().swap
   const { wallets: canonicalWallets, counterParty: canonicalCounterParty } = canonicalAppState.swap || getState().swap
   const client = getClient(assets.b.currency, wallets.b.type)
   const blockNumber = await client.chain.getBlockHeight()
-  const swapExpiration = getClaimExpiration(expiration, isPartyB ? 'b' : 'a').time
   const claimSwapParams = [
     transactions.b.fund.hash,
     canonicalWallets.b.addresses[0],
     canonicalCounterParty.b.address,
     secretParams.secret,
-    swapExpiration.unix()
+    expiration.b.unix()
   ]
   if (config.debug) { // TODO: enable debugging universally on all CAL functions (chainClient.js)
     console.log('Claiming Swap', claimSwapParams)
@@ -279,20 +274,18 @@ function refundSwap () {
       wallets,
       transactions,
       secretParams,
-      isPartyB,
       expiration
     } = getState().swap
     const { wallets: canonicalWallets, counterParty: canonicalCounterParty } = canonicalAppState.swap || getState().swap
 
     const client = getClient(assets.a.currency, wallets.a.type)
-    const swapExpiration = getFundExpiration(expiration, isPartyB ? 'b' : 'a').time
     const blockNumber = await client.chain.getBlockHeight()
     const refundSwapParams = [
       transactions.a.fund.hash,
       canonicalCounterParty.a.address,
       canonicalWallets.a.addresses[0],
       secretParams.secretHash,
-      swapExpiration.unix()
+      expiration.a.unix()
     ]
     console.log('Refunding Swap', refundSwapParams)
     await withLoadingMessage('a', dispatch, getState, async () => {

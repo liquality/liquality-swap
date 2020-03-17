@@ -6,7 +6,6 @@ import { actions as secretActions } from './secretparams'
 import { steps } from '../components/SwapProgressStepper/steps'
 import { getClient } from '../services/chainClient'
 import { sleep } from '../utils/async'
-import { getFundExpiration } from '../utils/expiration'
 import { generateLink } from '../utils/app-links'
 
 const types = {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import cryptoassets from '@liquality/cryptoassets'
 import config from '../../config'
-import { getFundExpiration, getClaimExpiration } from '../../utils/expiration'
+import { expirationDurations } from '../../utils/expiration'
 import withCopyButton from '../withCopyButton'
 import ClockIcon from '../../icons/clock.svg'
 import CopyIcon from '../../icons/copy.svg'
@@ -43,13 +43,19 @@ class ExpirationDetails extends Component {
   }
 
   getExpirationState () {
-    const party = this.props.isPartyB ? 'b' : 'a'
-    const expiration = this.props.isClaim ? getClaimExpiration(this.props.expiration, party) : getFundExpiration(this.props.expiration, party)
+    const party = this.props.isClaim ? 'b' : 'a'
+    const oppositeParty = party === 'a' ? 'b' : 'a'
+    const expiration = this.props.expiration[party]
+
+    const swapExpiration = this.props.isPartyB ? this.props.expiration.b : this.props.expiration.a
+
+    const duration = expirationDurations[this.props.isPartyB ? oppositeParty : party]
+    const start = moment(swapExpiration).subtract(expirationDurations.a)
 
     return {
-      start: expiration.start,
-      duration: expiration.duration,
-      expiration: expiration.time,
+      start,
+      duration,
+      expiration,
       now: moment(),
       transaction: this.getTransaction()
     }
