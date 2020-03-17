@@ -31,7 +31,7 @@ class SwapRedemption extends Component {
             For: <span className='SwapRefund_expiredFrame_content_value'>{this.props.assets.a.value} {cryptoassets[this.props.assets.a.currency].code}</span>
           </p>
           <p>
-            Expired: <span className='SwapRefund_expiredFrame_content_value'>{this.props.expiration.format('DD/MM/YYYY h:mm a')}</span>
+            Expired: <span className='SwapRefund_expiredFrame_content_value'>{this.props.expiration.a.format('DD/MM/YYYY h:mm a')}</span>
           </p>
           <hr />
         </div>
