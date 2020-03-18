@@ -6,6 +6,8 @@ const errorMap = {
   'Unable to claim interface.': 'Ledger is unable to connect. Please unlock the device; exit the current account on your device; enter into the desired account and retry connecting.',
   'Ledger device: INS_NOT_SUPPORTED (0x6d00)': 'Ledger is connected to a different account. Please navigate to the correct account on your device.',
   'Ledger device: Incorrect length (0x6700)': 'Ledger is unable to connect. Please navigate to the correct account on your device.',
+  'Ledger device: Security not satisfied': 'Ledger is unable to connect. Please unlock your device, navigate to the correct account, and try connecting again.',
+  'Ledger device: Condition of use not satisfied': 'Ledger is unable to connect. Please unlock your device, navigate to the correct account, and try connecting again.',
   'Ledger device is busy': 'Ledger is unable to connect. Please exit the current account on your device; enter into the desired account and retry connecting.',
   'Transaction amount does not cover fee': 'Transaction amount does not cover fee. Please increase the transaction amount',
   'Not enough balance': 'Not enough balance on your selected wallet. Please connect a different wallet or top up your balance.',
