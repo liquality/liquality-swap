@@ -19,7 +19,10 @@ function errorHandler (e) {
   if (e instanceof Error) {
     console.log(e.message)
     const errorMapping = Object.keys(errorMap).find(err => e.message.includes(err))
-    if (errorMapping) e.message = errorMap[errorMapping]
+    if (errorMapping) {
+      e.name = ''
+      e.message = errorMap[errorMapping]
+    }
     store.dispatch(errorActions.setError(e))
   } else {
     throw e
