@@ -15,7 +15,7 @@ function setError (error) {
     }
     timeout = setTimeout(() => {
       dispatch(clearError())
-    }, 10000)
+    }, 20000)
     dispatch({ type: types.SET_ERROR, error })
   }
 }
