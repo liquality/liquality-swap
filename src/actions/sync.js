@@ -51,7 +51,7 @@ async function findClaimSwapTransaction (party, blockNumber, dispatch, getState)
   const oppositeParty = party === 'a' ? 'b' : 'a'
   const client = getClient(assets[oppositeParty].currency, wallets[oppositeParty].type)
   const swapExpiration = getExpirationForParty(expiration, oppositeParty, isPartyB).time
-  const claimTransaction = await client.swap.findClaimSwapTransaction(transactions[oppositeParty].fund.hash, counterParty[oppositeParty].address, wallets[oppositeParty].addresses[0], secretParams.secretHash, swapExpiration.unix(), blockNumber)
+  const claimTransaction = await client.swap.findClaimSwapTransaction(transactions[oppositeParty].fund.hash, wallets[oppositeParty].addresses[0], counterParty[oppositeParty].address, secretParams.secretHash, swapExpiration.unix(), blockNumber)
   if (claimTransaction) {
     dispatch(transactionActions.setTransaction(party, 'claim', claimTransaction))
   }
