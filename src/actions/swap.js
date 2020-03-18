@@ -217,7 +217,6 @@ function initiateSwap () {
     })
     await setCounterPartyStartBlock(dispatch, getState)
     await submitOrder(dispatch, getState)
-    dispatch(setIsVerified(true))
     dispatch(syncActions.sync('a'))
     dispatch(syncActions.sync('b'))
     dispatch(replace('/backupLink'))
