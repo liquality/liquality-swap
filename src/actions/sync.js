@@ -3,6 +3,7 @@ import { getClient } from '../services/chainClient'
 import { sleep } from '../utils/async'
 import { actions as transactionActions } from './transactions'
 import { actions as swapActions } from './swap'
+import { getFundExpiration, getExpirationForParty } from '../utils/expiration'
 import config from '../config'
 
 const types = {
@@ -30,7 +31,7 @@ async function findInitiateSwapTransaction (party, blockNumber, dispatch, getSta
   } = getState().swap
   const client = getClient(currency, type)
   const valueInUnit = Math.floor(cryptoassets[currency].currencyToUnit(value))
-  const swapExpiration = expiration[party]
+  const swapExpiration = getFundExpiration(expiration, party).time
   const initiateTransaction = await client.swap.findInitiateSwapTransaction(valueInUnit, addresses[0], counterParty[party].address, secretParams.secretHash, swapExpiration.unix(), blockNumber)
   if (initiateTransaction) {
     dispatch(transactionActions.setTransaction(party, 'fund', initiateTransaction))
@@ -44,11 +45,12 @@ async function findClaimSwapTransaction (party, blockNumber, dispatch, getState)
     transactions,
     counterParty,
     secretParams,
-    expiration
+    expiration,
+    isPartyB
   } = getState().swap
   const oppositeParty = party === 'a' ? 'b' : 'a'
   const client = getClient(assets[oppositeParty].currency, wallets[oppositeParty].type)
-  const swapExpiration = expiration[oppositeParty]
+  const swapExpiration = getExpirationForParty(expiration, oppositeParty, isPartyB).time
   const claimTransaction = await client.swap.findClaimSwapTransaction(transactions[oppositeParty].fund.hash, counterParty[oppositeParty].address, wallets[oppositeParty].addresses[0], secretParams.secretHash, swapExpiration.unix(), blockNumber)
   if (claimTransaction) {
     dispatch(transactionActions.setTransaction(party, 'claim', claimTransaction))
@@ -62,10 +64,16 @@ async function findRefundSwapTransaction (party, blockNumber, dispatch, getState
     transactions,
     counterParty,
     secretParams,
-    expiration
+    expiration,
+    isPartyB
   } = getState().swap
   const client = getClient(assets[party].currency, wallets[party].type)
-  const swapExpiration = expiration[party]
+  let swapExpiration
+  if (party === 'a') {
+    swapExpiration = isPartyB ? getFundExpiration(expiration, 'b').time : expiration
+  } else {
+    swapExpiration = isPartyB ? expiration : getFundExpiration(expiration, 'b').time
+  }
   const refundTransaction = await client.swap.findRefundSwapTransaction(transactions[party].fund.hash, counterParty[party].address, wallets[party].addresses[0], secretParams.secretHash, swapExpiration.unix(), blockNumber)
   if (refundTransaction) {
     dispatch(transactionActions.setTransaction(party, 'refund', refundTransaction))
@@ -83,7 +91,7 @@ async function verifyInitiateSwapTransaction (dispatch, getState) {
   } = getState().swap
   const client = getClient(currency, type)
   const valueInUnit = cryptoassets[currency].currencyToUnit(value)
-  const swapVerified = await client.swap.verifyInitiateSwapTransaction(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty.b.address, secretParams.secretHash, expiration.b.unix())
+  const swapVerified = await client.swap.verifyInitiateSwapTransaction(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty.b.address, secretParams.secretHash, expiration.unix())
   if (swapVerified) {
     dispatch(swapActions.setIsVerified(true))
   }

@@ -3,6 +3,7 @@ import _ from 'lodash'
 import config from '../config'
 import cryptoassets from '@liquality/cryptoassets'
 import { generateSwapState } from './app-links'
+import { getClaimExpiration } from './expiration'
 
 function getCurrencyInputErrors (assets, agent) {
   const errors = {}
@@ -46,7 +47,7 @@ function getInitiationErrors (transactions, expiration, isVerified, isPartyB, qu
     if (!(isVerified && transactions.b.fund.hash)) {
       errors.initiation = 'Counterparty hasn\'t initiated'
     }
-    const safeConfirmTime = isPartyB ? expiration.a : expiration.b
+    const safeConfirmTime = getClaimExpiration(expiration, isPartyB ? 'b' : 'a').time
     if (moment().isAfter(safeConfirmTime)) {
       errors.initiation = 'Offer expired.'
     }

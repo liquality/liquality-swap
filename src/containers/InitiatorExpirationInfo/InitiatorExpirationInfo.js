@@ -28,7 +28,7 @@ class InitiatorExpirationInfo extends Component {
     return <div className='InitiatorExpirationInfo'>
       <div className='row justify-content-center'>
         <strong>What happens when you swap?</strong>
-        <p><img src={ClockIcon} className='InitiatorExpirationInfo_icon' alt='Clock Icon' />If the swap doesn't complete within {Number(expirationDurations.b.asHours().toFixed(2))} hours, your funds will be released from escrow in {Number(expirationDurations.a.asHours().toFixed(2))} hours at {this.state.expiration.a.format('LT')}.</p>
+        <p><img src={ClockIcon} className='InitiatorExpirationInfo_icon' alt='Clock Icon' />If the swap doesn't complete within {Number(expirationDurations.b.asHours().toFixed(2))} hours, your funds will be released from escrow in {Number(expirationDurations.a.asHours().toFixed(2))} hours at {this.state.expiration.format('LT')}.</p>
       </div>
     </div>
   }

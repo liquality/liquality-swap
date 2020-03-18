@@ -27,7 +27,6 @@ class Agent {
     return {
       ...response.data,
       swapExpiration: moment.unix(response.data.swapExpiration),
-      nodeSwapExpiration: moment.unix(response.data.nodeSwapExpiration),
       retrievedAt: Date.now()
     }
   }
