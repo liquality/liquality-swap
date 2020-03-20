@@ -24,9 +24,9 @@ afterEach(async () => {
 
 async function connectNodeWallet (page) {
   await page.click('.WalletChoose_WalletsContainer div:nth-child(3)')
-  await page.click('.WalletConnectModal .btn-primary')
+  await page.click('.WalletConnectPopup .btn-primary')
   await page.waitForSelector('.WalletConnected', { timeout: 10000 })
-  await page.click('.WalletConnectModal .btn-primary')
+  await page.click('.WalletConnectPopup .btn-primary')
 }
 
 async function claim (page) {

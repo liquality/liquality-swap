@@ -14,6 +14,7 @@ import cryptoassets from '@liquality/cryptoassets'
 import { wallets as walletsConfig } from '../utils/wallets'
 import { getFundExpiration, getClaimExpiration, generateExpiration } from '../utils/expiration'
 import { isInitiateValid } from '../utils/validation'
+import { getActionPopups, WALLET_ACTION_STEPS, SWAP_STAGES } from '../utils/walletActionPopups'
 
 const types = {
   SWITCH_SIDES: 'SWITCH_SIDES',
@@ -97,12 +98,53 @@ async function ensureWallet (party, dispatch, getState) {
   })
 }
 
+async function setInitiationWalletPopups (confirm, dispatch, getState) {
+  const {
+    assets,
+    wallets
+  } = getState().swap
+  const popup = getActionPopups(SWAP_STAGES.INITIATE, assets.a.currency, wallets.a.type)
+  if(!popup) return
+  const popupSteps = popup.steps
+  const theSteps = confirm ? [popupSteps[1]] : popupSteps
+  dispatch(walletActions.setPopupSteps(theSteps))
+}
+
+async function setClaimWalletPopups (sign, dispatch, getState) {
+  const {
+    assets,
+    wallets,
+  } = getState().swap
+  const signTransactionPopup = getActionPopups(SWAP_STAGES.CLAIM, assets.a.currency, wallets.a.type)
+  const claimTransactionPopup = getActionPopups(SWAP_STAGES.CLAIM, assets.b.currency, wallets.b.type)
+  const steps = []
+
+  if(sign && signTransactionPopup) {
+    steps.push(signTransactionPopup.steps[0])
+  }
+  if(claimTransactionPopup) {
+    steps.push(claimTransactionPopup.steps[1])
+  }
+  
+  dispatch(walletActions.setPopupSteps(steps))
+}
+
+async function setRefundWalletSteps (dispatch, getState) {
+  const {
+    assets,
+    wallets,
+  } = getState().swap
+  const refundTransactionPopups = getActionPopups(SWAP_STAGES.REFUND, assets.a.currency, wallets.a.type)
+  if(refundTransactionPopups) {
+    dispatch(walletActions.setPopupSteps(refundTransactionPopups[1]))
+  }
+}
+
 async function generateSecret (dispatch, getState) {
   const {
     assets,
     expiration
   } = getState().swap
-  await ensureWallet('a', dispatch, getState)
   const { wallets } = getState().swap
   const { wallets: canonicalWallets, counterParty: canonicalCounterParty } = canonicalAppState.swap || getState().swap
   const client = getClient(assets.a.currency, wallets.a.type)
@@ -123,16 +165,6 @@ async function generateSecret (dispatch, getState) {
     const secret = await client.swap.generateSecret(secretMsg)
     dispatch(secretActions.setSecret(secret))
   })
-}
-
-async function ensureSecret (dispatch, getState) {
-  const {
-    secretParams,
-    isPartyB
-  } = getState().swap
-  if (!isPartyB && !secretParams.secret) {
-    await generateSecret(dispatch, getState)
-  }
 }
 
 async function lockFunds (dispatch, getState) {
@@ -166,6 +198,23 @@ async function lockFunds (dispatch, getState) {
   }
   dispatch(transactionActions.setTransaction('a', 'fund', { hash: txHash }))
   dispatch(transactionActions.setStartBlock('a', blockNumber))
+}
+
+async function withWalletPopupStep (step, dispatch, getState, func) {
+  const steps = getState().swap.wallets.popup.steps
+  if (steps && steps.find(s => s.id === step)) {
+    dispatch(walletActions.setPopupStep(step))
+    try {
+      await func(dispatch, getState)
+    } catch (e) {
+      dispatch(walletActions.closePopup())
+      throw (e)
+    }
+  }
+  else {
+    await func(dispatch, getState)
+    return
+  }
 }
 
 async function withLoadingMessage (party, dispatch, getState, func) {
@@ -211,10 +260,16 @@ function initiateSwap () {
     await ensureWallet('a', dispatch, getState)
     const initiateValid = isInitiateValid(getState().swap)
     if (!initiateValid) return
-    await generateSecret(dispatch, getState)
-    await withLoadingMessage('a', dispatch, getState, async () => {
-      await lockFunds(dispatch, getState)
+    await setInitiationWalletPopups(false, dispatch, getState)
+    await withWalletPopupStep(WALLET_ACTION_STEPS.SIGN, dispatch, getState, async () => {
+      await generateSecret(dispatch, getState)
     })
+    await withWalletPopupStep(WALLET_ACTION_STEPS.CONFIRM, dispatch, getState, async () => {
+      await withLoadingMessage('a', dispatch, getState, async () => {
+        await lockFunds(dispatch, getState)
+      })
+    })
+    dispatch(walletActions.closePopup())
     await setCounterPartyStartBlock(dispatch, getState)
     await submitOrder(dispatch, getState)
     dispatch(syncActions.sync('a'))
@@ -229,7 +284,11 @@ function confirmSwap () {
     await ensureWallet('a', dispatch, getState)
     const initiateValid = isInitiateValid(getState().swap)
     if (!initiateValid) return
-    await withLoadingMessage('a', dispatch, getState, lockFunds)
+    await setInitiationWalletPopups(true, dispatch, getState)
+    await withWalletPopupStep(WALLET_ACTION_STEPS.CONFIRM, dispatch, getState, async () => {
+      await withLoadingMessage('a', dispatch, getState, lockFunds)
+    })
+    dispatch(walletActions.closePopup())
     dispatch(replace('/backupLink'))
   }
 }
@@ -263,9 +322,23 @@ async function unlockFunds (dispatch, getState) {
 
 function redeemSwap () {
   return async (dispatch, getState) => {
-    await ensureSecret(dispatch, getState)
+    const {
+      secretParams,
+      isPartyB
+    } = getState().swap
+    const secretRequired = !isPartyB && !secretParams.secret
+    if (secretRequired) {
+      await ensureWallet('a', dispatch, getState)
+    }
     await ensureWallet('b', dispatch, getState)
-    await withLoadingMessage('b', dispatch, getState, unlockFunds)
+    await setClaimWalletPopups(secretRequired, dispatch, getState)
+    if (secretRequired) {
+      await withWalletPopupStep(WALLET_ACTION_STEPS.SIGN, dispatch, getState, generateSecret)
+    }
+    await withWalletPopupStep(WALLET_ACTION_STEPS.CONFIRM, dispatch, getState, async () => {
+      await withLoadingMessage('b', dispatch, getState, unlockFunds)
+    })
+    dispatch(walletActions.closePopup())
   }
 }
 
@@ -294,10 +367,14 @@ function refundSwap () {
       swapExpiration.unix()
     ]
     console.log('Refunding Swap', refundSwapParams)
-    await withLoadingMessage('a', dispatch, getState, async () => {
-      const refundTxHash = await client.swap.refundSwap(...refundSwapParams)
-      dispatch(transactionActions.setTransaction('a', 'refund', { hash: refundTxHash, blockNumber }))
+    await setRefundWalletSteps(dispatch, getState)
+    await withWalletPopupStep(WALLET_ACTION_STEPS.CONFIRM, dispatch, getState, async () => {
+      await withLoadingMessage('a', dispatch, getState, async () => {
+        const refundTxHash = await client.swap.refundSwap(...refundSwapParams)
+        dispatch(transactionActions.setTransaction('a', 'refund', { hash: refundTxHash, blockNumber }))
+      })
     })
+    dispatch(walletActions.closePopup())
   }
 }
 

@@ -7,7 +7,10 @@ const types = {
   CHOOSE_WALLET: 'CHOOSE_WALLET',
   START_CONNECTING_WALLET: 'START_CONNECTING_WALLET',
   CONNECT_WALLET: 'CONNECT_WALLET',
-  DISCONNECT_WALLET: 'DISCONNECT_WALLET'
+  DISCONNECT_WALLET: 'DISCONNECT_WALLET',
+  SET_POPUP_STEPS: 'SET_POPUP_STEPS',
+  SET_POPUP_STEP: 'SET_POPUP_STEP',
+  CLOSE_POPUP: 'CLOSE_POPUP'
 }
 
 function waitForWallet (party, currency, wallet) {
@@ -71,13 +74,28 @@ function disconnectWallet (party) {
   }
 }
 
+function setPopupSteps (steps) {
+  return { type: types.SET_POPUP_STEPS,  steps }
+}
+
+function setPopupStep (step) {
+  return { type: types.SET_POPUP_STEP, step }
+}
+
+function closePopup () {
+  return { type: types.CLOSE_POPUP }
+}
+
 const actions = {
   waitForWallet,
   waitForWalletInitialization,
   toggleWalletConnect,
   chooseWallet,
   connectWallet,
-  disconnectWallet
+  disconnectWallet,
+  setPopupSteps,
+  setPopupStep,
+  closePopup
 }
 
 export { types, actions }
