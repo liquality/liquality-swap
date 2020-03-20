@@ -15,22 +15,22 @@ const SWAP_STAGES = {
 // TODO: Deduplicate somehow
 const bitcoinLedgerPopup = {
   steps: [
-    { id: WALLET_ACTION_STEPS.SIGN, title: 'On your ledger', type: 'Bitcoin', label: 'Sign Message', description: 'View displayed hash, then sign', image: require('../icons/wallets/ledger/device.svg')},
-    { id: WALLET_ACTION_STEPS.CONFIRM, title: 'On your ledger', type: 'Bitcoin', label: 'Confirm Transaction', description: 'Once you accept the amount, sign to confirm the transaction', image: require('../icons/wallets/ledger/device.svg') }
+    { id: WALLET_ACTION_STEPS.SIGN, title: 'On your Ledger', type: 'Bitcoin', label: 'Sign Message', description: 'View displayed hash, then sign', image: require('../icons/wallets/ledger/device.svg')},
+    { id: WALLET_ACTION_STEPS.CONFIRM, title: 'On your Ledger', type: 'Bitcoin', label: 'Confirm Transaction', description: 'Once you accept the amount, sign to confirm the transaction', image: require('../icons/wallets/ledger/device.svg') }
   ]
 }
 
 const ethereumLedgerPopup = {
   steps: [
-    { id: WALLET_ACTION_STEPS.SIGN, title: 'On your ledger', type: 'Ethereum', label: 'Sign Message', description: 'View displayed hash, then sign', image: require('../icons/wallets/ledger/device.svg')},
-    { id: WALLET_ACTION_STEPS.CONFIRM, title: 'On your ledger', type: 'Ethereum', label: 'Confirm Transaction', description: 'Once you accept the amount, sign to confirm the transaction', image: require('../icons/wallets/ledger/device.svg') }
+    { id: WALLET_ACTION_STEPS.SIGN, title: 'On your Ledger', type: 'Ethereum', label: 'Sign Message', description: 'View displayed hash, then sign', image: require('../icons/wallets/ledger/device.svg')},
+    { id: WALLET_ACTION_STEPS.CONFIRM, title: 'On your Ledger', type: 'Ethereum', label: 'Confirm Transaction', description: 'Once you accept the amount, sign to confirm the transaction', image: require('../icons/wallets/ledger/device.svg') }
   ]
 }
 
 const ledgerERC20Popup = {
   steps: [
-    { id: WALLET_ACTION_STEPS.SIGN, title: 'On your ledger', type: 'Ethereum', label: 'Sign Message', description: 'View displayed hash, then sign', image: require('../icons/wallets/ledger/device.svg') },
-    { id: WALLET_ACTION_STEPS.CONFIRM, title: 'On your ledger', type: 'Ethereum', label: 'Confirm Transactions', description: 'Sign 2 transactions to confirm. Expect a lag in between them.', image: require('../icons/wallets/ledger/device.svg') }
+    { id: WALLET_ACTION_STEPS.SIGN, title: 'On your Ledger', type: 'Ethereum', label: 'Sign Message', description: 'View displayed hash, then sign', image: require('../icons/wallets/ledger/device.svg') },
+    { id: WALLET_ACTION_STEPS.CONFIRM, title: 'On your Ledger', type: 'Ethereum', label: 'Confirm Transactions', description: 'Sign 2 transactions to confirm. Expect a lag in between them.', image: require('../icons/wallets/ledger/device.svg') }
   ]
 }
 
