@@ -136,7 +136,7 @@ async function setRefundWalletSteps (dispatch, getState) {
   } = getState().swap
   const refundTransactionPopups = getActionPopups(SWAP_STAGES.REFUND, assets.a.currency, wallets.a.type)
   if(refundTransactionPopups) {
-    dispatch(walletActions.setPopupSteps(refundTransactionPopups[1]))
+    dispatch(walletActions.setPopupSteps([refundTransactionPopups.steps[1]]))
   }
 }
 
