@@ -75,7 +75,7 @@ function disconnectWallet (party) {
 }
 
 function setPopupSteps (steps) {
-  return { type: types.SET_POPUP_STEPS,  steps }
+  return { type: types.SET_POPUP_STEPS, steps }
 }
 
 function setPopupStep (step) {

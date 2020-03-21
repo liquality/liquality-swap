@@ -81,13 +81,13 @@ class ExpirationDetails extends Component {
         <div className='ExpirationDetails_transactions'>
           <div className='ExpirationDetails_transaction ExpirationDetails_transaction'>
             <span className='ExpirationDetails_transaction_name'>Your {cryptoassets[this.props.assets.a.currency].code} Transaction:</span>
-            { this.state.transactions.a && <a className='ExpirationDetails_transaction_link' href={this.state.transactions.a.explorerLink} target='_blank'>{shortenTransactionHash(this.state.transactions.a.hash)}</a> }
+            { this.state.transactions.a && <a className='ExpirationDetails_transaction_link' href={this.state.transactions.a.explorerLink} target='_blank'>{shortenTransactionHash(this.state.transactions.a.hash)}</a> }
             { this.state.transactions.a && <span className='ExpirationDetails_transaction_confirmations'>{this.state.transactions.a.confirmations} Confirmations</span> }
             { !this.state.transactions.a && <span className='ExpirationDetails_transaction_missing'>&mdash;</span> }
           </div>
           <div className='ExpirationDetails_transaction ExpirationDetails_transaction'>
             <span className='ExpirationDetails_transaction_name'>Partner's {cryptoassets[this.props.assets.b.currency].code} Transaction:</span>
-            { this.state.transactions.b && <a className='ExpirationDetails_transaction_link' href={this.state.transactions.b.explorerLink} target='_blank'>{shortenTransactionHash(this.state.transactions.b.hash)}</a> }
+            { this.state.transactions.b && <a className='ExpirationDetails_transaction_link' href={this.state.transactions.b.explorerLink} target='_blank'>{shortenTransactionHash(this.state.transactions.b.hash)}</a> }
             { this.state.transactions.b && <span className='ExpirationDetails_transaction_confirmations'>{this.state.transactions.b.confirmations} Confirmations</span> }
             { !this.state.transactions.b && <span className='ExpirationDetails_transaction_missing'>&mdash;</span> }
           </div>

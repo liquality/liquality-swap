@@ -104,7 +104,7 @@ async function setInitiationWalletPopups (confirm, dispatch, getState) {
     wallets
   } = getState().swap
   const popup = getActionPopups(SWAP_STAGES.INITIATE, assets.a.currency, wallets.a.type)
-  if(!popup) return
+  if (!popup) return
   const popupSteps = popup.steps
   const theSteps = confirm ? [popupSteps[1]] : popupSteps
   dispatch(walletActions.setPopupSteps(theSteps))
@@ -113,29 +113,29 @@ async function setInitiationWalletPopups (confirm, dispatch, getState) {
 async function setClaimWalletPopups (sign, dispatch, getState) {
   const {
     assets,
-    wallets,
+    wallets
   } = getState().swap
   const signTransactionPopup = getActionPopups(SWAP_STAGES.CLAIM, assets.a.currency, wallets.a.type)
   const claimTransactionPopup = getActionPopups(SWAP_STAGES.CLAIM, assets.b.currency, wallets.b.type)
   const steps = []
 
-  if(sign && signTransactionPopup) {
+  if (sign && signTransactionPopup) {
     steps.push(signTransactionPopup.steps[0])
   }
-  if(claimTransactionPopup) {
+  if (claimTransactionPopup) {
     steps.push(claimTransactionPopup.steps[1])
   }
-  
+
   dispatch(walletActions.setPopupSteps(steps))
 }
 
 async function setRefundWalletSteps (dispatch, getState) {
   const {
     assets,
-    wallets,
+    wallets
   } = getState().swap
   const refundTransactionPopups = getActionPopups(SWAP_STAGES.REFUND, assets.a.currency, wallets.a.type)
-  if(refundTransactionPopups) {
+  if (refundTransactionPopups) {
     dispatch(walletActions.setPopupSteps([refundTransactionPopups.steps[1]]))
   }
 }
@@ -210,10 +210,8 @@ async function withWalletPopupStep (step, dispatch, getState, func) {
       dispatch(walletActions.closePopup())
       throw (e)
     }
-  }
-  else {
+  } else {
     await func(dispatch, getState)
-    return
   }
 }
 
