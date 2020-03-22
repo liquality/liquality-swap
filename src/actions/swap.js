@@ -206,6 +206,9 @@ async function withWalletPopupStep (step, dispatch, getState, func) {
     dispatch(walletActions.setPopupStep(step))
     try {
       await func(dispatch, getState)
+      if (steps.findIndex(s => s.id === step) + 1 === steps.length) { // Close popup after last step
+        dispatch(walletActions.closePopup())
+      }
     } catch (e) {
       dispatch(walletActions.closePopup())
       throw (e)
@@ -267,7 +270,6 @@ function initiateSwap () {
         await lockFunds(dispatch, getState)
       })
     })
-    dispatch(walletActions.closePopup())
     await setCounterPartyStartBlock(dispatch, getState)
     await submitOrder(dispatch, getState)
     dispatch(syncActions.sync('a'))
@@ -286,7 +288,6 @@ function confirmSwap () {
     await withWalletPopupStep(WALLET_ACTION_STEPS.CONFIRM, dispatch, getState, async () => {
       await withLoadingMessage('a', dispatch, getState, lockFunds)
     })
-    dispatch(walletActions.closePopup())
     dispatch(replace('/backupLink'))
   }
 }
@@ -336,7 +337,6 @@ function redeemSwap () {
     await withWalletPopupStep(WALLET_ACTION_STEPS.CONFIRM, dispatch, getState, async () => {
       await withLoadingMessage('b', dispatch, getState, unlockFunds)
     })
-    dispatch(walletActions.closePopup())
   }
 }
 
@@ -372,7 +372,6 @@ function refundSwap () {
         dispatch(transactionActions.setTransaction('a', 'refund', { hash: refundTxHash, blockNumber }))
       })
     })
-    dispatch(walletActions.closePopup())
   }
 }
 
