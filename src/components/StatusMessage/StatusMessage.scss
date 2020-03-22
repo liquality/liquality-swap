@@ -1,0 +1,19 @@
+@import '../../scss/variables.scss';
+
+.StatusMessage {
+  text-align: center;
+  padding: 20px;
+  width: 650px;
+  margin: 0 auto;
+
+  img {
+    display: block;
+    float: left;
+    width: 30px;
+  }
+
+  &_message {
+    font-weight: bold;
+    font-size: $h3-font-size;
+  }
+}
