@@ -46,6 +46,9 @@ class Waiting extends Component {
       {showQuoteTimer && <div className='Waiting_quoteTimer'><TimeProgressBar startTime={this.props.quote.retrievedAt} endTime={this.props.quote.expiresAt} /></div>}
       <StatusMessage
         message={`Confirming Your ${cryptoassets[this.props.assets.a.currency].code} Transaction`}
+        completedMessage={this.props.quote
+          ? `Your ${cryptoassets[this.props.assets.a.currency].code} Transaction and Quote Confirmed`
+          : `Your ${cryptoassets[this.props.assets.a.currency].code} Transaction Confirmed`}
         complete={this.props.transactions.a.fund.confirmations > 0} />
       { showPartnerTransactionStatus && <StatusMessage
         message={`Confirming Your Trading Partner's ${cryptoassets[this.props.assets.b.currency].code} Transaction`}

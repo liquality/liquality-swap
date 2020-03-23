@@ -2,10 +2,14 @@
 
 .StatusMessage {
   text-align: center;
-  padding: 20px;
+  padding: 12px 20px;
   width: 650px;
   margin: 0 auto;
   background: $color-bg-secondary;
+
+  &_complete {
+    background: none;
+  }
 
   img {
     display: block;
@@ -15,6 +19,12 @@
 
   &_message {
     font-weight: bold;
-    font-size: $h3-font-size;
+    font-size: $h4-font-size;
+  }
+
+  &_complete &_message {
+    font-weight: normal;
+    font-size: $h5-font-size;
+    line-height: 30px;
   }
 }
