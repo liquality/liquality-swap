@@ -15,4 +15,9 @@ function getNetworkByCurrency (asset) {
   return networks[networkId]
 }
 
-export { getNetworkByCurrency }
+function isETHNetwork (asset) {
+  const assetConfig = config.assets[asset]
+  return asset === 'eth' || assetConfig.type === 'erc20'
+}
+
+export { getNetworkByCurrency, isETHNetwork }

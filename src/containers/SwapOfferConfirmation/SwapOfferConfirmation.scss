@@ -44,6 +44,10 @@
     border-radius: 0 0 7px 7px;
   }
 
+  &_footnote {
+    font-size: $font-size-sm;
+  }
+
   &_errorMessage {
     @include error-message;
   }
