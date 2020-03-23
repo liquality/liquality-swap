@@ -15,14 +15,14 @@ const SWAP_STAGES = {
 const bitcoinLedgerPopup = {
   steps: [
     { id: WALLET_ACTION_STEPS.SIGN, title: 'On your Ledger', type: 'Bitcoin', label: 'Sign Message', description: 'View displayed hash, then sign', image: require('../icons/wallets/ledger/device.svg') },
-    { id: WALLET_ACTION_STEPS.CONFIRM, title: 'On your Ledger', type: 'Bitcoin', label: 'Confirm Transaction', description: 'Once you accept the amount, sign to confirm the transaction', image: require('../icons/wallets/ledger/device.svg') }
+    { id: WALLET_ACTION_STEPS.CONFIRM, title: 'On your Ledger', type: 'Bitcoin', label: 'Confirm Transaction', description: 'Once you accept the amount, confirm the transaction. There might be a lag.', image: require('../icons/wallets/ledger/device.svg') }
   ]
 }
 
 const ethereumLedgerPopup = {
   steps: [
     { id: WALLET_ACTION_STEPS.SIGN, title: 'On your Ledger', type: 'Ethereum', label: 'Sign Message', description: 'View displayed hash, then sign', image: require('../icons/wallets/ledger/device.svg') },
-    { id: WALLET_ACTION_STEPS.CONFIRM, title: 'On your Ledger', type: 'Ethereum', label: 'Confirm Transaction', description: 'Once you accept the amount, sign to confirm the transaction', image: require('../icons/wallets/ledger/device.svg') }
+    { id: WALLET_ACTION_STEPS.CONFIRM, title: 'On your Ledger', type: 'Ethereum', label: 'Confirm Transaction', description: 'Once you accept the amount, confirm the transaction. There might be a lag.', image: require('../icons/wallets/ledger/device.svg') }
   ]
 }
 
@@ -31,6 +31,14 @@ const ledgerERC20Popup = {
     { id: WALLET_ACTION_STEPS.SIGN, title: 'On your Ledger', type: 'Ethereum', label: 'Sign Message', description: 'View displayed hash, then sign', image: require('../icons/wallets/ledger/device.svg') },
     { id: WALLET_ACTION_STEPS.CONFIRM, title: 'On your Ledger', type: 'Ethereum', label: 'Confirm Transactions', description: 'Sign 2 transactions to confirm. Expect a lag in between them.', image: require('../icons/wallets/ledger/device.svg') }
   ]
+}
+
+function toClaimPopup (popup) {
+  return { steps: popup.steps.map(step => ({...step, description: 'Confirm to claim your assets.'})) }
+}
+
+function toRefundPopup (popup) {
+  return { steps: popup.steps.map(step => ({...step, description: 'Confirm to refund your assets.'})) }
 }
 
 const initiatePopups = {
@@ -43,17 +51,17 @@ const initiatePopups = {
 
 const claimPopups = {
   ledger: {
-    btc: bitcoinLedgerPopup,
-    eth: ethereumLedgerPopup,
-    erc20: ethereumLedgerPopup
+    btc: toClaimPopup(bitcoinLedgerPopup),
+    eth: toClaimPopup(ethereumLedgerPopup),
+    erc20: toClaimPopup(ethereumLedgerPopup)
   }
 }
 
 const refundPopups = {
   ledger: {
-    btc: bitcoinLedgerPopup,
-    eth: ethereumLedgerPopup,
-    erc20: ethereumLedgerPopup
+    btc: toRefundPopup(bitcoinLedgerPopup),
+    eth: toRefundPopup(ethereumLedgerPopup),
+    erc20: toRefundPopup(ethereumLedgerPopup)
   }
 }
 

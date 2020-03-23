@@ -17,7 +17,7 @@ class WalletActionPopup extends Component {
             <div className='WalletActionPopup_body'>
               <span className='WalletActionPopup_type'>{activeStep.type}</span>
               <h1>{activeStep.title}</h1>
-              { this.props.steps.length > 1 && <Stepper connector={null} nonLinear activeStep={activeStepIndex} className='WalletActionPopup_stepper'
+              { this.props.steps.length > 1 ? <Stepper connector={null} nonLinear activeStep={activeStepIndex} className='WalletActionPopup_stepper'
                 classes={{root: 'WalletActionPopup_stepper_root'}}>
                 {this.props.steps.map((step, index) => {
                   const stepIconProps = {
@@ -35,7 +35,7 @@ class WalletActionPopup extends Component {
                     }} StepIconProps={stepIconProps}>{step.label}</StepLabel>
                   </Step>
                 })}
-              </Stepper>}
+              </Stepper> : <div className='WalletActionPopup_step'>{activeStep.label}</div> }
               <div className='WalletActionPopup_instructions'>
                 <div className='WalletActionPopup_message'>
                   <p>{activeStep.description}</p>
