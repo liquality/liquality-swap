@@ -12,6 +12,14 @@
   &_info {
     margin: 0 auto 30px auto;
     text-align: center;
+
+    &_eth {
+      font-size: $font-size-sm;
+      img {
+        width: 13px;
+        margin-top: -2px;
+      }
+    }
   }
 
   &_errorMessage {
