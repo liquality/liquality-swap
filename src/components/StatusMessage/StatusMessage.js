@@ -10,8 +10,9 @@ class StatusMessage extends Component {
     return (
       <div className={classNames('StatusMessage', {'StatusMessage_complete': this.props.complete})}>
         <img src={this.props.complete ? TickIcon : Spinner} alt='status' />
-        <div className='StatusMessage_message'>
-          {this.props.completedMessage && this.props.complete ? this.props.completedMessage : this.props.message}
+        <div>
+          <div className='StatusMessage_message'>{this.props.completedMessage && this.props.complete ? this.props.completedMessage : this.props.message}</div>
+          {!this.props.complete && <div className='StatusMessage_estimate'>this will take ~{this.props.estimate.asMinutes()}min</div>}
         </div>
       </div>
     )
@@ -21,7 +22,8 @@ class StatusMessage extends Component {
 StatusMessage.propTypes = {
   message: PropTypes.string.isRequired,
   completedMessage: PropTypes.string,
-  complete: PropTypes.bool
+  complete: PropTypes.bool,
+  estimate: PropTypes.any
 }
 
 export default StatusMessage

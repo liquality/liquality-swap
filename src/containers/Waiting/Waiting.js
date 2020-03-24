@@ -5,6 +5,7 @@ import ExpirationDetails from '../../components/ExpirationDetails'
 import TimeProgressBar from '../../components/TimeProgressBar/TimeProgressBar'
 import StatusMessage from '../../components/StatusMessage/StatusMessage'
 import { steps } from '../../components/SwapProgressStepper/steps'
+import { getConfirmationEstimate } from '../../utils/networks'
 import './Waiting.css'
 
 class Waiting extends Component {
@@ -49,13 +50,16 @@ class Waiting extends Component {
         completedMessage={this.props.quote
           ? `Your ${cryptoassets[this.props.assets.a.currency].code} Transaction and Quote Confirmed`
           : `Your ${cryptoassets[this.props.assets.a.currency].code} Transaction Confirmed`}
-        complete={this.props.transactions.a.fund.confirmations > 0} />
+        complete={this.props.transactions.a.fund.confirmations > 0}
+        estimate={getConfirmationEstimate(this.props.assets.a.currency)} />
       { showPartnerTransactionStatus && <StatusMessage
         message={`Confirming Your Trading Partner's ${cryptoassets[this.props.assets.b.currency].code} Transaction`}
-        complete={this.props.transactions.b.fund.confirmations > 0} /> }
+        complete={this.props.transactions.b.fund.confirmations > 0}
+        estimate={getConfirmationEstimate(this.props.assets.b.currency)} /> }
       { showPartnerClaimTransactionStatus && <StatusMessage
         message={`Confirming Your Trading Partner's ${cryptoassets[this.props.assets.a.currency].code} Claim Transaction`}
-        complete={this.props.transactions.b.claim.hash && this.props.secretParams.secret} /> }
+        complete={this.props.transactions.b.claim.hash && this.props.secretParams.secret}
+        estimate={getConfirmationEstimate(this.props.assets.a.currency)} /> }
       <p className='Waiting_status'>{description}</p>
       <ExpirationDetails isClaim />
     </BrandCard>
