@@ -29,16 +29,15 @@
     margin-top: 30px;
     padding-top: 30px;
 
-    ul {
-      font-weight: bold;
-      list-style-position: inside;
-      padding: 0;
+    p:nth-child(1) {
+      width: 280px;
+      text-align: left;
+      margin: 0 auto 1rem auto;
     }
   }
 
   &_bottom {
     text-align: center;
-    margin-top: 20px;
     padding-top: 40px;
     min-height: 210px;
     border-radius: 0 0 7px 7px;

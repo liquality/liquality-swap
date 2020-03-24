@@ -10,8 +10,9 @@
   }
 
   &_info {
+    width: 600px;
     margin: 0 auto 30px auto;
-    text-align: center;
+    text-align: left;
 
     &_eth {
       font-size: $font-size-sm;

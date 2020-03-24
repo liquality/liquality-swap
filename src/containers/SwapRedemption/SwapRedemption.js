@@ -23,7 +23,8 @@ class SwapRedemption extends Component {
       </div>
       <ExpirationDetails isClaim />
       <div className='SwapRedemption_info'>
-        <p><strong>Connect the wallet and {claimCurrency.code} account you used to create the swap.<br />Then press the button below to sign the transaction.</strong></p>
+        <p>Before you claim <br />
+        Connect the account that you provided as ${claimCurrency.code} receiving address</p>
         { isETHNetwork(this.props.assets.b.currency) &&
           <p className='SwapRedemption_info_eth'><img src={InfoIcon} alt='info' /> The zero balance when signing refers to the contract. After claiming you will receive the {claimCurrency.code} amount above.</p> }
       </div>

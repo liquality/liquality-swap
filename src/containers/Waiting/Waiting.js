@@ -12,21 +12,21 @@ class Waiting extends Component {
   getWaitingStatus () {
     if (this.props.step === steps.AGREEMENT) {
       if (this.props.isPartyB) {
-        if (!this.props.transactions.b.claim.hash) {
-          return ['Swap In Progress', 'Waiting for transaction...']
+        if (!(this.props.transactions.a.fund.confirmations > 0)) {
+          return ['Confirming Terms', `Initial Transaction Pending Confirmation On The Blockchain...`]
         }
-        if (!this.props.transactions.b.claim.confirmations > 0) {
-          return ['Awaiting Confirmation', `Trade Partner's Claim Transaction Pending Confirmation On The Blockchain...`]
+        if (!this.props.transactions.b.claim.hash) {
+          return ['Confirming Terms', `When Completed You Can Claim Your ${cryptoassets[this.props.assets.b.currency].code}`]
         }
       } else {
         if (!this.props.transactions.b.fund.hash) {
           if (this.props.transactions.a.fund.confirmations > 0) {
-            return ['Swap In Progress', 'Confirming terms...']
+            return ['Confirming Terms', `When Completed You Can Claim Your ${cryptoassets[this.props.assets.b.currency].code}`]
           } else {
             if (this.props.quote) {
-              return ['Awaiting Confirmation', `Once the transaction is confirmed, the quote is locked and the assets can be securely swapped.`]
+              return ['Confirming Terms', `Once the transaction is confirmed the quote is guaranteed`]
             } else {
-              return ['Awaiting Confirmation', `Initial Transaction Pending Confirmation On The Blockchain...`]
+              return ['Confirming Terms', `Initial Transaction Pending Confirmation On The Blockchain...`]
             }
           }
         }
@@ -35,7 +35,7 @@ class Waiting extends Component {
         }
       }
     }
-    return ['Swap In Progress', '']
+    return ['Confirming Terms', '']
   }
 
   render () {

@@ -28,11 +28,11 @@ class SwapOfferConfirmation extends Component {
         {this.props.assets.a.value} {assetA.code}</div>
       <div className='SwapOfferConfirmation_rate'>Rate: 1 {assetA.code} = {this.props.assets.rate} {assetB.code}</div>
       <div className='SwapOfferConfirmation_info'>
-        <p>To accept this offer, you will need to connect your:</p>
-        <ul>
-          <li>{assetA.code} wallet to sign the first swap transaction.</li>
-          <li>{assetB.code} wallet to specify the address for receipt.</li>
-        </ul>
+        <p>To accept this quote please connect your: <br />
+          {assetA.code} wallet to sign the first swap transaction<br />
+          {assetB.code} wallet for the recipient
+        </p>
+        <p>All terms, including the quote will be confirmed in the next step.</p>
       </div>
       <div className='SwapOfferConfirmation_bottom'>
         <Button wide primary onClick={() => this.handleAcceptRate()}>Connect Wallets To Accept Quote</Button><br />
