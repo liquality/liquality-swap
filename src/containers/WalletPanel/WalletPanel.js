@@ -8,7 +8,7 @@ class WalletPanel extends Component {
   render () {
     const { a: assetA, b: assetB } = this.props.assets
     const { a: walletA, b: walletB } = this.props.wallets
-    const errors = this.props.showErrors ? getWalletErrors(this.props.wallets, this.props.isPartyB) : {}
+    const errors = this.props.showErrors ? getWalletErrors(this.props.wallets, this.props.assets, this.props.isPartyB) : {}
 
     return <div className='WalletPanel'>
       <div className='row justify-content-between no-gutters'>
@@ -18,7 +18,9 @@ class WalletPanel extends Component {
             currency={assetA.currency}
             type={walletA.type}
             balance={walletA.balance}
+            balanceError={errors.walletABalance}
             address={walletA.addresses[0]}
+            addressError={errors.walletAAddress}
             connected={walletA.connected}
             error={errors.walletA}
             onButtonClick={() => this.props.onToggleWalletConnect('a')} />
@@ -28,7 +30,9 @@ class WalletPanel extends Component {
             currency={assetB.currency}
             type={walletB.type}
             balance={walletB.balance}
+            balanceError={errors.walletBBalance}
             address={walletB.addresses[0]}
+            addressError={errors.walletBAddress}
             connected={walletB.connected}
             error={errors.walletB}
             onButtonClick={() => this.props.onToggleWalletConnect('b')} />

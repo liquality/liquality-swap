@@ -41,7 +41,7 @@ function waitForWalletInitialization (party, currency, wallet) {
       }
     }
     const balance = await client.chain.getBalance(allAddresses)
-    const formattedBalance = currency.unitToCurrency(balance).toFixed(6)
+    const formattedBalance = currency.unitToCurrency(balance)
     const otherParty = party === 'a' ? 'b' : 'a'
     const swapState = getState().swap
     const walletParty = swapState.assets[party].currency === currencyCode ? party : otherParty
