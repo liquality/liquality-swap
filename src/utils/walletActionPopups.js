@@ -33,12 +33,30 @@ const ledgerERC20Popup = {
   ]
 }
 
+const ethereumMetamaskPopup = {
+  steps: [
+    { id: WALLET_ACTION_STEPS.SIGN, title: 'On MetaMask', label: 'Sign Message', description: 'View displayed hash, then sign', image: require('../icons/wallets/metamask/sign.png') },
+    { id: WALLET_ACTION_STEPS.CONFIRM, title: 'On MetaMask', label: 'Confirm Transaction', description: 'Confirm the transaction.', image: require('../icons/wallets/metamask/confirm.png') }
+  ]
+}
+
+const ERC20MetamaskPopup = {
+  steps: [
+    { id: WALLET_ACTION_STEPS.SIGN, title: 'On MetaMask', label: 'Sign Message', description: 'View displayed hash, then sign', image: require('../icons/wallets/metamask/sign.png') },
+    { id: WALLET_ACTION_STEPS.CONFIRM, title: 'On MetaMask', label: 'Confirm Transactions', description: 'Sign 2 transactions to confirm. After the first confirmation there is a lag before the MetaMask popup displays again.', image: require('../icons/wallets/metamask/confirm.png') }
+  ]
+}
+
 function toClaimPopup (popup) {
-  return { steps: popup.steps.map(step => ({...step, description: 'Confirm to claim your assets.'})) }
+  return { steps: popup.steps.map(step => {
+    return step.id === WALLET_ACTION_STEPS.CONFIRM ? {...step, description: 'Confirm to claim your assets.'} : step
+  })}
 }
 
 function toRefundPopup (popup) {
-  return { steps: popup.steps.map(step => ({...step, description: 'Confirm to refund your assets.'})) }
+  return { steps: popup.steps.map(step => {
+    return step.id === WALLET_ACTION_STEPS.CONFIRM ? {...step, description: 'Confirm to refund your assets.'} : step
+  })}
 }
 
 const initiatePopups = {
@@ -46,6 +64,10 @@ const initiatePopups = {
     btc: bitcoinLedgerPopup,
     eth: ethereumLedgerPopup,
     erc20: ledgerERC20Popup
+  },
+  metamask: {
+    eth: ethereumMetamaskPopup,
+    erc20: ERC20MetamaskPopup
   }
 }
 
@@ -54,6 +76,10 @@ const claimPopups = {
     btc: toClaimPopup(bitcoinLedgerPopup),
     eth: toClaimPopup(ethereumLedgerPopup),
     erc20: toClaimPopup(ethereumLedgerPopup)
+  },
+  metamask: {
+    eth: toClaimPopup(ethereumMetamaskPopup),
+    erc20: toClaimPopup(ERC20MetamaskPopup)
   }
 }
 
@@ -62,6 +88,10 @@ const refundPopups = {
     btc: toRefundPopup(bitcoinLedgerPopup),
     eth: toRefundPopup(ethereumLedgerPopup),
     erc20: toRefundPopup(ethereumLedgerPopup)
+  },
+  metamask: {
+    eth: toRefundPopup(ethereumMetamaskPopup),
+    erc20: toRefundPopup(ERC20MetamaskPopup)
   }
 }
 
@@ -76,6 +106,8 @@ function getActionPopups (stage, asset, wallet) {
   const assetConfig = config.assets[asset]
   if (wallet.includes('ledger')) {
     return popups[stage].ledger[assetConfig.type || asset]
+  } else if (wallet.includes('metamask')) {
+    return popups[stage].metamask[assetConfig.type || asset]
   }
 }
 

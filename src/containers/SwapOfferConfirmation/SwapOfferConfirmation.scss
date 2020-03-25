@@ -36,8 +36,13 @@
     }
 
     ul {
+      display: inline-block;
       list-style-position: inside;
       padding-left: 0;
+
+      li {
+        text-align: left;
+      }
     }
   }
 

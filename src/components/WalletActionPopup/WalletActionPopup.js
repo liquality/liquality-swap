@@ -15,7 +15,7 @@ class WalletActionPopup extends Component {
         <Modal open={this.props.open}>
           <div className='WalletActionPopup'>
             <div className='WalletActionPopup_body'>
-              <span className='WalletActionPopup_type'>{activeStep.type}</span>
+              {activeStep.type && <span className='WalletActionPopup_type'>{activeStep.type}</span>}
               <h1>{activeStep.title}</h1>
               { this.props.steps.length > 1 ? <Stepper connector={null} nonLinear activeStep={activeStepIndex} className='WalletActionPopup_stepper'
                 classes={{root: 'WalletActionPopup_stepper_root'}}>
