@@ -35,7 +35,7 @@ function getWalletErrors (wallets, assets, isPartyB) {
     if (!errors.walletAAddress && BigNumber(wallets.a.balance).lt(BigNumber(assets.a.value))) errors.walletABalance = 'Insufficient. Add funds.'
   }
   if (wallets.b.connected && !errors.walletBAddress) {
-    if (isETHNetwork(assets.b.currency) && !(BigNumber(wallets.b.networkBalance).gt(BigNumber(0)))) errors.walletBBalance = 'Insufficient. Add ETH for fee.'
+    if (isETHNetwork(assets.b.currency) && !(BigNumber(wallets.b.networkBalance).gt(BigNumber(0)))) errors.walletB = 'Insufficient. Add ETH for fee.'
   }
 
   if (!walletA.connected) errors.walletA = 'Please add your wallet'
