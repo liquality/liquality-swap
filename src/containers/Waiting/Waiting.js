@@ -31,7 +31,7 @@ class Waiting extends Component {
           }
         }
         if (!this.props.transactions.b.fund.confirmations > 0) {
-          return ['Awaiting Confirmation', `Trade Partner's Transaction Pending Confirmation On The Blockchain...`]
+          return ['Confirming Terms', `When Completed You Can Claim Your ${cryptoassets[this.props.assets.b.currency].code}`]
         }
       }
     }

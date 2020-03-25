@@ -1,6 +1,12 @@
 @import '../../scss/variables.scss';
 
 .InitiatorExpirationInfo {
+  p {
+    display: block;
+    width: 100%;
+    margin: 0;
+  }
+
   &_icon {
     height: 25px;
     margin-right: 10px;
