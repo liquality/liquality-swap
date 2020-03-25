@@ -7,6 +7,7 @@ const initialState = {
   a: {
     addresses: [], // TODO: why multiple addresses?
     balance: null,
+    networkBalance: null,
     connectOpen: false,
     connected: false,
     connecting: false,
@@ -16,6 +17,7 @@ const initialState = {
   b: {
     addresses: [],
     balance: null,
+    networkBalance: null,
     connectOpen: false,
     connected: false,
     connecting: false,
@@ -66,7 +68,8 @@ function connectWallet (state, action) {
     [action.party]: {
       addresses: { $set: action.addresses },
       connected: { $set: true },
-      balance: { $set: action.balance }
+      balance: { $set: action.balance },
+      networkBalance: { $set: action.networkBalance }
     }
   })
 }

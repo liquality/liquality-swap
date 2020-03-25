@@ -13,7 +13,6 @@ import EthereumRpcProvider from '@liquality/ethereum-rpc-provider'
 import EthereumLedgerProvider from '@liquality/ethereum-ledger-provider'
 import EthereumNetworks from '@liquality/ethereum-networks'
 import EthereumSwapProvider from '@liquality/ethereum-swap-provider'
-import EthereumBlockscoutSwapFindProvider from '@liquality/ethereum-blockscout-swap-find-provider'
 import EthereumScraperSwapFindProvider from '@liquality/ethereum-scraper-swap-find-provider'
 import EthereumErc20Provider from '@liquality/ethereum-erc20-provider'
 import EthereumErc20SwapProvider from '@liquality/ethereum-erc20-swap-provider'
@@ -68,47 +67,36 @@ function createBtcClient (asset, wallet) {
 }
 
 function createEthClient (asset, wallet) {
-  const ethConfig = config.assets.eth
+  const assetConfig = config.assets[asset]
+  const isERC20 = assetConfig.type === 'erc20'
   const ethClient = new Client()
   ethClient.addProvider(new EthereumRpcProvider(
-    ethConfig.rpc.url
-  ))
-  if (wallet === 'metamask') {
-    ethClient.addProvider(new EthereumMetaMaskProvider(web3.currentProvider, EthereumNetworks[ethConfig.network]))
-  } else if (wallet === 'ethereum_ledger') {
-    ethClient.addProvider(new EthereumLedgerProvider({network: EthereumNetworks[ethConfig.network]}))
-  }
-  ethClient.addProvider(new EthereumSwapProvider())
-  if (ethConfig.api) {
-    if (ethConfig.api.type === 'blockscout') ethClient.addProvider(new EthereumBlockscoutSwapFindProvider(ethConfig.api.url))
-    if (ethConfig.api.type === 'scraper') ethClient.addProvider(new EthereumScraperSwapFindProvider(ethConfig.api.url))
-  }
-  return ethClient
-}
-
-function createERC20Client (asset, wallet) {
-  const assetConfig = config.assets[asset]
-  const erc20Client = new Client()
-  erc20Client.addProvider(new EthereumRpcProvider(
     assetConfig.rpc.url
   ))
   if (wallet === 'metamask') {
-    erc20Client.addProvider(new EthereumMetaMaskProvider(web3.currentProvider, EthereumNetworks[assetConfig.network]))
+    ethClient.addProvider(new EthereumMetaMaskProvider(web3.currentProvider, EthereumNetworks[assetConfig.network]))
   } else if (wallet === 'ethereum_ledger') {
-    erc20Client.addProvider(new EthereumLedgerProvider({network: EthereumNetworks[assetConfig.network]}))
+    ethClient.addProvider(new EthereumLedgerProvider({network: EthereumNetworks[assetConfig.network]}))
   }
-  erc20Client.addProvider(new EthereumErc20Provider(assetConfig.contractAddress))
-  erc20Client.addProvider(new EthereumErc20SwapProvider())
-  if (assetConfig.api) {
-    if (assetConfig.api.type === 'scraper') erc20Client.addProvider(new EthereumErc20ScraperSwapFindProvider(assetConfig.api.url))
+  if (isERC20) {
+    ethClient.addProvider(new EthereumErc20Provider(assetConfig.contractAddress))
+    ethClient.addProvider(new EthereumErc20SwapProvider())
+  } else {
+    ethClient.addProvider(new EthereumSwapProvider())
   }
-  return erc20Client
+
+  if (assetConfig.api && assetConfig.api.type === 'scraper') {
+    if (isERC20) ethClient.addProvider(new EthereumErc20ScraperSwapFindProvider(assetConfig.api.url))
+    else ethClient.addProvider(new EthereumScraperSwapFindProvider(assetConfig.api.url))
+  }
+
+  return ethClient
 }
 
 const clientCreators = {
   btc: createBtcClient,
   eth: createEthClient,
-  erc20: createERC20Client
+  erc20: createEthClient
 }
 
 const clients = {}
@@ -125,4 +113,13 @@ function getClient (asset, wallet) {
   return client
 }
 
-export { getClient }
+function getNetworkClient (asset, wallet) {
+  const assetConfig = config.assets[asset]
+  if (assetConfig.type === 'erc20') {
+    return getClient('eth', wallet)
+  } else {
+    return getClient(asset, wallet)
+  }
+}
+
+export { getClient, getNetworkClient }

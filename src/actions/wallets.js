@@ -29,6 +29,7 @@ function waitForWalletInitialization (party, currency, wallet) {
     const currencyCode = assets[party].currency
     const currency = cryptoassets[currencyCode]
     const client = getClient(currencyCode, wallet)
+    const networkClient = getClient(currencyCode, wallet)
     const addressesPerCall = 100
     const unusedAddress = await client.wallet.getUnusedAddress()
     let allAddresses = await client.wallet.getUsedAddresses(addressesPerCall)
@@ -41,12 +42,12 @@ function waitForWalletInitialization (party, currency, wallet) {
       }
     }
     const balance = await client.chain.getBalance(allAddresses)
-    const formattedBalance = currency.unitToCurrency(balance)
+    const networkBalance = networkClient === client ? balance : await networkClient.chain.getBalance(allAddresses)
     const otherParty = party === 'a' ? 'b' : 'a'
     const swapState = getState().swap
     const walletParty = swapState.assets[party].currency === currencyCode ? party : otherParty
     if (swapState.wallets[walletParty].connecting) {
-      dispatch(connectWallet(walletParty, allAddresses, formattedBalance))
+      dispatch(connectWallet(walletParty, allAddresses, currency.unitToCurrency(balance), currency.unitToCurrency(networkBalance)))
     }
   }
 }
@@ -63,8 +64,8 @@ function startConnecting (party) {
   return { type: types.START_CONNECTING_WALLET, party }
 }
 
-function connectWallet (party, addresses, balance) {
-  return { type: types.CONNECT_WALLET, party, addresses, balance }
+function connectWallet (party, addresses, balance, networkBalance) {
+  return { type: types.CONNECT_WALLET, party, addresses, balance, networkBalance }
 }
 
 function disconnectWallet (party) {
