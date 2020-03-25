@@ -53,11 +53,11 @@ class Waiting extends Component {
         complete={this.props.transactions.a.fund.confirmations > 0}
         estimate={getConfirmationEstimate(this.props.assets.a.currency)} />
       { showPartnerTransactionStatus && <StatusMessage
-        message={`Confirming Your Trading Partner's ${cryptoassets[this.props.assets.b.currency].code} Transaction`}
+        message={`Waiting For Trading Partner's ${cryptoassets[this.props.assets.b.currency].code} Transaction`}
         complete={this.props.transactions.b.fund.confirmations > 0}
         estimate={getConfirmationEstimate(this.props.assets.b.currency)} /> }
       { showPartnerClaimTransactionStatus && <StatusMessage
-        message={`Confirming Your Trading Partner's ${cryptoassets[this.props.assets.a.currency].code} Claim Transaction`}
+        message={`Waiting For Trading Partner's ${cryptoassets[this.props.assets.a.currency].code} Claim Transaction`}
         complete={this.props.transactions.b.claim.hash && this.props.secretParams.secret}
         estimate={getConfirmationEstimate(this.props.assets.a.currency)} /> }
       <p className='Waiting_status'>{description}</p>
