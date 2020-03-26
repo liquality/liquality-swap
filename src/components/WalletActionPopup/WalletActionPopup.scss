@@ -1,0 +1,68 @@
+@import '../../scss/mixins.scss';
+@import '../../scss/variables.scss';
+
+.WalletActionPopup {
+  @include popup;
+  padding: 0 50px 50px 50px;
+
+  h1 {
+    margin: 0;
+    color: $color-text-1;
+    padding-top: 54px;
+  }
+
+  &_type {
+    display: block;
+    width: 110px;
+    height: 22px;
+    border-radius: 16px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    text-align: center;
+    font-size: $font-size-sm;
+    line-height: 22px;
+    color: #f2f2f2;
+    background-size: 100% 100%;
+    background-image: webkit-linear-gradient(left, #7186E5 0%,#58A3DB 100%);
+    background-image: -moz-linear-gradient(left, #7186E5 0%, #58A3DB 100%);
+    background-image: -o-linear-gradient(left, #7186E5 0%,  #58A3DB 100%);
+    background-image: linear-gradient(to right, #7186E5 0%,#58A3DB 100%);
+  }
+
+  &_stepper {
+    @include stepper;
+    &_root {
+      padding: 20px 0 !important;
+    }
+
+    &_label {
+      margin-right: 30px;
+    }
+  }
+
+  &_step {
+    padding: 20px 0;
+    font-weight: bold;
+  }
+
+  &_instructions {
+    background: $color-bg-secondary;
+    padding: 10px 0;
+    margin-top: 20px;
+    border-radius: 16px;
+    font-size: $font-size-sm;
+
+    p {
+      height: 40px;
+      padding: 0 20px 6px 32px;
+    }
+
+    img {
+      display: block;
+      margin: 20px auto;
+    }
+  }
+}

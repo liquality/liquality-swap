@@ -1,7 +1,9 @@
 import moment from 'moment'
 import _ from 'lodash'
+import BigNumber from 'bignumber.js'
 import config from '../config'
 import cryptoassets from '@liquality/cryptoassets'
+import { isETHNetwork } from './networks'
 import { generateSwapState } from './app-links'
 import { getClaimExpiration } from './expiration'
 
@@ -16,14 +18,26 @@ function getCurrencyInputErrors (assets, agent) {
   return errors
 }
 
-function getWalletErrors (wallets, isPartyB) {
+function getWalletErrors (wallets, assets, isPartyB) {
   const errors = {}
   const { a: walletA, b: walletB } = wallets
   if (isPartyB) {
     const initialSwapState = generateSwapState(window.location)
-    if (!wallets.a.addresses.includes(initialSwapState.wallets.a.addresses[0])) errors.walletA = 'Address does not match swap'
-    if (!wallets.b.addresses.includes(initialSwapState.wallets.b.addresses[0])) errors.walletB = 'Address does not match swap'
+    if (wallets.a.connected) {
+      if (!wallets.a.addresses.includes(initialSwapState.wallets.a.addresses[0])) errors.walletAAddress = 'Address does not match swap'
+    }
+    if (wallets.b.connected) {
+      if (!wallets.b.addresses.includes(initialSwapState.wallets.b.addresses[0])) errors.walletBAddress = 'Address does not match swap'
+    }
   }
+
+  if (wallets.a.connected && !errors.walletAAddress) {
+    if (!errors.walletAAddress && BigNumber(wallets.a.balance).lt(BigNumber(assets.a.value))) errors.walletABalance = 'Insufficient. Add funds.'
+  }
+  if (wallets.b.connected && !errors.walletBAddress) {
+    if (isETHNetwork(assets.b.currency) && !(BigNumber(wallets.b.networkBalance).gt(BigNumber(0)))) errors.walletB = 'Insufficient. Add ETH for fee.'
+  }
+
   if (!walletA.connected) errors.walletA = 'Please add your wallet'
   if (!walletB.connected) errors.walletB = 'Please add your wallet'
   return errors
@@ -70,7 +84,7 @@ function getClaimErrors (transactions, isPartyB) {
 function isInitiateValid (swap) {
   let errors = [
     getCurrencyInputErrors(swap.assets),
-    getWalletErrors(swap.wallets, swap.isPartyB),
+    getWalletErrors(swap.wallets, swap.assets, swap.isPartyB),
     getCounterPartyErrors(swap.assets, swap.counterParty),
     getInitiationErrors(swap.transactions, swap.expiration, swap.isVerified, swap.isPartyB, swap.agent.quote)
   ]

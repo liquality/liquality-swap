@@ -1,11 +1,11 @@
 import config from '../config'
-import metamask from '../icons/metamask.svg'
-import ledger from '../icons/ledger.svg'
-import node from '../icons/node.svg'
+import metamaskIcon from '../icons/wallets/metamask/icon.svg'
+import ledgerIcon from '../icons/wallets/ledger/icon.svg'
+import nodeIcon from '../icons/wallets/node/icon.svg'
 
 const wallets = {
   'metamask': {
-    icon: metamask,
+    icon: metamaskIcon,
     name: 'MetaMask',
     connection: {
       title: 'Login to MetaMask',
@@ -14,7 +14,7 @@ const wallets = {
     troubleshootConnectionLink: 'https://metamask.zendesk.com/hc/en-us/articles/360015489531-Getting-Started-With-MetaMask-Part-1-'
   },
   'bitcoin_ledger_legacy': {
-    icon: ledger,
+    icon: ledgerIcon,
     name: 'Ledger (Legacy)',
     connection: {
       title: 'On your ledger',
@@ -23,7 +23,7 @@ const wallets = {
     troubleshootConnectionLink: 'https://support.ledger.com/hc/en-us/articles/115005195945'
   },
   'bitcoin_ledger_native_segwit': {
-    icon: ledger,
+    icon: ledgerIcon,
     name: 'Ledger (Native Segwit)',
     connection: {
       title: 'On your ledger',
@@ -32,7 +32,7 @@ const wallets = {
     troubleshootConnectionLink: 'https://support.ledger.com/hc/en-us/articles/115005195945'
   },
   'bitcoin_node': {
-    icon: node,
+    icon: nodeIcon,
     name: 'Node',
     connection: {
       title: 'On your node',
@@ -41,7 +41,7 @@ const wallets = {
     troubleshootConnectionLink: 'https://github.com/bitpay/bitcore'
   },
   'ethereum_node': {
-    icon: node,
+    icon: nodeIcon,
     name: 'Node',
     connection: {
       title: 'On your node',
@@ -50,7 +50,7 @@ const wallets = {
     troubleshootConnectionLink: 'https://ethereum.gitbooks.io/frontier-guide/content/getting_a_client.html'
   },
   'ethereum_ledger': {
-    icon: ledger,
+    icon: ledgerIcon,
     name: 'Ledger',
     connection: {
       title: 'On your ledger',

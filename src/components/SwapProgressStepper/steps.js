@@ -6,8 +6,8 @@ const steps = Object.freeze({
 })
 
 const stepData = [
-  { id: steps.INITIATION, label: 'Swap initiation' },
-  { id: steps.AGREEMENT, label: 'Counterparties agree' },
+  { id: steps.INITIATION, label: 'Swap Initiation' },
+  { id: steps.AGREEMENT, label: 'Confirming Terms' },
   { id: steps.CLAIMING, label: 'Claiming' },
   { id: steps.SETTLED, label: 'Settlement' }
 ]

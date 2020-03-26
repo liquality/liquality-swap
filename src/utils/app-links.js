@@ -57,7 +57,8 @@ function generateSwapState (location) {
     },
     wallets: {
       a: { addresses: [urlParams.ccy1Addr] },
-      b: { addresses: [urlParams.ccy2Addr] }
+      b: { addresses: [urlParams.ccy2Addr] },
+      popup: {}
     },
     counterParty: {
       a: { address: urlParams.ccy1CounterPartyAddr },

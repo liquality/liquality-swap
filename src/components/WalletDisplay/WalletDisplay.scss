@@ -3,8 +3,12 @@
 
 .WalletDisplay {
   text-align: center;
-  width: 130px;
+  width: 160px;
   min-height: 126px;
+
+  .Button {
+    margin-top: 2px;
+  }
 
   &.error > &_wrapper {
     padding: 10px 0;
@@ -21,15 +25,20 @@
   }
 
   &_address {
-    width: 130px;
+    width: 160px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
     font-size: $font-size-sm;
     color: $color-text-2;
-    padding-bottom: 4px;
+    padding: 0 0 0 4px;
     &:hover {
       overflow: visible;
+    }
+
+    &.error {
+      border: 1px solid $danger;
+      padding: 2px 4px;
     }
   }
 
@@ -43,6 +52,10 @@
 
   &_balance {
     color: $color-text-2;
+
+    &.error {
+      border: 1px solid $danger;
+    }
   }
 
   &_errorMessage {

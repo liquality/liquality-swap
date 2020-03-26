@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import WalletConnectPopup from '../../components/WalletConnectPopup/WalletConnectPopup'
+import WalletActionPopup from '../../components/WalletActionPopup/WalletActionPopup'
 
 class WalletPanel extends Component {
   render () {
@@ -36,6 +37,7 @@ class WalletPanel extends Component {
         walletConnecting={walletB.connecting}
         handleClose={() => this.props.onToggleWalletConnect('b')}
       />
+      {this.props.wallets.popup.steps && this.props.wallets.popup.step && <WalletActionPopup steps={this.props.wallets.popup.steps} activeStep={this.props.wallets.popup.step} open={this.props.wallets.popup.open} />}
     </div>
   }
 }

@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import cryptoassets from '@liquality/cryptoassets'
-import config from '../../config'
 import { getFundExpiration, getClaimExpiration } from '../../utils/expiration'
+import { shortenTransactionHash, getExplorerLink } from '../../utils/transactions'
 import withCopyButton from '../withCopyButton'
 import ClockIcon from '../../icons/clock.svg'
 import CopyIcon from '../../icons/copy.svg'
@@ -15,29 +15,12 @@ class ExpirationDetails extends Component {
     this.state = this.getExpirationState()
   }
 
-  getExplorerLink (tx, asset) {
-    const assetConfig = config.assets[asset]
-    return `${assetConfig.explorerPath}${tx.hash}`
-  }
+  getTransaction (party) {
+    const tx = this.props.transactions[party].fund
+    if (!tx.hash) return null
 
-  getTransaction () {
-    const transactions = this.props.transactions
-
-    const displayOrder = [
-      { party: 'b', kind: 'claim' },
-      { party: 'a', kind: 'claim' }
-    ]
-
-    if (this.props.isPartyB) {
-      displayOrder.push({ party: 'a', kind: 'fund' }, { party: 'b', kind: 'fund' })
-    } else {
-      displayOrder.push({ party: 'b', kind: 'fund' }, { party: 'a', kind: 'fund' })
-    }
-
-    const selectedTransaction = displayOrder.find(tx => transactions[tx.party][tx.kind].hash) || {}
-    const tx = transactions[selectedTransaction.party][selectedTransaction.kind]
-    const asset = this.props.assets[selectedTransaction.party].currency
-    const explorerLink = tx && this.getExplorerLink(tx, asset)
+    const asset = this.props.assets[party].currency
+    const explorerLink = tx && getExplorerLink(tx, asset)
     tx.explorerLink = explorerLink
     return tx
   }
@@ -51,7 +34,10 @@ class ExpirationDetails extends Component {
       duration: expiration.duration,
       expiration: expiration.time,
       now: moment(),
-      transaction: this.getTransaction()
+      transactions: {
+        a: this.getTransaction('a'),
+        b: this.getTransaction('b')
+      }
     }
   }
 
@@ -92,12 +78,18 @@ class ExpirationDetails extends Component {
         <div className='ExpirationDetails_progress'>
           <div className='ExpirationDetails_progress_fill' style={{width: `${filled}%`}} />
         </div>
-        <div className='ExpirationDetails_bottom'>
-          <div className='ExpirationDetails_transaction'>
-            <strong>Transaction ID: </strong> <a href={this.state.transaction.explorerLink} target='_blank'>{this.state.transaction.hash}</a>
+        <div className='ExpirationDetails_transactions'>
+          <div className='ExpirationDetails_transaction ExpirationDetails_transaction'>
+            <span className='ExpirationDetails_transaction_name'>Your {cryptoassets[this.props.assets.a.currency].code} Transaction:</span>
+            { this.state.transactions.a && <a className='ExpirationDetails_transaction_link' href={this.state.transactions.a.explorerLink} target='_blank'>{shortenTransactionHash(this.state.transactions.a.hash)}</a> }
+            { this.state.transactions.a && <span className='ExpirationDetails_transaction_confirmations'>{this.state.transactions.a.confirmations} Confirmations</span> }
+            { !this.state.transactions.a && <span className='ExpirationDetails_transaction_missing'>&mdash;</span> }
           </div>
-          <div className='ExpirationDetails_confirmations'>
-            Confirmations: {this.state.transaction.confirmations}
+          <div className='ExpirationDetails_transaction ExpirationDetails_transaction'>
+            <span className='ExpirationDetails_transaction_name'>Partner's {cryptoassets[this.props.assets.b.currency].code} Transaction:</span>
+            { this.state.transactions.b && <a className='ExpirationDetails_transaction_link' href={this.state.transactions.b.explorerLink} target='_blank'>{shortenTransactionHash(this.state.transactions.b.hash)}</a> }
+            { this.state.transactions.b && <span className='ExpirationDetails_transaction_confirmations'>{this.state.transactions.b.confirmations} Confirmations</span> }
+            { !this.state.transactions.b && <span className='ExpirationDetails_transaction_missing'>&mdash;</span> }
           </div>
         </div>
       </div>

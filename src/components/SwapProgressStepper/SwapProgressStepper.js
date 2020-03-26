@@ -33,8 +33,7 @@ class SwapProgressStepper extends Component {
         }
         return <Step key={step.id}>
           <StepLabel classes={{
-            label: 'SwapProgressStepper_label',
-            alternativeLabel: 'SwapProgressStepper_alternativeLabel',
+            root: 'SwapProgressStepper_label',
             active: 'SwapProgressStepper_label_active',
             completed: 'SwapProgressStepper_label_completed'
           }} StepIconProps={stepIconProps}>{step.label}</StepLabel>
