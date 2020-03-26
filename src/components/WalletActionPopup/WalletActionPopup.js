@@ -39,7 +39,7 @@ class WalletActionPopup extends Component {
               <div className='WalletActionPopup_instructions'>
                 <div className='WalletActionPopup_message'>
                   <p>{activeStep.description}</p>
-                  <img src={activeStep.image} alt={activeStep.description} />
+                  {activeStep.image && <img src={activeStep.image} alt={activeStep.description} />}
                 </div>
               </div>
             </div>

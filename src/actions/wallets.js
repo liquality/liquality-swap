@@ -72,6 +72,7 @@ function disconnectWallet (party) {
   return async (dispatch, getState) => {
     const swap = getState().swap
     dispatch({ type: types.DISCONNECT_WALLET, party, preserveAddress: swap.isPartyB || swap.step !== steps.INITIATION })
+    dispatch(closePopup())
   }
 }
 
