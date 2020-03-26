@@ -104,7 +104,6 @@ async function setInitiationWalletPopups (confirm, dispatch, getState) {
     wallets
   } = getState().swap
   const popup = getActionPopups(SWAP_STAGES.INITIATE, assets.a.currency, wallets.a.type)
-  if (!popup) return
   const popupSteps = popup.steps
   const theSteps = confirm ? [popupSteps[1]] : popupSteps
   dispatch(walletActions.setPopupSteps(theSteps))
@@ -119,12 +118,10 @@ async function setClaimWalletPopups (sign, dispatch, getState) {
   const claimTransactionPopup = getActionPopups(SWAP_STAGES.CLAIM, assets.b.currency, wallets.b.type)
   const steps = []
 
-  if (sign && signTransactionPopup) {
+  if (sign) {
     steps.push(signTransactionPopup.steps[0])
   }
-  if (claimTransactionPopup) {
-    steps.push(claimTransactionPopup.steps[1])
-  }
+  steps.push(claimTransactionPopup.steps[1])
 
   dispatch(walletActions.setPopupSteps(steps))
 }
@@ -135,9 +132,7 @@ async function setRefundWalletSteps (dispatch, getState) {
     wallets
   } = getState().swap
   const refundTransactionPopups = getActionPopups(SWAP_STAGES.REFUND, assets.a.currency, wallets.a.type)
-  if (refundTransactionPopups) {
-    dispatch(walletActions.setPopupSteps([refundTransactionPopups.steps[1]]))
-  }
+  dispatch(walletActions.setPopupSteps([refundTransactionPopups.steps[1]]))
 }
 
 async function generateSecret (dispatch, getState) {
@@ -328,13 +323,13 @@ function redeemSwap () {
     const secretRequired = !isPartyB && !secretParams.secret
     if (secretRequired) {
       await ensureWallet('a', dispatch, getState)
-    }
-    await ensureWallet('b', dispatch, getState)
-    await setClaimWalletPopups(secretRequired, dispatch, getState)
-    if (secretRequired) {
+      await setClaimWalletPopups(secretRequired, dispatch, getState)
       await withWalletPopupStep(WALLET_ACTION_STEPS.SIGN, dispatch, getState, generateSecret)
     }
+    await setClaimWalletPopups(secretRequired, dispatch, getState)
     await withWalletPopupStep(WALLET_ACTION_STEPS.CONFIRM, dispatch, getState, async () => {
+      await ensureWallet('b', dispatch, getState)
+      await setClaimWalletPopups(secretRequired, dispatch, getState)
       await withLoadingMessage('b', dispatch, getState, unlockFunds)
     })
   }
