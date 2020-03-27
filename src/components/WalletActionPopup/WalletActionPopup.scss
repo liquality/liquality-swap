@@ -56,11 +56,23 @@
     font-size: $font-size-sm;
 
     p {
-      height: 40px;
-      padding: 0 20px 6px 32px;
+      margin-bottom: 0;
     }
 
-    img {
+    &_description {
+      padding: 0 20px 0 32px;
+    }
+
+    &_info {
+      padding: 4px 20px 0 32px;
+      font-size: 11px;
+      img {
+        width: 13px;
+        margin-top: -2px;
+      }
+    }
+
+    &_image {
       display: block;
       margin: 20px auto;
     }

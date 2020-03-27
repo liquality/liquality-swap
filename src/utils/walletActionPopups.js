@@ -73,6 +73,12 @@ function toRefundPopup (popup) {
   })}
 }
 
+function toEthereumClaimPopup (popup) {
+  return { steps: toClaimPopup(popup).steps.map(step => {
+    return step.id === WALLET_ACTION_STEPS.CONFIRM ? {...step, info: 'The zero balance when signing refers to the contract. After claiming you will receive the correct amount.'} : step
+  })}
+}
+
 const initiatePopups = {
   ledger: {
     btc: bitcoinLedgerPopup,
@@ -93,17 +99,17 @@ const initiatePopups = {
 const claimPopups = {
   ledger: {
     btc: toClaimPopup(bitcoinLedgerPopup),
-    eth: toClaimPopup(ethereumLedgerPopup),
-    erc20: toClaimPopup(ethereumLedgerPopup)
+    eth: toEthereumClaimPopup(ethereumLedgerPopup),
+    erc20: toEthereumClaimPopup(ethereumLedgerPopup)
   },
   metamask: {
-    eth: toClaimPopup(ethereumMetamaskPopup),
-    erc20: toClaimPopup(ERC20MetamaskPopup)
+    eth: toEthereumClaimPopup(ethereumMetamaskPopup),
+    erc20: toEthereumClaimPopup(ERC20MetamaskPopup)
   },
   default: {
     btc: toClaimPopup(defaultPopup),
-    eth: toClaimPopup(defaultPopup),
-    erc20: toClaimPopup(defaultERC20Popup)
+    eth: toEthereumClaimPopup(defaultPopup),
+    erc20: toEthereumClaimPopup(defaultERC20Popup)
   }
 }
 

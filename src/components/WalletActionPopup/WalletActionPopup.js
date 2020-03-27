@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Modal from '@material-ui/core/Modal'
+import InfoIcon from '../../icons/info.svg'
 
 import { Stepper, Step, StepLabel } from '@material-ui/core'
 
@@ -37,10 +38,9 @@ class WalletActionPopup extends Component {
                 })}
               </Stepper> : <div className='WalletActionPopup_step'>{activeStep.label}</div> }
               <div className='WalletActionPopup_instructions'>
-                <div className='WalletActionPopup_message'>
-                  <p>{activeStep.description}</p>
-                  {activeStep.image && <img src={activeStep.image} alt={activeStep.description} />}
-                </div>
+                <p className='WalletActionPopup_instructions_description'>{activeStep.description}</p>
+                {activeStep.info && <p className='WalletActionPopup_instructions_info'><img src={InfoIcon} alt='info' /> {activeStep.info}</p>}
+                {activeStep.image && <img className='WalletActionPopup_instructions_image' src={activeStep.image} alt={activeStep.description} />}
               </div>
             </div>
           </div>
