@@ -1,4 +1,4 @@
-import { getClient } from '../services/chainClient'
+import { getClient, getNetworkClient } from '../services/chainClient'
 import { steps } from '../components/SwapProgressStepper/steps'
 import cryptoassets from '@liquality/cryptoassets'
 
@@ -29,7 +29,7 @@ function waitForWalletInitialization (party, currency, wallet) {
     const currencyCode = assets[party].currency
     const currency = cryptoassets[currencyCode]
     const client = getClient(currencyCode, wallet)
-    const networkClient = getClient(currencyCode, wallet)
+    const networkClient = getNetworkClient(currencyCode, wallet)
     const addressesPerCall = 100
     const unusedAddress = await client.wallet.getUnusedAddress()
     let allAddresses = await client.wallet.getUsedAddresses(addressesPerCall)
