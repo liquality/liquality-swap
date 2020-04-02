@@ -34,6 +34,11 @@ const CurrencyInput = (props) => {
     </span>
   }
 
+  const getFiatValue = () => {
+    const total = BigNumber(props.value).times(BigNumber(props.fiatRate)).toFixed(2)
+    return total
+  }
+
   return <div className='CurrencyInput'>
     <h3 className='CurrencyInput_heading'>{asset.code}</h3>
     <div className={classNames('CurrencyInput_inputWrapper', { 'disabled': props.disabled })}>
@@ -41,6 +46,9 @@ const CurrencyInput = (props) => {
         className={classNames('CurrencyInput_input', { 'error': props.error })} placeholder='0.00'
         onChange={onChange} onKeyDown={preventNegative} tabIndex={props.tabIndex} />
     </div>
+    { props.fiatRate && props.value && <div className='CurrencyInput_price'>
+      ${ getFiatValue() } USD
+    </div> }
     { props.error && <div className={classNames('CurrencyInput_label', { 'CurrencyInput_errorMessage': props.error })}>
       { props.error }
     </div> }
@@ -54,6 +62,7 @@ CurrencyInput.propTypes = {
   // TODO: probably need some sort of repository for currency codes and icons?
   currency: PropTypes.oneOf(Object.keys(cryptoassets)).isRequired,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  fiatRate: PropTypes.number,
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
   tabIndex: PropTypes.number,

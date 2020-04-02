@@ -80,6 +80,7 @@ class SwapOfferSelection extends Component {
           showInputs
           showErrors
           showRate={amountEntered}
+          showLeftFiatValue
           rateDisabled
           rateStrong
           rateTitle='Estimated Quote'

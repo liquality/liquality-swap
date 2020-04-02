@@ -26,7 +26,7 @@ class SwapInitiation extends Component {
         onIconClick={() => this.props.switchSides()} />
       <div className='SwapInitiation_top'>
         {this.props.quote && <div className='SwapInitiation_quoteTimer'><TimeProgressBar startTime={this.props.quote.retrievedAt} endTime={this.props.quote.expiresAt} /></div>}
-        <CurrencyInputs showInputs leftInputDisabled={inputsDisabled} rightInputDisabled={inputsDisabled} rateDisabled={this.props.assets.rateLocked} showRate />
+        <CurrencyInputs showInputs leftInputDisabled={inputsDisabled} rightInputDisabled={inputsDisabled} rateDisabled={this.props.assets.rateLocked} showRate showLeftFiatValue showRightFiatValue={!this.props.quote} />
       </div>
       <WalletPanel />
       <div className='SwapInitiation_bottom'>

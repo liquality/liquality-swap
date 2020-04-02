@@ -67,6 +67,7 @@
 
     #{$this}_icon_active {
       color: $primary;
+      border: 0;
       #{$this}_icon_text {
         fill: #ffffff;
       }

@@ -43,6 +43,13 @@
     }
   }
 
+  &_price {
+    text-align: center;
+    font-size: $font-size-sm;
+    color: $color-text-2;
+    padding-top: 3px;
+  }
+
   &_label {
     height: 20px;
     padding-top: 1px;

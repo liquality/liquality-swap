@@ -8,7 +8,8 @@ const mapStateToProps = (state, ownProps) => {
     assets: state.swap.assets,
     agent: state.swap.agent,
     disabled: ownProps.disabled,
-    showErrors: state.swap.showErrors
+    showErrors: state.swap.showErrors,
+    fiatRates: state.fiat.rates
   }
 }
 

@@ -13,6 +13,7 @@ import { actions as transactionActions } from './actions/transactions'
 import { actions as assetActions } from './actions/assets'
 import { actions as counterPartyActions } from './actions/counterparty'
 import { actions as agentActions } from './actions/agent'
+import { actions as fiatActions } from './actions/fiat'
 
 import LiqualitySwap from './containers/LiqualitySwap'
 import './App.css'
@@ -46,6 +47,8 @@ if (initialAppState.swap) {
     store.dispatch(agentActions.connectAgent())
   }
 }
+
+store.dispatch(fiatActions.syncFiatRates())
 
 class App extends Component {
   render () {
