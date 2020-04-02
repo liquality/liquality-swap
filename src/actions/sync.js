@@ -111,11 +111,13 @@ function sync (party) {
 
     let blockNumber = startBlock
     do {
-      const swap = getState().swap
+      let swap = getState().swap
       if (!swap.sync[party].synced) {
         if (!swap.transactions[party].fund.hash) {
           await findInitiateSwapTransaction(party, blockNumber, dispatch, getState)
-        } else {
+        }
+        swap = getState().swap
+        if (swap.transactions[party].fund.hash) {
           if (party === 'b' && !swap.isVerified) {
             await verifyInitiateSwapTransaction(dispatch, getState)
           }
