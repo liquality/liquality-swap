@@ -97,7 +97,7 @@ async function verifyInitiateSwapTransaction (dispatch, getState) {
   const swapExpiration = isPartyB ? expiration : getClaimExpiration(expiration, 'a').time
   const swapVerified = await client.swap.verifyInitiateSwapTransaction(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty.b.address, secretParams.secretHash, swapExpiration.unix())
   if (swapVerified) {
-    dispatch(swapActions.setIsVerified(true))
+    dispatch(transactionActions.setIsVerified(true))
   }
 }
 
@@ -118,7 +118,7 @@ function sync (party) {
         }
         swap = getState().swap
         if (swap.transactions[party].fund.hash) {
-          if (party === 'b' && !swap.isVerified) {
+          if (party === 'b' && !swap.transactions.isVerified) {
             await verifyInitiateSwapTransaction(dispatch, getState)
           }
           const oppositeParty = party === 'a' ? 'b' : 'a'

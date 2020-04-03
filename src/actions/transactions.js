@@ -11,7 +11,15 @@ import { generateLink } from '../utils/app-links'
 
 const types = {
   SET_TRANSACTION: 'SET_TRANSACTION',
-  SET_START_BLOCK: 'SET_START_BLOCK'
+  SET_START_BLOCK: 'SET_START_BLOCK',
+  SET_IS_VERIFIED: 'SET_IS_VERIFIED'
+}
+
+function setIsVerified (isVerified) {
+  return async (dispatch, getState) => {
+    dispatch({ type: types.SET_IS_VERIFIED, isVerified })
+    updateStep(dispatch, getState)
+  }
 }
 
 async function setSecret (swap, party, tx, dispatch) {
@@ -67,6 +75,13 @@ function setLocation (swap, currentLocation, dispatch) {
   }
 }
 
+function updateStep (dispatch, getState) {
+  let state = getState()
+  setStep(state.swap.transactions, state.swap.isPartyB, state.swap.transactions.isVerified, dispatch)
+  state = getState()
+  setLocation(state.swap, state.router.location, dispatch)
+}
+
 async function monitorTransaction (swap, party, kind, tx, dispatch, getState) {
   while (true) {
     let client
@@ -90,10 +105,7 @@ async function monitorTransaction (swap, party, kind, tx, dispatch, getState) {
         await setSecret(swap, party, updatedTransaction, dispatch)
       }
     }
-    let state = getState()
-    setStep(state.swap.transactions, state.swap.isPartyB, state.swap.isVerified, dispatch)
-    state = getState()
-    setLocation(state.swap, state.router.location, dispatch)
+    updateStep(dispatch, getState)
     await sleep(5000)
   }
 }
@@ -121,7 +133,8 @@ function setStartBlock (party, blockNumber) {
 
 const actions = {
   setTransaction,
-  setStartBlock
+  setStartBlock,
+  setIsVerified
 }
 
 export { types, actions }

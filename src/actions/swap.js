@@ -21,7 +21,6 @@ const types = {
   SET_STEP: 'SET_STEP',
   SET_EXPIRATION: 'SET_EXPIRATION',
   SET_LINK: 'SET_LINK',
-  SET_IS_VERIFIED: 'SET_IS_VERIFIED',
   SET_SHOW_ERRORS: 'SET_SHOW_ERRORS',
   SET_LOADING_MESSAGE: 'SET_LOADING_MESSAGE',
   RESET: 'RESET'
@@ -43,10 +42,6 @@ function setLink (link) {
   localStorage.setItem(link, '')
   window.location = link
   return { type: types.SET_LINK, link }
-}
-
-function setIsVerified (isVerified) {
-  return { type: types.SET_IS_VERIFIED, isVerified }
 }
 
 function showErrors () {
@@ -375,7 +370,6 @@ const actions = {
   setStep,
   setExpiration,
   setLink,
-  setIsVerified,
   showErrors,
   hideErrors,
   reset,

@@ -14,7 +14,14 @@ const initialState = {
     claim: {},
     refund: {},
     startBlock: null
-  }
+  },
+  isVerified: false
+}
+
+function setIsVerified (state, action) {
+  return update(state, {
+    isVerified: { $set: action.isVerified }
+  })
 }
 
 function setTransaction (state, action) {
@@ -31,9 +38,10 @@ function setStartBlock (state, action) {
 
 const reducers = {
   [types.SET_TRANSACTION]: setTransaction,
-  [types.SET_START_BLOCK]: setStartBlock
+  [types.SET_START_BLOCK]: setStartBlock,
+  [types.SET_IS_VERIFIED]: setIsVerified
 }
 
-const counterParty = getReducerFunction(reducers, initialState)
+const transactions = getReducerFunction(reducers, initialState)
 
-export default counterParty
+export default transactions
