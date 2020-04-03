@@ -19,7 +19,7 @@ const devTools = composeWithDevTools({})
 const store = createStore(
   connectRouter(history)(reducers),
   initialAppState,
-  composeWithDevTools(applyMiddleware(thunk, routerMiddleware(history)))
+  devTools(applyMiddleware(thunk, routerMiddleware(history)))
 )
 
 export { store, initialAppState }
