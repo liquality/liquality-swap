@@ -76,7 +76,13 @@ function createEthClient (asset, wallet) {
   if (wallet === 'metamask') {
     ethClient.addProvider(new EthereumMetaMaskProvider(web3.currentProvider, EthereumNetworks[assetConfig.network]))
   } else if (wallet === 'ethereum_ledger') {
-    ethClient.addProvider(new EthereumLedgerProvider({network: EthereumNetworks[assetConfig.network]}))
+    const ledger = new EthereumLedgerProvider({network: EthereumNetworks[assetConfig.network]})
+    
+    if (window.useWebBle || localStorage.useWebBle) {
+      ledger.useWebBle()
+    }
+    
+    ethClient.addProvider(ledger)
   }
   if (isERC20) {
     ethClient.addProvider(new EthereumErc20Provider(assetConfig.contractAddress))
