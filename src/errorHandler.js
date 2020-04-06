@@ -12,7 +12,10 @@ const errorMap = {
   'Transaction amount does not cover fee': 'Transaction amount does not cover fee. Please increase the transaction amount',
   'Not enough balance': 'Not enough balance on your selected wallet. Please connect a different wallet or top up your balance.',
   'Please enable Contract data on the Ethereum app settings': `Ledger unable to claim. Please go to your Ethereum app setting on your Ledger device and allow ‘Contract Data’`,
-  'insufficient funds for gas': 'Insufficient funds for gas. Please make sure you have enough eth in your selected wallet to cover gas costs.'
+  'insufficient funds for gas': 'Insufficient funds for gas. Please make sure you have enough eth in your selected wallet to cover gas costs.',
+  'Request failed with status code 401. Insufficient balance': 'Trade partner does not have enough balance to swap. Please reduce the amount.',
+  'MetaMask Tx Signature: User denied transaction signature.': 'To proceed, please sign the transaction.',
+  'MetaMask Message Signature: User denied message signature.': 'To proceed, please sign the message.'
 }
 
 function errorHandler (e) {
