@@ -46,15 +46,15 @@ const CurrencyInput = (props) => {
         className={classNames('CurrencyInput_input', { 'error': props.error })} placeholder='0.00'
         onChange={onChange} onKeyDown={preventNegative} tabIndex={props.tabIndex} />
     </div>
-    { props.fiatRate && props.value && <div className='CurrencyInput_price'>
-      ${ getFiatValue() } USD
-    </div> }
     { props.error && <div className={classNames('CurrencyInput_label', { 'CurrencyInput_errorMessage': props.error })}>
       { props.error }
     </div> }
     <div className='CurrencyInput_label'>
       { props.limits && getLimits() }
     </div>
+    { props.fiatRate && props.value && <div className='CurrencyInput_price'>
+      ${ getFiatValue() } USD
+    </div> }
   </div>
 }
 
