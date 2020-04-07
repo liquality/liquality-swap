@@ -13,8 +13,8 @@ function getCurrencyInputErrors (assets, agent) {
   if (!(assetA.value > 0)) errors.assetA = 'Amount not set'
   if (!(assetB.value > 0)) errors.assetB = 'Amount not set'
   if (!(assetRate > 0)) errors.rate = 'Please select the conversion rate'
-  if (agent && agent.market && !_.isEmpty(assetA.value) && (assetA.value > agent.market.max)) errors.assetA = 'Decrease amount'
-  if (agent && agent.market && !_.isEmpty(assetA.value) && (assetA.value < agent.market.min)) errors.assetA = 'Increase amount'
+  if (agent && agent.market && assetA.value > 0 && (assetA.value > agent.market.max)) errors.assetA = 'Decrease amount'
+  if (agent && agent.market && assetA.value > 0 && (assetA.value < agent.market.min)) errors.assetA = 'Increase amount'
   return errors
 }
 
