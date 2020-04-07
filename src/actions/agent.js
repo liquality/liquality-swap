@@ -39,21 +39,26 @@ async function getMarkets () {
   return formattedMarkets
 }
 
-async function setMarkets (dispatch) {
+async function setMarkets (dispatch, getState) {
   const markets = await getMarkets()
   const configuredAssets = Object.keys(config.assets)
   const validMarkets = markets.filter(market => configuredAssets.includes(market.to) && configuredAssets.includes(market.from))
   dispatch({ type: types.SET_MARKETS, markets: validMarkets })
+  const selectedMarket = getState().swap.agent.market
+  if (selectedMarket) {
+    const updatedMarket = validMarkets.find(market => selectedMarket.from === market.from && selectedMarket.to === market.to)
+    dispatch(setMarket(updatedMarket))
+  }
 }
 
 function connectAgent () {
   return async (dispatch, getState) => {
-    await setMarkets(dispatch)
+    await setMarkets(dispatch, getState)
     const defaultMarket = getState().swap.agent.markets[0]
     dispatch(setMarket(defaultMarket))
     while (!(getState().swap.agent.quote)) {
       await sleep(3000)
-      await setMarkets(dispatch)
+      await setMarkets(dispatch, getState)
     }
   }
 }
