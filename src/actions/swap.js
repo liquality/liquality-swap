@@ -150,7 +150,7 @@ async function generateSecret (dispatch, getState) {
     expiration.unix()
   ]
 
-  const secretMsg = 'Sign this message to create your secret. Your trade parameters:\n\n' + secretData.join('')
+  const secretMsg = secretData.join('')
   await withLoadingMessage('a', dispatch, getState, async () => {
     const secret = await client.swap.generateSecret(secretMsg)
     dispatch(secretActions.setSecret(secret))
