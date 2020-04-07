@@ -2,7 +2,6 @@ import cryptoassets from '@liquality/cryptoassets'
 import { getClient } from '../services/chainClient'
 import { sleep } from '../utils/async'
 import { actions as transactionActions } from './transactions'
-import { actions as swapActions } from './swap'
 import { getFundExpiration, getExpirationForParty, getClaimExpiration } from '../utils/expiration'
 import config from '../config'
 
