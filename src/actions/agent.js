@@ -6,7 +6,6 @@ import cryptoassets from '@liquality/cryptoassets'
 import config from '../config'
 import agent from '../services/agentClient'
 import { isAgentRequestValid } from '../utils/validation'
-import { sleep } from '../utils/async'
 
 const types = {
   SET_QUOTE: 'SET_QUOTE',
@@ -39,21 +38,14 @@ async function getMarkets () {
   return formattedMarkets
 }
 
-async function setMarkets (dispatch) {
-  const markets = await getMarkets()
-  const configuredAssets = Object.keys(config.assets)
-  const validMarkets = markets.filter(market => configuredAssets.includes(market.to) && configuredAssets.includes(market.from))
-  dispatch({ type: types.SET_MARKETS, markets: validMarkets })
-  const defaultMarket = validMarkets[0]
-  dispatch(setMarket(defaultMarket))
-}
-
 function connectAgent () {
   return async (dispatch, getState) => {
-    while (!(getState().swap.agent.quote)) {
-      await setMarkets(dispatch)
-      await sleep(3000)
-    }
+    const markets = await getMarkets()
+    const configuredAssets = Object.keys(config.assets)
+    const validMarkets = markets.filter(market => configuredAssets.includes(market.to) && configuredAssets.includes(market.from))
+    dispatch({ type: types.SET_MARKETS, markets: validMarkets })
+    const defaultMarket = validMarkets[0]
+    dispatch(setMarket(defaultMarket))
   }
 }
 
