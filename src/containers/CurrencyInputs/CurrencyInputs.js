@@ -15,6 +15,7 @@ class CurrencyInputs extends Component {
           { this.props.showInputs && <CurrencyInput
             currency={assetA.currency}
             value={assetA.value}
+            {...(this.props.showLeftFiatValue ? {fiatRate: this.props.fiatRates[assetA.currency]} : {})}
             disabled={this.props.leftInputDisabled}
             error={errors.assetA}
             limits={this.props.leftInputLimits && {
@@ -30,6 +31,7 @@ class CurrencyInputs extends Component {
           { this.props.showInputs && <CurrencyInput
             currency={assetB.currency}
             value={assetB.value}
+            {...(this.props.showRightFiatValue ? {fiatRate: this.props.fiatRates[assetB.currency]} : {})}
             disabled={this.props.rightInputDisabled}
             error={errors.assetB}
             limits={this.props.rightInputLimits && {
@@ -70,7 +72,9 @@ CurrencyInputs.propTypes = {
   rateTitle: PropTypes.string,
   rateStrong: PropTypes.bool,
   showRate: PropTypes.bool,
-  showInputs: PropTypes.bool
+  showInputs: PropTypes.bool,
+  showLeftFiatValue: PropTypes.bool,
+  showRightFiatValue: PropTypes.bool
 }
 
 export default CurrencyInputs

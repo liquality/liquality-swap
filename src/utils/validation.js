@@ -86,7 +86,7 @@ function isInitiateValid (swap) {
     getCurrencyInputErrors(swap.assets),
     getWalletErrors(swap.wallets, swap.assets, swap.isPartyB),
     getCounterPartyErrors(swap.assets, swap.counterParty),
-    getInitiationErrors(swap.transactions, swap.expiration, swap.isVerified, swap.isPartyB, swap.agent.quote)
+    getInitiationErrors(swap.transactions, swap.expiration, swap.transactions.isVerified, swap.isPartyB, swap.agent.quote)
   ]
 
   const numErrors = errors.reduce((prev, next) => prev + Object.keys(next).length, 0)

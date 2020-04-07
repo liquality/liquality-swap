@@ -2,7 +2,6 @@ import cryptoassets from '@liquality/cryptoassets'
 import { getClient } from '../services/chainClient'
 import { sleep } from '../utils/async'
 import { actions as transactionActions } from './transactions'
-import { actions as swapActions } from './swap'
 import { getFundExpiration, getExpirationForParty, getClaimExpiration } from '../utils/expiration'
 import config from '../config'
 
@@ -97,7 +96,7 @@ async function verifyInitiateSwapTransaction (dispatch, getState) {
   const swapExpiration = isPartyB ? expiration : getClaimExpiration(expiration, 'a').time
   const swapVerified = await client.swap.verifyInitiateSwapTransaction(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty.b.address, secretParams.secretHash, swapExpiration.unix())
   if (swapVerified) {
-    dispatch(swapActions.setIsVerified(true))
+    dispatch(transactionActions.setIsVerified(true))
   }
 }
 
@@ -111,12 +110,14 @@ function sync (party) {
 
     let blockNumber = startBlock
     do {
-      const swap = getState().swap
+      let swap = getState().swap
       if (!swap.sync[party].synced) {
         if (!swap.transactions[party].fund.hash) {
           await findInitiateSwapTransaction(party, blockNumber, dispatch, getState)
-        } else {
-          if (party === 'b' && !swap.isVerified) {
+        }
+        swap = getState().swap
+        if (swap.transactions[party].fund.hash) {
+          if (party === 'b' && !swap.transactions.isVerified) {
             await verifyInitiateSwapTransaction(dispatch, getState)
           }
           const oppositeParty = party === 'a' ? 'b' : 'a'

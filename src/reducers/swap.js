@@ -29,9 +29,6 @@ const swapReducer = combineReducers({
   link: (state = null, action) => {
     return action.type === types.SET_LINK ? action.link : state
   },
-  isVerified: (state = false, action) => {
-    return action.type === types.SET_IS_VERIFIED ? action.isVerified : state
-  },
   showErrors: (state = false, action) => {
     return action.type === types.SET_SHOW_ERRORS ? action.showErrors : state
   },
