@@ -159,27 +159,42 @@ export default {
     #terms {
       width: 100%;
       height: 100%;
-      color: white;
       position:absolute;
       background: rgba(0, 0, 0, 70%);
       top: 0;
       bottom: 0;
       right: 0;
       left: 0;
+      z-index: 1000;
+    }
+
+    #terms h3 {
+      color: #1D1E21;
     }
 
     .terms-wrapper {
       position: absolute;
+      background: #F7F8F9;
       z-index: 999;
       top: 100px;
       left: 100px;
       right: 100px;
-      bottom: 200px;
+      padding: 20px;
+      border-radius: 20px;
     }
   </style>
   <div id="terms" style="display: none;">
     <div class="terms-wrapper">
-      <iframe style="width: 100%; height: 100%;" src="https://liquality.io/terms-of-use/standalone.html"></iframe>
+      <div class="reqs"><h3>Swap compatibility:</h3>
+      • Chrome Browser <br/>
+      • Ledger Nano S (BTC, ETH, ERC20) <br/>
+      • Ledger Nano X (BTC) <br/>
+      • MetaMask (ETH, ERC20) <br/>
+      <br/>
+      You are using an implementation that is on beta and was created to demonstrate the features of cross-chain atomic swaps.. The interface is secure and fully functional, and all contracts have been audited.<br/>
+      To add tokens and extend features, please find developer tools on <a href="https://liquality.io">liquality.io</a>.<br/><br/>
+      </div>
+      <iframe style="width: 100%;" src="https://liquality.io/terms-of-use/standalone.html"></iframe>
       <p><input type="checkbox" id="analytics-checkbox"/> Enable analytics to help us better understand issues and improve the experience.</p>
       <div style="text-align: center;">
         <button
