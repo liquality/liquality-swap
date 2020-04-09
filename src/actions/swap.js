@@ -183,7 +183,7 @@ async function lockFunds (dispatch, getState) {
   const swapExpiration = isPartyB ? getFundExpiration(expiration, 'b').time : expiration
 
   const blockNumber = await client.chain.getBlockHeight()
-  const valueInUnit = cryptoassets[assets.a.currency].currencyToUnit(assets.a.value)
+  const valueInUnit = cryptoassets[assets.a.currency].currencyToUnit(assets.a.value).toNumber() // TODO: This should be passed as BigNumber
   const initiateSwapParams = [
     valueInUnit,
     canonicalCounterParty.a.address,

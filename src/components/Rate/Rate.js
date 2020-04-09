@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import BigNumber from 'bignumber.js'
 
 import cryptoassets from '@liquality/cryptoassets'
 import './Rate.css'
@@ -13,8 +14,8 @@ const Rate = (props) => (
       <h4 className='Rate_equal'>=</h4>
       <h6 className='Rate_amount'>
         {props.disabled
-          ? props.value
-          : <input tabIndex={props.tabIndex} type='number' value={props.value} className='Rate_input' placeholder='0.0000' onChange={e => props.onChange(e.target.value)} />}
+          ? props.value.toFixed()
+          : <input tabIndex={props.tabIndex} type='number' value={props.value.toFixed()} className='Rate_input' placeholder='0.0000' onChange={e => props.onChange(BigNumber(e.target.value))} />}
         &nbsp;{cryptoassets[props.currencyB].code}
       </h6>
     </div>
@@ -24,7 +25,7 @@ const Rate = (props) => (
 
 Rate.propTypes = {
   title: PropTypes.string,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  value: PropTypes.instanceOf(BigNumber),
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
   tabIndex: PropTypes.number,
@@ -34,7 +35,7 @@ Rate.propTypes = {
 
 Rate.defaultProps = {
   title: 'Rate',
-  value: 0,
+  value: BigNumber(0),
   tabIndex: -1
 }
 

@@ -1,4 +1,5 @@
 import { replace } from 'connected-react-router'
+import BigNumber from 'bignumber.js'
 import { actions as swapActions } from './swap'
 import { actions as assetActions } from './assets'
 import { actions as counterPartyActions } from './counterparty'
@@ -33,7 +34,8 @@ async function getMarkets () {
       min: convertedMin,
       max: convertedMax,
       from: m.from.toLowerCase(),
-      to: m.to.toLowerCase()
+      to: m.to.toLowerCase(),
+      rate: BigNumber(m.rate)
     }
   })
   return formattedMarkets
@@ -57,7 +59,7 @@ async function setMarkets (dispatch, getState) {
 
 function connectAgent () {
   return async (dispatch, getState) => {
-    while (!(getState().swap.agent.quote)) {
+    while (!(getState().swap.agent.quote) && getState().router.location.pathname !== '/assetSelection') {
       await setMarkets(dispatch, getState)
       await sleep(3000)
     }
@@ -73,7 +75,7 @@ function retrieveAgentQuote () {
     dispatch(swapActions.showErrors())
     if (isAgentRequestValid(getState().swap)) {
       const { assets: { a: assetA, b: assetB } } = getState().swap
-      const amount = cryptoassets[assetA.currency].currencyToUnit(assetA.value)
+      const amount = cryptoassets[assetA.currency].currencyToUnit(assetA.value).toNumber() // TODO: This should be passed as BigNumber
       const quote = await agent.getQuote(assetA.currency, assetB.currency, amount)
       dispatch(setQuote(quote))
 

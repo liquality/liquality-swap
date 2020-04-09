@@ -22,12 +22,12 @@ const CurrencyInput = (props) => {
   }
 
   const onChange = (e) => {
-    props.onChange(restrictNumber(e.target.value))
+    props.onChange(BigNumber(restrictNumber(e.target.value)))
   }
 
   const getLimits = () => {
-    const minString = BigNumber(props.limits.min).toFixed()
-    const maxString = BigNumber(props.limits.max).toFixed()
+    const minString = props.limits.min.toFixed()
+    const maxString = props.limits.max.toFixed()
     return <span>
       Min: <a href='javascript:void(0)' onClick={() => props.limits.onClick(props.limits.min)}>{minString}</a>&nbsp;
       Max: <a href='javascript:void(0)' onClick={() => props.limits.onClick(props.limits.max)}>{maxString}</a>
@@ -35,14 +35,14 @@ const CurrencyInput = (props) => {
   }
 
   const getFiatValue = () => {
-    const total = BigNumber(props.value).times(BigNumber(props.fiatRate)).toFixed(2)
+    const total = props.value.times(BigNumber(props.fiatRate)).toFixed(2)
     return total
   }
 
   return <div className='CurrencyInput'>
     <h3 className='CurrencyInput_heading'>{asset.code}</h3>
     <div className={classNames('CurrencyInput_inputWrapper', { 'disabled': props.disabled })}>
-      <input type='number' min='0' readOnly={props.disabled} value={restrictNumber(props.value)}
+      <input type='number' min='0' readOnly={props.disabled} value={restrictNumber(props.value.toFixed())}
         className={classNames('CurrencyInput_input', { 'error': props.error })} placeholder='0.00'
         onChange={onChange} onKeyDown={preventNegative} tabIndex={props.tabIndex} />
     </div>
@@ -61,15 +61,15 @@ const CurrencyInput = (props) => {
 CurrencyInput.propTypes = {
   // TODO: probably need some sort of repository for currency codes and icons?
   currency: PropTypes.oneOf(Object.keys(cryptoassets)).isRequired,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  value: PropTypes.instanceOf(BigNumber),
   fiatRate: PropTypes.number,
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
   tabIndex: PropTypes.number,
   error: PropTypes.string,
   limits: PropTypes.shape({
-    min: PropTypes.number,
-    max: PropTypes.number,
+    min: PropTypes.instanceOf(BigNumber),
+    max: PropTypes.instanceOf(BigNumber),
     onClick: PropTypes.func
   })
 }

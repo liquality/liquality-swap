@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import BigNumber from 'bignumber.js'
 import Button from '../Button/Button'
 
 import cryptoassets from '@liquality/cryptoassets'
@@ -23,7 +24,7 @@ const WalletDisplay = (props) => {
         ? <Button tabIndex={-1} small secondary onClick={e => props.onButtonClick(e)}>Change wallet</Button>
         : <Button tabIndex={-1} small primary onClick={e => props.onButtonClick(e)}>Connect wallet</Button>
       }
-      { typeof props.balance === 'number' &&
+      { props.balance &&
         <div>
           <p>{props.spendable ? 'Spendable' : 'Balance'}</p>
           <p className={classNames('WalletDisplay_balance', {error: props.balanceError})}>{props.balance.toFixed(6)} {currency.code}</p>
@@ -35,7 +36,7 @@ const WalletDisplay = (props) => {
 }
 
 WalletDisplay.propTypes = PropTypes.shape({
-  balance: PropTypes.number.isRequired,
+  balance: PropTypes.instanceOf(BigNumber),
   balanceError: PropTypes.string,
   currency: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,

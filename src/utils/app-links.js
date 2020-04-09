@@ -1,5 +1,6 @@
 import queryString from 'qs'
 import moment from 'moment'
+import BigNumber from 'bignumber.js'
 
 const APP_BASE_URL = `${window.location.protocol}//${window.location.host}${window.location.pathname}`
 
@@ -21,12 +22,12 @@ function generateLink (swap, counterparty = false) {
 
   const urlParams = {
     ccy1: assetA.currency,
-    ccy1v: assetA.value,
+    ccy1v: assetA.value.toFixed(),
     ccy1Addr: counterparty ? counterPartyA.address : walletA.addresses[0],
     ccy1CounterPartyAddr: counterparty ? walletA.addresses[0] : counterPartyA.address,
 
     ccy2: assetB.currency,
-    ccy2v: assetB.value,
+    ccy2v: assetB.value.toFixed(),
     ccy2Addr: counterparty ? counterPartyB.address : walletB.addresses[0],
     ccy2CounterPartyAddr: counterparty ? walletB.addresses[0] : counterPartyB.address,
 
@@ -51,8 +52,8 @@ function generateSwapState (location) {
 
   return {
     assets: {
-      a: { currency: urlParams.ccy1, value: parseFloat(urlParams.ccy1v) },
-      b: { currency: urlParams.ccy2, value: parseFloat(urlParams.ccy2v) },
+      a: { currency: urlParams.ccy1, value: BigNumber(urlParams.ccy1v) },
+      b: { currency: urlParams.ccy2, value: BigNumber(urlParams.ccy2v) },
       rate: urlParams.rate ? urlParams.rate : undefined
     },
     wallets: {

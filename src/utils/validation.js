@@ -1,6 +1,4 @@
 import moment from 'moment'
-import _ from 'lodash'
-import BigNumber from 'bignumber.js'
 import config from '../config'
 import cryptoassets from '@liquality/cryptoassets'
 import { isETHNetwork } from './networks'
@@ -10,11 +8,11 @@ import { getClaimExpiration } from './expiration'
 function getCurrencyInputErrors (assets, agent) {
   const errors = {}
   const { a: assetA, b: assetB, rate: assetRate } = assets
-  if (!(assetA.value > 0)) errors.assetA = 'Amount not set'
-  if (!(assetB.value > 0)) errors.assetB = 'Amount not set'
-  if (!(assetRate > 0)) errors.rate = 'Please select the conversion rate'
-  if (agent && agent.market && assetA.value > 0 && (assetA.value > agent.market.max)) errors.assetA = 'Decrease amount'
-  if (agent && agent.market && assetA.value > 0 && (assetA.value < agent.market.min)) errors.assetA = 'Increase amount'
+  if (!(assetA.value.gt(0))) errors.assetA = 'Amount not set'
+  if (!(assetB.value.gt(0))) errors.assetB = 'Amount not set'
+  if (!(assetRate.gt(0))) errors.rate = 'Please select the conversion rate'
+  if (agent && agent.market && assetA.value.gt(0) && assetA.value.gt(agent.market.max)) errors.assetA = 'Decrease amount'
+  if (agent && agent.market && assetA.value.gt(0) && assetA.value.lt(agent.market.min)) errors.assetA = 'Increase amount'
   return errors
 }
 
@@ -32,10 +30,10 @@ function getWalletErrors (wallets, assets, isPartyB) {
   }
 
   if (wallets.a.connected && !errors.walletAAddress) {
-    if (!errors.walletAAddress && BigNumber(wallets.a.balance).lt(BigNumber(assets.a.value))) errors.walletABalance = 'Insufficient. Add funds.'
+    if (!errors.walletAAddress && wallets.a.balance.lt(assets.a.value)) errors.walletABalance = 'Insufficient. Add funds.'
   }
   if (wallets.b.connected && !errors.walletBAddress) {
-    if (isETHNetwork(assets.b.currency) && !(BigNumber(wallets.b.networkBalance).gt(BigNumber(0)))) errors.walletB = 'Insufficient. Add ETH for fee.'
+    if (isETHNetwork(assets.b.currency) && !(wallets.b.networkBalance.gt(0))) errors.walletB = 'Insufficient. Add ETH for fee.'
   }
 
   if (!walletA.connected) errors.walletA = 'Please add your wallet'

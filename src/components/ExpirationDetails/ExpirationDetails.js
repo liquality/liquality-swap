@@ -67,8 +67,8 @@ class ExpirationDetails extends Component {
       <div className='ExpirationDetails_center'>
         <div className='ExpirationDetails_top'>
           <div className='ExpirationDetails_terms'>
-            <em>Get {this.props.assets.b.value} {cryptoassets[this.props.assets.b.currency].code}
-            &nbsp;for {this.props.assets.a.value} {cryptoassets[this.props.assets.a.currency].code}</em>
+            <em>Get {this.props.assets.b.value.toFixed()} {cryptoassets[this.props.assets.b.currency].code}
+            &nbsp;for {this.props.assets.a.value.toFixed()} {cryptoassets[this.props.assets.a.currency].code}</em>
             &nbsp;Active for {moment.utc(left.asMilliseconds()).format('HH:mm')}hr {this.state.expiration.format('L LT')}
           </div>
           <div className='ExpirationDetails_link'>

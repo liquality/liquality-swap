@@ -23,10 +23,10 @@ class SwapOfferConfirmation extends Component {
 
     return <BrandCard className='SwapOfferConfirmation' title='Accept Quote'>
       <TimeProgressBar startTime={this.props.quote.retrievedAt} endTime={this.props.quote.expiresAt} />
-      <div className='SwapOfferConfirmation_terms'>Get {this.props.assets.b.value} {assetB.code} <br />
+      <div className='SwapOfferConfirmation_terms'>Get {this.props.assets.b.value.toFixed()} {assetB.code} <br />
       for<br />
-        {this.props.assets.a.value} {assetA.code}</div>
-      <div className='SwapOfferConfirmation_rate'>Rate: 1 {assetA.code} = {this.props.assets.rate} {assetB.code}</div>
+        {this.props.assets.a.value.toFixed()} {assetA.code}</div>
+      <div className='SwapOfferConfirmation_rate'>Rate: 1 {assetA.code} = {this.props.assets.rate.toFixed()} {assetB.code}</div>
       <div className='SwapOfferConfirmation_info'>
         <p>To accept this quote please connect your:</p>
         <ul>
