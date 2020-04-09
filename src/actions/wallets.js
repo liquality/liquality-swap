@@ -1,12 +1,14 @@
 import { getClient, getNetworkClient } from '../services/chainClient'
 import { steps } from '../components/SwapProgressStepper/steps'
 import cryptoassets from '@liquality/cryptoassets'
+import { sleep } from '../utils/async'
 
 const types = {
   TOGGLE_WALLET_CONNECT: 'TOGGLE_WALLET_CONNECT',
   CHOOSE_WALLET: 'CHOOSE_WALLET',
   START_CONNECTING_WALLET: 'START_CONNECTING_WALLET',
   CONNECT_WALLET: 'CONNECT_WALLET',
+  CONNECTING_WALLET_FAILED: 'CONNECTING_WALLET_FAILED',
   DISCONNECT_WALLET: 'DISCONNECT_WALLET',
   SET_POPUP_STEPS: 'SET_POPUP_STEPS',
   SET_POPUP_STEP: 'SET_POPUP_STEP',
@@ -30,6 +32,29 @@ function waitForWalletInitialization (party, currency, wallet) {
     const currency = cryptoassets[currencyCode]
     const client = getClient(currencyCode, wallet)
     const networkClient = getNetworkClient(currencyCode, wallet)
+
+    let walletConnected, walletConnectionError
+    for (let tries = 0; tries < 3; tries++) {
+      if (!getState().swap.wallets[party].connecting) break
+      try {
+        walletConnected = await client.wallet.isWalletAilable()
+      } catch (e) {
+        walletConnectionError = e
+      }
+      if (walletConnected) break
+      await sleep(1000)
+    }
+
+    if (!getState().swap.wallets[party].connecting) {
+      return
+    }
+
+    if (!walletConnected) {
+      console.log('THE ERROR', )
+      dispatch(connectingFailed(party, walletConnectionError))
+      if (walletConnectionError) throw walletConnectionError
+    }
+
     const addressesPerCall = 100
     const unusedAddress = await client.wallet.getUnusedAddress()
     let allAddresses = await client.wallet.getUsedAddresses(addressesPerCall)
@@ -62,6 +87,10 @@ function chooseWallet (party, wallet) {
 
 function startConnecting (party) {
   return { type: types.START_CONNECTING_WALLET, party }
+}
+
+function connectingFailed (party, error) {
+  return { type: types.CONNECTING_WALLET_FAILED, party, error }
 }
 
 function connectWallet (party, addresses, balance, networkBalance) {
