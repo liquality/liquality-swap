@@ -11,7 +11,7 @@ class SwapRedemption extends Component {
         <div className='SwapRefund_confirmation'>
           Refund amount:
           <p className='SwapRefund_terms'>
-            {this.props.assets.a.toFixed()} {cryptoassets[this.props.assets.a.currency].code}
+            {this.props.assets.a.value.toFixed()} {cryptoassets[this.props.assets.a.currency].code}
           </p>
           <p>To process this refund, press the reclaim button.</p>
         </div>
