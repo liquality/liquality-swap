@@ -91,8 +91,8 @@ class LiqualitySwap extends Component {
       botLink.href = 'javascript:void(0)'
       botLink.onClick = () => {
         this.props.resetSwap()
-        this.props.connectAgent()
         this.props.history.replace('/offerSelection')
+        this.props.connectAgent()
       }
     } else if (this.props.swap.agent.markets) {
       otcLink.href = 'javascript:void(0)'

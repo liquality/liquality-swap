@@ -20,10 +20,10 @@ class SwapRefunded extends Component {
             </p>
             <hr />
             <p>
-              Receive: <span className='SwapRefunded_expiredFrame_content_value'>{this.props.assets.b.value} {cryptoassets[this.props.assets.b.currency].code}</span>
+              Receive: <span className='SwapRefunded_expiredFrame_content_value'>{this.props.assets.b.value.toFixed()} {cryptoassets[this.props.assets.b.currency].code}</span>
             </p>
             <p>
-              For: <span className='SwapRefunded_expiredFrame_content_value'>{this.props.assets.a.value} {cryptoassets[this.props.assets.a.currency].code}</span>
+              For: <span className='SwapRefunded_expiredFrame_content_value'>{this.props.assets.a.value.toFixed()} {cryptoassets[this.props.assets.a.currency].code}</span>
             </p>
             <p>
               Expired: <span className='SwapRefunded_expiredFrame_content_value'>{this.props.expiration.format('DD/MM/YYYY h:mm a')}</span>
@@ -33,7 +33,7 @@ class SwapRefunded extends Component {
         </div>
         <div className='SwapRefunded_confirmation'>
           <p className='SwapRefunded_terms'>
-            {this.props.assets.a.value} {cryptoassets[this.props.assets.a.currency].code} Returned
+            {this.props.assets.a.value.toFixed()} {cryptoassets[this.props.assets.a.currency].code} Returned
           </p>
           <p>Address: <HexaDisplay address={this.props.wallets.a.addresses[0]} /></p>
           <p>Transaction: <HexaDisplay address={this.props.refundTransaction.hash} /></p>

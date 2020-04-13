@@ -29,7 +29,7 @@ async function findInitiateSwapTransaction (party, blockNumber, dispatch, getSta
     expiration
   } = getState().swap
   const client = getClient(currency, type)
-  const valueInUnit = Math.floor(cryptoassets[currency].currencyToUnit(value))
+  const valueInUnit = cryptoassets[currency].currencyToUnit(value).toNumber() // TODO: This should be passed as BigNumber
   const swapExpiration = getFundExpiration(expiration, party).time
   const initiateTransaction = await client.swap.findInitiateSwapTransaction(valueInUnit, addresses[0], counterParty[party].address, secretParams.secretHash, swapExpiration.unix(), blockNumber)
   if (initiateTransaction) {
@@ -92,7 +92,7 @@ async function verifyInitiateSwapTransaction (dispatch, getState) {
     expiration
   } = getState().swap
   const client = getClient(currency, type)
-  const valueInUnit = cryptoassets[currency].currencyToUnit(value)
+  const valueInUnit = cryptoassets[currency].currencyToUnit(value).toNumber() // TODO: This should be passed as BigNumber
   const swapExpiration = isPartyB ? expiration : getClaimExpiration(expiration, 'a').time
   const swapVerified = await client.swap.verifyInitiateSwapTransaction(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty.b.address, secretParams.secretHash, swapExpiration.unix())
   if (swapVerified) {

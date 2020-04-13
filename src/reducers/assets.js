@@ -3,22 +3,23 @@ import { types as assetTypes } from '../actions/assets'
 import { types as swapTypes } from '../actions/swap'
 import { getReducerFunction } from './helpers'
 import config from '../config'
+import BigNumber from 'bignumber.js'
 
 const initialState = {
   a: {
     currency: Object.keys(config.assets)[0],
-    value: ''
+    value: BigNumber(0)
   },
   b: {
     currency: Object.keys(config.assets)[1],
-    value: ''
+    value: BigNumber(0)
   },
-  rate: '',
+  rate: BigNumber(0),
   rateLocked: false
 }
 
 function switchSides (state, action) {
-  const newRate = +(parseFloat(state.b.value) / parseFloat(state.a.value)).toFixed(6)
+  const newRate = BigNumber(state.b.value.div(state.a.value).toFixed(6))
   return update(state, {
     a: { $set: state.b },
     b: { $set: state.a },

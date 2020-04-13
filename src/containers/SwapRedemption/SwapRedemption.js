@@ -15,8 +15,8 @@ class SwapRedemption extends Component {
     return <BrandCard className='SwapRedemption' title='Claiming'>
       <div className='SwapRedemption_confirmation'>
         <p className='SwapRedemption_terms'>
-          Get <strong>{this.props.assets.b.value} {claimCurrency.code}</strong>
-          &nbsp;for <strong>{this.props.assets.a.value} {cryptoassets[this.props.assets.a.currency].code}</strong>
+          Get <strong>{this.props.assets.b.value.toFixed()} {claimCurrency.code}</strong>
+          &nbsp;for <strong>{this.props.assets.a.value.toFixed()} {cryptoassets[this.props.assets.a.currency].code}</strong>
         </p>
       </div>
       <ExpirationDetails isClaim />

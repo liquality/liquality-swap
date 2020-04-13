@@ -1,3 +1,5 @@
+import BigNumber from 'bignumber.js'
+
 const types = {
   SET_ASSET: 'SET_ASSET',
   CHANGE_AMOUNT: 'CHANGE_AMOUNT',
@@ -13,13 +15,13 @@ function changeRate (newValue) {
   return (dispatch, getState) => {
     dispatch({ type: types.CHANGE_RATE, newValue })
     const { assets } = getState().swap
-    const a = {type: 'a', value: assets.a.value || 0}
-    const rate = assets.rate || 0
+    const a = {type: 'a', value: assets.a.value || BigNumber(0)}
+    const rate = assets.rate || BigNumber(0)
 
-    if (a.value === 0) return ''
+    if (a.value.eq(0)) return BigNumber(0)
 
-    let newVal = +(parseFloat(a.value) * parseFloat(rate)).toFixed(6)
-    dispatch({ type: types.CHANGE_AMOUNT, party: 'b', newValue: newVal.toString() })
+    let newVal = BigNumber(a.value.times(rate).toFixed(6))
+    dispatch({ type: types.CHANGE_AMOUNT, party: 'b', newValue: newVal })
   }
 }
 
@@ -28,20 +30,20 @@ function changeAmount (party, newValue) {
     dispatch({ type: types.CHANGE_AMOUNT, party, newValue })
     const { assets } = getState().swap
 
-    const a = {type: 'a', value: assets.a.value || 0}
-    const b = {type: 'b', value: assets.b.value || 0}
-    const rate = assets.rate || 0
+    const a = {type: 'a', value: assets.a.value || BigNumber(0)}
+    const b = {type: 'b', value: assets.b.value || BigNumber(0)}
+    const rate = assets.rate || BigNumber(0)
 
     if (party === 'a') {
-      let newVal = +(parseFloat(a.value) * parseFloat(rate)).toFixed(6)
-      dispatch({ type: types.CHANGE_AMOUNT, party: 'b', newValue: newVal.toString() })
+      let newVal = BigNumber(a.value.times(rate).toFixed(6)) // TODO: Is .tofixed() required??
+      dispatch({ type: types.CHANGE_AMOUNT, party: 'b', newValue: newVal })
     } else if (party === 'b') {
-      if (a.value === 0) {
-        let newVal = +(parseFloat(b.value) * parseFloat(rate.value)).toFixed(6)
-        dispatch({ type: types.CHANGE_AMOUNT, party: 'a', newValue: newVal.toString() })
+      if (a.value.isEqualTo(BigNumber(0))) {
+        let newVal = BigNumber(b.value.times(rate.value).toFixed(6))
+        dispatch({ type: types.CHANGE_AMOUNT, party: 'a', newValue: newVal })
       } else {
-        let newRate = +(parseFloat(b.value) / parseFloat(a.value)).toFixed(6)
-        dispatch({ type: types.CHANGE_RATE, newValue: newRate.toString() })
+        let newRate = BigNumber(b.value.div(a.value).toFixed(6))
+        dispatch({ type: types.CHANGE_RATE, newValue: newRate })
       }
     }
   }

@@ -11,7 +11,7 @@ class SwapRedemption extends Component {
         <div className='SwapRefund_confirmation'>
           Refund amount:
           <p className='SwapRefund_terms'>
-            {this.props.assets.a.value} {cryptoassets[this.props.assets.a.currency].code}
+            {this.props.assets.a.value.toFixed()} {cryptoassets[this.props.assets.a.currency].code}
           </p>
           <p>To process this refund, press the reclaim button.</p>
         </div>
@@ -25,10 +25,10 @@ class SwapRedemption extends Component {
           </p>
           <hr />
           <p>
-            Receive: <span className='SwapRefund_expiredFrame_content_value'>{this.props.assets.b.value} {cryptoassets[this.props.assets.b.currency].code}</span>
+            Receive: <span className='SwapRefund_expiredFrame_content_value'>{this.props.assets.b.value.toFixed()} {cryptoassets[this.props.assets.b.currency].code}</span>
           </p>
           <p>
-            For: <span className='SwapRefund_expiredFrame_content_value'>{this.props.assets.a.value} {cryptoassets[this.props.assets.a.currency].code}</span>
+            For: <span className='SwapRefund_expiredFrame_content_value'>{this.props.assets.a.value.toFixed()} {cryptoassets[this.props.assets.a.currency].code}</span>
           </p>
           <p>
             Expired: <span className='SwapRefund_expiredFrame_content_value'>{this.props.expiration.format('DD/MM/YYYY h:mm a')}</span>

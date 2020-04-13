@@ -150,7 +150,19 @@ async function generateSecret (dispatch, getState) {
     expiration.unix()
   ]
 
-  const secretMsg = secretData.join('')
+  const secretMsg = `Creating swap with following terms:
+  
+Send: ${assets.a.value} ${assets.a.currency.toUpperCase()}
+Receive: ${assets.b.value} ${assets.b.currency.toUpperCase()}
+
+My ${assets.a.currency.toUpperCase()} Address: ${canonicalWallets.a.addresses[0]}
+My ${assets.b.currency.toUpperCase()} Address: ${canonicalWallets.b.addresses[0]}
+
+Counterparty ${assets.a.currency.toUpperCase()} Address: ${canonicalCounterParty.a.address}
+Counterparty ${assets.b.currency.toUpperCase()} Address: ${canonicalCounterParty.b.address}
+
+Time ref: ${expiration.unix()}`
+
   await withLoadingMessage('a', dispatch, getState, async () => {
     const secret = await client.swap.generateSecret(secretMsg)
     dispatch(secretActions.setSecret(secret))
@@ -171,7 +183,7 @@ async function lockFunds (dispatch, getState) {
   const swapExpiration = isPartyB ? getFundExpiration(expiration, 'b').time : expiration
 
   const blockNumber = await client.chain.getBlockHeight()
-  const valueInUnit = cryptoassets[assets.a.currency].currencyToUnit(assets.a.value)
+  const valueInUnit = cryptoassets[assets.a.currency].currencyToUnit(assets.a.value).toNumber() // TODO: This should be passed as BigNumber
   const initiateSwapParams = [
     valueInUnit,
     canonicalCounterParty.a.address,
