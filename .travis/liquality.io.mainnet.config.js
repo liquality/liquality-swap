@@ -152,11 +152,13 @@ export default {
         a.appendChild(r);
     })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
     const interval = setInterval(() => { // Trigger feedback
-      if(document.getElementsByClassName('SwapCompleted').length) {
+      if(document.getElementsByClassName('SwapCompleted').length ||
+        document.getElementsByClassName('SwapRedemption').length ||
+        document.getElementsByClassName('SwapRefund').length) {
         hj('trigger', 'swap_completed_feedback');
         clearInterval(interval);
       }
-    }, 5000);
+    }, 4000);
   }
 
   function addAnalytics () {
@@ -188,6 +190,8 @@ export default {
   `,
   injectFooter: `<p style="text-align: center; margin-bottom: 8px">
   <a href="https://liquality.io/support" target="_blank">Support</a>
+  &nbsp;|&nbsp;
+  <a href="https://youtu.be/G8zcvEy2Ccw" target="_blank">Youtube Tutorial</a>
   &nbsp;|&nbsp;
   <a href="https://liquality.io/terms-of-use/standalone.html" target="_blank">Terms of Use</a>
   &nbsp;|&nbsp;

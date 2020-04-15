@@ -172,6 +172,8 @@ export default {
   injectFooter: `<p style="text-align: center; margin-bottom: 8px">
   <a href="https://liquality.io/support" target="_blank">Support</a>
   &nbsp;|&nbsp;
+  <a href="https://youtu.be/G8zcvEy2Ccw" target="_blank">Youtube Tutorial</a>
+  &nbsp;|&nbsp;
   <a href="https://liquality.io/terms-of-use/standalone.html" target="_blank">Terms of Use</a>
   &nbsp;|&nbsp;
   <a href="https://liquality.io/privacy-policy" target="_blank">Privacy Policy</a>
