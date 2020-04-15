@@ -151,6 +151,12 @@ export default {
         r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
         a.appendChild(r);
     })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    const interval = setInterval(() => { // Trigger feedback
+      if(document.getElementsByClassName('SwapCompleted').length) {
+        hj('trigger', 'swap_completed_feedback');
+        clearInterval(interval);
+      }
+    }, 5000);
   }
 
   function addAnalytics () {
