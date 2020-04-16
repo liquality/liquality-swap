@@ -14,17 +14,22 @@ import { pickMarket } from '../utils/agent'
 const types = {
   SET_QUOTE: 'SET_QUOTE',
   SET_MARKETS: 'SET_MARKETS',
-  DEFAULT_SET: 'DEFAULT_SET'
+  SET_MARKET: 'SET_MARKET'
 }
 
 function setMarket (from, to) {
   return async (dispatch, getState) => {
+    const { agent: { markets }, assets: { a: assetA } } = getState().swap
+    if (!markets) return
+
     dispatch(assetActions.setAsset('a', from))
     dispatch(assetActions.setAsset('b', to))
-    const { agent: { markets }, assets: { a: assetA } } = getState().swap
-    const market = pickMarket(markets, from, to, assetA.value)
-    if (market) dispatch(assetActions.changeRate(market.rate))
-    else dispatch(assetActions.changeRate(BigNumber(0))) // If no market available - unset rate
+
+    const market = pickMarket(markets, from, to, assetA.value) // TODO: OR GET CLOSEST MATCH
+    if (market) {
+      dispatch({ type: types.SET_MARKET, market: market })
+      dispatch(assetActions.changeRate(market.rate))
+    }
   }
 }
 
@@ -60,11 +65,10 @@ async function setMarkets (dispatch, getState) {
   dispatch({ type: types.SET_MARKETS, markets: markets })
   const { agent, assets: { a: assetA, b: assetB } } = getState().swap
   let marketToSet
-  if (agent.defaultMarketSet) {
+  if (agent.market) {
     marketToSet = agent.markets.find(market => assetA.currency === market.from && assetB.currency === market.to)
   } else {
     marketToSet = agent.markets[0] // Default market
-    dispatch({ type: types.DEFAULT_SET })
   }
 
   dispatch(setMarket(marketToSet.from, marketToSet.to))
@@ -74,7 +78,7 @@ function connectAgents () {
   return async (dispatch, getState) => {
     while (!(getState().swap.agent.quote) && getState().router.location.pathname !== '/assetSelection') {
       await setMarkets(dispatch, getState)
-      await sleep(3000)
+      await sleep(4000)
     }
   }
 }

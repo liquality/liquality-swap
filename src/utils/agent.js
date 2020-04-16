@@ -11,14 +11,18 @@ function calculateLimits (markets, from, to) {
   }
 }
 
+function bestRateComparator (a, b) {
+  return b.rate.minus(a.rate).toNumber()
+}
+
 function pickMarket (markets, from, to, amount) {
-  const matchingMarkets = markets.filter(market =>
-    market.from === from &&
-    market.to === to &&
-    !amount.gt(market.max) &&
-    !amount.lt(market.min))
-  const bestRateMarket = matchingMarkets.sort((a, b) => b.rate.minus(a.rate).toNumber())[0]
-  return bestRateMarket
+  const matchingMarkets = markets.filter(market => market.from === from && market.to === to)
+  const amountLimitedMarkets = matchingMarkets.filter(market => !amount.gt(market.max) && !amount.lt(market.min))
+  if (amountLimitedMarkets.length) {
+    return amountLimitedMarkets.sort(bestRateComparator)[0]
+  } else {
+    return matchingMarkets.sort(bestRateComparator)[0]
+  }
 }
 
 export { calculateLimits, pickMarket }

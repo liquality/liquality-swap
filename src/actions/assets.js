@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js'
-import { pickMarket } from '../utils/agent'
+import { actions as agentActions } from './agent'
 
 const types = {
   SET_ASSET: 'SET_ASSET',
@@ -29,17 +29,14 @@ function changeRate (newValue) {
 function changeAmount (party, newValue) {
   return (dispatch, getState) => {
     dispatch({ type: types.CHANGE_AMOUNT, party, newValue })
-    const { assets, agent: { markets } } = getState().swap
+    const { assets } = getState().swap
 
     const a = {type: 'a', value: assets.a.value || BigNumber(0)}
     const b = {type: 'b', value: assets.b.value || BigNumber(0)}
     const rate = assets.rate || BigNumber(0)
 
     if (party === 'a') {
-      if (markets.length) {
-        const market = pickMarket(markets, assets.a.currency, assets.b.currency, newValue)
-        if (market) dispatch({ type: types.CHANGE_RATE, newValue: market.rate })
-      }
+      dispatch(agentActions.setMarket(assets.a.currency, assets.b.currency))
       let newVal = BigNumber(a.value.times(rate).toFixed(6)) // TODO: Is .tofixed() required??
       dispatch({ type: types.CHANGE_AMOUNT, party: 'b', newValue: newVal })
     } else if (party === 'b') {
