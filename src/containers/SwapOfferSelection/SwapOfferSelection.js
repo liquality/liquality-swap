@@ -51,8 +51,9 @@ class SwapOfferSelection extends Component {
   }
 
   render () {
-    const { a: assetA, b: assetB } = this.props.assets
+    const { a: assetA, b: assetB, rate } = this.props.assets
     const amountEntered = assetA.value.gt(0)
+    const rateValid = rate.gt(0)
     const selectorAssets = this.getSelectorAssets()
     const switchSidesAvailable = this.props.markets.find(market => market.from === assetB.currency && market.to === assetA.currency)
     const limits = calculateLimits(this.props.markets, assetA.currency, assetB.currency)
@@ -81,7 +82,7 @@ class SwapOfferSelection extends Component {
           rightInputDisabled
           showInputs
           showErrors
-          showRate={amountEntered}
+          showRate={amountEntered && rateValid}
           showLeftFiatValue
           rateDisabled
           rateStrong
@@ -90,7 +91,7 @@ class SwapOfferSelection extends Component {
             min: limits.min,
             max: limits.max
           }} />
-        { !amountEntered && <span className='SwapOfferSelection_host'>Trade with <br /><img src={config.hostIcon} alt={config.hostName} /></span> }
+        { (!amountEntered || !rateValid) && <span className='SwapOfferSelection_host'>Trade with <br /><img src={config.hostIcon} alt={config.hostName} /></span> }
       </div> }
       { !this.props.assetSelector.open && <div className='SwapOfferSelection_bottom'>
         <Button wide primary onClick={this.props.retrieveAgentQuote}>Get Quote</Button><br />

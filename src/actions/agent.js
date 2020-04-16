@@ -24,6 +24,7 @@ function setMarket (from, to) {
     const { agent: { markets }, assets: { a: assetA } } = getState().swap
     const market = pickMarket(markets, from, to, assetA.value)
     if (market) dispatch(assetActions.changeRate(market.rate))
+    else dispatch(assetActions.changeRate(BigNumber(0))) // If no market available - unset rate
   }
 }
 
