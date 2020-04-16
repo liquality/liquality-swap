@@ -36,7 +36,7 @@ class LiqualitySwap extends Component {
     if (this.props.swap.link) {
       return <SwapInitiation />
     } else {
-      if (config.hostAgent) return <SwapOfferSelection />
+      if (config.agents && config.agents.length) return <SwapOfferSelection />
     }
     return <AssetSelection />
   }
@@ -92,7 +92,7 @@ class LiqualitySwap extends Component {
       botLink.onClick = () => {
         this.props.resetSwap()
         this.props.history.replace('/offerSelection')
-        this.props.connectAgent()
+        this.props.connectAgents()
       }
     } else if (this.props.swap.agent.markets) {
       otcLink.href = 'javascript:void(0)'

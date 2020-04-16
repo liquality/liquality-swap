@@ -23,6 +23,6 @@ export default withRouter(connect(
     waitForWalletInitialization: walletsActions.waitForWalletInitialization,
     onWalletDisconnected: walletsActions.disconnectWallet,
     onToggleWalletConnect: walletsActions.toggleWalletConnect,
-    connectAgent: agentActions.connectAgent
+    connectAgents: agentActions.connectAgents
   }
 )(LiqualitySwap))

@@ -4,19 +4,13 @@ import { getReducerFunction } from './helpers'
 
 const initialState = {
   markets: [],
-  market: null,
-  quote: null
+  quote: null,
+  defaultMarketSet: false
 }
 
 function setMarkets (state, action) {
   return update(state, {
     markets: { $set: action.markets }
-  })
-}
-
-function setMarket (state, action) {
-  return update(state, {
-    market: { $set: action.market }
   })
 }
 
@@ -26,10 +20,16 @@ function setQuote (state, action) {
   })
 }
 
+function defaultSet (state) {
+  return update(state, {
+    defaultMarketSet: { $set: true }
+  })
+}
+
 const reducers = {
   [agentTypes.SET_MARKETS]: setMarkets,
-  [agentTypes.SET_MARKET]: setMarket,
-  [agentTypes.SET_QUOTE]: setQuote
+  [agentTypes.SET_QUOTE]: setQuote,
+  [agentTypes.DEFAULT_SET]: defaultSet
 }
 
 const agent = getReducerFunction(reducers, initialState)
