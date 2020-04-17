@@ -4,6 +4,7 @@ import Button from '../../components/Button/Button'
 import ErrorIcon from '../../icons/error.svg'
 
 import { wallets } from '../../utils/wallets'
+import { mapErrorMessage } from '../../utils/errors'
 
 import './WalletConnecting.css'
 
@@ -17,7 +18,7 @@ const WalletConnecting = (props) => {
       </div>
       {props.error && <div className='WalletConnecting_error'>
         <div className='WalletConnecting_imgContainer'><img src={ErrorIcon} alt='Error' /></div>
-        <p className='WalletConnecting_error_message'>{props.error.message}</p>
+        <p className='WalletConnecting_error_message'>{mapErrorMessage(props.error.message) || props.error.message}</p>
       </div>}
     </div>
     <h2>{wallet.connection.title}</h2>
