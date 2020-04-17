@@ -1,14 +1,13 @@
 import { getClient, getNetworkClient } from '../services/chainClient'
 import { steps } from '../components/SwapProgressStepper/steps'
 import cryptoassets from '@liquality/cryptoassets'
-import { sleep } from '../utils/async'
 
 const types = {
   TOGGLE_WALLET_CONNECT: 'TOGGLE_WALLET_CONNECT',
   CHOOSE_WALLET: 'CHOOSE_WALLET',
   START_CONNECTING_WALLET: 'START_CONNECTING_WALLET',
   CONNECT_WALLET: 'CONNECT_WALLET',
-  CONNECTING_WALLET_FAILED: 'CONNECTING_WALLET_FAILED',
+  CONNECTING_WALLET_ERROR: 'CONNECTING_WALLET_ERROR',
   DISCONNECT_WALLET: 'DISCONNECT_WALLET',
   SET_POPUP_STEPS: 'SET_POPUP_STEPS',
   SET_POPUP_STEP: 'SET_POPUP_STEP',
@@ -21,58 +20,47 @@ function waitForWallet (party, currency, wallet) {
   }
 }
 
+async function connectToWallet (party, wallet, dispatch, getState) {
+  const { assets, wallets } = getState().swap
+  dispatch(startConnecting(party))
+  const currencyCode = assets[party].currency
+  const currency = cryptoassets[currencyCode]
+  const client = getClient(currencyCode, wallet)
+  const networkClient = getNetworkClient(currencyCode, wallet)
+
+  const addressesPerCall = 100
+  const unusedAddress = await client.wallet.getUnusedAddress()
+  let allAddresses = await client.wallet.getUsedAddresses(addressesPerCall)
+  allAddresses = [ ...new Set([ unusedAddress, ...allAddresses ].map(a => a.address)) ]
+  allAddresses = allAddresses.map(currency.formatAddress)
+  if (wallets[party].addresses[0] !== null) { // Preserve the preset address for party B
+    const expectedAddress = wallets[party].addresses[0]
+    if (allAddresses.includes(expectedAddress)) {
+      allAddresses = [expectedAddress, ...allAddresses.filter(address => address !== expectedAddress)]
+    }
+  }
+
+  const balance = await client.chain.getBalance(allAddresses)
+  const networkBalance = networkClient === client ? balance : await networkClient.chain.getBalance(allAddresses)
+  const otherParty = party === 'a' ? 'b' : 'a'
+  const swapState = getState().swap
+  const walletParty = swapState.assets[party].currency === currencyCode ? party : otherParty
+  if (swapState.wallets[walletParty].connecting) {
+    dispatch(connectWallet(walletParty, allAddresses, currency.unitToCurrency(balance), currency.unitToCurrency(networkBalance)))
+  }
+}
+
 function waitForWalletInitialization (party, currency, wallet) {
   return async (dispatch, getState) => {
-    const {
-      assets,
-      wallets
-    } = getState().swap
-    dispatch(startConnecting(party))
-    const currencyCode = assets[party].currency
-    const currency = cryptoassets[currencyCode]
-    const client = getClient(currencyCode, wallet)
-    const networkClient = getNetworkClient(currencyCode, wallet)
-
-    let walletConnected, walletConnectionError
-    for (let tries = 0; tries < 3; tries++) {
-      if (!getState().swap.wallets[party].connecting) break
-      try {
-        walletConnected = await client.wallet.isWalletAilable()
-      } catch (e) {
-        walletConnectionError = e
-      }
-      if (walletConnected) break
-      await sleep(1000)
+    let walletConnectionError
+    try {
+      await connectToWallet(party, wallet, dispatch, getState)
+    } catch (e) {
+      walletConnectionError = e
     }
 
-    if (!getState().swap.wallets[party].connecting) {
-      return
-    }
-
-    if (!walletConnected) {
-      console.log('THE ERROR', )
-      dispatch(connectingFailed(party, walletConnectionError))
-      if (walletConnectionError) throw walletConnectionError
-    }
-
-    const addressesPerCall = 100
-    const unusedAddress = await client.wallet.getUnusedAddress()
-    let allAddresses = await client.wallet.getUsedAddresses(addressesPerCall)
-    allAddresses = [ ...new Set([ unusedAddress, ...allAddresses ].map(a => a.address)) ]
-    allAddresses = allAddresses.map(currency.formatAddress)
-    if (wallets[party].addresses[0] !== null) { // Preserve the preset address for party B
-      const expectedAddress = wallets[party].addresses[0]
-      if (allAddresses.includes(expectedAddress)) {
-        allAddresses = [expectedAddress, ...allAddresses.filter(address => address !== expectedAddress)]
-      }
-    }
-    const balance = await client.chain.getBalance(allAddresses)
-    const networkBalance = networkClient === client ? balance : await networkClient.chain.getBalance(allAddresses)
-    const otherParty = party === 'a' ? 'b' : 'a'
-    const swapState = getState().swap
-    const walletParty = swapState.assets[party].currency === currencyCode ? party : otherParty
-    if (swapState.wallets[walletParty].connecting) {
-      dispatch(connectWallet(walletParty, allAddresses, currency.unitToCurrency(balance), currency.unitToCurrency(networkBalance)))
+    if (walletConnectionError) {
+      dispatch(connectingError(party, walletConnectionError))
     }
   }
 }
@@ -89,8 +77,8 @@ function startConnecting (party) {
   return { type: types.START_CONNECTING_WALLET, party }
 }
 
-function connectingFailed (party, error) {
-  return { type: types.CONNECTING_WALLET_FAILED, party, error }
+function connectingError (party, error) {
+  return { type: types.CONNECTING_WALLET_ERROR, party, error }
 }
 
 function connectWallet (party, addresses, balance, networkBalance) {
