@@ -20,6 +20,7 @@ class WalletPanel extends Component {
         addresses={walletA.addresses}
         walletConnected={walletA.connected}
         walletConnecting={walletA.connecting}
+        walletConnectingError={walletA.connectingError}
         handleClose={() => this.props.onToggleWalletConnect('a')}
       />
 
@@ -35,6 +36,7 @@ class WalletPanel extends Component {
         addresses={walletB.addresses}
         walletConnected={walletB.connected}
         walletConnecting={walletB.connecting}
+        walletConnectingError={walletB.connectingError}
         handleClose={() => this.props.onToggleWalletConnect('b')}
       />
       {this.props.wallets.popup.steps && this.props.wallets.popup.step && <WalletActionPopup steps={this.props.wallets.popup.steps} activeStep={this.props.wallets.popup.step} open={this.props.wallets.popup.open} />}

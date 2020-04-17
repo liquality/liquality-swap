@@ -74,6 +74,7 @@ class LiqualitySwap extends Component {
       currency={this.props.swap.assets[currentWallet].currency}
       walletChosen={this.props.swap.wallets[currentWallet].chosen}
       walletConnecting={this.props.swap.wallets[currentWallet].connecting}
+      walletConnectingError={this.props.swap.wallets[currentWallet].connectingError}
       wallet={this.props.swap.wallets[currentWallet].type}
       chooseWallet={this.props.waitForWallet}
       connectWallet={this.props.waitForWalletInitialization}

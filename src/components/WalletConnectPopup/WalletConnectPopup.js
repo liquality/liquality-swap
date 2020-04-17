@@ -55,6 +55,8 @@ class WalletConnectPopup extends Component {
         <WalletConnecting
           cancelText='Cancel'
           cancelWallet={this.disconnectWallet}
+          onRetryClick={() => this.chooseWallet(props.wallet)}
+          error={props.walletConnectingError}
           currency={props.currency}
           wallet={props.wallet} />
       )
