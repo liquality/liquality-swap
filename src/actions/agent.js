@@ -33,6 +33,11 @@ function setMarket (from, to) {
   }
 }
 
+// Should market updates be allowed? Prevent updates to rates and amounts
+function shouldUpdateMarkets (getState) {
+  return !(getState().swap.agent.quote) && getState().router.location.pathname !== '/assetSelection'
+}
+
 async function getMarkets (agent) {
   const marketInfo = await getAgentClient(agent).getMarketInfo()
   const formattedMarkets = marketInfo.map(m => {
@@ -62,6 +67,8 @@ async function getAllMarkets () {
 
 async function setMarkets (dispatch, getState) {
   const markets = await getAllMarkets()
+  if (!shouldUpdateMarkets(getState)) return
+
   dispatch({ type: types.SET_MARKETS, markets: markets })
   const { agent, assets: { a: assetA, b: assetB } } = getState().swap
   let marketToSet
@@ -76,7 +83,7 @@ async function setMarkets (dispatch, getState) {
 
 function connectAgents () {
   return async (dispatch, getState) => {
-    while (!(getState().swap.agent.quote) && getState().router.location.pathname !== '/assetSelection') {
+    while (shouldUpdateMarkets(getState)) {
       await setMarkets(dispatch, getState)
       await sleep(4000)
     }
