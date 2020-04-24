@@ -1,7 +1,7 @@
 export default {
   hostName: 'Liquality',
   hostIcon: 'https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png',
-  hostAgent: 'http://localhost:3030',
+  agents: ['http://localhost:3030'],
   assets: {
     eth: {
       rpc: {

@@ -6,6 +6,7 @@ import CurrencyInputs from '../CurrencyInputs'
 import SwapIcon from '../../icons/switch.svg'
 import './SwapOfferSelection.css'
 import { APP_BASE_URL } from '../../utils/app-links'
+import { calculateLimits } from '../../utils/agent'
 import config from '../../config'
 
 class SwapOfferSelection extends Component {
@@ -16,7 +17,7 @@ class SwapOfferSelection extends Component {
     if (!market) {
       market = this.props.markets.find(market => market.from === assetA)
     }
-    this.props.setMarket(market)
+    this.props.setMarket(market.from, market.to)
     this.props.closeAssetSelector()
   }
 
@@ -31,7 +32,7 @@ class SwapOfferSelection extends Component {
   handleSwitchSides () {
     const { a: assetA, b: assetB } = this.props.assets
     const market = this.props.markets.find(market => market.from === assetB.currency && market.to === assetA.currency)
-    this.props.setMarket(market)
+    this.props.setMarket(market.from, market.to)
   }
 
   getSelectorAssets () {
@@ -50,10 +51,11 @@ class SwapOfferSelection extends Component {
   }
 
   render () {
-    const { a: assetA, b: assetB } = this.props.assets
+    const { a: assetA, b: assetB, rate } = this.props.assets
     const amountEntered = assetA.value.gt(0)
     const selectorAssets = this.getSelectorAssets()
     const switchSidesAvailable = this.props.markets.find(market => market.from === assetB.currency && market.to === assetA.currency)
+    const limits = calculateLimits(this.props.markets, assetA.currency, assetB.currency)
 
     return <div className='SwapOfferSelection'>
       <SwapPairPanel
@@ -84,11 +86,11 @@ class SwapOfferSelection extends Component {
           rateDisabled
           rateStrong
           rateTitle='Estimated Quote'
-          leftInputLimits={this.props.market && {
-            min: this.props.market.min,
-            max: this.props.market.max
+          leftInputLimits={limits && {
+            min: limits.min,
+            max: limits.max
           }} />
-        { !amountEntered && <span className='SwapOfferSelection_host'>Trade with <br /><img src={config.hostIcon} alt={config.hostName} /></span> }
+        { (!amountEntered) && <span className='SwapOfferSelection_host'>Trade with <br /><img src={config.hostIcon} alt={config.hostName} /></span> }
       </div> }
       { !this.props.assetSelector.open && <div className='SwapOfferSelection_bottom'>
         <Button wide primary onClick={this.props.retrieveAgentQuote}>Get Quote</Button><br />

@@ -4,6 +4,7 @@ import cryptoassets from '@liquality/cryptoassets'
 import { isETHNetwork } from './networks'
 import { generateSwapState } from './app-links'
 import { getClaimExpiration } from './expiration'
+import { calculateLimits } from './agent'
 
 function getCurrencyInputErrors (assets, agent) {
   const errors = {}
@@ -11,8 +12,11 @@ function getCurrencyInputErrors (assets, agent) {
   if (!(assetA.value.gt(0))) errors.assetA = 'Amount not set'
   if (!(assetB.value.gt(0))) errors.assetB = 'Amount not set'
   if (!(assetRate.gt(0))) errors.rate = 'Please select the conversion rate'
-  if (agent && agent.market && assetA.value.gt(0) && assetA.value.gt(agent.market.max)) errors.assetA = 'Decrease amount'
-  if (agent && agent.market && assetA.value.gt(0) && assetA.value.lt(agent.market.min)) errors.assetA = 'Increase amount'
+  if (agent && agent.markets) {
+    const limits = calculateLimits(agent.markets, assetA.currency, assetB.currency)
+    if (assetA.value.gt(0) && assetA.value.gt(limits.max)) errors.assetA = 'Decrease amount'
+    if (assetA.value.gt(0) && assetA.value.lt(limits.min)) errors.assetA = 'Increase amount'
+  }
   return errors
 }
 

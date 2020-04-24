@@ -5,7 +5,7 @@ import watch from 'redux-watch'
 import { store, initialAppState as canonicalAppState } from '../store'
 import config from '../config'
 import { getClient } from '../services/chainClient'
-import agent from '../services/agentClient'
+import { getAgentClient } from '../services/agentClient'
 import { actions as transactionActions } from './transactions'
 import { actions as secretActions } from './secretparams'
 import { actions as walletActions } from './wallets'
@@ -244,7 +244,7 @@ async function setCounterPartyStartBlock (dispatch, getState) {
 async function submitOrder (dispatch, getState) {
   const swap = getState().swap
   if (swap.agent.quote) {
-    await agent.submitOrder(
+    await getAgentClient(swap.agent.quote.agent).submitOrder(
       swap.agent.quote.id,
       swap.transactions.a.fund.hash,
       swap.wallets.a.addresses[0],

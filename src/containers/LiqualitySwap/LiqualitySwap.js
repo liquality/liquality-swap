@@ -36,7 +36,7 @@ class LiqualitySwap extends Component {
     if (this.props.swap.link) {
       return <SwapInitiation />
     } else {
-      if (config.hostAgent) return <SwapOfferSelection />
+      if (config.agents && config.agents.length) return <SwapOfferSelection />
     }
     return <AssetSelection />
   }
@@ -74,6 +74,7 @@ class LiqualitySwap extends Component {
       currency={this.props.swap.assets[currentWallet].currency}
       walletChosen={this.props.swap.wallets[currentWallet].chosen}
       walletConnecting={this.props.swap.wallets[currentWallet].connecting}
+      walletConnectingError={this.props.swap.wallets[currentWallet].connectingError}
       wallet={this.props.swap.wallets[currentWallet].type}
       chooseWallet={this.props.waitForWallet}
       connectWallet={this.props.waitForWalletInitialization}
@@ -92,7 +93,7 @@ class LiqualitySwap extends Component {
       botLink.onClick = () => {
         this.props.resetSwap()
         this.props.history.replace('/offerSelection')
-        this.props.connectAgent()
+        this.props.connectAgents()
       }
     } else if (this.props.swap.agent.markets) {
       otcLink.href = 'javascript:void(0)'

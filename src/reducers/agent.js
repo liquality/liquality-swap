@@ -5,7 +5,8 @@ import { getReducerFunction } from './helpers'
 const initialState = {
   markets: [],
   market: null,
-  quote: null
+  quote: null,
+  defaultMarketSet: false
 }
 
 function setMarkets (state, action) {

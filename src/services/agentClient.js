@@ -42,6 +42,16 @@ class Agent {
   }
 }
 
-const agent = new Agent(config.hostAgent)
+const agentClients = {}
 
-export default agent
+function getAgentClient (url) {
+  if (url in agentClients) {
+    return agentClients[url]
+  } else {
+    const client = new Agent(url)
+    agentClients[url] = client
+    return client
+  }
+}
+
+export { getAgentClient }

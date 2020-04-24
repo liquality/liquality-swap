@@ -43,8 +43,8 @@ if (initialAppState.swap) {
   store.dispatch(syncActions.sync('a'))
   store.dispatch(syncActions.sync('b'))
 } else {
-  if (config.hostAgent) {
-    store.dispatch(agentActions.connectAgent())
+  if (config.agents && config.agents.length) {
+    store.dispatch(agentActions.connectAgents())
   }
 }
 

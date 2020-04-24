@@ -1,3 +1,5 @@
+@import '../../scss/variables.scss';
+
 .WalletChoose {
   text-align: center;
   padding: 15px;
@@ -14,7 +16,7 @@
 
   &_WalletsContainer {
     border-radius: 10px;
-    background-color: #f7f8f9;
+    background-color: $color-bg-secondary;
     padding: 10px;
     margin: 10px 5px 20px;
   }
