@@ -174,6 +174,8 @@ export default {
   &nbsp;|&nbsp;
   <a href="https://youtu.be/G8zcvEy2Ccw" target="_blank">Youtube Tutorial</a>
   &nbsp;|&nbsp;
+  <a href="https://liquality.io/disclaimer/" target="_blank">Disclaimer</a>
+  &nbsp;|&nbsp;
   <a href="https://liquality.io/terms-of-use/standalone.html" target="_blank">Terms of Use</a>
   &nbsp;|&nbsp;
   <a href="https://liquality.io/privacy-policy" target="_blank">Privacy Policy</a>
