@@ -52,7 +52,7 @@ export default {
   },
   hostName: 'Liquality',
   hostIcon: 'https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png',
-  agents: ['https://liquality.io/swap-dev/agent', 'https://liquality.io/swap/agent'],
+  agents: ['https://liquality.io/swap/agent', 'https://liquality.io/swap/btc'],
   injectScript: `
   function addSentry () {
     (function loadScript(src, callback) {
