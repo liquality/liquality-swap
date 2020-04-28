@@ -138,19 +138,7 @@ async function generateSecret (dispatch, getState) {
   const { wallets } = getState().swap
   const { wallets: canonicalWallets, counterParty: canonicalCounterParty } = canonicalAppState.swap || getState().swap
   const client = getClient(assets.a.currency, wallets.a.type)
-  const secretData = [
-    assets.a.value,
-    assets.a.currency,
-    assets.b.value,
-    assets.b.currency,
-    canonicalWallets.a.addresses[0],
-    canonicalCounterParty.a.address,
-    canonicalWallets.b.addresses[0],
-    canonicalCounterParty.b.address,
-    expiration.unix()
-  ]
-
-  const secretMsg = `Creating swap with following terms:
+  const secretMsg = `Swap terms:
   
 Send: ${assets.a.value} ${assets.a.currency.toUpperCase()}
 Receive: ${assets.b.value} ${assets.b.currency.toUpperCase()}
