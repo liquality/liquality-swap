@@ -23,7 +23,7 @@ function switchSides (state, action) {
   return update(state, {
     a: { $set: state.b },
     b: { $set: state.a },
-    rate: { $set: newRate.toString() }
+    rate: { $set: BigNumber(newRate) }
   })
 }
 
