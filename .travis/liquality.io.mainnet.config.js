@@ -52,7 +52,7 @@ export default {
   },
   hostName: 'Liquality',
   hostIcon: 'https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png',
-  agents: ['https://liquality.io/swap/agent', 'https://liquality.io/swap/btc'],
+  agents: ['https://liquality.io/swap/agent'],
   injectScript: `
   function addSentry () {
     (function loadScript(src, callback) {
@@ -187,19 +187,6 @@ export default {
       document.getElementById("terms").style = '';
     }
   }
-var banner = document.createElement("div")
-banner.innerHTML = "Welcome to our 2-day swap competition - make sure to swap from the same ETH address! Full details on the competition <a href='https://liquality.io/blog/2-day-swap-competition/'>here.</a>"
-banner.style.background = "#5d92d9"
-banner.style.lineHeight = 2 + "em";
-banner.position = "flex"
-banner.height = 20 + "px"
-banner.top = 0
-banner.style.textAlign = "center"
-banner.style.color = "#ffffff"
-banner.zIndex = 100
-banner.style.padding = 10
-banner.style.width="100%"
-document.body.insertBefore( banner, document.body.firstChild)
   `,
   injectFooter: `<p style="text-align: center; margin-bottom: 8px">
   <a href="https://liquality.io/support" target="_blank">Support</a>
