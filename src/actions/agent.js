@@ -35,7 +35,7 @@ function setMarket (from, to) {
 
 // Should market updates be allowed? Prevent updates to rates and amounts
 function shouldUpdateMarkets (getState) {
-  return !(getState().swap.agent.quote) && getState().router.location.pathname !== '/assetSelection'
+  return !(getState().swap.agent.quote) && getState().router.location.pathname === '/'
 }
 
 async function getMarkets (agent) {
