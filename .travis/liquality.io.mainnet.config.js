@@ -6,7 +6,7 @@ export default {
   assets: {
     eth: {
       rpc: {
-        url: 'https://mainnet.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
+        url: 'https://mainnet.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6'
       },
       api: {
         type: 'scraper',
@@ -26,7 +26,7 @@ export default {
     dai: {
       type: 'erc20',
       rpc: {
-        url: 'https://mainnet.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
+        url: 'https://mainnet.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6'
       },
       api: {
         type: 'scraper',
@@ -39,7 +39,7 @@ export default {
     usdc: {
       type: 'erc20',
       rpc: {
-        url: 'https://mainnet.infura.io/v3/3bbb5ebeb45e4b2b9a35261f272fb611'
+        url: 'https://mainnet.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6'
       },
       api: {
         type: 'scraper',
