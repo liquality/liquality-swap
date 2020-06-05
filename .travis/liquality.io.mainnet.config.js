@@ -187,19 +187,6 @@ export default {
       document.getElementById("terms").style = '';
     }
   }
-	var banner = document.createElement("div")
-	banner.innerHTML = "Congrats! Your rates are now 1% lower than the market - good for unlimited swaps as long as you see this banner!"
-	banner.style.background = "#5d92d9"
-	banner.style.lineHeight = 2 + "em";
-	banner.position = "flex"
-	banner.height = 20 + "px"
-	banner.top = 0
-	banner.style.textAlign = "center"
-	banner.style.color = "#ffffff"
-	banner.zIndex = 100
-	banner.style.padding = 10
-	banner.style.width="100%"
-	document.body.insertBefore( banner, document.body.firstChild)
   `,
   injectFooter: `<p style="text-align: center; margin-bottom: 8px">
   <a href="https://liquality.io/support" target="_blank">Support</a>
