@@ -188,19 +188,6 @@ export default {
     }
   }
 
-	var banner = document.createElement("div")
-	banner.innerHTML = "Welcome to our 8-hour swap competition - make sure to swap from the same ETH address! Full details on the competition <a href='https://liquality.io/blog/8-hour-swap-competition-liquality-200-in-dai/' style='color:#fff;font-weight:bold'>here</a>."
-	banner.style.background = "#5d92d9"
-	banner.style.lineHeight = 2 + "em";
-	banner.position = "flex"
-	banner.height = 20 + "px"
-	banner.top = 0
-	banner.style.textAlign = "center"
-	banner.style.color = "#ffffff"
-	banner.zIndex = 100
-	banner.style.padding = 10
-	banner.style.width="100%"
-	document.body.insertBefore( banner, document.body.firstChild)
   `,
   injectFooter: `<p style="text-align: center; margin-bottom: 8px">
   <a href="https://liquality.io/support" target="_blank">Support</a>
