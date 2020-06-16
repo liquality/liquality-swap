@@ -40,14 +40,14 @@ function createBtcClient (asset, wallet) {
     } else if (wallet === 'bitcoin_ledger_nagive_segwit') {
       addressType = 'bech32'
     }
-    const ledger = new BitcoinLedgerProvider({network: BitcoinNetworks[btcConfig.network]}, addressType)
+    const ledger = new BitcoinLedgerProvider(BitcoinNetworks[btcConfig.network], addressType)
 
     if (window.useWebBle || localStorage.useWebBle) {
       ledger.useWebBle()
     }
     btcClient.addProvider(getBitcoinDataProvider(btcConfig))
     btcClient.addProvider(ledger)
-    btcClient.addProvider(new BitcoinSwapProvider({network: BitcoinNetworks[btcConfig.network]}, btcConfig.swapMode))
+    btcClient.addProvider(new BitcoinSwapProvider(BitcoinNetworks[btcConfig.network], btcConfig.swapMode))
   } else if (wallet === 'bitcoin_node') {
     if (btcConfig.rpc.addressType === 'p2sh-segwit') {
       throw new Error('Wrapped segwit addresses (p2sh-segwit) are currently unsupported.')
@@ -55,11 +55,11 @@ function createBtcClient (asset, wallet) {
     if (btcConfig.api) btcClient.addProvider(new BitcoinEsploraApiProvider(btcConfig.api.url, btcConfig.feeNumberOfBlocks))
     btcClient.addProvider(new BitcoinRpcProvider(btcConfig.rpc.url, btcConfig.rpc.username, btcConfig.rpc.password, btcConfig.feeNumberOfBlocks))
     btcClient.addProvider(new BitcoinNodeWalletProvider(BitcoinNetworks[btcConfig.network], btcConfig.rpc.url, btcConfig.rpc.username, btcConfig.rpc.password, btcConfig.rpc.addressType))
-    btcClient.addProvider(new BitcoinSwapProvider({network: BitcoinNetworks[btcConfig.network]}, btcConfig.swapMode))
+    btcClient.addProvider(new BitcoinSwapProvider(BitcoinNetworks[btcConfig.network], btcConfig.swapMode))
   } else {
     // Verify functions required when wallet not connected
     btcClient.addProvider(getBitcoinDataProvider(btcConfig))
-    btcClient.addProvider(new BitcoinSwapProvider({network: BitcoinNetworks[btcConfig.network]}, btcConfig.swapMode))
+    btcClient.addProvider(new BitcoinSwapProvider(BitcoinNetworks[btcConfig.network], btcConfig.swapMode))
   }
   if (btcConfig.api) btcClient.addProvider(new BitcoinEsploraSwapFindProvider(btcConfig.api.url))
 
@@ -76,7 +76,7 @@ function createEthClient (asset, wallet) {
   if (wallet === 'metamask') {
     ethClient.addProvider(new EthereumMetaMaskProvider(web3.currentProvider, EthereumNetworks[assetConfig.network]))
   } else if (wallet === 'ethereum_ledger') {
-    const ledger = new EthereumLedgerProvider({network: EthereumNetworks[assetConfig.network]})
+    const ledger = new EthereumLedgerProvider(EthereumNetworks[assetConfig.network])
 
     if (window.useWebBle || localStorage.useWebBle) {
       ledger.useWebBle()
