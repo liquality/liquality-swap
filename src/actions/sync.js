@@ -26,7 +26,7 @@ async function catchSwapCallError (func, dispatch) {
     const result = await func()
     return result
   } catch (e) {
-    dispatch(errorActions.setError(e))
+    console.error(e)
   }
 }
 
