@@ -2,6 +2,7 @@ import cryptoassets from '@liquality/cryptoassets'
 import { getClient } from '../services/chainClient'
 import { sleep } from '../utils/async'
 import { actions as transactionActions } from './transactions'
+import { actions as errorActions } from './errors'
 import { getFundExpiration, getExpirationForParty, getClaimExpiration } from '../utils/expiration'
 import config from '../config'
 
@@ -20,6 +21,15 @@ function setSynced (party, synced) {
   return { type: types.SET_SYNCED, party, synced }
 }
 
+async function catchSwapCallError (func, dispatch) {
+  try {
+    const result = await func()
+    return result
+  } catch (e) {
+    console.error(e)
+  }
+}
+
 async function findInitiateSwapTransaction (party, blockNumber, dispatch, getState) {
   const {
     assets: { [party]: { currency, value } },
@@ -31,7 +41,9 @@ async function findInitiateSwapTransaction (party, blockNumber, dispatch, getSta
   const client = getClient(currency, type)
   const valueInUnit = cryptoassets[currency].currencyToUnit(value).toNumber() // TODO: This should be passed as BigNumber
   const swapExpiration = getFundExpiration(expiration, party).time
-  const initiateTransaction = await client.swap.findInitiateSwapTransaction(valueInUnit, addresses[0], counterParty[party].address, secretParams.secretHash, swapExpiration.unix(), blockNumber)
+  const initiateTransaction = await catchSwapCallError(async () =>
+    client.swap.findInitiateSwapTransaction(valueInUnit, addresses[0], counterParty[party].address, secretParams.secretHash, swapExpiration.unix(), blockNumber),
+  dispatch)
   if (initiateTransaction) {
     dispatch(transactionActions.setTransaction(party, 'fund', initiateTransaction))
   }
@@ -52,7 +64,9 @@ async function findClaimSwapTransaction (party, blockNumber, dispatch, getState)
   const swapExpiration = getExpirationForParty(expiration, oppositeParty, isPartyB).time
   const recipientAddress = oppositeParty === 'a' ? counterParty[oppositeParty].address : wallets[oppositeParty].addresses[0]
   const refundAddress = oppositeParty === 'a' ? wallets[oppositeParty].addresses[0] : counterParty[oppositeParty].address
-  const claimTransaction = await client.swap.findClaimSwapTransaction(transactions[oppositeParty].fund.hash, recipientAddress, refundAddress, secretParams.secretHash, swapExpiration.unix(), blockNumber)
+  const claimTransaction = await catchSwapCallError(async () =>
+    client.swap.findClaimSwapTransaction(transactions[oppositeParty].fund.hash, recipientAddress, refundAddress, secretParams.secretHash, swapExpiration.unix(), blockNumber),
+  dispatch)
   if (claimTransaction) {
     dispatch(transactionActions.setTransaction(party, 'claim', claimTransaction))
   }
@@ -75,7 +89,9 @@ async function findRefundSwapTransaction (party, blockNumber, dispatch, getState
   } else {
     swapExpiration = isPartyB ? expiration : getFundExpiration(expiration, 'b').time
   }
-  const refundTransaction = await client.swap.findRefundSwapTransaction(transactions[party].fund.hash, counterParty[party].address, wallets[party].addresses[0], secretParams.secretHash, swapExpiration.unix(), blockNumber)
+  const refundTransaction = await catchSwapCallError(async () =>
+    client.swap.findRefundSwapTransaction(transactions[party].fund.hash, counterParty[party].address, wallets[party].addresses[0], secretParams.secretHash, swapExpiration.unix(), blockNumber),
+  dispatch)
   if (refundTransaction) {
     dispatch(transactionActions.setTransaction(party, 'refund', refundTransaction))
   }
@@ -94,7 +110,9 @@ async function verifyInitiateSwapTransaction (dispatch, getState) {
   const client = getClient(currency, type)
   const valueInUnit = cryptoassets[currency].currencyToUnit(value).toNumber() // TODO: This should be passed as BigNumber
   const swapExpiration = isPartyB ? expiration : getClaimExpiration(expiration, 'a').time
-  const swapVerified = await client.swap.verifyInitiateSwapTransaction(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty.b.address, secretParams.secretHash, swapExpiration.unix())
+  const swapVerified = await catchSwapCallError(async () =>
+    client.swap.verifyInitiateSwapTransaction(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty.b.address, secretParams.secretHash, swapExpiration.unix()),
+  dispatch)
   if (swapVerified) {
     dispatch(transactionActions.setIsVerified(true))
   }

@@ -48,40 +48,62 @@ export default {
       contractAddress: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
       network: 'mainnet',
       explorerPath: 'https://etherscan.io/tx/0x'
+    },
+    usdt: {
+      type: 'erc20',
+      rpc: {
+        url: 'https://mainnet.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6'
+      },
+      api: {
+        type: 'scraper',
+        url: 'https://liquality.io/eth-mainnet-api'
+      },
+      contractAddress: '0xdac17f958d2ee523a2206206994597c13d831ec7',
+      network: 'mainnet',
+      explorerPath: 'https://etherscan.io/tx/0x'
     }
   },
   hostName: 'Liquality',
   hostIcon: 'https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png',
-  agents: ['https://liquality.io/swap/agent'],
+  agents: ['https://liquality.io/swap/agent', 'https://liquality.io/swap-dev/agent'],
   injectScript: `
-  function addSentry () {
-    (function loadScript(src, callback) {
-      var s,
-          r,
-          t;
-      r = false;
-      s = document.createElement('script');
-      s.type = 'text/javascript';
-      s.src = src;
-      s.onload = s.onreadystatechange = function() {
-        //console.log( this.readyState ); //uncomment this line to see which ready states are called.
-        if ( !r && (!this.readyState || this.readyState == 'complete') )
-        {
-          r = true;
-          callback();
-        }
-      };
-      t = document.getElementsByTagName('script')[0];
-      t.parentNode.insertBefore(s, t);
-    })('https://browser.sentry-cdn.com/5.14.2/bundle.min.js', function () {
-      var dsn = window.location.pathname.indexOf('-dev') !== -1
-        ? 'https://816ae35527f34f4fbde7165d34046382@sentry.io/4693986'
-        : 'https://8ecc6862378646dd819d160876b47f75@sentry.io/4693923'
+  function loadScript(src, callback) {
+    var s,
+        r,
+        t;
+    r = false;
+    s = document.createElement('script');
+    s.type = 'text/javascript';
+    s.src = src;
+    s.onload = s.onreadystatechange = function() {
+      //console.log( this.readyState ); //uncomment this line to see which ready states are called.
+      if ( !r && (!this.readyState || this.readyState == 'complete') )
+      {
+        r = true;
+        callback();
+      }
+    };
+    t = document.getElementsByTagName('script')[0];
+    t.parentNode.insertBefore(s, t);
+  }
 
-      Sentry.init({
-        dsn: dsn,
-        release: '${footerVersion}'
-      })
+  function addSentry () {
+    loadScript('https://browser.sentry-cdn.com/5.18.1/bundle.min.js', function () {
+      loadScript('https://browser.sentry-cdn.com/5.18.1/captureconsole.min.js', function () {
+        var dsn = window.location.pathname.indexOf('-dev') !== -1
+          ? 'https://816ae35527f34f4fbde7165d34046382@sentry.io/4693986'
+          : 'https://8ecc6862378646dd819d160876b47f75@sentry.io/4693923'
+
+        Sentry.init({
+          dsn: dsn,
+          integrations: [
+            new Sentry.Integration.CaptureConsole({
+              levels: ['error']
+            })
+          ],
+          release: '${footerVersion}'
+        })
+      });
     });
   }
 

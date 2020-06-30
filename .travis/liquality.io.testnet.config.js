@@ -55,34 +55,43 @@ export default {
   hostIcon: 'https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png',
   agents: ['https://liquality.io/swap-testnet-dev/agent', 'https://liquality.io/swap-testnet/agent'],
   injectScript: `
-  function addSentry () {
-    (function loadScript(src, callback) {
-      var s,
-          r,
-          t;
-      r = false;
-      s = document.createElement('script');
-      s.type = 'text/javascript';
-      s.src = src;
-      s.onload = s.onreadystatechange = function() {
-        //console.log( this.readyState ); //uncomment this line to see which ready states are called.
-        if ( !r && (!this.readyState || this.readyState == 'complete') )
-        {
-          r = true;
-          callback();
-        }
-      };
-      t = document.getElementsByTagName('script')[0];
-      t.parentNode.insertBefore(s, t);
-    })('https://browser.sentry-cdn.com/5.14.2/bundle.min.js', function () {
-      var dsn = window.location.pathname.indexOf('-dev') !== -1
-        ? 'https://47837321894a4befa9211cf8754587dc@sentry.io/4694007'
-        : 'https://d9929a726dba4e929d6fded47f4b3fb4@sentry.io/4693957'
+  function loadScript(src, callback) {
+    var s,
+        r,
+        t;
+    r = false;
+    s = document.createElement('script');
+    s.type = 'text/javascript';
+    s.src = src;
+    s.onload = s.onreadystatechange = function() {
+      //console.log( this.readyState ); //uncomment this line to see which ready states are called.
+      if ( !r && (!this.readyState || this.readyState == 'complete') )
+      {
+        r = true;
+        callback();
+      }
+    };
+    t = document.getElementsByTagName('script')[0];
+    t.parentNode.insertBefore(s, t);
+  }
 
-      Sentry.init({
-        dsn: dsn,
-        release: '${footerVersion}'
-      })
+  function addSentry () {
+    loadScript('https://browser.sentry-cdn.com/5.18.1/bundle.min.js', function () {
+      loadScript('https://browser.sentry-cdn.com/5.18.1/captureconsole.min.js', function () {
+        var dsn = window.location.pathname.indexOf('-dev') !== -1
+          ? 'https://47837321894a4befa9211cf8754587dc@sentry.io/4694007'
+          : 'https://d9929a726dba4e929d6fded47f4b3fb4@sentry.io/4693957'
+
+        Sentry.init({
+          dsn: dsn,
+          integrations: [
+            new Sentry.Integrations.CaptureConsole({
+              levels: ['error']
+            })
+          ],
+          release: '${footerVersion}'
+        })
+      });
     });
   }
 
