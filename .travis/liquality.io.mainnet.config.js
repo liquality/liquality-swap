@@ -17,7 +17,7 @@ export default {
     },
     btc: {
       api: {
-        url: 'https://blockstream.info/api'
+        url: 'https://liquality.io/electrs'
       },
       feeNumberOfBlocks: 2,
       network: 'bitcoin',
@@ -65,7 +65,7 @@ export default {
   },
   hostName: 'Liquality',
   hostIcon: 'https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png',
-  agents: ['https://liquality.io/swap/agent', 'https://liquality.io/swap-dev/agent'],
+  agents: ['agent'],
   injectScript: `
   function loadScript(src, callback) {
     var s,
