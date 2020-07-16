@@ -16,7 +16,7 @@ import SwapRefunded from '../SwapRefunded'
 import SwapOfferSelection from '../SwapOfferSelection'
 import SwapOfferConfirmation from '../SwapOfferConfirmation'
 import SwapProgressStepper from '../../components/SwapProgressStepper/SwapProgressStepper'
-import { generateLink } from '../../utils/app-links'
+import { generateLink, APP_BASE_URL } from '../../utils/app-links'
 import config from '../../config'
 
 import { steps } from '../../components/SwapProgressStepper/steps'
@@ -85,35 +85,11 @@ class LiqualitySwap extends Component {
     />
   }
 
-  getNav () {
-    const botLink = {}
-    const otcLink = {}
-    if (this.props.location.pathname === '/assetSelection') {
-      botLink.href = 'javascript:void(0)'
-      botLink.onClick = () => {
-        this.props.resetSwap()
-        this.props.history.replace('/offerSelection')
-        this.props.connectAgents()
-      }
-    } else if (this.props.swap.agent.markets) {
-      otcLink.href = 'javascript:void(0)'
-      otcLink.onClick = () => {
-        this.props.resetSwap()
-        this.props.history.replace('/assetSelection')
-      }
-    }
-    const swapLinks = <span><a {...botLink}>Bot Swap</a>&nbsp;|&nbsp;<a {...otcLink}>OTC Swap</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-    const showSwapLinks = this.props.swap.step === null
-
-    return <div className='LiqualitySwap_nav'>{showSwapLinks && swapLinks}<a href='https://liquality.io/faqs.html' target='_blank'>Help</a></div>
-  }
-
   render () {
     return <div className='LiqualitySwap'>
       <div className='LiqualitySwap_bar' />
       <div className='LiqualitySwap_header'>
-        <img className='LiqualitySwap_logo' src={LiqualityLogo} alt='Liquality Logo' />
-        { this.getNav() }
+        <a href={APP_BASE_URL}><img className='LiqualitySwap_logo' src={LiqualityLogo} alt='Liquality Logo' /></a>
         { this.props.swap.step && <SwapProgressStepper state={this.props.swap.step} /> }
       </div>
       <div className='LiqualitySwap_main'>
