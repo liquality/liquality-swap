@@ -51,15 +51,10 @@ function changeAmount (party, newValue) {
   }
 }
 
-function lockRate () {
-  return { type: types.LOCK_RATE }
-}
-
 const actions = {
   setAsset,
   changeAmount,
-  changeRate,
-  lockRate
+  changeRate
 }
 
 export { types, actions }

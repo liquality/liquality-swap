@@ -1,13 +1,10 @@
-import { replace } from 'connected-react-router'
 import BigNumber from 'bignumber.js'
 import _ from 'lodash'
-import { actions as swapActions } from './swap'
 import { actions as assetActions } from './assets'
 import { actions as counterPartyActions } from './counterparty'
 import cryptoassets from '@liquality/cryptoassets'
 import config from '../config'
 import { getAgentClient } from '../services/agentClient'
-import { isAgentRequestValid } from '../utils/validation'
 import { sleep } from '../utils/async'
 import { pickMarket } from '../utils/agent'
 
@@ -28,14 +25,13 @@ function setMarket (from, to) {
     const market = pickMarket(markets, from, to, assetA.value) // TODO: OR GET CLOSEST MATCH
     if (market) {
       dispatch({ type: types.SET_MARKET, market: market })
-      dispatch(assetActions.changeRate(market.rate))
     }
   }
 }
 
 // Should market updates be allowed? Prevent updates to rates and amounts
 function shouldUpdateMarkets (getState) {
-  return !(getState().swap.agent.quote) && getState().router.location.pathname === '/'
+  return getState().router.location.pathname === '/'
 }
 
 async function getMarkets (agent) {
@@ -96,25 +92,18 @@ function setQuote (quote) {
 
 function retrieveAgentQuote () {
   return async (dispatch, getState) => {
-    dispatch(swapActions.showErrors())
-    if (isAgentRequestValid(getState().swap)) {
-      const { assets: { a: assetA, b: assetB }, agent: { markets } } = getState().swap
-      const market = pickMarket(markets, assetA.currency, assetB.currency, assetA.value)
-      const amount = cryptoassets[assetA.currency].currencyToUnit(assetA.value)
-      const quote = await getAgentClient(market.agent).getQuote(assetA.currency, assetB.currency, amount.toNumber()) // TODO: This should be passed as BigNumber
-      dispatch(setQuote({...quote, agent: market.agent}))
+    const { assets: { a: assetA, b: assetB }, agent: { markets } } = getState().swap
+    const market = pickMarket(markets, assetA.currency, assetB.currency, assetA.value)
+    const amount = cryptoassets[assetA.currency].currencyToUnit(assetA.value)
+    const quote = await getAgentClient(market.agent).getQuote(assetA.currency, assetB.currency, amount.toNumber()) // TODO: This should be passed as BigNumber
+    dispatch(setQuote({...quote, agent: market.agent}))
 
-      dispatch(assetActions.changeAmount('a', cryptoassets[assetA.currency].unitToCurrency(quote.fromAmount)))
-      dispatch(assetActions.changeAmount('b', cryptoassets[assetB.currency].unitToCurrency(quote.toAmount)))
-      dispatch(assetActions.changeAmount('b', cryptoassets[assetB.currency].unitToCurrency(quote.toAmount)))
+    dispatch(assetActions.changeAmount('a', cryptoassets[assetA.currency].unitToCurrency(quote.fromAmount)))
+    dispatch(assetActions.changeAmount('b', cryptoassets[assetB.currency].unitToCurrency(quote.toAmount)))
+    dispatch(assetActions.changeAmount('b', cryptoassets[assetB.currency].unitToCurrency(quote.toAmount)))
 
-      dispatch(assetActions.lockRate())
-      dispatch(counterPartyActions.changeCounterPartyAddress('a', quote.fromCounterPartyAddress))
-      dispatch(counterPartyActions.changeCounterPartyAddress('b', quote.toCounterPartyAddress))
-      dispatch(counterPartyActions.setCounterPartyVisible(false))
-      dispatch(replace('/offerConfirmation'))
-      dispatch(swapActions.hideErrors())
-    }
+    dispatch(counterPartyActions.changeCounterPartyAddress('a', quote.fromCounterPartyAddress))
+    dispatch(counterPartyActions.changeCounterPartyAddress('b', quote.toCounterPartyAddress))
   }
 }
 
