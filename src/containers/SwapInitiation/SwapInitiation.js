@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import _ from 'lodash'
 
 import Button from '../../components/Button/Button'
 import ExpirationDetails from '../../components/ExpirationDetails'
@@ -24,6 +25,7 @@ class SwapInitiation extends Component {
     this.state = {
       remaining: QUOTE_REFRESH_INTERVAL
     }
+    this.updateQuoteTimer = _.debounce(this.updateQuoteTimer.bind(this), 800)
   }
 
   clearCountdown () {
@@ -54,6 +56,12 @@ class SwapInitiation extends Component {
     })
   }
 
+  updateQuoteTimer () {
+    this.props.retrieveAgentQuote()
+    this.clearCountdown()
+    this.startCountdown()
+  }
+
   componentDidUpdate (prevProps) {
     if (!this.props.agent.markets.length) return
 
@@ -65,9 +73,7 @@ class SwapInitiation extends Component {
         return
       }
 
-      this.props.retrieveAgentQuote()
-      this.clearCountdown()
-      this.startCountdown()
+      this.updateQuoteTimer()
     }
   }
 
