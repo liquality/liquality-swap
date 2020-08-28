@@ -62,6 +62,11 @@ class SwapInitiation extends Component {
     this.startCountdown()
   }
 
+  resetQuote () {
+    if (this.props.agent.quote) this.props.clearQuote()
+    if (this.props.agent.market) this.props.changeRate(this.props.agent.market.rate)
+  }
+
   componentDidUpdate (prevProps) {
     if (!this.props.agent.markets.length) return
 
@@ -69,6 +74,7 @@ class SwapInitiation extends Component {
       this.props.assets.a.currency !== prevProps.assets.a.currency ||
       this.props.assets.b.currency !== prevProps.assets.b.currency) {
       if (!isAgentRequestValid({assets: this.props.assets, agent: this.props.agent})) {
+        this.resetQuote()
         this.clearCountdown()
         return
       }
@@ -132,6 +138,7 @@ class SwapInitiation extends Component {
   render () {
     const { a: assetA, b: assetB } = this.props.assets
     const errors = getInitiationErrors(this.props.transactions, this.props.expiration, this.props.isVerified, this.props.isPartyB, this.props.agent.quote)
+    const showRate = assetA.value.gt(0) && this.props.assets.rate.gt(0)
     const counterPartyLocked = !!(this.props.agent.markets.length || this.props.isPartyB)
     const termsImmutable = this.props.isPartyB
     const limits = calculateLimits(this.props.agent.markets, assetA.currency, assetB.currency)
@@ -140,24 +147,26 @@ class SwapInitiation extends Component {
     const showCountdown = this.state.interval
 
     return <div className='SwapInitiation'>
-      <SwapPairPanel
-        haveCurrency={this.props.assets.a.currency}
-        wantCurrency={this.props.assets.b.currency}
-        showCurrencyLabels
-        focusSide={this.props.assetSelector.party && (this.props.assetSelector.party === 'a' ? 'have' : 'want')}
-        onHaveClick={() => this.handlePairPanelAssetClick('a')}
-        onWantClick={() => this.handlePairPanelAssetClick('b')}
-        icon={termsImmutable ? undefined : SwapIcon}
-        iconDisabled={!switchSidesAvailable}
-        onIconClick={() => this.props.switchSides()} />
-      { this.props.assetSelector.open && <div className='SwapOfferSelection_assetSelector'>
-        <AssetSelector
-          search={this.props.assetSelector.search}
-          assets={selectorAssets}
-          onSelectAsset={asset => this.handleSelectAsset(asset)}
-          onSearchChange={value => this.props.setAssetSelectorSearch(value)}
-          onClose={() => this.props.closeAssetSelector()} />
-      </div> }
+      <div className='SwapInitiation_assets'>
+        <SwapPairPanel
+          haveCurrency={this.props.assets.a.currency}
+          wantCurrency={this.props.assets.b.currency}
+          showCurrencyLabels
+          focusSide={this.props.assetSelector.party && (this.props.assetSelector.party === 'a' ? 'have' : 'want')}
+          onHaveClick={() => this.handlePairPanelAssetClick('a')}
+          onWantClick={() => this.handlePairPanelAssetClick('b')}
+          icon={termsImmutable ? undefined : SwapIcon}
+          iconDisabled={!switchSidesAvailable}
+          onIconClick={() => this.props.switchSides()} />
+        { this.props.assetSelector.open && <div className='SwapInitiation_assetSelector'>
+          <AssetSelector
+            search={this.props.assetSelector.search}
+            assets={selectorAssets}
+            onSelectAsset={asset => this.handleSelectAsset(asset)}
+            onSearchChange={value => this.props.setAssetSelectorSearch(value)}
+            onClose={() => this.props.closeAssetSelector()} />
+        </div> }
+      </div>
       <div className='SwapInitiation_top'>
         <CurrencyInputs
           showInputs
@@ -168,7 +177,7 @@ class SwapInitiation extends Component {
             duration: QUOTE_REFRESH_INTERVAL,
             current: this.state.remaining
           }}
-          showRate
+          showRate={showRate}
           showLeftFiatValue
           showRightFiatValue={false}
           rateTitle=''

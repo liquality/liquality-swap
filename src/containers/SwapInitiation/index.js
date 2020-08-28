@@ -29,11 +29,13 @@ export default connect(
     confirmSwap: actions.confirmSwap,
     setMarket: agentActions.setMarket,
     retrieveAgentQuote: agentActions.retrieveAgentQuote,
+    clearQuote: agentActions.clearQuote,
     switchSides: actions.switchSides,
     toggleWalletConnect: walletActions.toggleWalletConnect,
     openAssetSelector: assetSelectorActions.openAssetSelector,
     closeAssetSelector: assetSelectorActions.closeAssetSelector,
     setAssetSelectorSearch: assetSelectorActions.setAssetSelectorSearch,
-    setAsset: assetActions.setAsset
+    setAsset: assetActions.setAsset,
+    changeRate: assetActions.changeRate
   }
 )(SwapInitiation)

@@ -86,6 +86,10 @@ function connectAgents () {
   }
 }
 
+function clearQuote () {
+  return { type: types.SET_QUOTE, quote: null }
+}
+
 function setQuote (quote) {
   return { type: types.SET_QUOTE, quote }
 }
@@ -111,6 +115,7 @@ const actions = {
   connectAgents,
   setMarket,
   setQuote,
+  clearQuote,
   retrieveAgentQuote
 }
 

@@ -246,7 +246,6 @@ function initiateSwap () {
     const quote = getState().swap.agent.quote
     const expiration = quote ? quote.swapExpiration : generateExpiration()
     dispatch(setExpiration(expiration))
-    await ensureWallet('a', dispatch, getState)
     const initiateValid = isInitiateValid(getState().swap)
     if (!initiateValid) return
     await setInitiationWalletPopups(false, dispatch, getState)
