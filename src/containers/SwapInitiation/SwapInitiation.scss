@@ -2,6 +2,22 @@
 @import '../../scss/mixins.scss';
 
 .SwapInitiation {
+  &_assets {
+    position: relative;
+    z-index: $layer-popup;
+  }
+
+  &_assetSelector {
+    position: absolute;
+    top: 100%;
+    padding-top: 20px;
+    box-shadow: 0px 2px 14px $color-shadow;
+    border-radius: 0 0 $swap-panel-radius $swap-panel-radius;
+    background: $color-bg-primary;
+    width: 100%;
+    z-index: $layer-top;
+  }
+  
   &_top {
     position: relative;
     width: 100%;

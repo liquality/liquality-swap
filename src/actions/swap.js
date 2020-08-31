@@ -229,17 +229,15 @@ async function setCounterPartyStartBlock (dispatch, getState) {
   dispatch(transactionActions.setStartBlock('b', blockNumber))
 }
 
-async function submitOrder (dispatch, getState) {
+async function submitOrder (quote, dispatch, getState) {
   const swap = getState().swap
-  if (swap.agent.quote) {
-    await getAgentClient(swap.agent.quote.agent).submitOrder(
-      swap.agent.quote.id,
-      swap.transactions.a.fund.hash,
-      swap.wallets.a.addresses[0],
-      swap.wallets.b.addresses[0],
-      swap.secretParams.secretHash
-    )
-  }
+  await getAgentClient(swap.agent.quote.agent).submitOrder(
+    quote.id,
+    swap.transactions.a.fund.hash,
+    swap.wallets.a.addresses[0],
+    swap.wallets.b.addresses[0],
+    swap.secretParams.secretHash
+  )
 }
 
 function initiateSwap () {
@@ -248,7 +246,6 @@ function initiateSwap () {
     const quote = getState().swap.agent.quote
     const expiration = quote ? quote.swapExpiration : generateExpiration()
     dispatch(setExpiration(expiration))
-    await ensureWallet('a', dispatch, getState)
     const initiateValid = isInitiateValid(getState().swap)
     if (!initiateValid) return
     await setInitiationWalletPopups(false, dispatch, getState)
@@ -261,7 +258,9 @@ function initiateSwap () {
       })
     })
     await setCounterPartyStartBlock(dispatch, getState)
-    await submitOrder(dispatch, getState)
+    if (quote) {
+      await submitOrder(quote, dispatch, getState)
+    }
     dispatch(syncActions.sync('a'))
     dispatch(syncActions.sync('b'))
     dispatch(replace('/backupLink'))
