@@ -11,7 +11,8 @@ import { pickMarket } from '../utils/agent'
 const types = {
   SET_QUOTE: 'SET_QUOTE',
   SET_MARKETS: 'SET_MARKETS',
-  SET_MARKET: 'SET_MARKET'
+  SET_MARKET: 'SET_MARKET',
+  SET_QUOTE_LOCKED: 'SET_QUOTE_LOCKED'
 }
 
 function setMarket (from, to) {
@@ -111,12 +112,22 @@ function retrieveAgentQuote () {
   }
 }
 
+function lockQuote () {
+  return { type: types.SET_QUOTE_LOCKED, locked: true }
+}
+
+function unlockQuote () {
+  return { type: types.SET_QUOTE_LOCKED, locked: false }
+}
+
 const actions = {
   connectAgents,
   setMarket,
   setQuote,
   clearQuote,
-  retrieveAgentQuote
+  retrieveAgentQuote,
+  lockQuote,
+  unlockQuote,
 }
 
 export { types, actions }
