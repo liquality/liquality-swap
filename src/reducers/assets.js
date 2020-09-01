@@ -14,7 +14,8 @@ const initialState = {
     currency: Object.keys(config.assets)[1],
     value: BigNumber(0)
   },
-  rate: BigNumber(0)
+  rate: BigNumber(0),
+  rateLocked: false
 }
 
 function switchSides (state, action) {
@@ -46,11 +47,18 @@ function changeRate (state, action) {
   })
 }
 
+function lockRate (state) {
+  return update(state, {
+    rateLocked: { $set: true }
+  })
+}
+
 const reducers = {
   [swapTypes.SWITCH_SIDES]: switchSides,
   [assetTypes.SET_ASSET]: setAsset,
   [assetTypes.CHANGE_AMOUNT]: changeAmount,
-  [assetTypes.CHANGE_RATE]: changeRate
+  [assetTypes.CHANGE_RATE]: changeRate,
+  [assetTypes.LOCK_RATE]: lockRate
 }
 
 const assets = getReducerFunction(reducers, initialState)

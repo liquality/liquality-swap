@@ -1,9 +1,7 @@
 import update from 'immutability-helper'
 import { types as walletTypes } from '../actions/wallets'
 import { types as swapTypes } from '../actions/swap'
-import { types as assetTypes } from '../actions/assets'
 import { getReducerFunction } from './helpers'
-import { getAssetWallets } from '../utils/wallets'
 
 const initialState = {
   a: {
@@ -40,16 +38,6 @@ function switchSides (state, action) {
     a: { $set: state.b },
     b: { $set: state.a }
   })
-}
-
-function setAsset (state, action) {
-  const currentWallet = state[action.party].type
-  const assetWallets = getAssetWallets(action.currency)
-  if (currentWallet === '') return state
-  if (assetWallets.includes(currentWallet)) return state
-
-  // If selected asset is not supported on selected wallet: Disconnect the wallet
-  return disconnectWallet(state, { party: action.party })
 }
 
 function toggleWalletConnect (state, action) {
@@ -134,7 +122,6 @@ function closePopup (state, action) {
 
 const reducers = {
   [swapTypes.SWITCH_SIDES]: switchSides,
-  [assetTypes.SET_ASSET]: setAsset,
   [walletTypes.TOGGLE_WALLET_CONNECT]: toggleWalletConnect,
   [walletTypes.CHOOSE_WALLET]: chooseWallet,
   [walletTypes.START_CONNECTING_WALLET]: startConnecting,

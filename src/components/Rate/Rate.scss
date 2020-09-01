@@ -2,7 +2,6 @@
 @import '../../scss/mixins.scss';
 
 .Rate {
-  position: relative;
   display: block;
   text-align: center;
   width: 250px;
@@ -69,52 +68,5 @@
 
   &_errorMessage {
     @include error-message;
-  }
-
-  &_timer {
-    width: 160px;
-    height: 160px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    margin: 0 auto;
-
-    &_progress {
-      fill: none;
-      stroke: $color-primary-2;
-      stroke-width: 2px;
-      transition: stroke-dashoffset 0.7s;
-      stroke-dasharray: 628.319;
-      stroke-dashoffset: -1256.64;
-    }
-
-    &_pointer {
-      transform: rotate(0deg);
-      animation-iteration-count: 1;
-      &_c {
-        fill: #FFF;
-        stroke: $color-primary-2;
-        stroke-width: 2px;
-      }
-    }
-
-    @keyframes countdown {
-      from {
-        stroke-dashoffset: -1256.64;
-      }
-      to {
-        stroke-dashoffset: -628.319;
-      }
-    }
-
-    @keyframes pointer {
-      from {
-        transform: rotate(360deg);
-      }
-      to {
-        transform: rotate(0deg);
-      }
-    }
   }
 }

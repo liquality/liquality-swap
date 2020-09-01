@@ -51,7 +51,7 @@ class SwapOfferSelection extends Component {
   }
 
   render () {
-    const { a: assetA, b: assetB } = this.props.assets
+    const { a: assetA, b: assetB, rate } = this.props.assets
     const amountEntered = assetA.value.gt(0)
     const selectorAssets = this.getSelectorAssets()
     const switchSidesAvailable = this.props.markets.find(market => market.from === assetB.currency && market.to === assetA.currency)
