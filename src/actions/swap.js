@@ -10,6 +10,7 @@ import { actions as transactionActions } from './transactions'
 import { actions as secretActions } from './secretparams'
 import { actions as walletActions } from './wallets'
 import { actions as syncActions } from './sync'
+import { actions as agentActions } from './agent'
 import cryptoassets from '@liquality/cryptoassets'
 import { wallets as walletsConfig } from '../utils/wallets'
 import { getFundExpiration, getClaimExpiration, generateExpiration } from '../utils/expiration'
@@ -219,6 +220,16 @@ async function withLoadingMessage (party, dispatch, getState, func) {
   }
 }
 
+async function withLockedQuote (dispatch, getState, func) {
+  dispatch(agentActions.lockQuote())
+  try {
+    await func(dispatch, getState)
+  } catch (e) {
+    dispatch(agentActions.unlockQuote())
+    throw (e)
+  }
+}
+
 async function setCounterPartyStartBlock (dispatch, getState) {
   const {
     assets: { b: { currency } },
@@ -248,19 +259,21 @@ function initiateSwap () {
     dispatch(setExpiration(expiration))
     const initiateValid = isInitiateValid(getState().swap)
     if (!initiateValid) return
-    await setInitiationWalletPopups(false, dispatch, getState)
-    await withWalletPopupStep(WALLET_ACTION_STEPS.SIGN, dispatch, getState, async () => {
-      await generateSecret(dispatch, getState)
-    })
-    await withWalletPopupStep(WALLET_ACTION_STEPS.CONFIRM, dispatch, getState, async () => {
-      await withLoadingMessage('a', dispatch, getState, async () => {
-        await lockFunds(dispatch, getState)
+    await withLockedQuote(dispatch, getState, async () => {
+      await setInitiationWalletPopups(false, dispatch, getState)
+      await withWalletPopupStep(WALLET_ACTION_STEPS.SIGN, dispatch, getState, async () => {
+        await generateSecret(dispatch, getState)
       })
+      await withWalletPopupStep(WALLET_ACTION_STEPS.CONFIRM, dispatch, getState, async () => {
+        await withLoadingMessage('a', dispatch, getState, async () => {
+          await lockFunds(dispatch, getState)
+        })
+      })
+      await setCounterPartyStartBlock(dispatch, getState)
+      if (quote) {
+        await submitOrder(quote, dispatch, getState)
+      }
     })
-    await setCounterPartyStartBlock(dispatch, getState)
-    if (quote) {
-      await submitOrder(quote, dispatch, getState)
-    }
     dispatch(syncActions.sync('a'))
     dispatch(syncActions.sync('b'))
     dispatch(replace('/backupLink'))

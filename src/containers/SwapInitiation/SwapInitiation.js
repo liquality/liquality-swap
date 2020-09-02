@@ -81,6 +81,11 @@ class SwapInitiation extends Component {
 
       this.updateQuoteTimer()
     }
+
+    if (this.props.agent.quoteLocked !== prevProps.agent.quoteLocked) {
+      if (this.props.agent.quoteLocked) this.clearCountdown()
+      else this.updateQuoteTimer()
+    }
   }
 
   componentWillUnmount () {
@@ -138,7 +143,7 @@ class SwapInitiation extends Component {
   render () {
     const { a: assetA, b: assetB } = this.props.assets
     const errors = getInitiationErrors(this.props.transactions, this.props.expiration, this.props.isVerified, this.props.isPartyB, this.props.agent.quote)
-    const showRate = assetA.value.gt(0) && this.props.assets.rate.gt(0)
+    const showRate = assetA.value.gt(0) && this.props.assets.rate && this.props.assets.rate.gt(0)
     const counterPartyLocked = !!(this.props.agent.markets.length || this.props.isPartyB)
     const termsImmutable = this.props.isPartyB
     const limits = calculateLimits(this.props.agent.markets, assetA.currency, assetB.currency)

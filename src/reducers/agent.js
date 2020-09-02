@@ -6,7 +6,7 @@ const initialState = {
   markets: [],
   market: null,
   quote: null,
-  defaultMarketSet: false
+  quoteLocked: false
 }
 
 function setMarkets (state, action) {
@@ -27,10 +27,17 @@ function setQuote (state, action) {
   })
 }
 
+function setQuoteLocked (state, action) {
+  return update(state, {
+    quoteLocked: { $set: action.locked }
+  })
+}
+
 const reducers = {
   [agentTypes.SET_MARKETS]: setMarkets,
   [agentTypes.SET_MARKET]: setMarket,
-  [agentTypes.SET_QUOTE]: setQuote
+  [agentTypes.SET_QUOTE]: setQuote,
+  [agentTypes.SET_QUOTE_LOCKED]: setQuoteLocked
 }
 
 const agent = getReducerFunction(reducers, initialState)
