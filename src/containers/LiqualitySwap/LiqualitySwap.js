@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Route, Redirect } from 'react-router-dom'
 
+import AssetSelection from '../AssetSelection'
 import SwapInitiation from '../SwapInitiation'
 import CounterPartyLinkCard from '../../components/CounterPartyLinkCard/CounterPartyLinkCard'
 import BackupLinkCard from '../../components/BackupLinkCard/BackupLinkCard'
@@ -12,6 +13,8 @@ import SwapRedemption from '../SwapRedemption'
 import SwapCompleted from '../SwapCompleted'
 import SwapRefund from '../SwapRefund'
 import SwapRefunded from '../SwapRefunded'
+import SwapOfferSelection from '../SwapOfferSelection'
+import SwapOfferConfirmation from '../SwapOfferConfirmation'
 import SwapProgressStepper from '../../components/SwapProgressStepper/SwapProgressStepper'
 import { generateLink, APP_BASE_URL } from '../../utils/app-links'
 import config from '../../config'
@@ -30,7 +33,12 @@ class LiqualitySwap extends Component {
   }
 
   getStartingScreen () {
-    return <SwapInitiation />
+    if (this.props.swap.link) {
+      return <SwapInitiation />
+    } else {
+      if (config.agents && config.agents.length) return <SwapOfferSelection />
+    }
+    return <AssetSelection />
   }
 
   getBackupLinkCard () {
@@ -79,7 +87,6 @@ class LiqualitySwap extends Component {
 
   render () {
     return <div className='LiqualitySwap'>
-      { this.props.swap.assetSelector.open && <div className='LiqualitySwap_blur' /> }
       <div className='LiqualitySwap_bar' />
       <div className='LiqualitySwap_header'>
         <a href={APP_BASE_URL}><img className='LiqualitySwap_logo' src={LiqualityLogo} alt='Liquality Logo' /></a>
@@ -90,6 +97,11 @@ class LiqualitySwap extends Component {
         <div className='LiqualitySwap_wrapper'>
           { window.location.hash === '#otcswap' && <Redirect to='/assetSelection' /> }
           <Route exact path='/' render={this.getStartingScreen.bind(this)} />
+          <Route path='/offerSelection' component={SwapOfferSelection} />
+          <Route path='/offerConfirmation' component={SwapOfferConfirmation} />
+          <Route path='/assetSelection' component={AssetSelection} />
+          <Route path='/walletA' render={() => { return this.getConnectWallet('a') }} />
+          <Route path='/walletB' render={() => { return this.getConnectWallet('b') }} />
           <Route path='/initiation' component={SwapInitiation} />
           <Route path='/backupLink' render={this.getBackupLinkCard} />
           <Route path='/counterPartyLink' render={this.getCounterPartyLinkCard} />

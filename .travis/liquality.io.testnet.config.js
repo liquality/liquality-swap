@@ -17,7 +17,7 @@ export default {
     },
     btc: {
       api: {
-        url: 'https://blockstream.info/testnet/api'
+        url: 'https://liquality.io/testnet/electrs'
       },
       feeNumberOfBlocks: 2,
       network: 'bitcoin_testnet',

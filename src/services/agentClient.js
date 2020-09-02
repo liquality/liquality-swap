@@ -1,5 +1,6 @@
 import moment from 'moment'
 import axios from 'axios'
+import config from '../config'
 
 class Agent {
   constructor (url) {

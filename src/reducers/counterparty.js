@@ -5,7 +5,8 @@ import { getReducerFunction } from './helpers'
 
 const initialState = {
   a: { address: '', valid: false },
-  b: { address: '', valid: false }
+  b: { address: '', valid: false },
+  visible: true
 }
 
 function switchSides (state) {
@@ -21,9 +22,16 @@ function changeCounterPartyAddress (state, action) {
   })
 }
 
+function setCounterPartyVisible (state, action) {
+  return update(state, {
+    visible: { $set: action.visible }
+  })
+}
+
 const reducers = {
   [swapTypes.SWITCH_SIDES]: switchSides,
-  [counterPartyTypes.CHANGE_COUNTER_PARTY_ADDRESS]: changeCounterPartyAddress
+  [counterPartyTypes.CHANGE_COUNTER_PARTY_ADDRESS]: changeCounterPartyAddress,
+  [counterPartyTypes.SET_COUNTER_PARTY_VISIBLE]: setCounterPartyVisible
 }
 
 const counterParty = getReducerFunction(reducers, initialState)

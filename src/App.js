@@ -11,6 +11,7 @@ import config from './config'
 import { actions as syncActions } from './actions/sync'
 import { actions as transactionActions } from './actions/transactions'
 import { actions as assetActions } from './actions/assets'
+import { actions as counterPartyActions } from './actions/counterparty'
 import { actions as agentActions } from './actions/agent'
 import { actions as fiatActions } from './actions/fiat'
 
@@ -36,6 +37,8 @@ if (initialAppState.swap) {
   if (initialAppState.swap.isPartyB) {
     // Need to use action to kick off tx monitoring
     store.dispatch(assetActions.changeAmount('b', initialAppState.swap.assets.b.value)) // Trigger rate calc
+    store.dispatch(assetActions.lockRate())
+    store.dispatch(counterPartyActions.setCounterPartyVisible(false))
   }
   store.dispatch(syncActions.sync('a'))
   store.dispatch(syncActions.sync('b'))

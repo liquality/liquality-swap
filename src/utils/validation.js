@@ -10,13 +10,12 @@ function getCurrencyInputErrors (assets, agent) {
   const errors = {}
   const { a: assetA, b: assetB, rate: assetRate } = assets
   if (!(assetA.value.gt(0))) errors.assetA = 'Amount not set'
+  if (!(assetB.value.gt(0))) errors.assetB = 'Amount not set'
+  if (!(assetRate.gt(0))) errors.rate = 'Please select the conversion rate'
   if (agent && agent.markets.length) {
     const limits = calculateLimits(agent.markets, assetA.currency, assetB.currency)
     if (assetA.value.gt(0) && assetA.value.gt(limits.max)) errors.assetA = 'Decrease amount'
     if (assetA.value.gt(0) && assetA.value.lt(limits.min)) errors.assetA = 'Increase amount'
-  } else {
-    if (!(assetB.value.gt(0))) errors.assetB = 'Amount not set'
-    if (!(assetRate.gt(0))) errors.rate = 'Please select the conversion rate'
   }
   return errors
 }

@@ -1,23 +1,18 @@
 import React, { Component } from 'react'
-import _ from 'lodash'
 
 import Button from '../../components/Button/Button'
 import ExpirationDetails from '../../components/ExpirationDetails'
 import SwapPairPanel from '../../components/SwapPairPanel/SwapPairPanel'
+import TimeProgressBar from '../../components/TimeProgressBar/TimeProgressBar'
 import HandshakeIcon from '../../icons/handshake.png'
 import SwapIcon from '../../icons/switch.svg'
 import CounterPartyWallets from '../CounterPartyWallets'
 import CurrencyInputs from '../CurrencyInputs'
 import InitiatorExpirationInfo from '../InitiatorExpirationInfo'
 import WalletPanel from '../WalletPanel'
-import AssetSelector from '../../components/AssetSelector/AssetSelector'
 import './SwapInitiation.css'
-import { getInitiationErrors, isAgentRequestValid } from '../../utils/validation'
-import { calculateLimits } from '../../utils/agent'
+import { getInitiationErrors } from '../../utils/validation'
 import { APP_BASE_URL } from '../../utils/app-links'
-import config from '../../config'
-
-const QUOTE_REFRESH_INTERVAL = 60
 
 class SwapInitiation extends Component {
   constructor (props) {
@@ -152,57 +147,25 @@ class SwapInitiation extends Component {
     const showCountdown = this.state.interval
 
     return <div className='SwapInitiation'>
-      <div className='SwapInitiation_assets'>
-        <SwapPairPanel
-          haveCurrency={this.props.assets.a.currency}
-          wantCurrency={this.props.assets.b.currency}
-          showCurrencyLabels
-          focusSide={this.props.assetSelector.party && (this.props.assetSelector.party === 'a' ? 'have' : 'want')}
-          onHaveClick={() => this.handlePairPanelAssetClick('a')}
-          onWantClick={() => this.handlePairPanelAssetClick('b')}
-          icon={termsImmutable ? undefined : SwapIcon}
-          iconDisabled={!switchSidesAvailable}
-          onIconClick={() => this.props.switchSides()} />
-        { this.props.assetSelector.open && <div className='SwapInitiation_assetSelector'>
-          <AssetSelector
-            search={this.props.assetSelector.search}
-            assets={selectorAssets}
-            onSelectAsset={asset => this.handleSelectAsset(asset)}
-            onSearchChange={value => this.props.setAssetSelectorSearch(value)}
-            onClose={() => this.props.closeAssetSelector()} />
-        </div> }
-      </div>
+      <SwapPairPanel
+        haveCurrency={this.props.assets.a.currency}
+        wantCurrency={this.props.assets.b.currency}
+        icon={inputsDisabled ? undefined : SwapIcon}
+        onIconClick={() => this.props.switchSides()} />
       <div className='SwapInitiation_top'>
-        <CurrencyInputs
-          showInputs
-          leftInputDisabled={termsImmutable}
-          rightInputDisabled={counterPartyLocked}
-          rateDisabled={counterPartyLocked}
-          rateTimer={showCountdown && {
-            duration: QUOTE_REFRESH_INTERVAL,
-            current: this.state.remaining
-          }}
-          showRate={showRate}
-          showLeftFiatValue
-          showRightFiatValue={false}
-          rateTitle=''
-          rateStrong
-          leftInputLimits={limits && {
-            min: limits.min,
-            max: limits.max
-          }}
-        />
+        {this.props.quote && <div className='SwapInitiation_quoteTimer'><TimeProgressBar startTime={this.props.quote.retrievedAt} endTime={this.props.quote.expiresAt} /></div>}
+        <CurrencyInputs showInputs leftInputDisabled={inputsDisabled} rightInputDisabled={inputsDisabled} rateDisabled={this.props.assets.rateLocked} showRate showLeftFiatValue showRightFiatValue={!this.props.quote} />
       </div>
       <WalletPanel />
       <div className='SwapInitiation_bottom'>
         { this.props.isPartyB
           ? <span className='SwapInitiation_handshake'><img src={HandshakeIcon} alt='Agree' /></span>
-          : !counterPartyLocked && <h5 className='SwapInitiation_counterPartyLabel'>Counter party wallets</h5> }
-        { !counterPartyLocked && <CounterPartyWallets /> }
+          : this.props.counterParty.visible && <h5 className='SwapInitiation_counterPartyLabel'>Counter party wallets</h5> }
+        { this.props.counterParty.visible && <CounterPartyWallets /> }
         { this.props.isPartyB
           ? <ExpirationDetails />
           : <InitiatorExpirationInfo /> }
-        {!errors.initiation && !this.props.isPartyB && <Button wide primary loadingMessage={this.props.loadingMessage} onClick={this.props.initiateSwap}>{ this.props.agent.quote ? 'Accept Quote and Initiate Swap' : 'Initiate Swap' }</Button>}
+        {!errors.initiation && !this.props.isPartyB && <Button wide primary loadingMessage={this.props.loadingMessage} onClick={this.props.initiateSwap}>Initiate Swap</Button>}
         {!errors.initiation && this.props.isPartyB && <Button wide primary loadingMessage={this.props.loadingMessage} onClick={this.props.confirmSwap}>Confirm Terms</Button>}
         {errors.initiation && <Button primary disabled>{ errors.initiation }</Button>}<br />
         {/* TODO: Do actual resetting of app state instead of refresh. */}
