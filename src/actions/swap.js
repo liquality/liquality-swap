@@ -10,6 +10,7 @@ import { actions as transactionActions } from './transactions'
 import { actions as secretActions } from './secretparams'
 import { actions as walletActions } from './wallets'
 import { actions as syncActions } from './sync'
+import { actions as agentActions } from './agent'
 import cryptoassets from '@liquality/cryptoassets'
 import { wallets as walletsConfig } from '../utils/wallets'
 import { getFundExpiration, getClaimExpiration, generateExpiration } from '../utils/expiration'
@@ -219,6 +220,16 @@ async function withLoadingMessage (party, dispatch, getState, func) {
   }
 }
 
+async function withLockedQuote (dispatch, getState, func) {
+  dispatch(agentActions.lockQuote())
+  try {
+    await func(dispatch, getState)
+  } catch (e) {
+    dispatch(agentActions.unlockQuote())
+    throw (e)
+  }
+}
+
 async function setCounterPartyStartBlock (dispatch, getState) {
   const {
     assets: { b: { currency } },
@@ -229,17 +240,15 @@ async function setCounterPartyStartBlock (dispatch, getState) {
   dispatch(transactionActions.setStartBlock('b', blockNumber))
 }
 
-async function submitOrder (dispatch, getState) {
+async function submitOrder (quote, dispatch, getState) {
   const swap = getState().swap
-  if (swap.agent.quote) {
-    await getAgentClient(swap.agent.quote.agent).submitOrder(
-      swap.agent.quote.id,
-      swap.transactions.a.fund.hash,
-      swap.wallets.a.addresses[0],
-      swap.wallets.b.addresses[0],
-      swap.secretParams.secretHash
-    )
-  }
+  await getAgentClient(swap.agent.quote.agent).submitOrder(
+    quote.id,
+    swap.transactions.a.fund.hash,
+    swap.wallets.a.addresses[0],
+    swap.wallets.b.addresses[0],
+    swap.secretParams.secretHash
+  )
 }
 
 function initiateSwap () {
@@ -248,20 +257,23 @@ function initiateSwap () {
     const quote = getState().swap.agent.quote
     const expiration = quote ? quote.swapExpiration : generateExpiration()
     dispatch(setExpiration(expiration))
-    await ensureWallet('a', dispatch, getState)
     const initiateValid = isInitiateValid(getState().swap)
     if (!initiateValid) return
-    await setInitiationWalletPopups(false, dispatch, getState)
-    await withWalletPopupStep(WALLET_ACTION_STEPS.SIGN, dispatch, getState, async () => {
-      await generateSecret(dispatch, getState)
-    })
-    await withWalletPopupStep(WALLET_ACTION_STEPS.CONFIRM, dispatch, getState, async () => {
-      await withLoadingMessage('a', dispatch, getState, async () => {
-        await lockFunds(dispatch, getState)
+    await withLockedQuote(dispatch, getState, async () => {
+      await setInitiationWalletPopups(false, dispatch, getState)
+      await withWalletPopupStep(WALLET_ACTION_STEPS.SIGN, dispatch, getState, async () => {
+        await generateSecret(dispatch, getState)
       })
+      await withWalletPopupStep(WALLET_ACTION_STEPS.CONFIRM, dispatch, getState, async () => {
+        await withLoadingMessage('a', dispatch, getState, async () => {
+          await lockFunds(dispatch, getState)
+        })
+      })
+      await setCounterPartyStartBlock(dispatch, getState)
+      if (quote) {
+        await submitOrder(quote, dispatch, getState)
+      }
     })
-    await setCounterPartyStartBlock(dispatch, getState)
-    await submitOrder(dispatch, getState)
     dispatch(syncActions.sync('a'))
     dispatch(syncActions.sync('b'))
     dispatch(replace('/backupLink'))
