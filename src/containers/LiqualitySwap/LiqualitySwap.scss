@@ -5,6 +5,15 @@
   display: flex;
   flex-direction: column;
 
+  &_blur {
+    backdrop-filter: blur(3px);
+    z-index: $layer-backdrop;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+
   &_bar {
     flex: 0 0 6px;
     height: 6px;

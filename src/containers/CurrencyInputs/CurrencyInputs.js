@@ -53,6 +53,7 @@ class CurrencyInputs extends Component {
               disabled={this.props.rateDisabled}
               error={errors.rate}
               strong={this.props.rateStrong}
+              timer={this.props.rateTimer}
               onChange={newValueA => this.props.onRateChange(newValueA)}
               tabIndex={2}
             />
@@ -71,6 +72,7 @@ CurrencyInputs.propTypes = {
   rateDisabled: PropTypes.bool,
   rateTitle: PropTypes.string,
   rateStrong: PropTypes.bool,
+  rateTimer: Rate.propTypes.timer,
   showRate: PropTypes.bool,
   showInputs: PropTypes.bool,
   showLeftFiatValue: PropTypes.bool,
