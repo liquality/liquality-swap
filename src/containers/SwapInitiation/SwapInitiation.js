@@ -70,9 +70,10 @@ class SwapInitiation extends Component {
   componentDidUpdate (prevProps) {
     if (!this.props.agent.markets.length) return
 
-    if (!this.props.assets.a.value.eq(prevProps.assets.a.value) ||
-      this.props.assets.a.currency !== prevProps.assets.a.currency ||
-      this.props.assets.b.currency !== prevProps.assets.b.currency) {
+    const valueChanged = !this.props.assets.a.value.eq(prevProps.assets.a.value) && !this.props.assets.a.value.isNaN()
+    const currencyAChanged = this.props.assets.a.currency !== prevProps.assets.a.currency
+    const currencyBChanged = this.props.assets.b.currency !== prevProps.assets.b.currency
+    if (valueChanged || currencyAChanged || currencyBChanged) {
       if (!isAgentRequestValid({assets: this.props.assets, agent: this.props.agent})) {
         this.resetQuote()
         this.clearCountdown()
@@ -202,7 +203,7 @@ class SwapInitiation extends Component {
         { this.props.isPartyB
           ? <ExpirationDetails />
           : <InitiatorExpirationInfo /> }
-        {!errors.initiation && !this.props.isPartyB && <Button wide primary loadingMessage={this.props.loadingMessage} onClick={this.props.initiateSwap}>{ this.props.agent.quote ? 'Accept Quote and Initiate Swap' : 'Initiate Swap' }</Button>}
+        {!errors.initiation && !this.props.isPartyB && <Button wide primary loadingMessage={this.props.loadingMessage} onClick={this.props.initiateSwap}>{ this.props.agent.markets.length ? 'Accept Quote and Initiate Swap' : 'Initiate Swap' }</Button>}
         {!errors.initiation && this.props.isPartyB && <Button wide primary loadingMessage={this.props.loadingMessage} onClick={this.props.confirmSwap}>Confirm Terms</Button>}
         {errors.initiation && <Button primary disabled>{ errors.initiation }</Button>}<br />
         {/* TODO: Do actual resetting of app state instead of refresh. */}

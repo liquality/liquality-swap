@@ -15,7 +15,7 @@ class CurrencyInput extends Component {
   }
 
   componentDidUpdate (prevProps) {
-    if (!prevProps.value.eq(this.props.value) && !(this.props.value.isNaN() && this.props.value.isNaN())) {
+    if (!prevProps.value.eq(this.props.value) && !this.props.value.isNaN()) {
       const keepValueString = BigNumber(this.state.valueString).eq(this.props.value)
       if (!keepValueString) {
         const valueString = this.props.value.isNaN() ? '' : this.props.value.toFixed()
