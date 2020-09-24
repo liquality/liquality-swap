@@ -19,7 +19,7 @@ class CoinGecko {
       return this._cache.coins
     }
 
-    const response = await this._axios.get('/coins/list')
+    const response = await this._axios.get('/coins/markets?vs_currency=usd&order=market_cap_desc')
     const coins = response.data
     this._cache.coins = coins
     return coins
