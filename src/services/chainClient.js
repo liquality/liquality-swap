@@ -17,7 +17,7 @@ import EthereumScraperSwapFindProvider from '@liquality/ethereum-scraper-swap-fi
 import EthereumErc20Provider from '@liquality/ethereum-erc20-provider'
 import EthereumErc20SwapProvider from '@liquality/ethereum-erc20-swap-provider'
 import EthereumErc20ScraperSwapFindProvider from '@liquality/ethereum-erc20-scraper-swap-find-provider'
-import EthereumMetaMaskProvider from '@liquality/ethereum-metamask-provider'
+import EthereumWalletApiProvider from '@liquality/ethereum-wallet-api-provider'
 
 import config from '../config'
 
@@ -74,7 +74,7 @@ function createEthClient (asset, wallet) {
     assetConfig.rpc.url
   ))
   if (wallet === 'metamask') {
-    ethClient.addProvider(new EthereumMetaMaskProvider(web3.currentProvider, EthereumNetworks[assetConfig.network]))
+    ethClient.addProvider(new EthereumWalletApiProvider(window.ethereum, EthereumNetworks[assetConfig.network]))
   } else if (wallet === 'ethereum_ledger') {
     const ledger = new EthereumLedgerProvider(EthereumNetworks[assetConfig.network])
 

@@ -183,11 +183,11 @@ async function lockFunds (dispatch, getState) {
   if (config.debug) { // TODO: enable debugging universally on all CAL functions (chainClient.js)
     console.log('Initiating Swap', initiateSwapParams)
   }
-  const txHash = await client.swap.initiateSwap(...initiateSwapParams)
+  const initiationTx = await client.swap.initiateSwap(...initiateSwapParams)
   if (wallets.a.type === 'metamask') { // TODO: fix properly
     alert('Please do not use the "Speed up" function to bump the priority of the transaction as this is not yet supported.')
   }
-  dispatch(transactionActions.setTransaction('a', 'fund', { hash: txHash }))
+  dispatch(transactionActions.setTransaction('a', 'fund', { hash: initiationTx.hash }))
   dispatch(transactionActions.setStartBlock('a', blockNumber))
 }
 
@@ -317,8 +317,8 @@ async function unlockFunds (dispatch, getState) {
   if (config.debug) { // TODO: enable debugging universally on all CAL functions (chainClient.js)
     console.log('Claiming Swap', claimSwapParams)
   }
-  const txHash = await client.swap.claimSwap(...claimSwapParams)
-  dispatch(transactionActions.setTransaction('a', 'claim', { hash: txHash, blockNumber }))
+  const claimTx = await client.swap.claimSwap(...claimSwapParams)
+  dispatch(transactionActions.setTransaction('a', 'claim', { hash: claimTx.hash, blockNumber }))
 }
 
 function redeemSwap () {
@@ -370,8 +370,8 @@ function refundSwap () {
     await setRefundWalletSteps(dispatch, getState)
     await withWalletPopupStep(WALLET_ACTION_STEPS.CONFIRM, dispatch, getState, async () => {
       await withLoadingMessage('a', dispatch, getState, async () => {
-        const refundTxHash = await client.swap.refundSwap(...refundSwapParams)
-        dispatch(transactionActions.setTransaction('a', 'refund', { hash: refundTxHash, blockNumber }))
+        const refundTx = await client.swap.refundSwap(...refundSwapParams)
+        dispatch(transactionActions.setTransaction('a', 'refund', { hash: refundTx.hash, blockNumber }))
       })
     })
   }
