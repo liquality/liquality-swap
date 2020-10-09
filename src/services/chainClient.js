@@ -23,7 +23,7 @@ import config from '../config'
 
 function getBitcoinDataProvider (btcConfig) {
   if (btcConfig.api) {
-    return new BitcoinEsploraApiProvider(btcConfig.api.url, btcConfig.feeNumberOfBlocks)
+    return new BitcoinEsploraApiProvider(btcConfig.api.url, BitcoinNetworks[btcConfig.network], btcConfig.feeNumberOfBlocks)
   } else if (btcConfig.rpc) {
     return new BitcoinRpcProvider(btcConfig.rpc.url, btcConfig.rpc.username, btcConfig.rpc.password, btcConfig.feeNumberOfBlocks)
   }
