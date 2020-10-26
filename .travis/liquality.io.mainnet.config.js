@@ -114,21 +114,25 @@ export default {
   }
 
   function addSentry () {
-    loadScript('https://browser.sentry-cdn.com/5.18.1/bundle.min.js', function () {
-      loadScript('https://browser.sentry-cdn.com/5.18.1/captureconsole.min.js', function () {
-        var dsn = window.location.pathname.indexOf('-dev') !== -1
-          ? 'https://816ae35527f34f4fbde7165d34046382@sentry.io/4693986'
-          : 'https://8ecc6862378646dd819d160876b47f75@sentry.io/4693923'
+    loadScript('https://browser.sentry-cdn.com/5.27.1/bundle.min.js', function () {
+      loadScript('https://browser.sentry-cdn.com/5.27.1/captureconsole.min.js', function () {
+        loadScript('https://browser.sentry-cdn.com/5.27.1/bundle.tracing.min.js', function () {
+          var dsn = window.location.pathname.indexOf('-dev') !== -1
+            ? 'https://816ae35527f34f4fbde7165d34046382@sentry.io/4693986'
+            : 'https://8ecc6862378646dd819d160876b47f75@sentry.io/4693923'
 
-        Sentry.init({
-          dsn: dsn,
-          integrations: [
-            new Sentry.Integration.CaptureConsole({
-              levels: ['error']
-            })
-          ],
-          release: '${footerVersion}'
-        })
+          Sentry.init({
+            dsn: dsn,
+            integrations: [
+              new Sentry.Integrations.CaptureConsole({
+                levels: ['error']
+              }),
+              new Sentry.Integrations.BrowserTracing()
+            ],
+            release: '${footerVersion}',
+            tracesSampleRate: 1.0
+          })
+        });
       });
     });
   }
