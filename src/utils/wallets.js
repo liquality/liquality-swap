@@ -1,17 +1,18 @@
 import config from '../config'
 import metamaskIcon from '../icons/wallets/metamask/icon.svg'
 import ledgerIcon from '../icons/wallets/ledger/icon.svg'
+import liqualityIcon from '../icons/wallets/liquality/icon.svg'
 import nodeIcon from '../icons/wallets/node/icon.svg'
 
 const wallets = {
-  'metamask': {
-    icon: metamaskIcon,
-    name: 'MetaMask',
+  'liquality': {
+    icon: liqualityIcon,
+    name: 'Liquality Wallet',
     connection: {
-      title: 'On MetaMask',
-      description: 'Look for the MetaMask window in your browser (or a prompt to accept the MetaMask pop-up).'
+      title: 'On Liquality Wallet',
+      description: 'Look for the Liquality extension in your browser.'
     },
-    troubleshootConnectionLink: 'https://metamask.zendesk.com/hc/en-us/articles/360015489531-Getting-Started-With-MetaMask-Part-1-'
+    troubleshootConnectionLink: 'https://liquality.io/blog/the-liquality-multi-chain-swap-wallet-cross-chain-atomic-swaps-have-never-been-so-easy/'
   },
   'bitcoin_ledger_legacy': {
     icon: ledgerIcon,
@@ -39,6 +40,15 @@ const wallets = {
       description: 'Make sure your Bitcoin node is running and available.'
     },
     troubleshootConnectionLink: 'https://github.com/bitpay/bitcore'
+  },
+  'metamask': {
+    icon: metamaskIcon,
+    name: 'MetaMask',
+    connection: {
+      title: 'On MetaMask',
+      description: 'Look for the MetaMask window in your browser (or a prompt to accept the MetaMask pop-up).'
+    },
+    troubleshootConnectionLink: 'https://metamask.zendesk.com/hc/en-us/articles/360015489531-Getting-Started-With-MetaMask-Part-1-'
   },
   'ethereum_node': {
     icon: nodeIcon,
@@ -70,7 +80,7 @@ function getAvailableEthereumWallets (asset) {
 }
 
 function getAvailableBitcoinWallets () {
-  const wallets = ['bitcoin_ledger_legacy', 'bitcoin_ledger_native_segwit']
+  const wallets = ['liquality', 'bitcoin_ledger_legacy', 'bitcoin_ledger_native_segwit']
   if (config.assets.btc.rpc && config.assets.btc.rpc.wallet) {
     wallets.push('bitcoin_node')
   }
