@@ -81,51 +81,51 @@ function toEthereumClaimPopup (popup) {
 
 const initiatePopups = {
   ledger: {
-    btc: bitcoinLedgerPopup,
-    eth: ethereumLedgerPopup,
+    BTC: bitcoinLedgerPopup,
+    ETH: ethereumLedgerPopup,
     erc20: ERC20LedgerPopup
   },
   metamask: {
-    eth: ethereumMetamaskPopup,
+    ETH: ethereumMetamaskPopup,
     erc20: ERC20MetamaskPopup
   },
   default: {
-    btc: defaultPopup,
-    eth: defaultPopup,
+    BTC: defaultPopup,
+    ETH: defaultPopup,
     erc20: defaultERC20Popup
   }
 }
 
 const claimPopups = {
   ledger: {
-    btc: toClaimPopup(bitcoinLedgerPopup),
-    eth: toEthereumClaimPopup(ethereumLedgerPopup),
+    BTC: toClaimPopup(bitcoinLedgerPopup),
+    ETH: toEthereumClaimPopup(ethereumLedgerPopup),
     erc20: toEthereumClaimPopup(ethereumLedgerPopup)
   },
   metamask: {
-    eth: toEthereumClaimPopup(ethereumMetamaskPopup),
+    ETH: toEthereumClaimPopup(ethereumMetamaskPopup),
     erc20: toEthereumClaimPopup(ERC20MetamaskPopup)
   },
   default: {
-    btc: toClaimPopup(defaultPopup),
-    eth: toEthereumClaimPopup(defaultPopup),
+    BTC: toClaimPopup(defaultPopup),
+    ETH: toEthereumClaimPopup(defaultPopup),
     erc20: toEthereumClaimPopup(defaultERC20Popup)
   }
 }
 
 const refundPopups = {
   ledger: {
-    btc: toRefundPopup(bitcoinLedgerPopup),
-    eth: toRefundPopup(ethereumLedgerPopup),
+    BTC: toRefundPopup(bitcoinLedgerPopup),
+    ETH: toRefundPopup(ethereumLedgerPopup),
     erc20: toRefundPopup(ethereumLedgerPopup)
   },
   metamask: {
-    eth: toRefundPopup(ethereumMetamaskPopup),
+    ETH: toRefundPopup(ethereumMetamaskPopup),
     erc20: toRefundPopup(ERC20MetamaskPopup)
   },
   default: {
-    btc: toRefundPopup(defaultPopup),
-    eth: toRefundPopup(defaultPopup),
+    BTC: toRefundPopup(defaultPopup),
+    ETH: toRefundPopup(defaultPopup),
     erc20: toRefundPopup(defaultERC20Popup)
   }
 }
@@ -138,6 +138,7 @@ const popups = {
 
 // TODO: make more generic to cover all wallet types
 function getActionPopups (stage, asset, wallet) {
+  if (asset === 'RBTC') asset = 'ETH'
   const assetConfig = config.assets[asset]
   if (wallet) {
     if (wallet.includes('ledger')) {

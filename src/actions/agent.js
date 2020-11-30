@@ -38,14 +38,14 @@ function shouldUpdateMarkets (getState) {
 async function getMarkets (agent) {
   const marketInfo = await getAgentClient(agent).getMarketInfo()
   const formattedMarkets = marketInfo.map(m => {
-    const convertedMin = cryptoassets[m.from.toLowerCase()].unitToCurrency(m.min)
-    const convertedMax = cryptoassets[m.from.toLowerCase()].unitToCurrency(m.max)
+    const convertedMin = cryptoassets[m.from].unitToCurrency(m.min)
+    const convertedMax = cryptoassets[m.from].unitToCurrency(m.max)
     return {
       ...m,
       min: convertedMin,
       max: convertedMax,
-      from: m.from.toLowerCase(),
-      to: m.to.toLowerCase(),
+      from: m.from,
+      to: m.to,
       rate: BigNumber(m.rate),
       agent
     }

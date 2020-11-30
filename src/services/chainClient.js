@@ -102,8 +102,9 @@ function createEthClient (asset, wallet) {
 }
 
 const clientCreators = {
-  btc: createBtcClient,
-  eth: createEthClient,
+  BTC: createBtcClient,
+  ETH: createEthClient,
+  RBTC: createEthClient,
   erc20: createEthClient
 }
 
@@ -124,7 +125,7 @@ function getClient (asset, wallet) {
 function getNetworkClient (asset, wallet) {
   const assetConfig = config.assets[asset]
   if (assetConfig.type === 'erc20') {
-    return getClient('eth', wallet)
+    return getClient('ETH', wallet)
   } else {
     return getClient(asset, wallet)
   }

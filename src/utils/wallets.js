@@ -81,15 +81,16 @@ function getAvailableEthereumWallets (asset) {
 
 function getAvailableBitcoinWallets () {
   const wallets = ['liquality', 'bitcoin_ledger_legacy', 'bitcoin_ledger_native_segwit']
-  if (config.assets.btc.rpc && config.assets.btc.rpc.wallet) {
+  if (config.assets.BTC.rpc && config.assets.BTC.rpc.wallet) {
     wallets.push('bitcoin_node')
   }
   return wallets
 }
 
 const walletsByAsset = {
-  eth: getAvailableEthereumWallets('eth'),
-  btc: getAvailableBitcoinWallets()
+  ETH: getAvailableEthereumWallets('ETH'),
+  RBTC: getAvailableEthereumWallets('RBTC'),
+  BTC: getAvailableBitcoinWallets()
 }
 
 function getAssetWallets (asset) {

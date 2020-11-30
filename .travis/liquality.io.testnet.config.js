@@ -4,7 +4,7 @@ const footerVersion = `${process.env.REACT_APP_TRAVIS_COMMIT || 'dev'}+${Client.
 
 export default {
   assets: {
-    eth: {
+    ETH: {
       rpc: {
         url: 'https://rinkeby.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6'
       },
@@ -15,7 +15,7 @@ export default {
       network: 'rinkeby',
       explorerPath: 'https://rinkeby.etherscan.io/tx/0x'
     },
-    btc: {
+    BTC: {
       api: {
         url: 'https://liquality.io/testnet/electrs'
       },
@@ -23,7 +23,7 @@ export default {
       network: 'bitcoin_testnet',
       explorerPath: 'https://blockstream.info/testnet/tx/'
     },
-    dai: {
+    DAI: {
       type: 'erc20',
       rpc: {
         url: 'https://rinkeby.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6'
@@ -36,7 +36,7 @@ export default {
       network: 'rinkeby',
       explorerPath: 'https://rinkeby.etherscan.io/tx/0x'
     },
-    usdc: {
+    USDC: {
       type: 'erc20',
       rpc: {
         url: 'https://rinkeby.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6'

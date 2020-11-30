@@ -1,4 +1,6 @@
 import axios from 'axios'
+import _ from 'lodash'
+import cryptoassets from '@liquality/cryptoassets'
 
 class CoinGecko {
   constructor (url = 'https://api.coingecko.com/api/v3') {
@@ -11,29 +13,14 @@ class CoinGecko {
       if (e.response && e.response.data && e.response.data.error) error = '. ' + e.response.data.error
       throw new Error(`CoinGecko: ${e.message}${error}`)
     })
-    this._cache = {}
-  }
-
-  async getCoins () {
-    if ('coins' in this._cache) {
-      return this._cache.coins
-    }
-
-    const response = await this._axios.get('/coins/markets?vs_currency=usd&order=market_cap_desc')
-    const coins = response.data
-    this._cache.coins = coins
-    return coins
   }
 
   async getPrices (baseCurrencies, toCurrency) {
-    const coins = await this.getCoins()
-    const coindIds = baseCurrencies.map(currency => coins.find(coin => coin.symbol === currency).id)
-    const response = await this._axios.get(`/simple/price?ids=${coindIds.join(',')}&vs_currencies=${toCurrency}`)
-    const prices = response.data
-    const symbolPrices = Object.entries(prices).reduce((curr, [id, toPrices]) => {
-      const currencySymbol = coins.find(coin => coin.id === id).symbol
-      return Object.assign(curr, { [currencySymbol]: toPrices[toCurrency] })
-    }, {})
+    const coindIds = baseCurrencies.map(currency => cryptoassets[currency].coinGeckoId)
+    const { data } = await this._axios.get(`/simple/price?ids=${coindIds.join(',')}&vs_currencies=${toCurrency}`)
+    let prices = _.mapKeys(data, (v, coinGeckoId) => _.findKey(cryptoassets, asset => asset.coinGeckoId === coinGeckoId))
+    prices = _.mapValues(prices, rates => _.mapKeys(rates, (v, k) => k.toUpperCase()))
+    const symbolPrices = _.mapValues(prices, rates => rates[toCurrency.toUpperCase()])
     return symbolPrices
   }
 }

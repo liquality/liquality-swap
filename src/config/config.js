@@ -3,13 +3,13 @@ export default {
   hostIcon: 'https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png',
   agents: ['http://localhost:3030'],
   assets: {
-    eth: {
+    ETH: {
       rpc: {
         url: 'http://localhost:8545',
         wallet: true
       }
     },
-    btc: {
+    BTC: {
       rpc: {
         username: 'bitcoin',
         password: 'local321',
@@ -21,7 +21,7 @@ export default {
       swapMode: 'p2wsh',
       feeNumberOfBlocks: 2
     },
-    dai: {
+    DAI: {
       type: 'erc20',
       rpc: {
         url: 'http://localhost:8545',

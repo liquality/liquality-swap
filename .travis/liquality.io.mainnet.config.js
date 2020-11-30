@@ -4,7 +4,7 @@ const footerVersion = `${process.env.REACT_APP_TRAVIS_COMMIT || 'dev'}+${Client.
 
 export default {
   assets: {
-    eth: {
+    ETH: {
       rpc: {
         url: 'https://mainnet.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6'
       },
@@ -15,7 +15,7 @@ export default {
       network: 'mainnet',
       explorerPath: 'https://etherscan.io/tx/0x'
     },
-    btc: {
+    BTC: {
       api: {
         url: 'https://liquality.io/electrs'
       },
@@ -23,7 +23,7 @@ export default {
       network: 'bitcoin',
       explorerPath: 'https://blockstream.info/tx/'
     },
-    dai: {
+    DAI: {
       type: 'erc20',
       rpc: {
         url: 'https://mainnet.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6'
@@ -36,7 +36,7 @@ export default {
       network: 'mainnet',
       explorerPath: 'https://etherscan.io/tx/0x'
     },
-    usdc: {
+    USDC: {
       type: 'erc20',
       rpc: {
         url: 'https://mainnet.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6'
@@ -49,7 +49,7 @@ export default {
       network: 'mainnet',
       explorerPath: 'https://etherscan.io/tx/0x'
     },
-    usdt: {
+    USDT: {
       type: 'erc20',
       rpc: {
         url: 'https://mainnet.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6'
@@ -62,7 +62,7 @@ export default {
       network: 'mainnet',
       explorerPath: 'https://etherscan.io/tx/0x'
     },
-    wbtc: {
+    WBTC: {
       type: 'erc20',
       rpc: {
         url: 'https://mainnet.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6'
@@ -75,7 +75,7 @@ export default {
       network: 'mainnet',
       explorerPath: 'https://etherscan.io/tx/0x'
     },
-    uni: {
+    UNI: {
       type: 'erc20',
       rpc: {
         url: 'https://mainnet.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6'

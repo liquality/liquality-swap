@@ -1,12 +1,12 @@
 export default {
   assets: {
-    eth: {
+    ETH: {
       rpc: {
         url: 'http://localhost:8545',
         wallet: true
       }
     },
-    btc: {
+    BTC: {
       rpc: {
         username: 'bitcoin',
         password: 'local321',
