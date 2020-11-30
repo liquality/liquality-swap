@@ -23,6 +23,17 @@ export default {
       network: 'bitcoin',
       explorerPath: 'https://blockstream.info/tx/'
     },
+    RBTC: {
+      rpc: {
+        url: 'https://public-node.rsk.co'
+      },
+      api: {
+        type: 'scraper',
+        url: 'https://liquality.io/rsk-mainnet-api'
+      },
+      network: 'rsk_mainnet',
+      explorerPath: 'https://explorer.rsk.co/tx/0x'
+    },
     DAI: {
       type: 'erc20',
       rpc: {
