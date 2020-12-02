@@ -15,7 +15,7 @@ it('renders without crashing', () => {
     subTitle: 'Subtitle',
     wallets: ['metamask'],
     chooseWallet: mockFn,
-    currency: 'eth'
+    currency: 'ETH'
   }
   ReactDOM.render(<WalletChoose {...props} />, div)
   ReactDOM.unmountComponentAtNode(div)

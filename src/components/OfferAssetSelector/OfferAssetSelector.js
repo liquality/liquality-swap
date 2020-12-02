@@ -5,8 +5,8 @@ import './OfferAssetSelector.css'
 
 const OfferAssetSelector = (props) => {
   const options = [
-    { value: 'btc', label: 'BTC' },
-    { value: 'eth', label: 'ETH' }
+    { value: 'BTC', label: 'BTC' },
+    { value: 'ETH', label: 'ETH' }
   ]
 
   return <div className='OfferAssetSelector'>

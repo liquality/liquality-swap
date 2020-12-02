@@ -10,7 +10,7 @@ it('renders without crashing', () => {
     title: 'Bitcoin Wallet',
     type: 'ledger',
     balance: '3.141592653589793238',
-    currency: 'btc'
+    currency: 'BTC'
   }
   ReactDOM.render(<WalletDisplay {...props} />, div)
   ReactDOM.unmountComponentAtNode(div)

@@ -24,7 +24,7 @@ class SwapCompleted extends Component {
         <CurrencyInputs showInputs leftInputDisabled rightInputDisabled />
         <h2 className='SwapCompleted_label'>Swap Completed</h2>
         <p className='SwapCompleted_subLabel'>
-          Go to {this.props.assets.b.currency === 'btc' ? 'Ledger Live' : 'MetaMask'} to confirm your balance
+          Go to {this.props.assets.b.currency === 'BTC' ? 'Ledger Live' : 'MetaMask'} to confirm your balance
         </p>
         <span className='SwapCompleted_handshake'><img src={HandshakeIcon} alt='' /></span>
       </div>

@@ -31,7 +31,7 @@ function getBitcoinDataProvider (btcConfig) {
 }
 
 function createBtcClient (asset, wallet) {
-  const btcConfig = config.assets.btc
+  const btcConfig = config.assets.BTC
 
   const btcClient = new Client()
   if (wallet && wallet.includes('bitcoin_ledger')) {
