@@ -1,4 +1,4 @@
-/* global web3, localStorage */
+/* global localStorage */
 
 import Client from '@liquality/client'
 import BitcoinEsploraApiProvider from '@liquality/bitcoin-esplora-api-provider'

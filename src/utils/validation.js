@@ -84,12 +84,39 @@ function getClaimErrors (transactions, isPartyB) {
   return errors
 }
 
+function getQuoteErrors (swap) {
+  const errors = {}
+  const { a: assetA, b: assetB } = swap.assets
+  const { a: counterPartyA, b: counterPartyB } = swap.counterParty
+  if (!swap.agent.quote) {
+    errors.quote = 'Quote missing.'
+  } else {
+    if (!cryptoassets[assetA.currency].unitToCurrency(swap.agent.quote.fromAmount).eq(assetA.value)) {
+      errors.quote = 'Quote fromAmount does not match.'
+    }
+    if (!cryptoassets[assetB.currency].unitToCurrency(swap.agent.quote.toAmount).eq(assetB.value)) {
+      errors.quote = 'Quote toAmount does not match.'
+    }
+    if (counterPartyA.address !== swap.agent.quote.fromCounterPartyAddress) {
+      errors.quote = 'Quote fromCounterPartyAddress does not match.'
+    }
+    if (counterPartyB.address !== swap.agent.quote.toCounterPartyAddress) {
+      errors.quote = 'Quote toCounterPartyAddress does not match.'
+    }
+  }
+  if (errors.quote) {
+    console.error(`Quote encountered an error: ${errors.quote}`)
+  }
+  return errors
+}
+
 function isInitiateValid (swap) {
   let errors = [
-    getCurrencyInputErrors(swap.assets),
+    getCurrencyInputErrors(swap.assets, swap.agent),
     getWalletErrors(swap.wallets, swap.assets, swap.isPartyB),
     getCounterPartyErrors(swap.assets, swap.counterParty),
-    getInitiationErrors(swap.transactions, swap.expiration, swap.transactions.isVerified, swap.isPartyB, swap.agent.quote)
+    getInitiationErrors(swap.transactions, swap.expiration, swap.transactions.isVerified, swap.isPartyB, swap.agent.quote),
+    getQuoteErrors(swap)
   ]
 
   const numErrors = errors.reduce((prev, next) => prev + Object.keys(next).length, 0)

@@ -127,7 +127,7 @@ const actions = {
   clearQuote,
   retrieveAgentQuote,
   lockQuote,
-  unlockQuote,
+  unlockQuote
 }
 
 export { types, actions }
