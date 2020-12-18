@@ -1,7 +1,7 @@
 import moment from 'moment'
 import config from '../config'
 import cryptoassets from '@liquality/cryptoassets'
-import { isETHNetwork } from './networks'
+import { isEthereumAsset } from './networks'
 import { generateSwapState } from './app-links'
 import { getClaimExpiration } from './expiration'
 import { calculateLimits } from './agent'
@@ -38,7 +38,7 @@ function getWalletErrors (wallets, assets, isPartyB) {
     if (!errors.walletAAddress && wallets.a.balance.lt(assets.a.value)) errors.walletABalance = 'Insufficient. Add funds.'
   }
   if (wallets.b.connected && !errors.walletBAddress) {
-    if (isETHNetwork(assets.b.currency) && !(wallets.b.networkBalance.gt(0))) errors.walletB = 'Insufficient. Add ETH for fee.'
+    if (isEthereumAsset(assets.b.currency) && !(wallets.b.networkBalance.gt(0))) errors.walletB = 'Insufficient. Add ETH for fee.'
   }
 
   if (!walletA.connected) errors.walletA = 'Please add your wallet'

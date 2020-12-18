@@ -17,13 +17,17 @@ function getNetworkByCurrency (asset) {
   return networks[networkId]
 }
 
-function isETHNetwork (asset) {
+function isEthereumAsset (asset) {
   const assetConfig = config.assets[asset]
-  return asset === 'ETH' || asset === 'RBTC' || assetConfig.type === 'erc20'
+  return asset === 'ETH' || assetConfig.type === 'erc20'
+}
+
+function isEthereumNetwork (asset) {
+  return asset === 'RBTC' || isEthereumAsset(asset)
 }
 
 function getConfirmationEstimate (asset) {
-  if (isETHNetwork(asset)) {
+  if (isEthereumNetwork(asset)) {
     return moment.duration(1, 'minutes')
   } else if (asset === 'BTC') {
     return moment.duration(10, 'minutes')
@@ -32,4 +36,4 @@ function getConfirmationEstimate (asset) {
   }
 }
 
-export { getNetworkByCurrency, isETHNetwork, getConfirmationEstimate }
+export { getNetworkByCurrency, isEthereumAsset, getConfirmationEstimate }

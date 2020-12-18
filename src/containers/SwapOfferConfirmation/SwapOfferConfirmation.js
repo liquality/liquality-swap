@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Button from '../../components/Button/Button'
 import assets from '@liquality/cryptoassets'
-import { isETHNetwork } from '../../utils/networks'
+import { isEthereumAsset } from '../../utils/networks'
 import { APP_BASE_URL } from '../../utils/app-links'
 import './SwapOfferConfirmation.css'
 import BrandCard from '../../components/BrandCard/BrandCard'
@@ -32,7 +32,7 @@ class SwapOfferConfirmation extends Component {
         <ul>
           <li>{assetA.code} wallet to sign the first swap transaction</li>
           <li>{assetB.code} wallet for the receiving address</li>
-          {isETHNetwork(this.props.assets.b.currency) && <li>ETH wallet has to have enough funds to cover transaction fee</li>}
+          {isEthereumAsset(this.props.assets.b.currency) && <li>ETH wallet has to have enough funds to cover transaction fee</li>}
         </ul>
         <p>All terms, including the quote will be confirmed in the next step.</p>
       </div>
