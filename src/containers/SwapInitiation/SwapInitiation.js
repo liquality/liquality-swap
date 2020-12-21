@@ -143,7 +143,7 @@ class SwapInitiation extends Component {
 
   render () {
     const { a: assetA, b: assetB } = this.props.assets
-    const errors = getInitiationErrors(this.props.transactions, this.props.expiration, this.props.isVerified, this.props.isPartyB, this.props.agent.quote)
+    const errors = getInitiationErrors(this.props.assets, this.props.transactions, this.props.expiration, this.props.isVerified, this.props.isPartyB, this.props.agent.quote)
     const showRate = assetA.value.gt(0) && this.props.assets.rate && this.props.assets.rate.gt(0)
     const counterPartyLocked = !!(this.props.agent.markets.length || this.props.isPartyB)
     const termsImmutable = this.props.isPartyB

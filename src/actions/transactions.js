@@ -1,5 +1,6 @@
 import { replace } from 'connected-react-router'
 import moment from 'moment'
+import cryptoassets from '@liquality/cryptoassets'
 import config from '../config'
 import { actions as swapActions } from './swap'
 import { actions as secretActions } from './secretparams'
@@ -29,12 +30,14 @@ async function setSecret (swap, party, tx, dispatch) {
   dispatch(secretActions.setSecret(secret))
 }
 
-function setStep (transactions, isPartyB, isVerified, dispatch) {
+function setStep (assets, transactions, isPartyB, isVerified, dispatch) {
   let step = steps.INITIATION
   if (transactions.a.fund.hash) {
     step = steps.AGREEMENT
     if (transactions.b.fund.hash) {
-      if (transactions.a.fund.confirmations >= config.minConfirmations && transactions.b.fund.confirmations >= config.minConfirmations) {
+      const aMinConfirmations = cryptoassets[assets.a.currency].safeConfirmations
+      const bMinConfirmations = cryptoassets[assets.b.currency].safeConfirmations
+      if (transactions.a.fund.confirmations >= aMinConfirmations && transactions.b.fund.confirmations >= bMinConfirmations) {
         if ((transactions.b.claim.hash || !isPartyB) && isVerified) {
           step = steps.CLAIMING
         }
@@ -77,7 +80,7 @@ function setLocation (swap, currentLocation, dispatch) {
 
 function updateStep (dispatch, getState) {
   let state = getState()
-  setStep(state.swap.transactions, state.swap.isPartyB, state.swap.transactions.isVerified, dispatch)
+  setStep(state.swap.assets, state.swap.transactions, state.swap.isPartyB, state.swap.transactions.isVerified, dispatch)
   state = getState()
   setLocation(state.swap, state.router.location, dispatch)
 }

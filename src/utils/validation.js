@@ -55,10 +55,11 @@ function getCounterPartyErrors (assets, counterParty) {
   return errors
 }
 
-function getInitiationErrors (transactions, expiration, isVerified, isPartyB, quote) {
+function getInitiationErrors (assets, transactions, expiration, isVerified, isPartyB, quote) {
   const errors = {}
   if (isPartyB) {
-    if (!(isVerified && transactions.b.fund.confirmations >= config.minConfirmations)) {
+    const minConfirmations = cryptoassets[assets.b.currency].safeConfirmations
+    if (!(isVerified && transactions.b.fund.confirmations >= minConfirmations)) {
       errors.initiation = 'Counterparty has initiated, awaiting confirmations'
     }
     if (!(isVerified && transactions.b.fund.hash)) {
@@ -115,7 +116,7 @@ function isInitiateValid (swap) {
     getCurrencyInputErrors(swap.assets, swap.agent),
     getWalletErrors(swap.wallets, swap.assets, swap.isPartyB),
     getCounterPartyErrors(swap.assets, swap.counterParty),
-    getInitiationErrors(swap.transactions, swap.expiration, swap.transactions.isVerified, swap.isPartyB, swap.agent.quote),
+    getInitiationErrors(swap.assets, swap.transactions, swap.expiration, swap.transactions.isVerified, swap.isPartyB, swap.agent.quote),
     getQuoteErrors(swap)
   ]
 

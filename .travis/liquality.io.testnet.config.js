@@ -61,7 +61,6 @@ export default {
       explorerPath: 'https://rinkeby.etherscan.io/tx/0x'
     }
   },
-  minConfirmations: 0,
   hostName: 'Liquality',
   hostIcon: 'https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png',
   agents: ['agent'],
