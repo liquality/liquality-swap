@@ -1,5 +1,4 @@
 import moment from 'moment'
-import config from '../config'
 import cryptoassets from '@liquality/cryptoassets'
 import { isEthereumAsset } from './networks'
 import { generateSwapState } from './app-links'

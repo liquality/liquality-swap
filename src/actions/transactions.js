@@ -1,7 +1,6 @@
 import { replace } from 'connected-react-router'
 import moment from 'moment'
 import cryptoassets from '@liquality/cryptoassets'
-import config from '../config'
 import { actions as swapActions } from './swap'
 import { actions as secretActions } from './secretparams'
 import { steps } from '../components/SwapProgressStepper/steps'
