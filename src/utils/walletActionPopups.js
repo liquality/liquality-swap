@@ -26,6 +26,13 @@ const ethereumLedgerPopup = {
   ]
 }
 
+const rskLedgerPopup = {
+  ...ethereumLedgerPopup,
+  steps: [
+    ...ethereumLedgerPopup.steps.map(step => ({ ...step, type: 'RSK' }))
+  ]
+}
+
 const ERC20LedgerPopup = {
   steps: [
     { id: WALLET_ACTION_STEPS.SIGN, title: 'On your Ledger', type: 'Ethereum', label: 'Sign Message', description: 'View displayed hash, then sign', image: require('../icons/wallets/ledger/device.svg') },
@@ -83,15 +90,18 @@ const initiatePopups = {
   ledger: {
     BTC: bitcoinLedgerPopup,
     ETH: ethereumLedgerPopup,
+    RBTC: rskLedgerPopup,
     erc20: ERC20LedgerPopup
   },
   metamask: {
     ETH: ethereumMetamaskPopup,
+    RBTC: ethereumMetamaskPopup,
     erc20: ERC20MetamaskPopup
   },
   default: {
     BTC: defaultPopup,
     ETH: defaultPopup,
+    RBTC: defaultPopup,
     erc20: defaultERC20Popup
   }
 }
@@ -100,15 +110,18 @@ const claimPopups = {
   ledger: {
     BTC: toClaimPopup(bitcoinLedgerPopup),
     ETH: toEthereumClaimPopup(ethereumLedgerPopup),
+    RBTC: toEthereumClaimPopup(rskLedgerPopup),
     erc20: toEthereumClaimPopup(ethereumLedgerPopup)
   },
   metamask: {
     ETH: toEthereumClaimPopup(ethereumMetamaskPopup),
+    RBTC: toEthereumClaimPopup(ethereumMetamaskPopup),
     erc20: toEthereumClaimPopup(ERC20MetamaskPopup)
   },
   default: {
     BTC: toClaimPopup(defaultPopup),
     ETH: toEthereumClaimPopup(defaultPopup),
+    RBTC: toEthereumClaimPopup(defaultPopup),
     erc20: toEthereumClaimPopup(defaultERC20Popup)
   }
 }
@@ -117,15 +130,18 @@ const refundPopups = {
   ledger: {
     BTC: toRefundPopup(bitcoinLedgerPopup),
     ETH: toRefundPopup(ethereumLedgerPopup),
+    RBTC: toRefundPopup(rskLedgerPopup),
     erc20: toRefundPopup(ethereumLedgerPopup)
   },
   metamask: {
     ETH: toRefundPopup(ethereumMetamaskPopup),
+    RBTC: toRefundPopup(ethereumMetamaskPopup),
     erc20: toRefundPopup(ERC20MetamaskPopup)
   },
   default: {
     BTC: toRefundPopup(defaultPopup),
     ETH: toRefundPopup(defaultPopup),
+    RBTC: toRefundPopup(defaultPopup),
     erc20: toRefundPopup(defaultERC20Popup)
   }
 }
@@ -138,7 +154,6 @@ const popups = {
 
 // TODO: make more generic to cover all wallet types
 function getActionPopups (stage, asset, wallet) {
-  if (asset === 'RBTC') asset = 'ETH'
   const assetConfig = config.assets[asset]
   if (wallet) {
     if (wallet.includes('ledger')) {
