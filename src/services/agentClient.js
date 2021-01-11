@@ -1,10 +1,19 @@
 import moment from 'moment'
 import axios from 'axios'
+import pkg from '../../package.json'
+
+const VERSION_STRING = `SwapUI ${pkg.version} (CAL ${pkg.dependencies['@liquality/client'].replace('^', '').replace('~', '')})`
 
 class Agent {
   constructor (url) {
     this._url = url
-    this._axios = axios.create({baseURL: this._url})
+    this._axios = axios.create({
+      baseURL: this._url,
+      headers: {
+        'x-requested-with': VERSION_STRING,
+        'x-liquality-user-agent': VERSION_STRING
+      }
+    })
     this._axios.interceptors.response.use(function (response) {
       return response
     }, function (e) {
