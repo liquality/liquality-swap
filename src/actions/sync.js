@@ -112,7 +112,16 @@ async function verifyInitiateSwapTransaction (dispatch, getState) {
   const swapVerified = await catchSwapCallError(async () =>
     client.swap.verifyInitiateSwapTransaction(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty.b.address, secretParams.secretHash, swapExpiration.unix()),
   dispatch)
-  if (swapVerified) {
+
+  // ERC20 swaps have separate funding tx. Ensures funding tx has enough confirmations
+  const fundingTransaction = await catchSwapCallError(async () =>
+    client.swap.findFundSwapTransaction(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty.b.address, secretParams.secretHash, swapExpiration.unix()),
+  dispatch)
+  if (fundingTransaction === undefined) return
+
+  const fundingConfirmed = fundingTransaction ? fundingTransaction.confirmations >= cryptoassets[currency].safeConfirmations : true
+
+  if (swapVerified && fundingConfirmed) {
     dispatch(transactionActions.setIsVerified(true))
   }
 }
