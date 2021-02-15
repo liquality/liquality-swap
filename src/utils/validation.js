@@ -1,5 +1,6 @@
 import moment from 'moment'
 import cryptoassets from '@liquality/cryptoassets'
+import config from '../config'
 import { isEthereumAsset } from './networks'
 import { generateSwapState } from './app-links'
 import { getClaimExpiration } from './expiration'
@@ -59,7 +60,7 @@ function getInitiationErrors (assets, transactions, expiration, isVerified, isPa
   if (isPartyB) {
     const minConfirmations = cryptoassets[assets.b.currency].safeConfirmations
     if (!(isVerified && transactions.b.fund.confirmations >= minConfirmations)) {
-      errors.initiation = 'Counterparty has initiated, awaiting confirmations'
+      errors.initiation = `Counterparty has initiated, awaiting minimum confirmations (${minConfirmations})`
     }
     if (!(isVerified && transactions.b.fund.hash)) {
       errors.initiation = 'Counterparty hasn\'t initiated'
@@ -116,8 +117,15 @@ function isInitiateValid (swap) {
     getWalletErrors(swap.wallets, swap.assets, swap.isPartyB),
     getCounterPartyErrors(swap.assets, swap.counterParty),
     getInitiationErrors(swap.assets, swap.transactions, swap.expiration, swap.transactions.isVerified, swap.isPartyB, swap.agent.quote),
-    getQuoteErrors(swap)
   ]
+
+  const agentEnabled = config.agents && config.agents.length
+  if (agentEnabled) {
+    errors = [
+      ...errors,
+      getQuoteErrors(swap)
+    ]
+  }
 
   const numErrors = errors.reduce((prev, next) => prev + Object.keys(next).length, 0)
 
