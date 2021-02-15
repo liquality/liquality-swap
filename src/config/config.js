@@ -61,5 +61,6 @@ export default {
     }
   },
   debug: true,
+  defaultFeeSpeed: 'average',
   injectFooter: `<p style="text-align: center;"><a href="https://github.com/liquality/chainabstractionlayer" target="_blank">Powered by ChainAbstractionLayer</a></p>`
 }

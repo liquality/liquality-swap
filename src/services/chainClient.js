@@ -8,6 +8,8 @@ import BitcoinLedgerProvider from '@liquality/bitcoin-ledger-provider'
 import BitcoinWalletApiProvider from '@liquality/bitcoin-wallet-api-provider'
 import BitcoinSwapProvider from '@liquality/bitcoin-swap-provider'
 import BitcoinNodeWalletProvider from '@liquality/bitcoin-node-wallet-provider'
+import BitcoinRpcFeeProvider from '@liquality/bitcoin-rpc-fee-provider'
+import BitcoinEarnFeeProvider from '@liquality/bitcoin-earn-fee-provider'
 import BitcoinNetworks from '@liquality/bitcoin-networks'
 
 import EthereumRpcProvider from '@liquality/ethereum-rpc-provider'
@@ -19,6 +21,8 @@ import EthereumErc20Provider from '@liquality/ethereum-erc20-provider'
 import EthereumErc20SwapProvider from '@liquality/ethereum-erc20-swap-provider'
 import EthereumErc20ScraperSwapFindProvider from '@liquality/ethereum-erc20-scraper-swap-find-provider'
 import EthereumWalletApiProvider from '@liquality/ethereum-wallet-api-provider'
+import EthereumRpcFeeProvider from '@liquality/ethereum-rpc-fee-provider'
+import EthereumGasStationFeeProvider from '@liquality/ethereum-gas-station-fee-provider'
 
 import config from '../config'
 
@@ -65,6 +69,9 @@ function createBtcClient (asset, wallet) {
   btcClient.addProvider(new BitcoinSwapProvider(BitcoinNetworks[btcConfig.network], btcConfig.swapMode))
   if (btcConfig.api) btcClient.addProvider(new BitcoinEsploraSwapFindProvider(btcConfig.api.url))
 
+  if (BitcoinNetworks[btcConfig.network].isTestnet) btcClient.addProvider(new BitcoinRpcFeeProvider())
+  else btcClient.addProvider(new BitcoinEarnFeeProvider('https://liquality.io/swap/mempool/v1/fees/recommended'))
+
   return btcClient
 }
 
@@ -97,6 +104,12 @@ function createEthClient (asset, wallet) {
     if (isERC20) ethClient.addProvider(new EthereumErc20ScraperSwapFindProvider(assetConfig.api.url))
     else ethClient.addProvider(new EthereumScraperSwapFindProvider(assetConfig.api.url))
   }
+
+  const FeeProvider = EthereumNetworks[assetConfig.network].isTestnet || asset === 'RBTC'
+    ? EthereumRpcFeeProvider
+    : EthereumGasStationFeeProvider
+
+  ethClient.addProvider(new FeeProvider())
 
   return ethClient
 }

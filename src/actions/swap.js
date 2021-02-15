@@ -172,13 +172,15 @@ async function lockFunds (dispatch, getState) {
   const swapExpiration = isPartyB ? getFundExpiration(expiration, 'b').time : expiration
 
   const blockNumber = await client.chain.getBlockHeight()
+  const fees = await client.chain.getFees()
   const valueInUnit = cryptoassets[assets.a.currency].currencyToUnit(assets.a.value).toNumber() // TODO: This should be passed as BigNumber
   const initiateSwapParams = [
     valueInUnit,
     canonicalCounterParty.a.address,
     canonicalWallets.a.addresses[0],
     secretParams.secretHash,
-    swapExpiration.unix()
+    swapExpiration.unix(),
+    fees[config.defaultFeeSpeed].fee
   ]
   if (config.debug) { // TODO: enable debugging universally on all CAL functions (chainClient.js)
     console.log('Initiating Swap', initiateSwapParams)
@@ -305,6 +307,7 @@ async function unlockFunds (dispatch, getState) {
   } = getState().swap
   const { wallets: canonicalWallets, counterParty: canonicalCounterParty } = canonicalAppState.swap || getState().swap
   const client = getClient(assets.b.currency, wallets.b.type)
+  const fees = await client.chain.getFees()
   const blockNumber = await client.chain.getBlockHeight()
   const swapExpiration = getClaimExpiration(expiration, isPartyB ? 'b' : 'a').time
   const claimSwapParams = [
@@ -312,7 +315,8 @@ async function unlockFunds (dispatch, getState) {
     canonicalWallets.b.addresses[0],
     canonicalCounterParty.b.address,
     secretParams.secret,
-    swapExpiration.unix()
+    swapExpiration.unix(),
+    fees[config.defaultFeeSpeed].fee
   ]
   if (config.debug) { // TODO: enable debugging universally on all CAL functions (chainClient.js)
     console.log('Claiming Swap', claimSwapParams)
@@ -358,13 +362,15 @@ function refundSwap () {
 
     const client = getClient(assets.a.currency, wallets.a.type)
     const swapExpiration = getFundExpiration(expiration, isPartyB ? 'b' : 'a').time
+    const fees = await client.chain.getFees()
     const blockNumber = await client.chain.getBlockHeight()
     const refundSwapParams = [
       transactions.a.fund.hash,
       canonicalCounterParty.a.address,
       canonicalWallets.a.addresses[0],
       secretParams.secretHash,
-      swapExpiration.unix()
+      swapExpiration.unix(),
+      fees[config.defaultFeeSpeed].fee
     ]
     console.log('Refunding Swap', refundSwapParams)
     await setRefundWalletSteps(dispatch, getState)

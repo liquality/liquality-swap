@@ -100,6 +100,7 @@ export default {
       explorerPath: 'https://etherscan.io/tx/0x'
     }
   },
+  defaultFeeSpeed: 'average',
   hostName: 'Liquality',
   hostIcon: 'https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png',
   agents: ['agent'],
