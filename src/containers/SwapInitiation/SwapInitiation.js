@@ -149,7 +149,8 @@ class SwapInitiation extends Component {
     const termsImmutable = this.props.isPartyB
     const limits = calculateLimits(this.props.agent.markets, assetA.currency, assetB.currency)
     const selectorAssets = this.getSelectorAssets()
-    const switchSidesAvailable = this.props.agent.markets.find(market => market.from === assetB.currency && market.to === assetA.currency)
+    const switchSidesAvailable = !config.agents
+      || this.props.agent.markets.find(market => market.from === assetB.currency && market.to === assetA.currency)
     const showCountdown = this.state.interval
 
     return <div className='SwapInitiation'>
