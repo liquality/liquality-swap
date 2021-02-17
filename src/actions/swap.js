@@ -180,7 +180,7 @@ async function lockFunds (dispatch, getState) {
     canonicalWallets.a.addresses[0],
     secretParams.secretHash,
     swapExpiration.unix(),
-    fees[config.defaultFeeSpeed].fee
+    fees[config.defaultFee].fee
   ]
   if (config.debug) { // TODO: enable debugging universally on all CAL functions (chainClient.js)
     console.log('Initiating Swap', initiateSwapParams)
@@ -316,7 +316,7 @@ async function unlockFunds (dispatch, getState) {
     canonicalCounterParty.b.address,
     secretParams.secret,
     swapExpiration.unix(),
-    fees[config.defaultFeeSpeed].fee
+    fees[config.defaultFee].fee
   ]
   if (config.debug) { // TODO: enable debugging universally on all CAL functions (chainClient.js)
     console.log('Claiming Swap', claimSwapParams)
@@ -370,7 +370,7 @@ function refundSwap () {
       canonicalWallets.a.addresses[0],
       secretParams.secretHash,
       swapExpiration.unix(),
-      fees[config.defaultFeeSpeed].fee
+      fees[config.defaultFee].fee
     ]
     console.log('Refunding Swap', refundSwapParams)
     await setRefundWalletSteps(dispatch, getState)
