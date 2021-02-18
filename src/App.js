@@ -26,11 +26,11 @@ window.addEventListener('unhandledrejection', e => errorHandler(e.reason))
 
 if (initialAppState.swap) {
   store.dispatch(transactionActions.setTransaction(
-    'a', 'fund', initialAppState.swap.transactions.a.fund
+    'a', 'initiation', initialAppState.swap.transactions.a.initiation
   ))
-  if (initialAppState.swap.transactions.b.fund) {
+  if (initialAppState.swap.transactions.b.initiation) {
     store.dispatch(transactionActions.setTransaction(
-      'b', 'fund', initialAppState.swap.transactions.b.fund
+      'b', 'initiation', initialAppState.swap.transactions.b.initiation
     ))
   }
   if (initialAppState.swap.isPartyB) {

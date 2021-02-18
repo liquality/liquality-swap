@@ -44,7 +44,7 @@ async function findInitiateSwapTransaction (party, blockNumber, dispatch, getSta
     client.swap.findInitiateSwapTransaction(valueInUnit, addresses[0], counterParty[party].address, secretParams.secretHash, swapExpiration.unix(), blockNumber),
   dispatch)
   if (initiateTransaction) {
-    dispatch(transactionActions.setTransaction(party, 'fund', initiateTransaction))
+    dispatch(transactionActions.setTransaction(party, 'initiation', initiateTransaction))
   }
 }
 
@@ -64,7 +64,7 @@ async function findClaimSwapTransaction (party, blockNumber, dispatch, getState)
   const recipientAddress = oppositeParty === 'a' ? counterParty[oppositeParty].address : wallets[oppositeParty].addresses[0]
   const refundAddress = oppositeParty === 'a' ? wallets[oppositeParty].addresses[0] : counterParty[oppositeParty].address
   const claimTransaction = await catchSwapCallError(async () =>
-    client.swap.findClaimSwapTransaction(transactions[oppositeParty].fund.hash, recipientAddress, refundAddress, secretParams.secretHash, swapExpiration.unix(), blockNumber),
+    client.swap.findClaimSwapTransaction(transactions[oppositeParty].initiation.hash, recipientAddress, refundAddress, secretParams.secretHash, swapExpiration.unix(), blockNumber),
   dispatch)
   if (claimTransaction) {
     dispatch(transactionActions.setTransaction(party, 'claim', claimTransaction))
@@ -89,7 +89,7 @@ async function findRefundSwapTransaction (party, blockNumber, dispatch, getState
     swapExpiration = isPartyB ? expiration : getFundExpiration(expiration, 'b').time
   }
   const refundTransaction = await catchSwapCallError(async () =>
-    client.swap.findRefundSwapTransaction(transactions[party].fund.hash, counterParty[party].address, wallets[party].addresses[0], secretParams.secretHash, swapExpiration.unix(), blockNumber),
+    client.swap.findRefundSwapTransaction(transactions[party].initiation.hash, counterParty[party].address, wallets[party].addresses[0], secretParams.secretHash, swapExpiration.unix(), blockNumber),
   dispatch)
   if (refundTransaction) {
     dispatch(transactionActions.setTransaction(party, 'refund', refundTransaction))
@@ -110,12 +110,12 @@ async function verifyInitiateSwapTransaction (dispatch, getState) {
   const valueInUnit = cryptoassets[currency].currencyToUnit(value).toNumber() // TODO: This should be passed as BigNumber
   const swapExpiration = isPartyB ? expiration : getClaimExpiration(expiration, 'a').time
   const swapVerified = await catchSwapCallError(async () =>
-    client.swap.verifyInitiateSwapTransaction(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty.b.address, secretParams.secretHash, swapExpiration.unix()),
+    client.swap.verifyInitiateSwapTransaction(transactions.b.initiation.hash, valueInUnit, addresses[0], counterParty.b.address, secretParams.secretHash, swapExpiration.unix()),
   dispatch)
 
   // ERC20 swaps have separate funding tx. Ensures funding tx has enough confirmations
   const fundingTransaction = await catchSwapCallError(async () =>
-    client.swap.findFundSwapTransaction(transactions.b.fund.hash, valueInUnit, addresses[0], counterParty.b.address, secretParams.secretHash, swapExpiration.unix()),
+    client.swap.findFundSwapTransaction(transactions.b.initiation.hash, valueInUnit, addresses[0], counterParty.b.address, secretParams.secretHash, swapExpiration.unix()),
   dispatch)
   if (fundingTransaction === undefined) return
 
@@ -138,11 +138,11 @@ function sync (party) {
     do {
       let swap = getState().swap
       if (!swap.sync[party].synced) {
-        if (!swap.transactions[party].fund.hash) {
+        if (!swap.transactions[party].initiation.hash) {
           await findInitiateSwapTransaction(party, blockNumber, dispatch, getState)
         }
         swap = getState().swap
-        if (swap.transactions[party].fund.hash) {
+        if (swap.transactions[party].initiation.hash) {
           if (party === 'b' && !swap.transactions.isVerified) {
             await verifyInitiateSwapTransaction(dispatch, getState)
           }

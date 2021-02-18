@@ -50,8 +50,15 @@ class CurrencyInput extends Component {
     const minString = this.props.limits.min.toFixed()
     const maxString = this.props.limits.max.toFixed()
     return <span>
-      Min: <a href='javascript:void(0)' onClick={() => this.props.limits.onClick(this.props.limits.min)}>{minString}</a>&nbsp;
-      Max: <a href='javascript:void(0)' onClick={() => this.props.limits.onClick(this.props.limits.max)}>{maxString}</a>
+      Min:&nbsp;
+      { this.props.disabled
+        ? <>{minString}</>
+        : <a href='javascript:void(0)' onClick={() => this.props.limits.onClick(this.props.limits.min)}>{minString}</a> }
+      &nbsp;
+      Max:&nbsp;
+      { this.props.disabled
+        ? <>{minString}</>
+        : <a href='javascript:void(0)' onClick={() => this.props.limits.onClick(this.props.limits.max)}>{maxString}</a> }
     </span>
   }
 

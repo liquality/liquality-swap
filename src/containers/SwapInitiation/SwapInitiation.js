@@ -145,12 +145,12 @@ class SwapInitiation extends Component {
     const { a: assetA, b: assetB } = this.props.assets
     const errors = getInitiationErrors(this.props.assets, this.props.transactions, this.props.expiration, this.props.isVerified, this.props.isPartyB, this.props.agent.quote)
     const showRate = assetA.value.gt(0) && this.props.assets.rate && this.props.assets.rate.gt(0)
-    const counterPartyLocked = !!(this.props.agent.markets.length || this.props.isPartyB)
-    const termsImmutable = this.props.isPartyB
+    const termsImmutable = !!(this.props.isPartyB || this.props.transactions.a.initiation.hash)
+    const counterPartyLocked = !!(this.props.agent.markets.length || termsImmutable)
     const limits = calculateLimits(this.props.agent.markets, assetA.currency, assetB.currency)
     const selectorAssets = this.getSelectorAssets()
-    const switchSidesAvailable = !config.agents
-      || this.props.agent.markets.find(market => market.from === assetB.currency && market.to === assetA.currency)
+    const switchSidesAvailable = !config.agents ||
+      this.props.agent.markets.find(market => market.from === assetB.currency && market.to === assetA.currency)
     const showCountdown = this.state.interval
 
     return <div className='SwapInitiation'>
@@ -204,7 +204,7 @@ class SwapInitiation extends Component {
         { this.props.isPartyB
           ? <ExpirationDetails />
           : <InitiatorExpirationInfo /> }
-        {!errors.initiation && !this.props.isPartyB && <Button wide primary loadingMessage={this.props.loadingMessage} onClick={this.props.initiateSwap}>{ this.props.agent.markets.length ? 'Accept Quote and Initiate Swap' : 'Initiate Swap' }</Button>}
+        {!errors.initiation && !this.props.isPartyB && <Button wide primary loadingMessage={this.props.loadingMessage} onClick={this.props.createSwap}>{ this.props.agent.markets.length ? 'Accept Quote and Initiate Swap' : 'Initiate Swap' }</Button>}
         {!errors.initiation && this.props.isPartyB && <Button wide primary loadingMessage={this.props.loadingMessage} onClick={this.props.confirmSwap}>Confirm Terms</Button>}
         {errors.initiation && <Button primary disabled>{ errors.initiation }</Button>}<br />
         {/* TODO: Do actual resetting of app state instead of refresh. */}

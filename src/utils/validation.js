@@ -58,12 +58,12 @@ function getCounterPartyErrors (assets, counterParty) {
 function getInitiationErrors (assets, transactions, expiration, isVerified, isPartyB, quote) {
   const errors = {}
   if (isPartyB) {
-    const minConfirmations = cryptoassets[assets.b.currency].safeConfirmations
-    if (!(isVerified && transactions.b.fund.confirmations >= minConfirmations)) {
-      errors.initiation = `Counterparty has initiated, awaiting minimum confirmations (${minConfirmations})`
-    }
-    if (!(isVerified && transactions.b.fund.hash)) {
+    if (!(isVerified && transactions.b.initiation.hash)) {
       errors.initiation = 'Counterparty hasn\'t initiated'
+    }
+    const minConfirmations = cryptoassets[assets.b.currency].safeConfirmations
+    if (!(isVerified && transactions.b.initiation.confirmations >= minConfirmations)) {
+      errors.initiation = `Counterparty has initiated, awaiting minimum confirmations (${minConfirmations})`
     }
     const safeConfirmTime = getClaimExpiration(expiration, isPartyB ? 'b' : 'a').time
     if (moment().isAfter(safeConfirmTime)) {
@@ -116,7 +116,7 @@ function isInitiateValid (swap) {
     getCurrencyInputErrors(swap.assets, swap.agent),
     getWalletErrors(swap.wallets, swap.assets, swap.isPartyB),
     getCounterPartyErrors(swap.assets, swap.counterParty),
-    getInitiationErrors(swap.assets, swap.transactions, swap.expiration, swap.transactions.isVerified, swap.isPartyB, swap.agent.quote),
+    getInitiationErrors(swap.assets, swap.transactions, swap.expiration, swap.transactions.isVerified, swap.isPartyB, swap.agent.quote)
   ]
 
   const agentEnabled = config.agents && config.agents.length

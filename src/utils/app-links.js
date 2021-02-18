@@ -31,8 +31,10 @@ function generateLink (swap, counterparty = false) {
     ccy2Addr: counterparty ? counterPartyB.address : walletB.addresses[0],
     ccy2CounterPartyAddr: counterparty ? walletB.addresses[0] : counterPartyB.address,
 
-    aFundHash: transactionsA.fund.hash,
-    bFundHash: transactionsB.fund.hash,
+    aInitiationHash: transactionsA.initiation.hash,
+    aFundHash: transactionsA.fund ? transactionsA.fund.hash : undefined,
+    bInitiationHash: transactionsB.initiation.hash,
+    bFundHash: transactionsB.fund ? transactionsB.fund.hash : undefined,
 
     aStartBlock: transactionsA.startBlock,
     bStartBlock: transactionsB.startBlock,
@@ -66,8 +68,8 @@ function generateSwapState (location) {
       b: { address: urlParams.ccy2CounterPartyAddr }
     },
     transactions: {
-      a: { fund: { hash: urlParams.aFundHash }, claim: {}, refund: {}, startBlock: parseInt(urlParams.aStartBlock) },
-      b: { fund: { hash: urlParams.bFundHash }, claim: {}, refund: {}, startBlock: parseInt(urlParams.bStartBlock) }
+      a: { initiation: { hash: urlParams.aInitiationHash }, fund: { hash: urlParams.aFundHash }, claim: {}, refund: {}, startBlock: parseInt(urlParams.aStartBlock) },
+      b: { initiation: { hash: urlParams.bInitiationHash }, fund: { hash: urlParams.bFundHash }, claim: {}, refund: {}, startBlock: parseInt(urlParams.bStartBlock) }
     },
     secretParams: {
       secretHash: urlParams.secretHash

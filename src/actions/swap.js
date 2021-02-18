@@ -16,6 +16,7 @@ import { wallets as walletsConfig } from '../utils/wallets'
 import { getFundExpiration, getClaimExpiration, generateExpiration } from '../utils/expiration'
 import { isInitiateValid } from '../utils/validation'
 import { getActionPopups, WALLET_ACTION_STEPS, SWAP_STAGES } from '../utils/walletActionPopups'
+import { sleep } from '../utils/async'
 
 const types = {
   SWITCH_SIDES: 'SWITCH_SIDES',
@@ -134,9 +135,14 @@ async function setRefundWalletSteps (dispatch, getState) {
 async function generateSecret (dispatch, getState) {
   const {
     assets,
-    expiration
+    expiration,
+    wallets,
+    transactions,
+    secretParams
   } = getState().swap
-  const { wallets } = getState().swap
+  // Do not regenerate if initiation has already happened
+  if (secretParams.secret && transactions.a.initiation.hash) return
+
   const { wallets: canonicalWallets, counterParty: canonicalCounterParty } = canonicalAppState.swap || getState().swap
   const client = getClient(assets.a.currency, wallets.a.type)
   const secretMsg = `Swap terms:
@@ -158,14 +164,18 @@ Time ref: ${expiration.unix()}`
   })
 }
 
-async function lockFunds (dispatch, getState) {
+async function initiateSwap (dispatch, getState) {
   const {
     assets,
     wallets,
     secretParams,
     expiration,
+    transactions,
     isPartyB
   } = getState().swap
+
+  if (transactions.a.initiation.hash) return
+
   const { wallets: canonicalWallets, counterParty: canonicalCounterParty } = canonicalAppState.swap || getState().swap
   const client = getClient(assets.a.currency, wallets.a.type)
 
@@ -189,8 +199,60 @@ async function lockFunds (dispatch, getState) {
   if (wallets.a.type === 'metamask') { // TODO: fix properly
     alert('Please do not use the "Speed up" function to bump the priority of the transaction as this is not yet supported.')
   }
-  dispatch(transactionActions.setTransaction('a', 'fund', { hash: initiationTx.hash }))
+  dispatch(transactionActions.setTransaction('a', 'initiation', { hash: initiationTx.hash }))
   dispatch(transactionActions.setStartBlock('a', blockNumber))
+}
+
+async function fundSwap (dispatch, getState) {
+  const {
+    assets,
+    wallets,
+    transactions,
+    secretParams,
+    expiration,
+    isPartyB
+  } = getState().swap
+  const { wallets: canonicalWallets, counterParty: canonicalCounterParty } = canonicalAppState.swap || getState().swap
+  const client = getClient(assets.a.currency, wallets.a.type)
+
+  // Only ERC20 swaps need fund step
+  const isERC20 = config.assets[assets.a.currency].type === 'erc20'
+  if (!isERC20) return
+
+  let initiationTransactionReceipt = null
+  while (initiationTransactionReceipt === null) {
+    initiationTransactionReceipt = await client.getMethod('getTransactionReceipt')(transactions.a.initiation.hash)
+    await sleep(5000)
+  }
+  const initiationSuccessful = initiationTransactionReceipt.contractAddress && initiationTransactionReceipt.status === '1'
+
+  if (!initiationSuccessful) {
+    throw new Error(`ERC20 Swap Initiation Transaction Failed: ${initiationTransactionReceipt.transactionHash}`)
+  }
+
+  const swapExpiration = getFundExpiration(expiration, isPartyB ? 'b' : 'a').time
+
+  const fees = await client.chain.getFees()
+  const valueInUnit = cryptoassets[assets.a.currency].currencyToUnit(assets.a.value).toNumber() // TODO: This should be passed as BigNumber
+  const fundSwapParams = [
+    transactions.a.initiation.hash,
+    valueInUnit,
+    canonicalCounterParty.a.address,
+    canonicalWallets.a.addresses[0],
+    secretParams.secretHash,
+    swapExpiration.unix(),
+    fees[config.defaultFee].fee
+  ]
+  if (config.debug) { // TODO: enable debugging universally on all CAL functions (chainClient.js)
+    console.log('Funding Swap', fundSwapParams)
+  }
+  const fundTx = await client.swap.fundSwap(...fundSwapParams)
+  if (fundTx) {
+    if (wallets.a.type === 'metamask') { // TODO: fix properly
+      alert('Please do not use the "Speed up" function to bump the priority of the transaction as this is not yet supported.')
+    }
+    dispatch(transactionActions.setTransaction('a', 'fund', { hash: fundTx.hash }))
+  }
 }
 
 async function withWalletPopupStep (step, dispatch, getState, func) {
@@ -227,7 +289,9 @@ async function withLockedQuote (dispatch, getState, func) {
   try {
     await func(dispatch, getState)
   } catch (e) {
-    dispatch(agentActions.unlockQuote())
+    const { transactions } = getState().swap
+    // Do not unlock quote if initiation has happened
+    if (!transactions.a.initiation.hash) dispatch(agentActions.unlockQuote())
     throw (e)
   }
 }
@@ -246,19 +310,30 @@ async function submitOrder (quote, dispatch, getState) {
   const swap = getState().swap
   await getAgentClient(swap.agent.quote.agent).submitOrder(
     quote.id,
-    swap.transactions.a.fund.hash,
+    swap.transactions.a.initiation.hash,
     swap.wallets.a.addresses[0],
     swap.wallets.b.addresses[0],
     swap.secretParams.secretHash
   )
 }
 
-function initiateSwap () {
+function createExpiration (dispatch, getState) {
+  const {
+    transactions,
+    agent: { quote },
+    expiration
+  } = getState().swap
+  // Do not regenerate expiration if initiation has happened
+  if (expiration && transactions.a.initiation.hash) return
+  const generatedExpiration = quote ? quote.swapExpiration : generateExpiration()
+  dispatch(setExpiration(generatedExpiration))
+}
+
+function createSwap () {
   return async (dispatch, getState) => {
     dispatch(showErrors())
     const quote = getState().swap.agent.quote
-    const expiration = quote ? quote.swapExpiration : generateExpiration()
-    dispatch(setExpiration(expiration))
+    createExpiration(dispatch, getState)
     const initiateValid = isInitiateValid(getState().swap)
     if (!initiateValid) return
     await withLockedQuote(dispatch, getState, async () => {
@@ -268,7 +343,8 @@ function initiateSwap () {
       })
       await withWalletPopupStep(WALLET_ACTION_STEPS.CONFIRM, dispatch, getState, async () => {
         await withLoadingMessage('a', dispatch, getState, async () => {
-          await lockFunds(dispatch, getState)
+          await initiateSwap(dispatch, getState)
+          await fundSwap(dispatch, getState)
         })
       })
       await setCounterPartyStartBlock(dispatch, getState)
@@ -290,13 +366,16 @@ function confirmSwap () {
     if (!initiateValid) return
     await setInitiationWalletPopups(true, dispatch, getState)
     await withWalletPopupStep(WALLET_ACTION_STEPS.CONFIRM, dispatch, getState, async () => {
-      await withLoadingMessage('a', dispatch, getState, lockFunds)
+      await withLoadingMessage('a', dispatch, getState, async () => {
+        await initiateSwap(dispatch, getState)
+        await fundSwap(dispatch, getState)
+      })
     })
     dispatch(replace('/backupLink'))
   }
 }
 
-async function unlockFunds (dispatch, getState) {
+async function claimSwap (dispatch, getState) {
   const {
     assets,
     wallets,
@@ -311,7 +390,7 @@ async function unlockFunds (dispatch, getState) {
   const blockNumber = await client.chain.getBlockHeight()
   const swapExpiration = getClaimExpiration(expiration, isPartyB ? 'b' : 'a').time
   const claimSwapParams = [
-    transactions.b.fund.hash,
+    transactions.b.initiation.hash,
     canonicalWallets.b.addresses[0],
     canonicalCounterParty.b.address,
     secretParams.secret,
@@ -341,7 +420,7 @@ function redeemSwap () {
     await withWalletPopupStep(WALLET_ACTION_STEPS.CONFIRM, dispatch, getState, async () => {
       await ensureWallet('b', dispatch, getState)
       await setClaimWalletPopups(secretRequired, dispatch, getState)
-      await withLoadingMessage('b', dispatch, getState, unlockFunds)
+      await withLoadingMessage('b', dispatch, getState, claimSwap)
     })
   }
 }
@@ -365,7 +444,7 @@ function refundSwap () {
     const fees = await client.chain.getFees()
     const blockNumber = await client.chain.getBlockHeight()
     const refundSwapParams = [
-      transactions.a.fund.hash,
+      transactions.a.initiation.hash,
       canonicalCounterParty.a.address,
       canonicalWallets.a.addresses[0],
       secretParams.secretHash,
@@ -391,7 +470,7 @@ const actions = {
   showErrors,
   hideErrors,
   reset,
-  initiateSwap,
+  createSwap,
   confirmSwap,
   redeemSwap,
   refundSwap

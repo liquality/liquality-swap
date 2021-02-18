@@ -25,7 +25,7 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   {
-    initiateSwap: actions.initiateSwap,
+    createSwap: actions.createSwap,
     confirmSwap: actions.confirmSwap,
     setMarket: agentActions.setMarket,
     retrieveAgentQuote: agentActions.retrieveAgentQuote,
