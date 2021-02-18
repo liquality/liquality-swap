@@ -14,6 +14,7 @@ deploy_app: &deploy_app
     - eval "$(ssh-agent -s)"
     - chmod 600 /tmp/deploy_rsa
     - ssh-add /tmp/deploy_rsa
+    - sudo apt-get update
     - sudo apt-get install -y libusb-1.0-0 libusb-1.0-0-dev libudev-dev
     - cp $APP_CONFIG ./src/config/config.js
   script:
