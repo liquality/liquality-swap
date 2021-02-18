@@ -6,6 +6,11 @@ node_js:
 addons:
   ssh_known_hosts:
     - 40.71.224.69
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-5
 
 deploy_app: &deploy_app
   stage: deploy
