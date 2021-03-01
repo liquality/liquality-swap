@@ -104,7 +104,7 @@ async function monitorTransaction (swap, party, kind, tx, dispatch, getState) {
     try {
       updatedTransaction = await client.chain.getTransactionByHash(tx.hash)
     } catch (e) {
-      console.error(`Getting transaction ${tx.hash} failed. Trying again later.`)
+      console.warn(`Getting transaction ${tx.hash} failed. Trying again later.`)
     }
     if (updatedTransaction) {
       dispatch({ type: types.SET_TRANSACTION, party, kind, tx: updatedTransaction })
