@@ -100,7 +100,8 @@ export default {
               levels: ['error']
             })
           ],
-          release: '${footerVersion}'
+          release: '${footerVersion}',
+          ignoreErrors: ['NodeError: timeout of 0ms exceeded', 'NodeError: Network Error']
         })
       });
     });

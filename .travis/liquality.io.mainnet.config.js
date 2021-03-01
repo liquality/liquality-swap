@@ -142,6 +142,7 @@ export default {
               new Sentry.Integrations.BrowserTracing()
             ],
             release: '${footerVersion}',
+            ignoreErrors: ['NodeError: timeout of 0ms exceeded', 'NodeError: Network Error'],
             tracesSampleRate: 1.0
           })
         });
