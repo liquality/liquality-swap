@@ -389,12 +389,15 @@ async function claimSwap (dispatch, getState) {
   const fees = await client.chain.getFees()
   const blockNumber = await client.chain.getBlockHeight()
   const swapExpiration = getClaimExpiration(expiration, isPartyB ? 'b' : 'a').time
+  const valueInUnit = cryptoassets[assets.b.currency].currencyToUnit(assets.b.value).toNumber() // TODO: This should be passed as BigNumber
   const claimSwapParams = [
     transactions.b.initiation.hash,
+    valueInUnit,
     canonicalWallets.b.addresses[0],
     canonicalCounterParty.b.address,
-    secretParams.secret,
+    secretParams.secretHash,
     swapExpiration.unix(),
+    secretParams.secret,
     fees[config.defaultFee].fee
   ]
   if (config.debug) { // TODO: enable debugging universally on all CAL functions (chainClient.js)
@@ -441,10 +444,12 @@ function refundSwap () {
 
     const client = getClient(assets.a.currency, wallets.a.type)
     const swapExpiration = getFundExpiration(expiration, isPartyB ? 'b' : 'a').time
+    const valueInUnit = cryptoassets[assets.a.currency].currencyToUnit(assets.a.value).toNumber() // TODO: This should be passed as BigNumber
     const fees = await client.chain.getFees()
     const blockNumber = await client.chain.getBlockHeight()
     const refundSwapParams = [
       transactions.a.initiation.hash,
+      valueInUnit,
       canonicalCounterParty.a.address,
       canonicalWallets.a.addresses[0],
       secretParams.secretHash,
