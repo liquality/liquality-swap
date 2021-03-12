@@ -1,6 +1,7 @@
 import cryptoassets from '@liquality/cryptoassets'
 import { getClient } from '../services/chainClient'
 import { sleep } from '../utils/async'
+import { actions as secretActions } from './secretparams'
 import { actions as transactionActions } from './transactions'
 import { getFundExpiration, getExpirationForParty, getClaimExpiration } from '../utils/expiration'
 import config from '../config'
@@ -67,6 +68,7 @@ async function findClaimSwapTransaction (party, blockNumber, dispatch, getState)
     client.swap.findClaimSwapTransaction(transactions[oppositeParty].initiation.hash, recipientAddress, refundAddress, secretParams.secretHash, swapExpiration.unix(), blockNumber),
   dispatch)
   if (claimTransaction) {
+    dispatch(secretActions.setSecret(claimTransaction.secret))
     dispatch(transactionActions.setTransaction(party, 'claim', claimTransaction))
   }
 }

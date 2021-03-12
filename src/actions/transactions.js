@@ -3,7 +3,6 @@ import moment from 'moment'
 import cryptoassets from '@liquality/cryptoassets'
 import config from '../config'
 import { actions as swapActions } from './swap'
-import { actions as secretActions } from './secretparams'
 import { steps } from '../components/SwapProgressStepper/steps'
 import { getClient } from '../services/chainClient'
 import { sleep } from '../utils/async'
@@ -21,13 +20,6 @@ function setIsVerified (isVerified) {
     dispatch({ type: types.SET_IS_VERIFIED, isVerified })
     updateStep(dispatch, getState)
   }
-}
-
-async function setSecret (swap, party, tx, dispatch) {
-  const currentParty = party === 'a' ? 'b' : 'a'
-  const client = getClient(swap.assets[currentParty].currency, swap.wallets[currentParty].type)
-  const secret = await client.swap.getSwapSecret(tx.hash)
-  dispatch(secretActions.setSecret(secret))
 }
 
 function setStep (assets, transactions, isPartyB, isVerified, dispatch) {
@@ -108,9 +100,6 @@ async function monitorTransaction (swap, party, kind, tx, dispatch, getState) {
     }
     if (updatedTransaction) {
       dispatch({ type: types.SET_TRANSACTION, party, kind, tx: updatedTransaction })
-      if (kind === 'claim') {
-        await setSecret(swap, party, updatedTransaction, dispatch)
-      }
     }
     updateStep(dispatch, getState)
     await sleep(5000)
