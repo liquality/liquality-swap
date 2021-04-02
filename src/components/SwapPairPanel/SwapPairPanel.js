@@ -33,7 +33,6 @@ class SwapPairPanel extends Component {
             )}
             alt={wantCurrency.code}
             onClick={this.props.onWantClick} />}
-          <img src={AssetsBG} className='SwapPairPanel_assetsBG' alt='' />
           {this.props.icon && <img
             src={this.props.icon} alt=''
             className={classNames('SwapPairPanel_icon', { 'disabled': this.props.iconDisabled })}

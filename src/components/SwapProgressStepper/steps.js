@@ -7,7 +7,7 @@ const steps = Object.freeze({
 
 const stepData = [
   { id: steps.INITIATION, label: 'Swap Initiation' },
-  { id: steps.AGREEMENT, label: 'Confirming Terms' },
+  { id: steps.AGREEMENT, label: 'Confirming Transaction' },
   { id: steps.CLAIMING, label: 'Claiming' },
   { id: steps.SETTLED, label: 'Settlement' }
 ]

@@ -4,6 +4,9 @@
 .SwapInitiation {
   &_assets {
     position: relative;
+    margin-top: 25%;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
     z-index: $layer-popup;
   }
 

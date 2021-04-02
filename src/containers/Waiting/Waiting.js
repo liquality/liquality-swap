@@ -13,29 +13,29 @@ class Waiting extends Component {
     if (this.props.step === steps.AGREEMENT) {
       if (this.props.isPartyB) {
         if (!(this.props.transactions.a.initiation.confirmations > 0)) {
-          return ['Confirming Terms', `Initial Transaction Pending Confirmation On The Blockchain...`]
+          return ['Confirming Transaction', `Initial Transaction Pending Confirmation On The Blockchain...`]
         }
         if (!this.props.transactions.b.claim.hash) {
-          return ['Confirming Terms', `When Completed You Can Claim Your ${cryptoassets[this.props.assets.b.currency].code}`]
+          return ['Confirming Transaction', `When Completed You Can Claim Your ${cryptoassets[this.props.assets.b.currency].code}`]
         }
       } else {
         if (!this.props.transactions.b.initiation.hash) {
           if (this.props.transactions.a.initiation.confirmations > 0) {
-            return ['Confirming Terms', `When Completed You Can Claim Your ${cryptoassets[this.props.assets.b.currency].code}`]
+            return ['Confirming Transaction', `When Completed You Can Claim Your ${cryptoassets[this.props.assets.b.currency].code}`]
           } else {
             if (this.props.quote) {
-              return ['Confirming Terms', `Once the transaction is confirmed the quote is guaranteed`]
+              return ['Confirming Transaction', `Once the transaction is confirmed the quote is guaranteed`]
             } else {
-              return ['Confirming Terms', `Initial Transaction Pending Confirmation On The Blockchain...`]
+              return ['Confirming Transaction', `Initial Transaction Pending Confirmation On The Blockchain...`]
             }
           }
         }
         if (!this.props.transactions.b.initiation.confirmations > 0) {
-          return ['Confirming Terms', `When Completed You Can Claim Your ${cryptoassets[this.props.assets.b.currency].code}`]
+          return ['Confirming Transaction', `When Completed You Can Claim Your ${cryptoassets[this.props.assets.b.currency].code}`]
         }
       }
     }
-    return ['Confirming Terms', '']
+    return ['Confirming Transaction', '']
   }
 
   render () {

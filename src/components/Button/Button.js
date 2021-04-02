@@ -17,6 +17,8 @@ class Button extends Component {
       classes.push('btn-secondary')
     } else if (this.props.link) {
       classes.push('btn-link')
+    } else if (this.props.secondaryWallet) {
+      classes.push('btn-secondary bg-none mt-4')
     }
 
     if (this.props.wide) {
@@ -43,6 +45,7 @@ Button.propTypes = {
   className: PropTypes.string,
   primary: PropTypes.bool,
   secondary: PropTypes.bool,
+  secondaryWallet: PropTypes.bool,
   link: PropTypes.bool,
   wide: PropTypes.bool,
   small: PropTypes.bool,
