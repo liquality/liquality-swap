@@ -30,6 +30,16 @@
   &_inputBigWrap {
     position: absolute;
     top: 50%;
+    width: 200px;
+  }
+
+  &_DropdownWrap {
+    h1 {
+      color: black;
+    }
+    &_toggler {
+      display: inline-block;
+    }
   }
 
   &_input {
