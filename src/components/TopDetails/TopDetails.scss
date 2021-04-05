@@ -1,0 +1,16 @@
+.TopDetails {
+    text-align: center;
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+    &_progress {
+        background: #D8E2F0;
+        height: 3px;
+        margin: 10px 0;
+    
+        &_fill {
+          background: white;
+          height: 3px;
+        }
+    }
+}

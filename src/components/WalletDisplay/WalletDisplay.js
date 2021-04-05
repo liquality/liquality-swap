@@ -3,10 +3,12 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import BigNumber from 'bignumber.js'
 import Button from '../Button/Button'
+import { shortenAddress } from '../../utils/address'
 
 import cryptoassets from '@liquality/cryptoassets'
 import { wallets } from '../../utils/wallets'
 import WalletIcon from './wallet-icon.svg'
+import { ReactComponent as Dot } from '../../icons/greenDot.svg'
 
 import './WalletDisplay.css'
 
@@ -19,7 +21,7 @@ const WalletDisplay = (props) => {
       <img className='WalletDisplay_icon mt-3'
         src={wallets[props.type] ? wallets[props.type].icon : WalletIcon}
         alt={wallets[props.type] ? wallets[props.type].name : 'Wallet'} />
-      <p className={classNames('WalletDisplay_address', {error: props.addressError})}>{address}</p>
+      <p className={classNames('WalletDisplay_address', {error: props.addressError})}>{props.address != null ? <p><Dot /></p> : null}{address}</p>
       { props.connected
         ? <Button tabIndex={-1} small secondary onClick={e => props.onButtonClick(e)}>Change wallet</Button>
         : <Button tabIndex={-1} small secondaryWallet onClick={e => props.onButtonClick(e)}>Connect wallet</Button>

@@ -18,8 +18,7 @@ class SwapCompleted extends Component {
         wantCurrency={this.props.assets.b.currency}
         haveLabel='Sent'
         wantLabel='Received'
-        icon={TickIcon}
-        onIconClick={() => this.props.switchSides()} />
+        icon={TickIcon} />
       <div className='SwapCompleted_top'>
         <CurrencyInputs showInputs leftInputDisabled rightInputDisabled />
         <h2 className='SwapCompleted_label'>Swap Completed</h2>

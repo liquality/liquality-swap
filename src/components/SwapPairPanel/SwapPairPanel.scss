@@ -25,10 +25,10 @@
   }
   
   &_assetContainer {
-    position: relative;
+    display: none;
     
     &_main {
-      
+      display: none;
       z-index: $layer-top;
     }
   }
@@ -37,7 +37,9 @@
     position: absolute;
     width: 100%;
     height: 72px;
-    background: #ffffff;
+    background: $secondary;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
     bottom: 0;
     z-index: $layer-bottom;
   }
@@ -82,6 +84,7 @@
 
     &_have {
       float: left;
+      display: none;
       background: $color-primary-1;
       border-radius: $swap-panel-radius $swap-panel-radius $swap-panel-radius 0px;
       padding-left: $panel-horizontal-padding;
@@ -93,6 +96,7 @@
     
     &_want {
       float: right;
+      display: none;
       background: $color-primary-2;
       border-radius: $swap-panel-radius $swap-panel-radius 0 $swap-panel-radius;
       text-align: right;
@@ -108,7 +112,7 @@
     width: 100%;
     padding-top: 14px;
     z-index: $layer-bottom;
-    background: #ffffff;
+    background: $secondary;
 
     > h4 {
       line-height: normal;

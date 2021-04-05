@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import BigNumber from 'bignumber.js'
+import DropDownTick from '../../icons/dropdownTick.svg'
+
 
 import cryptoassets from '@liquality/cryptoassets'
 import './CurrencyInput.css'
@@ -70,7 +72,12 @@ class CurrencyInput extends Component {
   render () {
     const asset = cryptoassets[this.props.currency]
     return <div className='CurrencyInput'>
-      <h3 className='CurrencyInput_heading'>{asset.code}</h3>
+      { this.props.fiatRate && !this.props.value.isNaN() && <div className='CurrencyInput_price'>
+        ${ this.getFiatValue() } USD
+      </div> }
+      <div className="CurrencyInput_inputBigWrap">
+      <h3 className='CurrencyInput_heading'>{asset.code}<img src={DropDownTick} alt='dropdown toggler' className="ml-2" /></h3>
+      </div>
       <div className={classNames('CurrencyInput_inputWrapper', { 'disabled': this.props.disabled })}>
         <input type='number' min='0' readOnly={this.props.disabled} value={this.restrictNumber(this.state.valueString)}
           className={classNames('CurrencyInput_input', { 'error': this.props.error })} placeholder='0.00'
@@ -82,9 +89,6 @@ class CurrencyInput extends Component {
       <div className='CurrencyInput_label'>
         { this.props.limits && this.getLimits() }
       </div>
-      { this.props.fiatRate && !this.props.value.isNaN() && <div className='CurrencyInput_price'>
-        ${ this.getFiatValue() } USD
-      </div> }
     </div>
   }
 }

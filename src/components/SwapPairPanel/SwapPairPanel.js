@@ -5,7 +5,7 @@ import cryptoassets from '@liquality/cryptoassets'
 import * as assetUtils from '../../utils/assets'
 import AssetsBG from './assets-bg.svg'
 import './SwapPairPanel.css'
-
+ 
 class SwapPairPanel extends Component {
   render () {
     const haveCurrency = cryptoassets[this.props.haveCurrency]

@@ -75,9 +75,9 @@ class ExpirationDetails extends Component {
             <a href='javascript:void(0)' onClick={() => this.props.onCopyClick()}>Swap link<img src={CopyIcon} alt='Copy' /></a>
           </div>
         </div>
-        <div className='ExpirationDetails_progress'>
+        {/* <div className='ExpirationDetails_progress'>
           <div className='ExpirationDetails_progress_fill' style={{width: `${filled}%`}} />
-        </div>
+        </div> */}
         <div className='ExpirationDetails_transactions'>
           <div className='ExpirationDetails_transaction ExpirationDetails_transaction'>
             <span className='ExpirationDetails_transaction_name'>Your {cryptoassets[this.props.assets.a.currency].code} Transaction:</span>

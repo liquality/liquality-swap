@@ -16,6 +16,8 @@ import { getInitiationErrors, isAgentRequestValid } from '../../utils/validation
 import { calculateLimits } from '../../utils/agent'
 import { APP_BASE_URL } from '../../utils/app-links'
 import config from '../../config'
+import BrandCard from '../../components/BrandCard/BrandCard'
+import Logo from '../../icons/liqualityLogo.svg'
 
 const QUOTE_REFRESH_INTERVAL = 60
 
@@ -154,7 +156,17 @@ class SwapInitiation extends Component {
     const showCountdown = this.state.interval
 
     return <div className='SwapInitiation'>
-      <div className='SwapInitiation_assets'>
+              <BrandCard className="SwapInitiation_card" title="liquality CROSSCHAIN SWAP">
+                <div className='SwapInitiation_switch'>
+                  <img src={SwapIcon} alt="switch icon for swapping" />
+                </div>
+                <div className='SwapInitiation_liqualityCircle'>
+                  <h3>Trade With</h3>
+                  <div className="SwapInitiation_logo">
+                    <img src={Logo} alt="liquality-logo" />
+                  </div>
+                </div>
+      {/* <div className='SwapInitiation_assets'>
         <SwapPairPanel
           haveCurrency={this.props.assets.a.currency}
           wantCurrency={this.props.assets.b.currency}
@@ -173,7 +185,7 @@ class SwapInitiation extends Component {
             onSearchChange={value => this.props.setAssetSelectorSearch(value)}
             onClose={() => this.props.closeAssetSelector()} />
         </div> }
-      </div>
+      </div> */}
       <div className='SwapInitiation_top'>
         <CurrencyInputs
           showInputs
@@ -210,7 +222,9 @@ class SwapInitiation extends Component {
         {/* TODO: Do actual resetting of app state instead of refresh. */}
         <Button wide link onClick={() => window.location.replace(APP_BASE_URL)}>{ this.props.isPartyB ? 'Abandon Swap' : 'Cancel' }</Button>
       </div>
+      </BrandCard>
     </div>
+    
   }
 }
 
