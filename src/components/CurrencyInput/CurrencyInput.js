@@ -79,6 +79,8 @@ class CurrencyInput extends Component {
     const userDefinedAssets = Object.keys(config.assets)
     const displayedAssets = Object.entries(cryptoassets)
       .filter(([id]) => userDefinedAssets.includes(id))
+    const haveCurrency = cryptoassets[this.props.haveCurrency]
+    const wantCurrency = cryptoassets[this.props.wantCurrency]
 
     //DROPDOWN
     const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -108,7 +110,7 @@ class CurrencyInput extends Component {
       
         <Dropdown.Menu>
           {displayedAssets.map(([id, currency]) => 
-            <Dropdown.Item href="#" key={id}><img src={assetUtils.getIcon(currency.code)} alt="currency icon/logo" style={{height: "25px", width: "25px", marginRight: "5%"}} /><strong>{currency.code}</strong></Dropdown.Item>
+            <Dropdown.Item href="#" onClick={this.props.onHaveClick} key={id}><img src={assetUtils.getIcon(currency.code)} alt="currency icon/logo" style={{height: "25px", width: "25px", marginRight: "5%"}} /><strong>{currency.code}</strong></Dropdown.Item>
           )}
         </Dropdown.Menu>
       </Dropdown>

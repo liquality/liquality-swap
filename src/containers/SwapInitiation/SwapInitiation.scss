@@ -40,8 +40,8 @@
 
   &_switch {
     position: absolute;
-    top: 20%;
-    left: 48%;
+    top: 18%;
+    left: 47.5%;
   }
 
   &_assets {
@@ -67,7 +67,6 @@
     width: 100%;
     height: 200px;
     padding-bottom: 28px;
-    box-shadow: 0px 2px 14px $color-shadow;
     border-radius: 0 0 $swap-panel-radius $swap-panel-radius;
     z-index: $layer-top;
   }
@@ -82,8 +81,6 @@
     top: -50px;
     padding: 1px 30px 20px;
     background: $color-bg-primary;
-    box-shadow: 0px -2px 14px $color-shadow;
-    border-radius: $swap-panel-radius;
     z-index: $layer-top;
   }
 

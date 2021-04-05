@@ -32,13 +32,15 @@
     top: 50%;
     width: 200px;
   }
-
   &_DropdownWrap {
     h1 {
       color: black;
+      display: inline;
+      padding-top: 5%;
     }
     &_toggler {
       display: inline-block;
+      
     }
   }
 

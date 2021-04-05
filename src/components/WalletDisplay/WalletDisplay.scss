@@ -4,24 +4,15 @@
 .WalletDisplay {
   text-align: center;
   width: 160px;
-  min-height: 126px;
-
-  .Button {
-    margin-top: 2px;
-  }
 
   &.error > &_wrapper {
     padding: 10px 0;
     border: 1px solid $danger;
   }
 
-  p {
-    margin-bottom: 2px;
-  }
-
   &_icon {
     height: 20px;
-    margin-bottom: 6px;
+    margin-bottom: 10%;
   }
 
   &_address {
@@ -31,7 +22,6 @@
     overflow: hidden;
     font-size: $font-size-sm;
     color: $color-text-2;
-    padding: 0 0 0 4px;
     &:hover {
       overflow: visible;
     }

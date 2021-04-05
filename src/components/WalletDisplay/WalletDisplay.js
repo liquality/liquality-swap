@@ -21,7 +21,7 @@ const WalletDisplay = (props) => {
       <img className='WalletDisplay_icon mt-3'
         src={wallets[props.type] ? wallets[props.type].icon : WalletIcon}
         alt={wallets[props.type] ? wallets[props.type].name : 'Wallet'} />
-      <p className={classNames('WalletDisplay_address', {error: props.addressError})}>{props.address != null ? <p><Dot /></p> : null}{address}</p>
+      <p className={classNames('WalletDisplay_address', {error: props.addressError})}>{props.address != null ? <p style={{display: "inline-block", marginRight: "2%"}}><Dot /></p> : null}{address}</p>
       { props.connected
         ? <Button tabIndex={-1} small secondary onClick={e => props.onButtonClick(e)}>Change wallet</Button>
         : <Button tabIndex={-1} small secondaryWallet onClick={e => props.onButtonClick(e)}>Connect wallet</Button>

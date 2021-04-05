@@ -13,29 +13,29 @@ class Waiting extends Component {
     if (this.props.step === steps.AGREEMENT) {
       if (this.props.isPartyB) {
         if (!(this.props.transactions.a.initiation.confirmations > 0)) {
-          return ['Confirming Transaction', `Initial Transaction Pending Confirmation On The Blockchain...`]
+          return ['Confirming Transactions', `Initial Transaction Pending Confirmation On The Blockchain...`]
         }
         if (!this.props.transactions.b.claim.hash) {
-          return ['Confirming Transaction', `When Completed You Can Claim Your ${cryptoassets[this.props.assets.b.currency].code}`]
+          return ['Confirming Transactions', `When Completed You Can Claim Your ${cryptoassets[this.props.assets.b.currency].code}`]
         }
       } else {
         if (!this.props.transactions.b.initiation.hash) {
           if (this.props.transactions.a.initiation.confirmations > 0) {
-            return ['Confirming Transaction', `When Completed You Can Claim Your ${cryptoassets[this.props.assets.b.currency].code}`]
+            return ['Confirming Transactions', `When Completed You Can Claim Your ${cryptoassets[this.props.assets.b.currency].code}`]
           } else {
             if (this.props.quote) {
-              return ['Confirming Transaction', `Once the transaction is confirmed the quote is guaranteed`]
+              return ['Confirming Transactions', `Once the transaction is confirmed the quote is guaranteed`]
             } else {
-              return ['Confirming Transaction', `Initial Transaction Pending Confirmation On The Blockchain...`]
+              return ['Confirming Transactions', `Next the trading partner's Transaction will be confirmed`]
             }
           }
         }
         if (!this.props.transactions.b.initiation.confirmations > 0) {
-          return ['Confirming Transaction', `When Completed You Can Claim Your ${cryptoassets[this.props.assets.b.currency].code}`]
+          return ['Confirming Transactions', `When Completed You Can Claim Your ${cryptoassets[this.props.assets.b.currency].code}`]
         }
       }
     }
-    return ['Confirming Transaction', '']
+    return ['Confirming Transactions', '']
   }
 
   render () {
@@ -46,7 +46,7 @@ class Waiting extends Component {
     return <BrandCard className='Waiting' title={title}>
       {showQuoteTimer && <div className='Waiting_quoteTimer'><TimeProgressBar startTime={this.props.quote.retrievedAt} endTime={this.props.quote.expiresAt} /></div>}
       <StatusMessage
-        message={`Confirming Your ${cryptoassets[this.props.assets.a.currency].code} Transaction`}
+        message={`Locking ${cryptoassets[this.props.assets.a.currency].code} and confirming quote`}
         completedMessage={this.props.quote
           ? `Your ${cryptoassets[this.props.assets.a.currency].code} Transaction and Quote Confirmed`
           : `Your ${cryptoassets[this.props.assets.a.currency].code} Transaction Confirmed`}

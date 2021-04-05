@@ -1,16 +1,29 @@
 @import '../../scss/variables.scss';
 
 .StatusMessage {
-  height: 55px;
+  height: 400px;
   text-align: center;
   padding: 7px 20px;
   width: 650px;
   margin: 0 auto;
-  background: red;
 
   &_complete {
     background: none;
     padding: 12px 20px;
+    display: none;
+  }
+
+  &_circle {
+    margin: 0 auto;
+    margin-top: 25%;
+    display: block;
+    width: 250px;
+    height: 250px;
+    margin-bottom: 2px;
+    border-radius: 50%;
+    padding: 30px 10px;
+    background: $color-bg-primary;
+    border: 1px solid #D9DFE5;
   }
 
   &_wrapper {
@@ -29,8 +42,8 @@
   &_message {
     font-weight: bold;
     font-size: $h4-font-size;
-    line-height: 1;
-    padding-top: 6px;
+    line-height: 1.75;
+    padding-top: 20%;
   }
 
   &_complete &_message {
