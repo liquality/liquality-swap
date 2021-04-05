@@ -16,6 +16,7 @@ import { getInitiationErrors, isAgentRequestValid } from '../../utils/validation
 import { calculateLimits } from '../../utils/agent'
 import { APP_BASE_URL } from '../../utils/app-links'
 import config from '../../config'
+import SwapProgressStepper from '../../components/SwapProgressStepper/SwapProgressStepper'
 import BrandCard from '../../components/BrandCard/BrandCard'
 import Logo from '../../icons/liqualityLogo.svg'
 
@@ -156,6 +157,9 @@ class SwapInitiation extends Component {
     const showCountdown = this.state.interval
 
     return <div className='SwapInitiation'>
+            {/* <div className='SwapInitiation_stepper'>
+              <SwapProgressStepper />
+            </div> */}
               <BrandCard className="SwapInitiation_card" title="liquality CROSSCHAIN SWAP">
                 <div className='SwapInitiation_switch'>
                   <img src={SwapIcon} alt="switch icon for swapping" />
