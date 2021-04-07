@@ -45,7 +45,7 @@ class Waiting extends Component {
     const showPartnerClaimTransactionStatus = this.props.isPartyB && (this.props.transactions.a.initiation.confirmations > 0 || this.props.transactions.b.claim.hash)
     const [ title, description ] = this.getWaitingStatus()
     return <BrandCard className='Waiting' title={title}>
-      {/* <TopDetails /> */}
+      <TopDetails />
       {showQuoteTimer && <div className='Waiting_quoteTimer'><TimeProgressBar startTime={this.props.quote.retrievedAt} endTime={this.props.quote.expiresAt} /></div>}
       <StatusMessage
         message={`Locking ${cryptoassets[this.props.assets.a.currency].code} and confirming quote`}

@@ -17,4 +17,4 @@ export default connect(
   mapStateToProps,
   {
   }
-)(TopDetails)
+)(TopDetails) 
