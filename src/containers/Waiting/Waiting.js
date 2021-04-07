@@ -6,6 +6,7 @@ import TimeProgressBar from '../../components/TimeProgressBar/TimeProgressBar'
 import StatusMessage from '../../components/StatusMessage/StatusMessage'
 import { steps } from '../../components/SwapProgressStepper/steps'
 import { getConfirmationEstimate } from '../../utils/networks'
+import TopDetails from '../../containers/TopDetails/TopDetails'
 import './Waiting.css'
 
 class Waiting extends Component {
@@ -44,6 +45,7 @@ class Waiting extends Component {
     const showPartnerClaimTransactionStatus = this.props.isPartyB && (this.props.transactions.a.initiation.confirmations > 0 || this.props.transactions.b.claim.hash)
     const [ title, description ] = this.getWaitingStatus()
     return <BrandCard className='Waiting' title={title}>
+      {/* <TopDetails /> */}
       {showQuoteTimer && <div className='Waiting_quoteTimer'><TimeProgressBar startTime={this.props.quote.retrievedAt} endTime={this.props.quote.expiresAt} /></div>}
       <StatusMessage
         message={`Locking ${cryptoassets[this.props.assets.a.currency].code} and confirming quote`}

@@ -4,7 +4,7 @@ import Button from '../../components/Button/Button'
 import cryptoassets from '@liquality/cryptoassets'
 import { getClaimErrors } from '../../utils/validation'
 import ExpirationDetails from '../../components/ExpirationDetails'
-import TopDetails from '../../components/TopDetails/TopDetails'
+import TopDetails from '../TopDetails/TopDetails'
 
 import './SwapRedemption.css'
 

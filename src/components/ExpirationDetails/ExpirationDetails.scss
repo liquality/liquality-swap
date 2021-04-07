@@ -4,11 +4,11 @@
   text-align: left;
   display: flex;
   padding: 14px 30px;
-  height: 90px;
+  height: 100px;
   margin: 0 auto;
-  background: $color-bg-primary;
-  box-shadow: 0px 2px 14px $color-shadow;
-  border-radius: $swap-panel-radius;
+  background: #F1F4F7;
+  border-bottom-left-radius: 22px;
+  border-bottom-right-radius: 22px;
 
   &_passed, &_left {
     display: flex;
@@ -34,9 +34,15 @@
     flex-direction: column;
   }
 
-  &_top,&_bottom {
+  &_top {
     display: flex;
     justify-content: space-between;
+  }
+  
+  &_bottom {
+    display: flex;
+    justify-content: space-between;
+    background: #F1F4F7;
   }
 
   &_terms {
@@ -60,7 +66,6 @@
   }
 
   &_transaction {
-    margin-left: 10%;
 
     &:nth-child(2) {
       text-align: right;
@@ -90,6 +95,9 @@
   }
 
   &_transaction_right {
+    display: flex;
+    justify-content: flex-end;
+    border: 1px solid red;
 
     &:nth-child(2) {
       text-align: right;

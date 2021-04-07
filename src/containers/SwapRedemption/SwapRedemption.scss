@@ -14,20 +14,6 @@
     top: 275px;
   }
 
-  &_whiteBar {
-    position: absolute;
-    width: 250px;
-    height: 17px;
-    top: 0%;
-    left: 36%;
-    border-radius: 25px;
-    background: white;
-    p {
-      font-size: 11px;
-      text-align: center;
-    }
-  }
-
   &_terms {
     font-size: $h3-font-size;
     margin: 50px 0 60px 0;

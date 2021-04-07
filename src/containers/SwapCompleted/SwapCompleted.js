@@ -67,10 +67,11 @@ class SwapCompleted extends Component {
     this.setState(this.getExpirationState())
   }
 
-  render (props) {
+  render () {
 
     const claimCurrency = cryptoassets[this.props.assets.b.currency]
     const sentCurrency = cryptoassets[this.props.assets.a.currency]
+    const claimTransaction = cryptoassets[this.state.transactions.a]
 
     return <BrandCard title="Swap Completed">
 
@@ -93,7 +94,7 @@ class SwapCompleted extends Component {
           <h4><strong>Partner's {claimCurrency.code} Transaction</strong></h4>
         </div>
         <div className="SwapCompleted_left">
-        <h4><strong>Your {sentCurrency.code} Transaction</strong></h4>
+        <h4><strong>Your {sentCurrency.code} Transaction</strong>{claimTransaction}</h4>
         <h4><strong>Your {claimCurrency.code} Transaction</strong></h4>
         </div>
       </div>

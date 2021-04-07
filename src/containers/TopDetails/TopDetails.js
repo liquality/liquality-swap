@@ -9,45 +9,45 @@ class TopDetails extends Component {
     constructor (props) {
         super(props)
         this.state = this.getExpirationState()
-    }
-
-    getTransaction (party) {
+      }
+    
+      getTransaction (party) {
         const tx = this.props.transactions[party].initiation
         if (!tx.hash) return null
-
+    
         const asset = this.props.assets[party].currency
         const explorerLink = tx && getExplorerLink(tx, asset)
         tx.explorerLink = explorerLink
         return tx
-    }
-
-    getExpirationState () {
+      }
+    
+      getExpirationState () {
         const party = this.props.isPartyB ? 'b' : 'a'
         const expiration = this.props.isClaim ? getClaimExpiration(this.props.expiration, party) : getFundExpiration(this.props.expiration, party)
-        
+    
         return {
-            start: expiration.start,
-            duration: expiration.duration,
-            expiration: expiration.time,
-            now: moment(),
-            transactions: {
-                a: this.getTransaction('a'),
-                b: this.getTransaction('b')
-            }
+          start: expiration.start,
+          duration: expiration.duration,
+          expiration: expiration.time,
+          now: moment(),
+          transactions: {
+            a: this.getTransaction('a'),
+            b: this.getTransaction('b')
+          }
         }
-    }
-
-    componentDidMount () {
+      }
+    
+      componentDidMount () {
         this.interval = setInterval(this.tick.bind(this), 1000)
-    }
-
-    componentWillUnmount () {
+      }
+    
+      componentWillUnmount () {
         clearInterval(this.interval)
-    }
-
-    tick () {
+      }
+    
+      tick () {
         this.setState(this.getExpirationState())
-    }
+      }
 
     render () {
         const maxNow = this.state.now.isAfter(this.state.expiration) ? this.state.expiration : this.state.now
@@ -63,6 +63,10 @@ class TopDetails extends Component {
                 <div className='TopDetails_progress'>
                     <div className='TopDetails_progress_fill' style={{width: `${filled}%`}} />
                 </div>
+            </div>
+
+            <div className="SwapRedemption_whiteBar">
+                <p>Swap {this.props.assets.a.value.toFixed()} {cryptoassets[this.props.assets.a.currency].code} for {this.props.assets.b.value.toFixed()} {cryptoassets[this.props.assets.b.currency].code}</p>
             </div>
 
         </div>
