@@ -5,6 +5,13 @@
   text-align: center;
   width: 160px;
 
+  &_type {
+    p {
+      padding: 0;
+      margin: 0;
+    }
+  }
+
   &.error > &_wrapper {
     padding: 10px 0;
     border: 1px solid $danger;
@@ -12,7 +19,6 @@
 
   &_icon {
     height: 20px;
-    margin-bottom: 10%;
   }
 
   &_address {
@@ -24,6 +30,9 @@
     color: $color-text-2;
     &:hover {
       overflow: visible;
+    }
+    p {
+      margin-top: 20%;
     }
 
     &.error {

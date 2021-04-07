@@ -9,6 +9,11 @@
     flex-direction: column;
   }
 
+  &_claimButton {
+    position: relative;
+    top: 275px;
+  }
+
   &_whiteBar {
     position: absolute;
     width: 250px;

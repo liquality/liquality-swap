@@ -2,9 +2,8 @@
 
 .TimeProgressBar {
   color: #FFFFFF;
-  background: #616161;
+  background: $color-primary-2;
   height: 25px;
-  border-radius: 20px;
   font-size: $font-size-sm;
   line-height: 1.7rem;
   position: relative;

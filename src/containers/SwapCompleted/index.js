@@ -3,7 +3,12 @@ import SwapCompleted from './SwapCompleted'
 
 const mapStateToProps = state => {
   return {
-    assets: state.swap.assets
+    expiration: state.swap.expiration,
+    isPartyB: state.swap.isPartyB,
+    assets: state.swap.assets,
+    transactions: state.swap.transactions,
+    link: state.swap.link,
+    step: state.swap.step,
   }
 }
 

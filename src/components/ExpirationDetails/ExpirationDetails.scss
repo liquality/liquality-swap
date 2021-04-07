@@ -60,6 +60,7 @@
   }
 
   &_transaction {
+    margin-left: 10%;
 
     &:nth-child(2) {
       text-align: right;
@@ -88,10 +89,39 @@
     }
   }
 
+  &_transaction_right {
+
+    &:nth-child(2) {
+      text-align: right;
+    }
+
+    float: right;
+    width: 50%;
+
+    &_name {
+      padding-left: 25%;
+    }
+
+    &_link {
+      padding-right: 10px;
+    }
+
+    &_confirmations {
+      color: $color-text-2;
+    }
+
+    &_missing {
+      display: inline-block;
+      width: 160px;
+      color: $color-primary-1;
+      text-align: left;
+    }
+  }
+
   &_progress {
     background: #D8E2F0;
     height: 3px;
-    margin: 10px 0;
+    // margin: 10px 0;
 
     &_fill {
       background: $color-primary-2;

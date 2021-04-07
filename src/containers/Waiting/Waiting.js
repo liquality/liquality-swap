@@ -24,7 +24,7 @@ class Waiting extends Component {
             return ['Confirming Transactions', `When Completed You Can Claim Your ${cryptoassets[this.props.assets.b.currency].code}`]
           } else {
             if (this.props.quote) {
-              return ['Confirming Transactions', `Once the transaction is confirmed the quote is guaranteed`]
+              return ['Confirming Transactions', `Next the trading partner's Transaction will be confirmed`]
             } else {
               return ['Confirming Transactions', `Next the trading partner's Transaction will be confirmed`]
             }

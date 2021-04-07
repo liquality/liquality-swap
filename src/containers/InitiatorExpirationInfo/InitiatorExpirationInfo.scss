@@ -2,9 +2,14 @@
 
 .InitiatorExpirationInfo {
   p {
-    display: block;
+    display: flex;
     width: 100%;
     margin: 0;
+    color: $color-text-2;
+  }
+  h5 {
+    color: $color-text-1;
+    font-weight: bold;
   }
 
   &_icon {

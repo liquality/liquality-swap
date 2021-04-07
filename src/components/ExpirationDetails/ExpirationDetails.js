@@ -62,38 +62,38 @@ class ExpirationDetails extends Component {
     const filled = (((total.asSeconds() - left.asSeconds()) / total.asSeconds()) * 100).toFixed(2)
 
     return <div className='ExpirationDetails'>
-      <img src={ClockIcon} className='ExpirationDetails_clock' alt='Clock Icon' />
-      <div className='ExpirationDetails_passed'>{moment.utc(passed.asMilliseconds()).format('HH:mm')}hr</div>
+      {/* <img src={ClockIcon} className='ExpirationDetails_clock' alt='Clock Icon' /> */}
+      {/* <div className='ExpirationDetails_passed'>{moment.utc(passed.asMilliseconds()).format('HH:mm')}hr</div> */}
       <div className='ExpirationDetails_center'>
         <div className='ExpirationDetails_top'>
-          <div className='ExpirationDetails_terms'>
+          {/* <div className='ExpirationDetails_terms'>
             <em>Get {this.props.assets.b.value.toFixed()} {cryptoassets[this.props.assets.b.currency].code}
             &nbsp;for {this.props.assets.a.value.toFixed()} {cryptoassets[this.props.assets.a.currency].code}</em>
             &nbsp;Active for {moment.utc(left.asMilliseconds()).format('HH:mm')}hr {this.state.expiration.format('L LT')}
-          </div>
-          <div className='ExpirationDetails_link'>
-            <a href='javascript:void(0)' onClick={() => this.props.onCopyClick()}>Swap link<img src={CopyIcon} alt='Copy' /></a>
-          </div>
-        </div>
+          </div> */}
         {/* <div className='ExpirationDetails_progress'>
           <div className='ExpirationDetails_progress_fill' style={{width: `${filled}%`}} />
         </div> */}
         <div className='ExpirationDetails_transactions'>
           <div className='ExpirationDetails_transaction ExpirationDetails_transaction'>
-            <span className='ExpirationDetails_transaction_name'>Your {cryptoassets[this.props.assets.a.currency].code} Transaction:</span>
+            <span className='ExpirationDetails_transaction_name'><strong>Your {cryptoassets[this.props.assets.a.currency].code} Transaction:</strong></span>
             { this.state.transactions.a && <a className='ExpirationDetails_transaction_link' href={this.state.transactions.a.explorerLink} target='_blank' rel='noopener noreferrer'>{shortenTransactionHash(this.state.transactions.a.hash)}</a> }
             { this.state.transactions.a && <span className='ExpirationDetails_transaction_confirmations'>{this.state.transactions.a.confirmations} Confirmations</span> }
             { !this.state.transactions.a && <span className='ExpirationDetails_transaction_missing'>&mdash;</span> }
           </div>
-          <div className='ExpirationDetails_transaction ExpirationDetails_transaction'>
-            <span className='ExpirationDetails_transaction_name'>Partner's {cryptoassets[this.props.assets.b.currency].code} Transaction:</span>
+          <div className='ExpirationDetails_transaction ExpirationDetails_transaction_right'>
+            <span className='ExpirationDetails_transaction_name'><strong>Partner's {cryptoassets[this.props.assets.b.currency].code} Transaction:</strong></span>
             { this.state.transactions.b && <a className='ExpirationDetails_transaction_link' href={this.state.transactions.b.explorerLink} target='_blank' rel='noopener noreferrer'>{shortenTransactionHash(this.state.transactions.b.hash)}</a> }
             { this.state.transactions.b && <span className='ExpirationDetails_transaction_confirmations'>{this.state.transactions.b.confirmations} Confirmations</span> }
             { !this.state.transactions.b && <span className='ExpirationDetails_transaction_missing'>&mdash;</span> }
           </div>
         </div>
       </div>
-      <div className='ExpirationDetails_left'>{moment.utc(left.asMilliseconds()).format('HH:mm')}hr</div>
+      <div className='ExpirationDetails_link'>
+            <a href='javascript:void(0)' onClick={() => this.props.onCopyClick()}>Swap link<img src={CopyIcon} alt='Copy' /></a>
+          </div>
+        </div>
+      {/* <div className='ExpirationDetails_left'>{moment.utc(left.asMilliseconds()).format('HH:mm')}hr</div> */}
     </div>
   }
 }

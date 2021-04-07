@@ -3,7 +3,7 @@
 
 .CurrencyInput {
 
-  margin-top: 7.5%;
+  margin-top: 10%;
 
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
@@ -37,6 +37,9 @@
       color: black;
       display: inline;
       padding-top: 5%;
+      :hover {
+        cursor: pointer;
+      }
     }
     &_toggler {
       display: inline-block;

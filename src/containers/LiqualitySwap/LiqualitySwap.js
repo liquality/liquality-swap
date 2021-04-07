@@ -78,6 +78,7 @@ class LiqualitySwap extends Component {
   }
 
   render () {
+
     return <div className='LiqualitySwap'>
       { this.props.swap.assetSelector.open && <div className='LiqualitySwap_blur' /> }
       <div className='LiqualitySwap_header'>

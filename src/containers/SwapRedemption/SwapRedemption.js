@@ -24,9 +24,9 @@ class SwapRedemption extends Component {
         <p>Swap {this.props.assets.a.value.toFixed()} {cryptoassets[this.props.assets.a.currency].code} for {this.props.assets.b.value.toFixed()} {cryptoassets[this.props.assets.b.currency].code}</p>
       </div>
       <div class="SwapRedemption_confetti-wrapper">
-          <div for="n in 150" key="n" className="`confetti-${n}`"></div>
+          <div key="n in 150" className="`confetti-${n}`"></div>
             <p>
-              {!errors.claim && <Button wide primary loadingMessage={this.props.loadingMessage} onClick={this.props.redeemSwap}>Claim {this.props.assets.b.value.toFixed()} {claimCurrency.code}</Button>}
+              {!errors.claim && <Button className='SwapRedemption_claimButton' wide primary loadingMessage={this.props.loadingMessage} onClick={this.props.redeemSwap}>Claim {this.props.assets.b.value.toFixed()} {claimCurrency.code}</Button>}
               {errors.claim && <div className='SwapRedemption_errorMessage'>{errors.claim}</div>}
             </p>
         </div>

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { getCurrencyInputErrors } from '../../utils/validation'
 import CurrencyInput from '../../components/CurrencyInput/CurrencyInput'
+import CurrencyInputWant from '../../components/CurrencyInput/CurrencyInputWant'
 import Rate from '../../components/Rate/Rate'
 import './CurrencyInputs.css'
 
@@ -28,8 +29,8 @@ class CurrencyInputs extends Component {
           }
         </div>
         <div className='col CurrencyInputs_right'>
-          { this.props.showInputs && <CurrencyInput
-            currency={assetB.currency}
+          { this.props.showInputs && <CurrencyInputWant
+            currency={assetB.currency} 
             value={assetB.value}
             {...(this.props.showRightFiatValue ? {fiatRate: this.props.fiatRates[assetB.currency]} : {})}
             disabled={this.props.rightInputDisabled}

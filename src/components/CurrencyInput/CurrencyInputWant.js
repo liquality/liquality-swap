@@ -11,7 +11,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import cryptoassets from '@liquality/cryptoassets'
 import './CurrencyInput.css'
 
-class CurrencyInput extends Component {
+class CurrencyInputWant extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -111,7 +111,7 @@ class CurrencyInput extends Component {
       
         <Dropdown.Menu>
           {displayedAssets.map(([id, currency]) => 
-            <Dropdown.Item href="#" onClick={this.props.onHaveClick} key={id}><img src={assetUtils.getIcon(currency.code)} alt="currency icon/logo" style={{height: "25px", width: "25px", marginRight: "5%"}} /><strong>{currency.code}</strong></Dropdown.Item>
+            <Dropdown.Item href="#" value={currency.code} onClick={this.props.onWantClick} key={id}><img src={assetUtils.getIcon(currency.code)} alt="currency icon/logo" style={{height: "25px", width: "25px", marginRight: "5%"}} /><strong>{currency.code}</strong></Dropdown.Item>
           )}
         </Dropdown.Menu>
       </Dropdown>
@@ -132,7 +132,7 @@ class CurrencyInput extends Component {
   }
 }
 
-CurrencyInput.propTypes = {
+CurrencyInputWant.propTypes = {
   // TODO: probably need some sort of repository for currency codes and icons?
   currency: PropTypes.oneOf(Object.keys(cryptoassets)).isRequired,
   value: PropTypes.instanceOf(BigNumber),
@@ -146,12 +146,12 @@ CurrencyInput.propTypes = {
     max: PropTypes.instanceOf(BigNumber),
     onClick: PropTypes.func
   }),
-  haveCurrency: PropTypes.string.isRequired,
-  onHaveClick: PropTypes.func,
+  wantCurrency: PropTypes.string.isRequired,
+  onWantClick: PropTypes.func,
 }
 
-CurrencyInput.defaultProps = {
+CurrencyInputWant.defaultProps = {
   tabIndex: -1
 }
 
-export default CurrencyInput
+export default CurrencyInputWant

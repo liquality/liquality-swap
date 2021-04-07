@@ -10,7 +10,7 @@
   }
 
   &_right {
-    margin-right: $panel-spacing;
+    margin-right: 7.5%;
     .CurrencyInput {
       float: right;
     }
@@ -19,9 +19,9 @@
   .Rate {
     position: absolute;
     margin: 0 auto;
-    bottom: -112px;
-    left: 0;
+    top: 85.5%;
+    left: -1.7%;
     right: 0;
-    z-index: $layer-bottom;
+    z-index: 11;
   }
 }
