@@ -26,7 +26,8 @@ class SwapInitiation extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      remaining: QUOTE_REFRESH_INTERVAL
+      remaining: QUOTE_REFRESH_INTERVAL,
+      rating: false
     }
     this.updateQuoteTimer = _.debounce(this.updateQuoteTimer.bind(this), 800)
   }
@@ -41,6 +42,7 @@ class SwapInitiation extends Component {
   }
 
   startCountdown () {
+    this.setState({rating: true})
     const interval = setInterval(() => {
       if (!isAgentRequestValid({assets: this.props.assets, agent: this.props.agent})) {
         this.clearCountdown()
@@ -164,12 +166,12 @@ class SwapInitiation extends Component {
                 <div className='SwapInitiation_switch'>
                   <img src={SwapIcon} alt="switch icon for swapping" />
                 </div>
-                <div className='SwapInitiation_liqualityCircle'>
+                {this.rating === true ? 'null' : <div className='SwapInitiation_liqualityCircle'>
                   <h3>Trade With</h3>
                   <div className="SwapInitiation_logo">
                     <img src={Logo} alt="liquality-logo" />
                   </div>
-                </div>
+                </div>}
       {/* <div className='SwapInitiation_assets'>
         <SwapPairPanel
           haveCurrency={this.props.assets.a.currency}

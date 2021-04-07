@@ -9,6 +9,14 @@ import { getFundExpiration, getClaimExpiration } from '../../utils/expiration'
 import { shortenTransactionHash, getExplorerLink } from '../../utils/transactions'
 import cryptoassets from '@liquality/cryptoassets'
 
+//Social Icons
+import Facebook from '../../icons/facebookicon.svg'
+import Twitter from '../../icons/twittericon.svg'
+import Telegram from '../../icons/telegramicon.svg'
+import Medium from '../../icons/mediumicon.svg'
+import Web from '../../icons/webicon.svg'
+import Github from '../../icons/githubicon.svg'
+
 import config from '../../config'
 import { APP_BASE_URL } from '../../utils/app-links'
 
@@ -92,24 +100,23 @@ class SwapCompleted extends Component {
       <div className='SwapCompleted_bottomButton mt-5'>
         <Button wide primary onClick={() => window.location.replace(APP_BASE_URL)}>Start another Swap</Button>
       </div>
+      <div className="SwapCompleted_shareSection mt-3">
+        <div className="SwapCompleted_shareLeft">
+            <h3 className="p-4 mt-1">SHARE</h3>
+            <img className="mr-3" src={Facebook} alt="facebook logo" />
+            <img className="mr-3" src={Twitter} alt="twitter logo" onClick={() => window.open('https://twitter.com/Liquality_io')} />
+            <img className="mr-3" src={Telegram} alt="telegram logo" onClick={() => window.open('https://t.me/liquality')} />
+        </div>
+        <div className="SwapCompleted_shareRight">
+            <h3 className="p-4 mt-1">FIND US</h3>
+            <img className="mr-3" src={Medium} alt="telegram logo" onClick={() => window.open('https://medium.com/liquality')} />
+            <img className="mr-3" src={Web} alt="liquality logo" onClick={() => window.open('https://liquality.io/')} />
+            <img className="mr-3" src={Github} alt="github logo" onClick={() => window.open('https://github.com/liquality')} />
+        </div>
+      </div>
 
     </BrandCard>
   }
 }
 
 export default SwapCompleted
-
-{/* <div className='SwapCompleted'>
-      <div className='SwapCompleted_top'>
-        <CurrencyInputs showInputs leftInputDisabled rightInputDisabled />
-        <h2 className='SwapCompleted_label'>Swap Completed</h2>
-        <p className='SwapCompleted_subLabel'>
-          Go to {this.props.assets.b.currency === 'BTC' ? 'Ledger Live' : 'MetaMask'} to confirm your balance
-        </p>
-        <span className='SwapCompleted_handshake'><img src={HandshakeIcon} alt='' /></span>
-      </div>
-      <div className='SwapCompleted_bottom'>
-        <Button wide primary onClick={() => window.location.replace(APP_BASE_URL)}>Start another Swap</Button>
-        {config.twitterButton && <a className='twitter-share-button' href={'https://twitter.com/intent/tweet' + config.twitterButton} data-size='large'>Tweet</a>}
-      </div>
-    </div> */}

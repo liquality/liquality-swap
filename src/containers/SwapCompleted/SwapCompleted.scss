@@ -26,4 +26,28 @@
       display: flex;
       justify-content: center;
   }
+
+  &_shareSection {
+    h3 {
+      font-size: 14px;
+      font-weight: bold;
+    }
+    img {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+  }
+
+  &_shareLeft {
+    display: flex;
+    flex-flow: row nowrap;
+  }
+  &_shareRight {
+    display: flex;
+    flex-flow: row nowrap;
+  }
 }

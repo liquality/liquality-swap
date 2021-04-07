@@ -81,7 +81,6 @@ class CurrencyInput extends Component {
     const haveCurrency = cryptoassets[this.props.haveCurrency]
     const wantCurrency = cryptoassets[this.props.wantCurrency]
 
-    console.log( 'send', haveCurrency, 'receive', wantCurrency )
 
     //DROPDOWN
     const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
