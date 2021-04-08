@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import CurrencyInputs from '../CurrencyInputs'
+import PropTypes from 'prop-types'
 import Button from '../../components/Button/Button'
 import moment from 'moment'
 import TickIcon from '../../icons/tick.svg'
@@ -73,7 +74,9 @@ class SwapCompleted extends Component {
     const sentCurrency = cryptoassets[this.props.assets.a.currency]
     const claimTransaction = cryptoassets[this.state.transactions.a]
 
-    return <BrandCard title="Swap Completed">
+    return <div className='SwapCompleted_bigWrap'>
+      
+      <BrandCard title="Swap Completed">
 
       <div className="SwapCompleted_top">
         <h4 className="mt-5">Received</h4>
@@ -117,7 +120,13 @@ class SwapCompleted extends Component {
       </div>
 
     </BrandCard>
+    </div>
   }
+}
+
+SwapCompleted.propTypes = {
+  retrievedAt: PropTypes.number,
+  expiresAt: PropTypes.number
 }
 
 export default SwapCompleted

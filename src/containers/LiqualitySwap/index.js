@@ -6,9 +6,17 @@ import { actions as errorActions } from '../../actions/errors'
 import { actions as agentActions } from '../../actions/agent'
 import LiqualitySwap from './LiqualitySwap'
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, ownProps) => ({
   swap: state.swap,
-  error: state.error
+  error: state.error,
+  quote: state.swap.agent.quote,
+  expiration: state.swap.expiration,
+  isPartyB: state.swap.isPartyB,
+  assets: state.swap.assets,
+  transactions: state.swap.transactions,
+  link: state.swap.link,
+  step: state.swap.step,
+  ...ownProps
 })
 
 export default withRouter(connect(

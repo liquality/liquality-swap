@@ -4,6 +4,7 @@ import moment from 'moment'
 import cryptoassets from '@liquality/cryptoassets'
 import { getFundExpiration, getClaimExpiration } from '../../utils/expiration'
 import { shortenTransactionHash, getExplorerLink } from '../../utils/transactions'
+import TimeProgressBar from '../../components/TimeProgressBar/TimeProgressBar'
 
 class TopDetails extends Component {
     constructor (props) {
@@ -59,6 +60,8 @@ class TopDetails extends Component {
 
         return <div className="TopDetails_bigWrap">
 
+            <TimeProgressBar startTime={this.props.start} endTime={this.props.expiration} />
+
             <div className="TopDetails_progressBar">
                 <div className='TopDetails_progress'>
                     <div className='TopDetails_progress_fill' style={{width: `${filled}%`}} />
@@ -74,7 +77,9 @@ class TopDetails extends Component {
 }
 
 TopDetails.propTypes = {
-    isClaim: PropTypes.bool
+    isClaim: PropTypes.bool,
+    startTime: PropTypes.number,
+    endTime: PropTypes.number
   }
   
   export default TopDetails;

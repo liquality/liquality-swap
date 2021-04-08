@@ -4,7 +4,7 @@ import Button from '../../components/Button/Button'
 import cryptoassets from '@liquality/cryptoassets'
 import { getClaimErrors } from '../../utils/validation'
 import ExpirationDetails from '../../components/ExpirationDetails'
-import TopDetails from '../TopDetails/TopDetails'
+import TopDetails from '../../containers/TopDetails'
 
 import './SwapRedemption.css'
 
@@ -14,7 +14,6 @@ class SwapRedemption extends Component {
     const claimCurrency = cryptoassets[this.props.assets.b.currency]
 
     return <div className="SwapRedemption_bigWrap">
-      {/* <TopDetails /> */}
       <BrandCard className='SwapRedemption' title='Claiming'>
       <div className='SwapRedemption_info mt-4'>
         <p className="d-flex justify-content-center">Before you claim,

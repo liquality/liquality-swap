@@ -6,6 +6,8 @@
   width: 160px;
 
   &_type {
+    position: relative;
+    top: -16px;
     p {
       padding: 0;
       margin: 0;
@@ -32,13 +34,28 @@
       overflow: visible;
     }
     p {
-      margin-top: 20%;
+      
     }
 
     &.error {
       border: 1px solid $danger;
       padding: 2px 4px;
     }
+  }
+
+  &_addressButtons {
+    position: relative;
+    top: -25px;
+    background: none;
+  }
+
+  &_addressWhole {
+    display: inline-block;
+  }
+
+  &_walletAddressConnected {
+    padding-left: 5%;
+    padding-top: 1.5%;
   }
 
   &_message {

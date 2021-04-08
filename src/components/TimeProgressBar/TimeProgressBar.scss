@@ -1,12 +1,16 @@
 @import '../../scss/variables.scss';
 
 .TimeProgressBar {
-  color: #FFFFFF;
-  background: $color-primary-2;
-  height: 25px;
+  background: #D9DFE5;
+  height: 30px;
   font-size: $font-size-sm;
+  width: 100%;
   line-height: 1.7rem;
   position: relative;
+
+  &_progress-bar {
+    
+  }
 
   span {
     position: absolute;
