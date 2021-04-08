@@ -155,6 +155,19 @@ class SwapInitiation extends Component {
     const switchSidesAvailable = !config.agents ||
       this.props.agent.markets.find(market => market.from === assetB.currency && market.to === assetA.currency)
     const showCountdown = this.state.interval
+    const isRate = this.state.rating
+    let circle
+
+    if(!isRate) {
+      circle = <div className='SwapInitiation_liqualityCircle'>
+      <h3>Trade With</h3>
+      <div className="SwapInitiation_logo">
+        <img src={Logo} alt="liquality-logo" />
+      </div>
+    </div>
+    } else {
+      circle = null
+    }
 
     return <div className='SwapInitiation'>
             {/* <div className='SwapInitiation_stepper'>
@@ -164,12 +177,7 @@ class SwapInitiation extends Component {
                 <div className='SwapInitiation_switch'>
                   <img src={SwapIcon} alt="switch icon for swapping" />
                 </div>
-                {this.rating === true ? 'null' : <div className='SwapInitiation_liqualityCircle'>
-                  <h3>Trade With</h3>
-                  <div className="SwapInitiation_logo">
-                    <img src={Logo} alt="liquality-logo" />
-                  </div>
-                </div>}
+            {circle}
       {/* <div className='SwapInitiation_assets'>
         <SwapPairPanel
           haveCurrency={this.props.assets.a.currency}
