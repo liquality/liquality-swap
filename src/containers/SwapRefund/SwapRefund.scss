@@ -3,8 +3,30 @@
 .SwapRefund {
   text-align: center;
 
+  &_confirmation {
+    font-weight: 700;
+    position: relative;
+    top:2%;
+  }
+
   &_terms {
-    font-size: $h1-font-size;
+    font-size: 40px;
+  }
+
+  &_pairDiv {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+    p {
+      justify-content: flex-start;
+      width: 50%;
+      
+    }
+    span {
+      justify-content: flex-end;
+      width: 50%;
+      text-align: right;
+    }
   }
 
   &_expiredFrame {
@@ -12,7 +34,6 @@
     width: 100%;
     background-color: #F7F8FA;
     color: #A4AAB6;
-    margin-top: -20px;
     border-radius: 0px 0px 22px 22px;
     padding: 50px;
 

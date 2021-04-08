@@ -62,6 +62,7 @@
   }
 
   &_transactions {
+    width: 100%;
     font-size: 11px;
   }
 
@@ -97,7 +98,6 @@
   &_transaction_right {
     display: flex;
     justify-content: flex-end;
-    border: 1px solid red;
 
     &:nth-child(2) {
       text-align: right;

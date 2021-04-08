@@ -134,7 +134,9 @@ class LiqualitySwap extends Component {
         <TimeProgressBar startTime={this.props.startTime} endTime={this.props.endTime} /></div>   
       <div className='LiqualitySwap_main'>
         <div className='LiqualitySwap_wave' />
-
+        <div className="SwapRedemption_whiteBar">
+        <p>Swap {this.props.assets.a.value.toFixed()} {cryptoassets[this.props.assets.a.currency].code} for {this.props.assets.b.value.toFixed()} {cryptoassets[this.props.assets.b.currency].code}</p>
+      </div>
         <div className='LiqualitySwap_wrapper'>
           { window.location.hash === '#otcswap' && <Redirect to='/assetSelection' /> }
           <Route exact path='/' render={this.getStartingScreen.bind(this)} />

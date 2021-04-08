@@ -19,9 +19,6 @@ class SwapRedemption extends Component {
         <p className="d-flex justify-content-center">Before you claim,
         Connect the account that you provided as <br /> {claimCurrency.code} receiving address</p>
       </div>
-      <div className="SwapRedemption_whiteBar">
-        <p>Swap {this.props.assets.a.value.toFixed()} {cryptoassets[this.props.assets.a.currency].code} for {this.props.assets.b.value.toFixed()} {cryptoassets[this.props.assets.b.currency].code}</p>
-      </div>
       <div class="SwapRedemption_confetti-wrapper">
           <div key="n in 150" className="`confetti-${n}`"></div>
             <p>
