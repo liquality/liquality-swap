@@ -20,8 +20,8 @@
   width: 275px;
   height: 275px;
   border-radius: 50%;
-  background: linear-gradient(#f07e6e, #84cdfa, #5ad1cd);
-  animation: animate 1.2s linear infinite;
+  background: linear-gradient(#9D4DFA, #1CE5C3, #F12274);
+  animation: animate 2s linear infinite;
   span{
     position: absolute;
     width: 100%;
@@ -52,6 +52,11 @@ filter: blur(50px);
     background: #f1f1f1;
     border: solid white 10px;
     border-radius: 50%;
+}
+
+&_statusMessage {
+  animation: none;
+  position: absolute;
 }
 
 

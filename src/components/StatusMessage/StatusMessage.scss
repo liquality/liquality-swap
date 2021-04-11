@@ -88,7 +88,7 @@
       }
     }
   
-  @keyframes animate {
+    @keyframes animate {
       0% {
           transform: rotate(0deg);
       }
@@ -98,19 +98,19 @@
   }
   
   &_spinningGradient {
-    position: relative;
-    width: 350px;
-    height: 350px;
+    position: absolute;
+    left: 35%;
+    top: 21.5%;
+    width: 275px;
+    height: 275px;
     border-radius: 50%;
-    background: linear-gradient(#f07e6e, #84cdfa, #5ad1cd);
-    animation: animate 1.2s linear infinite;
-    border: 1px solid black;
+    background: linear-gradient(#9D4DFA, #1CE5C3, #F12274);
+    animation: animate 2s linear infinite;
     span{
       position: absolute;
       width: 100%;
       height: 100%;
       border-radius: 50%;
-      background: linear-gradient(#f07e6e, #84cdfa, #5ad1cd);
       span:nth-child(1) {
         filter: blur(5px);
     }
@@ -119,10 +119,10 @@
   }
   span:nth-child(3) {
     filter: blur(25px);
-}
-span:nth-child(4) {
+  }
+  span:nth-child(4) {
   filter: blur(50px);
-}
+  }
     }
     }
   
@@ -137,5 +137,13 @@ span:nth-child(4) {
       border: solid white 10px;
       border-radius: 50%;
   }
+  }
+
+  &_statusMessage {
+    z-index: 10;
+    position: absolute;
+    top: 14.70%;
+    left: 14.25%;
+    animation: none;
   }
 }
