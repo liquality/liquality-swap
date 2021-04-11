@@ -10,6 +10,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 
 import cryptoassets from '@liquality/cryptoassets'
 import './CurrencyInput.css'
+import { stepData } from '../SwapProgressStepper/steps'
 
 class CurrencyInput extends Component {
   constructor (props) {
@@ -109,8 +110,10 @@ class CurrencyInput extends Component {
         </Dropdown.Toggle>
       
         <Dropdown.Menu>
-          {displayedAssets.map(([id, currency]) => 
-            <Dropdown.Item href="#" onClick={this.props.onHaveClick} key={id}><img src={assetUtils.getIcon(currency.code)} alt="currency icon/logo" style={{height: "25px", width: "25px", marginRight: "5%"}} /><strong>{currency.code}</strong></Dropdown.Item>
+          {displayedAssets.map(([id, currency]) =>
+          <div key={id} onClick={() => this.props.onSelectAsset(id)}> 
+            <Dropdown.Item><img src={assetUtils.getIcon(currency.code)} alt="currency icon/logo" style={{height: "25px", width: "25px", marginRight: "5%"}} /><strong>{currency.code}</strong></Dropdown.Item>
+          </div>
           )}
         </Dropdown.Menu>
       </Dropdown>
@@ -138,6 +141,7 @@ CurrencyInput.propTypes = {
   fiatRate: PropTypes.number,
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
+  onSelectAsset: PropTypes.func.isRequired,
   tabIndex: PropTypes.number,
   error: PropTypes.string,
   limits: PropTypes.shape({
@@ -145,7 +149,6 @@ CurrencyInput.propTypes = {
     max: PropTypes.instanceOf(BigNumber),
     onClick: PropTypes.func
   }),
-  haveCurrency: PropTypes.string.isRequired,
   onHaveClick: PropTypes.func,
 }
 

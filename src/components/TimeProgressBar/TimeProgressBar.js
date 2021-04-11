@@ -32,7 +32,6 @@ class TimeProgressBar extends Component {
     const timeLeft = this.props.endTime - this.state.currentTime
     const duration = moment.duration(timeLeft)
     return <div className='progress TimeProgressBar'>
-      {/* <span>Quote Expires In {duration.hours() > 0 ? `${duration.hours()} Hrs,` : ''} {duration.minutes() > 0 ? `${duration.minutes()} Mins,` : ''} {duration.seconds()} Secs</span> */}
       <div
         className={classNames('progress-bar', { 'bg-danger': percentage > 75, 'bg-info': percentage < 75 })}
         role='progressbar'

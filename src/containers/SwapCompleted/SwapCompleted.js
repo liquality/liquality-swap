@@ -86,7 +86,7 @@ class SwapCompleted extends Component {
         <h1>{this.props.assets.a.value.toFixed()} {sentCurrency.code}</h1>
 
         <h4 className="mt-4">Rate</h4>
-        <h1></h1>
+        <h1>{this.props.fiatRates[claimCurrency.currency]}</h1>
 
         <h4 className="mt-4">Network Fees</h4>
         <h1></h1>

@@ -5,7 +5,7 @@ import CurrencyInput from '../../components/CurrencyInput/CurrencyInput'
 import CurrencyInputWant from '../../components/CurrencyInput/CurrencyInputWant'
 import Rate from '../../components/Rate/Rate'
 import './CurrencyInputs.css'
-
+ 
 class CurrencyInputs extends Component {
   render () {
     const { a: assetA, b: assetB, rate: assetRate } = this.props.assets

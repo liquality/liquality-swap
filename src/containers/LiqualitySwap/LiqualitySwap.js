@@ -34,6 +34,9 @@ class LiqualitySwap extends Component {
     this.getBackupLinkCard = this.getBackupLinkCard.bind(this)
     this.getConnectWallet = this.getConnectWallet.bind(this)
     this.state = this.getExpirationState()
+    this.state = {
+      currentTime: Date.now()
+    }
   }
 
   getStartingScreen () {
@@ -87,6 +90,9 @@ class LiqualitySwap extends Component {
 
   tick () {
     this.setState(this.getExpirationState())
+    this.setState({
+      currentTime: Math.min(Date.now(), this.props.endTime)
+    })
   }
 
   getConnectWallet (currentWallet) {
@@ -124,6 +130,10 @@ class LiqualitySwap extends Component {
 
   render () {
 
+    const showQuoteTimer = this.props.quote && this.props.transactions.a.initiation.confirmations < this.props.quote.minConf
+    const timeLeft = this.props.endTime - this.state.currentTime
+    const duration = moment.duration(timeLeft)
+
     return <div className='LiqualitySwap'>
       { this.props.swap.assetSelector.open && <div className='LiqualitySwap_blur' /> }
       <div className='LiqualitySwap_header'>
@@ -131,7 +141,9 @@ class LiqualitySwap extends Component {
         { this.props.swap.step && <SwapProgressStepper state={this.props.swap.step} /> }
       </div>
       <div className='LiqualitySwap_detailsWrap'>
-        <TimeProgressBar startTime={this.props.startTime} endTime={this.props.endTime} /></div>   
+        {showQuoteTimer && <div className='LiqualitySwap_quoteTimer'><TimeProgressBar startTime={this.props.quote.retrievedAt} endTime={this.props.quote.expiresAt} /></div>} 
+        <span>Quote Expires In {duration.hours() > 0 ? `${duration.hours()} Hrs,` : ''} {duration.minutes() > 0 ? `${duration.minutes()} Mins,` : ''} {duration.seconds()} Secs</span>       
+      </div>   
       <div className='LiqualitySwap_main'>
         <div className='LiqualitySwap_wave' />
         <div className="SwapRedemption_whiteBar">
@@ -159,7 +171,8 @@ class LiqualitySwap extends Component {
 
 LiqualitySwap.propTypes = {
   startTime: PropTypes.number,
-  endTime: PropTypes.number
+  endTime: PropTypes.number,
+  duration: PropTypes.number
 }
 
 export default LiqualitySwap

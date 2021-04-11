@@ -108,8 +108,10 @@ class CurrencyInputWant extends Component {
         </Dropdown.Toggle>
       
         <Dropdown.Menu>
-          {displayedAssets.map(([id, currency]) => 
-            <Dropdown.Item href="#" value={currency.code} onClick={this.props.onWantClick} key={id}><img src={assetUtils.getIcon(currency.code)} alt="currency icon/logo" style={{height: "25px", width: "25px", marginRight: "5%"}} /><strong>{currency.code}</strong></Dropdown.Item>
+          {displayedAssets.map(([id, currency]) =>
+          <div key={id} onClick={() => this.props.onSelectAsset(id)}> 
+            <Dropdown.Item><img src={assetUtils.getIcon(currency.code)} alt="currency icon/logo" style={{height: "25px", width: "25px", marginRight: "5%"}} /><strong>{currency.code}</strong></Dropdown.Item>
+          </div>
           )}
         </Dropdown.Menu>
       </Dropdown>

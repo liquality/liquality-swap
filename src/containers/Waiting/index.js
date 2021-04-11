@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import Waiting from './Waiting'
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, props) => {
   return {
     step: state.swap.step,
     quote: state.swap.agent.quote,
@@ -9,7 +9,7 @@ const mapStateToProps = state => {
     transactions: state.swap.transactions,
     secretParams: state.swap.secretParams,
     expiration: state.swap.expiration,
-    isPartyB: state.swap.isPartyB
+    isPartyB: state.swap.isPartyB,
   }
 }
 

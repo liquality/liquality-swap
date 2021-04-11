@@ -8,6 +8,12 @@ class StatusMessage extends Component {
     return (
       <div className={classNames('StatusMessage', {'StatusMessage_complete': this.props.complete})}>
         <div className='StatusMessage_wrapper'>
+          {/* <div className="StatusMessage_spinningGradient">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div> */}
           <div className='StatusMessage_circle'>
           {/* { props.timer && <svg width='300' viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg' className='StatusMessage_timer'>
       <g transform='translate(110,110)'>

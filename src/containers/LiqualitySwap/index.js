@@ -10,6 +10,7 @@ const mapStateToProps = (state, ownProps) => ({
   swap: state.swap,
   error: state.error,
   quote: state.swap.agent.quote,
+  duration: state.swap.duration,
   expiration: state.swap.expiration,
   isPartyB: state.swap.isPartyB,
   assets: state.swap.assets,
