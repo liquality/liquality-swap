@@ -35,7 +35,8 @@ class LiqualitySwap extends Component {
     this.getConnectWallet = this.getConnectWallet.bind(this)
     this.state = this.getExpirationState()
     this.state = {
-      currentTime: Date.now()
+      currentTime: Date.now(),
+      step: 'INITIATION'
     }
   }
 
@@ -138,12 +139,13 @@ class LiqualitySwap extends Component {
       { this.props.swap.assetSelector.open && <div className='LiqualitySwap_blur' /> }
       <div className='LiqualitySwap_header'>
         <a href={APP_BASE_URL}><img className='LiqualitySwap_logo' src={LiqualityLogo} alt='Liquality Logo' /></a>
-        { this.props.swap.step && <SwapProgressStepper state={this.props.swap.step} /> }
+        <SwapProgressStepper state={this.props.swap.step} />
       </div>
       <div className='LiqualitySwap_detailsWrap'>
         {showQuoteTimer && <div className='LiqualitySwap_quoteTimer'><TimeProgressBar startTime={this.props.quote.retrievedAt} endTime={this.props.quote.expiresAt} /></div>} 
-        <span>Quote Expires In {duration.hours() > 0 ? `${duration.hours()} Hrs,` : ''} {duration.minutes() > 0 ? `${duration.minutes()} Mins,` : ''} {duration.seconds()} Secs</span>       
-      </div>   
+      </div>
+      <div className="LiqualitySwap_timeLeft">
+      </div>
       <div className='LiqualitySwap_main'>
         <div className='LiqualitySwap_wave' />
         <div className="SwapRedemption_whiteBar">

@@ -33,7 +33,7 @@ class TimeProgressBar extends Component {
     const duration = moment.duration(timeLeft)
     return <div className='progress TimeProgressBar'>
       <div
-        className={classNames('progress-bar', { 'bg-danger': percentage > 75, 'bg-info': percentage < 75 })}
+        className={classNames('progress-bar', { 'bg-danger': percentage > 75, '$color-primary-2': percentage < 75 })}
         role='progressbar'
         style={{ width: `${percentage}%` }}
         aria-valuenow={percentage}

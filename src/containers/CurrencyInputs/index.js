@@ -18,6 +18,7 @@ export default connect(
   {
     onSwitchSides: swapActions.switchSides,
     onAmountChange: assetActions.changeAmount,
-    onRateChange: assetActions.changeRate
+    onRateChange: assetActions.changeRate,
+    setAsset: assetActions.setAsset
   }
 )(CurrencyInputs)

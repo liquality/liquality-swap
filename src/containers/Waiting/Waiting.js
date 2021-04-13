@@ -40,12 +40,13 @@ class Waiting extends Component {
   }
 
   render () {
-    const showQuoteTimer = this.props.quote && this.props.transactions.a.initiation.confirmations < this.props.quote.minConf
     const showPartnerTransactionStatus = !this.props.isPartyB && (this.props.transactions.a.initiation.confirmations > 0 || this.props.transactions.b.initiation.hash)
     const showPartnerClaimTransactionStatus = this.props.isPartyB && (this.props.transactions.a.initiation.confirmations > 0 || this.props.transactions.b.claim.hash)
     const [ title, description ] = this.getWaitingStatus()
     return <BrandCard className='Waiting' title={title}>
-      {showQuoteTimer && <div className='Waiting_quoteTimer'><TimeProgressBar startTime={this.props.quote.retrievedAt} endTime={this.props.quote.expiresAt} /></div>}
+                  <div className="Waiting_whiteBar">
+                <p>Swap {this.props.assets.a.value.toFixed()} {cryptoassets[this.props.assets.a.currency].code} for {this.props.assets.b.value.toFixed()} {cryptoassets[this.props.assets.b.currency].code}</p>
+            </div>
       {/* { props.timer && <svg width='300' viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg' className='Rate_timer'>
       <g transform='translate(110,110)'>
         <g transform='rotate(-90)'>

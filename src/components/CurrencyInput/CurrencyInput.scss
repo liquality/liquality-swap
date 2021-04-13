@@ -18,9 +18,9 @@
   width: 270px;
 
   &_inputWrapper {
-    border-bottom: 1px solid #31E4C3;
     padding-bottom: 1px;
     display: flex;
+    border-bottom: 1px solid #31E4C3;
 
     &.disabled {
       border: none;

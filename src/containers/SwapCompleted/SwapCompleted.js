@@ -81,12 +81,13 @@ class SwapCompleted extends Component {
       <div className="SwapCompleted_top">
         <h4 className="mt-5">Received</h4>
         <h1>{this.props.assets.b.value.toFixed()} {claimCurrency.code}</h1>
+        <h5></h5>
 
         <h4 className="mt-4">Sent</h4>
         <h1>{this.props.assets.a.value.toFixed()} {sentCurrency.code}</h1>
 
         <h4 className="mt-4">Rate</h4>
-        <h1>{this.props.fiatRates[claimCurrency.currency]}</h1>
+        <h1>{claimCurrency.fiatRate}</h1>
 
         <h4 className="mt-4">Network Fees</h4>
         <h1></h1>
@@ -126,7 +127,8 @@ class SwapCompleted extends Component {
 
 SwapCompleted.propTypes = {
   retrievedAt: PropTypes.number,
-  expiresAt: PropTypes.number
+  expiresAt: PropTypes.number,
+  fiatRate: PropTypes.number,
 }
 
 export default SwapCompleted

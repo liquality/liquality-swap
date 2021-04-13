@@ -18,6 +18,7 @@ import { APP_BASE_URL } from '../../utils/app-links'
 import config from '../../config'
 import BrandCard from '../../components/BrandCard/BrandCard'
 import Logo from '../../icons/liqualityLogo.svg'
+import SwapProgressStepper from '../../components/SwapProgressStepper/SwapProgressStepper'
 
 const QUOTE_REFRESH_INTERVAL = 60
 
@@ -171,9 +172,6 @@ class SwapInitiation extends Component {
     }
 
     return <div className='SwapInitiation'>
-            {/* <div className='SwapInitiation_stepper'>
-              <SwapProgressStepper />
-            </div> */}
               <BrandCard className="SwapInitiation_card" title="liquality CROSSCHAIN SWAP">
                 <div className='SwapInitiation_switch'>
                   <img src={SwapIcon} alt="switch icon for swapping" />

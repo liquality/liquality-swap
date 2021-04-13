@@ -14,6 +14,7 @@ import { stepData } from '../SwapProgressStepper/steps'
 
 class CurrencyInput extends Component {
   constructor (props) {
+
     super(props)
     this.state = {
       valueString: props.value.toFixed(),
@@ -79,8 +80,8 @@ class CurrencyInput extends Component {
     const userDefinedAssets = Object.keys(config.assets)
     const displayedAssets = Object.entries(cryptoassets)
       .filter(([id]) => userDefinedAssets.includes(id))
-    const haveCurrency = cryptoassets[this.props.haveCurrency]
-    const wantCurrency = cryptoassets[this.props.wantCurrency]
+    // const haveCurrency = cryptoassets[this.props.haveCurrency]
+    // const wantCurrency = cryptoassets[this.props.wantCurrency]
 
 
     //DROPDOWN
@@ -136,7 +137,7 @@ class CurrencyInput extends Component {
 
 CurrencyInput.propTypes = {
   // TODO: probably need some sort of repository for currency codes and icons?
-  currency: PropTypes.oneOf(Object.keys(cryptoassets)).isRequired,
+  assets: PropTypes.arrayOf(PropTypes.oneOf(Object.keys(cryptoassets))),
   value: PropTypes.instanceOf(BigNumber),
   fiatRate: PropTypes.number,
   disabled: PropTypes.bool,
@@ -153,7 +154,8 @@ CurrencyInput.propTypes = {
 }
 
 CurrencyInput.defaultProps = {
-  tabIndex: -1
+  tabIndex: -1,
+  assets: [Object.keys(cryptoassets)]
 }
 
 export default CurrencyInput

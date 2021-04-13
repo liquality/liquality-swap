@@ -134,7 +134,7 @@ class CurrencyInputWant extends Component {
 
 CurrencyInputWant.propTypes = {
   // TODO: probably need some sort of repository for currency codes and icons?
-  currency: PropTypes.oneOf(Object.keys(cryptoassets)).isRequired,
+  currency: PropTypes.oneOf(Object.keys(cryptoassets)),
   value: PropTypes.instanceOf(BigNumber),
   fiatRate: PropTypes.number,
   disabled: PropTypes.bool,

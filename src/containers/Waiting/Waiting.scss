@@ -2,7 +2,16 @@
 
 .Waiting {
   text-align: center;
-  margin-top: 15%;
+  margin-top: 10%;
+
+  &_whiteBar {
+    margin: 0 auto;
+    margin-top: -10%;
+    background-color: white;
+    height: 20px;
+    width: 300px;
+    border-radius: 25px;
+  }
 
   @keyframes animate {
     0% {
@@ -16,11 +25,11 @@
 &_spinningGradient {
   position: absolute;
   left: 35%;
-  top: 21.5%;
+  top: 22.5%;
   width: 275px;
   height: 275px;
   border-radius: 50%;
-  background: linear-gradient(#9D4DFA, #1CE5C3, #F12274);
+  background: linear-gradient(#9D4DFA, #1CE5C3, #00a2ff);
   animation: animate 2s linear infinite;
   span{
     position: absolute;
@@ -32,13 +41,13 @@
   }
   span:nth-child(2) {
     filter: blur(10px);
-}
-span:nth-child(3) {
-  filter: blur(25px);
-}
-span:nth-child(4) {
-filter: blur(50px);
-}
+  }
+  span:nth-child(3) {
+    filter: blur(25px);
+  }
+  span:nth-child(4) {
+  filter: blur(50px);
+  }
   }
   }
 

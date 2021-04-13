@@ -20,7 +20,7 @@ class SwapRedemption extends Component {
         Connect the account that you provided as <br /> {claimCurrency.code} receiving address</p>
       </div>
       <div class="SwapRedemption_confetti-wrapper">
-          <div key="n in 150" className="`confetti-${n}`"></div>
+          <div key="`${n} in 150`" className="`confetti-${n}`"></div>
             <p>
               {!errors.claim && <Button className='SwapRedemption_claimButton' wide primary loadingMessage={this.props.loadingMessage} onClick={this.props.redeemSwap}>Claim {this.props.assets.b.value.toFixed()} {claimCurrency.code}</Button>}
               {errors.claim && <div className='SwapRedemption_errorMessage'>{errors.claim}</div>}

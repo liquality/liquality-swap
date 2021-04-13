@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import cryptoassets from '@liquality/cryptoassets'
 import { getCurrencyInputErrors } from '../../utils/validation'
 import CurrencyInput from '../../components/CurrencyInput/CurrencyInput'
 import CurrencyInputWant from '../../components/CurrencyInput/CurrencyInputWant'
@@ -7,14 +8,26 @@ import Rate from '../../components/Rate/Rate'
 import './CurrencyInputs.css'
  
 class CurrencyInputs extends Component {
+
+  handleSelectAssetA (asset) {
+    this.props.setAsset(this.props.assetA, asset)
+  }
+
+  handleSelectAssetB (asset) {
+    this.props.setAsset(this.props.assetB, asset)
+  }
+
   render () {
     const { a: assetA, b: assetB, rate: assetRate } = this.props.assets
+    // const haveCurrency = cryptoassets[this.props.haveCurrency]
+    // const wantCurrency = cryptoassets[this.props.wantCurrency]
     const errors = this.props.showErrors ? getCurrencyInputErrors(this.props.assets, this.props.agent) : {}
     return <div className='CurrencyInputs'>
       <div className='row justify-content-between no-gutters'>
         <div className='col CurrencyInputs_left'>
           { this.props.showInputs && <CurrencyInput
             currency={assetA.currency}
+            onSelectAsset={asset => this.handleSelectAssetA(asset)}
             value={assetA.value}
             {...(this.props.showLeftFiatValue ? {fiatRate: this.props.fiatRates[assetA.currency]} : {})}
             disabled={this.props.leftInputDisabled}
@@ -30,7 +43,8 @@ class CurrencyInputs extends Component {
         </div>
         <div className='col CurrencyInputs_right'>
           { this.props.showInputs && <CurrencyInputWant
-            currency={assetB.currency} 
+            currency={assetB.currency}
+            onSelectAsset={asset => this.handleSelectAssetB(asset)} 
             value={assetB.value}
             {...(this.props.showRightFiatValue ? {fiatRate: this.props.fiatRates[assetB.currency]} : {})}
             disabled={this.props.rightInputDisabled}
@@ -66,7 +80,9 @@ class CurrencyInputs extends Component {
 }
 
 CurrencyInputs.propTypes = {
+  assets: PropTypes.arrayOf(PropTypes.oneOf(Object.keys(cryptoassets))),
   leftInputDisabled: PropTypes.bool,
+  onSelectAsset: PropTypes.func.isRequired,
   rightInputDisabled: PropTypes.bool,
   leftInputLimits: CurrencyInput.propTypes.limits,
   rightInputLimits: CurrencyInput.propTypes.limits,
@@ -77,7 +93,17 @@ CurrencyInputs.propTypes = {
   showRate: PropTypes.bool,
   showInputs: PropTypes.bool,
   showLeftFiatValue: PropTypes.bool,
-  showRightFiatValue: PropTypes.bool
+  showRightFiatValue: PropTypes.bool,
+  haveCurrency: PropTypes.string.isRequired,
+  haveLabel: PropTypes.string.isRequired,
+  onHaveClick: PropTypes.func,
+  wantCurrency: PropTypes.string.isRequired,
+  wantLabel: PropTypes.string.isRequired,
+  onWantClick: PropTypes.func,
+  icon: PropTypes.any,
+  iconDisabled: PropTypes.bool,
+  onIconClick: PropTypes.func,
+  showCurrencyLabels: PropTypes.bool,
 }
 
 export default CurrencyInputs
