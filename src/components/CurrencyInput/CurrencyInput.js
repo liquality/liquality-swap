@@ -149,8 +149,7 @@ CurrencyInput.propTypes = {
     min: PropTypes.instanceOf(BigNumber),
     max: PropTypes.instanceOf(BigNumber),
     onClick: PropTypes.func
-  }),
-  onHaveClick: PropTypes.func,
+  })
 }
 
 CurrencyInput.defaultProps = {

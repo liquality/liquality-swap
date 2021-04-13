@@ -112,8 +112,6 @@ class SwapInitiation extends Component {
   handleSelectAsset (asset) {
     if (this.props.agent.markets.length) this.handleAgentSelectAsset(asset)
     else this.props.setAsset(this.props.assetSelector.party, asset)
-
-    this.props.closeAssetSelector()
   }
 
   getAgentSelectorAssets () {

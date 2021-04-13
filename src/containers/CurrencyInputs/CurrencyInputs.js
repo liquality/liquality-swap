@@ -10,11 +10,11 @@ import './CurrencyInputs.css'
 class CurrencyInputs extends Component {
 
   handleSelectAssetA (asset) {
-    this.props.setAsset(this.props.assetA, asset)
+    this.props.setAsset('a', asset)
   }
 
   handleSelectAssetB (asset) {
-    this.props.setAsset(this.props.assetB, asset)
+    this.props.setAsset('b', asset)
   }
 
   render () {
