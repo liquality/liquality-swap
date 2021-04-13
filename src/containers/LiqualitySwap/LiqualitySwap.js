@@ -136,7 +136,6 @@ class LiqualitySwap extends Component {
     const duration = moment.duration(timeLeft)
 
     return <div className='LiqualitySwap'>
-      { this.props.swap.assetSelector.open && <div className='LiqualitySwap_blur' /> }
       <div className='LiqualitySwap_header'>
         <a href={APP_BASE_URL}><img className='LiqualitySwap_logo' src={LiqualityLogo} alt='Liquality Logo' /></a>
         <SwapProgressStepper state={this.props.swap.step} />

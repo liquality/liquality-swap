@@ -2,7 +2,24 @@
 
 .WalletChoose {
   text-align: center;
-  padding: 15px;
+  padding: 0 !important;
+
+  &_divider {
+    border-bottom: 3px solid $color-bg-secondary;
+    margin-bottom: 5%;
+  }
+
+  &_currencyBar {
+    width: 150px;
+    height: 21px;
+    background: grey;
+    margin: 0 auto;
+    margin-top: -2%;
+    color: $secondary;
+    background: rgb(123,135,224);
+    background: linear-gradient(90deg, rgba(123,135,224,1) 0%, rgba(113,177,210,1) 100%);
+    border-radius: 25px;
+  }
 
   h1 {
     color: #fff;
@@ -12,20 +29,22 @@
     color: #747E8D; // TODO: use sass vars
     text-align: center;
     font-size: 1.7rem;
+    margin-bottom: 5%;
   }
 
   &_WalletsContainer {
-    border-radius: 10px;
-    background-color: $color-bg-secondary;
     margin: 10px 5px 20px;
   }
 
+
   &_wallet {
     border-radius: 10px;
+    background: $color-bg-secondary;
     padding: 10px;
     display: flex;
     align-items:center;
     cursor: pointer;
+    margin-bottom: 1%;
 
     &:hover {
       background-color: #f1f0f9;

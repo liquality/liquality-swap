@@ -3,8 +3,6 @@ import _ from 'lodash'
 
 import Button from '../../components/Button/Button'
 import ExpirationDetails from '../../components/ExpirationDetails'
-import SwapPairPanel from '../../components/SwapPairPanel/SwapPairPanel'
-import AssetSelector from '../../components/AssetSelector/AssetSelector'
 import HandshakeIcon from '../../icons/handshake.png'
 import SwapIcon from '../../icons/switch.svg'
 import CounterPartyWallets from '../CounterPartyWallets'
@@ -18,7 +16,6 @@ import { APP_BASE_URL } from '../../utils/app-links'
 import config from '../../config'
 import BrandCard from '../../components/BrandCard/BrandCard'
 import Logo from '../../icons/liqualityLogo.svg'
-import SwapProgressStepper from '../../components/SwapProgressStepper/SwapProgressStepper'
 
 const QUOTE_REFRESH_INTERVAL = 60
 
@@ -171,9 +168,9 @@ class SwapInitiation extends Component {
 
     return <div className='SwapInitiation'>
               <BrandCard className="SwapInitiation_card" title="liquality CROSSCHAIN SWAP">
-                <div className='SwapInitiation_switch'>
+                {/* <div className='SwapInitiation_switch'>
                   <img src={SwapIcon} alt="switch icon for swapping" />
-                </div>
+                </div> */}
             {circle}
       {/* <div className='SwapInitiation_assets'>
         <SwapPairPanel
@@ -198,6 +195,7 @@ class SwapInitiation extends Component {
       <div className='SwapInitiation_top'>
         <CurrencyInputs
           showInputs
+          onIconClick={() => this.props.switchSides()}
           leftInputDisabled={termsImmutable}
           rightInputDisabled={counterPartyLocked}
           rateDisabled={counterPartyLocked}

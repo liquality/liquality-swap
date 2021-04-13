@@ -9,7 +9,7 @@ import config from '../../config'
 import Dropdown from 'react-bootstrap/Dropdown'
 
 import cryptoassets from '@liquality/cryptoassets'
-import './CurrencyInput.css'
+import './CurrencyInputWant.css'
 
 class CurrencyInputWant extends Component {
   constructor (props) {
@@ -78,8 +78,6 @@ class CurrencyInputWant extends Component {
     const userDefinedAssets = Object.keys(config.assets)
     const displayedAssets = Object.entries(cryptoassets)
       .filter(([id]) => userDefinedAssets.includes(id))
-    const haveCurrency = cryptoassets[this.props.haveCurrency]
-    const wantCurrency = cryptoassets[this.props.wantCurrency]
 
     //DROPDOWN
     const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -96,15 +94,13 @@ class CurrencyInputWant extends Component {
       </h1>
     ));
 
-    return <div className='CurrencyInput'>
-      { this.props.fiatRate && !this.props.value.isNaN() && <div className='CurrencyInput_price'>
-        ${ this.getFiatValue() } USD
-      </div> }
-      <div className="CurrencyInput_inputBigWrap">
-      <div className="CurrencyInput_DropdownWrap">
-      <Dropdown>
-        <Dropdown.Toggle as={CustomToggle} id="dropdown-basic" className="CurrencyInput_toggler">
-          <img src={assetUtils.getIcon(asset.code)} alt='asset icon' /> <h1>{asset.code}</h1>
+    return <div className='CurrencyInputWant'>
+      <div className='CurrencyInputWant_receive'>Receive</div>
+      <div className="CurrencyInputWant_inputBigWrap">
+      <div className="CurrencyInputWant_DropdownWrap">
+      <Dropdown className="CurrencyInputWant_drop">
+        <Dropdown.Toggle as={CustomToggle} id="dropdown-basic" className="CurrencyInputWant_toggler">
+          <img src={assetUtils.getIcon(asset.code)} alt='asset icon' /> <h2>{asset.code}</h2>
         </Dropdown.Toggle>
       
         <Dropdown.Menu>
@@ -117,15 +113,15 @@ class CurrencyInputWant extends Component {
       </Dropdown>
       </div>
       </div>
-      <div className={classNames('CurrencyInput_inputWrapper', { 'disabled': this.props.disabled })}>
+      <div className={classNames('CurrencyInputWant_inputWrapper', { 'disabled': this.props.disabled })}>
         <input type='number' min='0' readOnly={this.props.disabled} value={this.restrictNumber(this.state.valueString)}
-          className={classNames('CurrencyInput_input', { 'error': this.props.error })} placeholder='0.00'
+          className={classNames('CurrencyInputWant_input', { 'error': this.props.error })} placeholder='0.00'
           onChange={e => this.onChange(e)} onKeyDown={e => this.preventNegative(e)} tabIndex={this.props.tabIndex} />
       </div>
-      { this.props.error && <div className={classNames('CurrencyInput_label', { 'CurrencyInput_errorMessage': this.props.error })}>
+      { this.props.error && <div className={classNames('CurrencyInputWant_label', { 'CurrencyInputWant_errorMessage': this.props.error })}>
         { this.props.error }
       </div> }
-      <div className='CurrencyInput_label'>
+      <div className='CurrencyInputWant_label'>
         { this.props.limits && this.getLimits() }
       </div>
     </div>

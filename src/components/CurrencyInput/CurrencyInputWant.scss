@@ -1,9 +1,10 @@
 @import '../../scss/variables.scss';
 @import '../../scss/mixins.scss';
 
-.CurrencyInput {
+.CurrencyInputWant {
 
   margin-top: 10%;
+  padding-left: 25%;
 
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
@@ -17,19 +18,28 @@
 
   width: 270px;
 
-  &_inputBar {
-    border-bottom: 1px solid #31E4C3;
-    width: 65%;
-    position: relative;
-    left: 107px;
-  }
-
   &_inputWrapper {
-    padding-bottom: 3px;
-    display: block;
+    padding-bottom: 1px;
+    display: flex;
+    padding-left: 15%;
+    border-bottom: 1px solid #31E4C3;
 
     &.disabled {
       border: none;
+    }
+  }
+
+  &_receive {
+    color: $color-text-1;
+    font-weight: bold;
+    font-size: $h4-font-size;
+    position: relative;
+    right: 10%;
+  }
+
+  &_drop {
+    &:hover {
+      cursor: pointer;
     }
   }
 
@@ -49,21 +59,13 @@
     }
     &_toggler {
       display: inline-block;
-      
-    }
-  }
-
-  &_drop {
-    &:hover {
-      cursor: pointer;
     }
   }
 
   &_input {
     @include blank-input;
-    display: block;
+    display: flex;
     width: 275px;
-    height: 32px;
     text-align: right;
     font-size: $h2-font-size;
     font-weight: 500;
@@ -74,28 +76,11 @@
   }
 
   &_price {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 285px;
-    margin-left: -2.5%;
-    padding-bottom:2%;
-  }
-
-  &_labelSwap {
-    color: $color-text-1;
-    font-weight: bold;
-    font-size: $h4-font-size;
-   }
-
-  &priceFiat {
     text-align: right;
     font-size: $font-size-sm;
     color: $color-text-2;
     padding-top: 3px;
-    border: 1px solid $color-text-1;
-   }
-
+  }
 
   &_label {
     height: 20px;

@@ -13,10 +13,14 @@ const WalletChoose = (props) => {
   const currency = cryptoassets[props.currency]
   const term = props.receive ? 'Receive' : 'Send'
   return <div className='WalletChoose'>
+    <div className="WalletChoose_currencyBar">
+      {currency.name}
+    </div>
     <img className='WalletDisplay_icon'
       src={wallets[props.type] ? wallets[props.type].icon : WalletIcon}
       alt={wallets[props.type] ? wallets[props.type].name : 'Wallet'} />
-    <h1>Select Wallet to {term} {currency.name}</h1>
+    <h1>{term} {currency.name}</h1>
+    <div className='WalletChoose_divider'></div>
     <div className='WalletChoose_WalletsContainer'>
       {props.wallets.map((wallet) => (
         <div key={wallet} onClick={() => props.chooseWallet(wallet)}>

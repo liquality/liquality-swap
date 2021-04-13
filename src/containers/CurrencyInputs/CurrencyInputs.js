@@ -4,6 +4,7 @@ import cryptoassets from '@liquality/cryptoassets'
 import { getCurrencyInputErrors } from '../../utils/validation'
 import CurrencyInput from '../../components/CurrencyInput/CurrencyInput'
 import CurrencyInputWant from '../../components/CurrencyInput/CurrencyInputWant'
+import SwapIcon from '../../icons/switch.svg'
 import Rate from '../../components/Rate/Rate'
 import './CurrencyInputs.css'
  
@@ -19,10 +20,12 @@ class CurrencyInputs extends Component {
 
   render () {
     const { a: assetA, b: assetB, rate: assetRate } = this.props.assets
-    // const haveCurrency = cryptoassets[this.props.haveCurrency]
-    // const wantCurrency = cryptoassets[this.props.wantCurrency]
+
     const errors = this.props.showErrors ? getCurrencyInputErrors(this.props.assets, this.props.agent) : {}
     return <div className='CurrencyInputs'>
+          <div className='CurrencyInputs_switch'>
+            <img src={SwapIcon} alt="switch icon for swapping" onClick={e => this.props.onIconClick(e)} />
+          </div>
       <div className='row justify-content-between no-gutters'>
         <div className='col CurrencyInputs_left'>
           { this.props.showInputs && <CurrencyInput

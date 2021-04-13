@@ -10,7 +10,6 @@ import Dropdown from 'react-bootstrap/Dropdown'
 
 import cryptoassets from '@liquality/cryptoassets'
 import './CurrencyInput.css'
-import { stepData } from '../SwapProgressStepper/steps'
 
 class CurrencyInput extends Component {
   constructor (props) {
@@ -80,8 +79,6 @@ class CurrencyInput extends Component {
     const userDefinedAssets = Object.keys(config.assets)
     const displayedAssets = Object.entries(cryptoassets)
       .filter(([id]) => userDefinedAssets.includes(id))
-    // const haveCurrency = cryptoassets[this.props.haveCurrency]
-    // const wantCurrency = cryptoassets[this.props.wantCurrency]
 
 
     //DROPDOWN
@@ -101,13 +98,13 @@ class CurrencyInput extends Component {
 
     return <div className='CurrencyInput'>
       { this.props.fiatRate && !this.props.value.isNaN() && <div className='CurrencyInput_price'>
-        ${ this.getFiatValue() } USD
+        <div className='CurrencyInput_labelSwap'>Send</div><div className='CurrencyInput_priceFiat'>${ this.getFiatValue() } USD</div>
       </div> }
       <div className="CurrencyInput_inputBigWrap">
       <div className="CurrencyInput_DropdownWrap">
-      <Dropdown>
+      <Dropdown className="CurrencyInput_drop">
         <Dropdown.Toggle as={CustomToggle} id="dropdown-basic" className="CurrencyInput_toggler">
-          <img src={assetUtils.getIcon(asset.code)} alt='asset icon' /> <h1>{asset.code}</h1>
+          <img src={assetUtils.getIcon(asset.code)} alt='asset icon' /> <h2>{asset.code}</h2>
         </Dropdown.Toggle>
       
         <Dropdown.Menu>
@@ -124,6 +121,7 @@ class CurrencyInput extends Component {
         <input type='number' min='0' readOnly={this.props.disabled} value={this.restrictNumber(this.state.valueString)}
           className={classNames('CurrencyInput_input', { 'error': this.props.error })} placeholder='0.00'
           onChange={e => this.onChange(e)} onKeyDown={e => this.preventNegative(e)} tabIndex={this.props.tabIndex} />
+                      <div className='CurrencyInput_inputBar'></div>
       </div>
       { this.props.error && <div className={classNames('CurrencyInput_label', { 'CurrencyInput_errorMessage': this.props.error })}>
         { this.props.error }
