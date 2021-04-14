@@ -1,0 +1,12 @@
+.TopProgressBar {
+    &_progress {
+        background: #D8E2F0;
+        height: 3px;
+        // margin: 10px 0;
+    
+        &_fill {
+          background: $color-primary-2;
+          height: 3px;
+        }
+      }
+}

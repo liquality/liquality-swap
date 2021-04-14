@@ -18,6 +18,7 @@ import SwapCompleted from '../SwapCompleted'
 import SwapRefund from '../SwapRefund'
 import SwapRefunded from '../SwapRefunded'
 import TimeProgressBar from '../../components/TimeProgressBar/TimeProgressBar'
+import TopProgressBar from "../TopProgressBar/index"
 import SwapProgressStepper from '../../components/SwapProgressStepper/SwapProgressStepper'
 import { generateLink, APP_BASE_URL } from '../../utils/app-links'
 import config from '../../config'
@@ -81,21 +82,6 @@ class LiqualitySwap extends Component {
     }
   }
 
-  componentDidMount () {
-    this.interval = setInterval(this.tick.bind(this), 1000)
-  }
-
-  componentWillUnmount () {
-    clearInterval(this.interval)
-  }
-
-  tick () {
-    this.setState(this.getExpirationState())
-    this.setState({
-      currentTime: Math.min(Date.now(), this.props.endTime)
-    })
-  }
-
   getConnectWallet (currentWallet) {
     const walletA = this.props.swap.wallets.a
     const walletB = this.props.swap.wallets.b
@@ -130,22 +116,37 @@ class LiqualitySwap extends Component {
   }
 
   render () {
+    // const timeLeft = this.props.endTime - this.state.currentTime
+    // const duration = moment.duration(timeLeft)
+    // // const left = moment.duration(this.state.expiration.diff(maxNow))
+    // // const maxNow = this.state.now.isAfter(this.state.expiration) ? this.state.expiration : this.state.now
+    // const maxNow = this.state.now.isAfter(this.state.expiration) ? this.state.expiration : this.state.now
+    // const left = moment.duration(this.state.expiration.diff(maxNow))
+    // const passed = moment.duration(maxNow.diff(this.state.start))
+    // const total = this.state.duration
 
-    const showQuoteTimer = this.props.quote && this.props.transactions.a.initiation.confirmations < this.props.quote.minConf
-    const timeLeft = this.props.endTime - this.state.currentTime
-    const duration = moment.duration(timeLeft)
+    // const filled = (((total.asSeconds() - left.asSeconds()) / total.asSeconds()) * 100).toFixed(2)
 
     return <div className='LiqualitySwap'>
       <div className='LiqualitySwap_header'>
+        <div className="LiqualitySwap_how">
         <a href={APP_BASE_URL}><img className='LiqualitySwap_logo' src={LiqualityLogo} alt='Liquality Logo' /></a>
+          <h2>How It Works</h2>
+          </div>
         <SwapProgressStepper state={this.props.swap.step} />
       </div>
       <div className='LiqualitySwap_detailsWrap'>
-        {showQuoteTimer && <div className='LiqualitySwap_quoteTimer'><TimeProgressBar startTime={this.props.quote.retrievedAt} endTime={this.props.quote.expiresAt} /></div>} 
+        {/* <TopProgressBar /> */}
+        <div className='LiqualitySwap_quoteTimer'><TimeProgressBar startTime={this.state.start} endTime={this.state.expiration} /></div> 
       </div>
-      <div className="LiqualitySwap_timeLeft">
-      </div>
+       {/* {this.state.expiration ? <div className='ExpirationDetails_progress'>
+          <div className='ExpirationDetails_progress_fill' style={{width: `${filled}%`}} />
+        </div>
+        : 'null'} */}
       <div className='LiqualitySwap_main'>
+      {/* <div className="LiqualitySwap_timeLeft">
+        <div className="LiqualitySwap_activeTime">You have 4 hrs 23 min to complete this swap by 10:39pm</div>
+      </div> */}
         <div className='LiqualitySwap_wave' />
         <div className="SwapRedemption_whiteBar">
         <p>Swap {this.props.assets.a.value.toFixed()} {cryptoassets[this.props.assets.a.currency].code} for {this.props.assets.b.value.toFixed()} {cryptoassets[this.props.assets.b.currency].code}</p>
@@ -173,7 +174,8 @@ class LiqualitySwap extends Component {
 LiqualitySwap.propTypes = {
   startTime: PropTypes.number,
   endTime: PropTypes.number,
-  duration: PropTypes.number
+  duration: PropTypes.number,
+  expiration: PropTypes.number
 }
 
 export default LiqualitySwap

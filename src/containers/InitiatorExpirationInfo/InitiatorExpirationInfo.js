@@ -29,7 +29,7 @@ class InitiatorExpirationInfo extends Component {
     return <div className='InitiatorExpirationInfo'>
       <div className='justify-content-start'>
         <h5 class="mb-3 justify-content-center"><strong>What happens when you swap?</strong></h5>
-        <p class="mb-2 ml-5"><img src={LockIcon} className='InitiatorExpirationInfo_icon' alt='Lock Icon' />When initiating the swap your funds will be securely locked into escrow</p>
+        <p class="mb-2 ml-5"><img src={LockIcon} className='InitiatorExpirationInfo_icon ml-1' alt='Lock Icon' />When initiating the swap your funds will be securely locked into escrow</p>
         <p class="mb-2 ml-5"><img src={ClockIcon} className='InitiatorExpirationInfo_icon' alt='Clock Icon' />If the swap doesn't complete within {Number(expirationDurations.b.asHours().toFixed(2))} hours, your funds will be released in {Number(expirationDurations.a.asHours().toFixed(2))} hours at {this.state.expiration.format('LT')}</p>
       </div>
     </div>

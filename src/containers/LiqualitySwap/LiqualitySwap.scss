@@ -14,6 +14,22 @@
     background-color: rgba(0, 0, 0, 0.3);
   }
 
+  &_how {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    h2 {
+      color: $color-primary-1;
+      font-size: $h5-font-size;
+      padding-right: 3%;
+    }
+  }
+
+  &_activeTime {
+    width: 100%;
+    text-align: center;
+  }
+
   &_bar {
     flex: 0 0 6px;
     height: 6px;

@@ -33,9 +33,9 @@ class TimeProgressBar extends Component {
     const duration = moment.duration(timeLeft)
     return <div className='progress TimeProgressBar'>
       <div
-        className={classNames('progress-bar', { 'bg-danger': percentage > 75, '$color-primary-2': percentage < 75 })}
+        className="progress-bar"
         role='progressbar'
-        style={{ width: `${percentage}%` }}
+        style={{ width: `${percentage}%`, backgroundColor: "#1CE5C3" }}
         aria-valuenow={percentage}
         aria-valuemin='0' aria-valuemax='100' />
     </div>
@@ -44,7 +44,9 @@ class TimeProgressBar extends Component {
 
 TimeProgressBar.propTypes = {
   startTime: PropTypes.number,
-  endTime: PropTypes.number
+  endTime: PropTypes.number,
+  expiration: PropTypes.number,
+
 }
 
 export default TimeProgressBar

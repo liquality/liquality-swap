@@ -4,6 +4,7 @@
   text-align: left;
   display: flex;
   padding: 14px 30px;
+  padding-bottom: none;
   height: 100px;
   margin: 0 auto;
   background: #F1F4F7;
@@ -56,6 +57,7 @@
 
   &_link {
     cursor: pointer;
+    padding-top: 4%;
     img {
       margin-left: 10px;
     }

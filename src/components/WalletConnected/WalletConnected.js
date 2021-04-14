@@ -12,6 +12,9 @@ const WalletConnected = (props) => {
   const term = props.receive ? 'Receive' : 'Send'
   const currency = cryptoassets[props.currency]
   return <div className='WalletConnected'>
+    <div className="WalletConnected_currencyBar">
+      {currency.name}
+    </div>
     <h2><img src={TickIcon} alt='done' />&nbsp;Connected!<br />Ready to {term} {currency.name}</h2>
     <div className='WalletConnected_wallet'>
       <img src={wallets[props.wallet].icon} className='WalletPanel_walletImg' alt={`${wallets[props.wallet].name} Icon`} />

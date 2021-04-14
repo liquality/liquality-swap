@@ -4,7 +4,7 @@
 .CurrencyInputWant {
 
   margin-top: 10%;
-  padding-left: 25%;
+  margin-left: 20%;
 
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
@@ -15,8 +15,7 @@
   input[type='number'] {
     -moz-appearance:textfield;
   }
-
-  width: 270px;
+  width: 250px;
 
   &_inputWrapper {
     padding-bottom: 1px;

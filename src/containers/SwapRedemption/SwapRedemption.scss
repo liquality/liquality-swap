@@ -29,15 +29,12 @@
     @include error-message;
   }
 
-  &_confettiBox {
-    height: 450px;
-  }
-
   &_confetti-wrapper {
     height: 450px;
+    z-index: 10;
   }
 
-  [class|="confetti"] {
+  [className|="confetti"] {
     position: absolute;
     min-height: 100vh;
   }

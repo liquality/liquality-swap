@@ -10,6 +10,18 @@
     color: #333;
   }
 
+  &_currencyBar {
+    width: 150px;
+    height: 21px;
+    background: grey;
+    margin: 0 auto;
+    margin-top: -5%;
+    color: $secondary;
+    background: rgb(123,135,224);
+    background: linear-gradient(90deg, rgba(123,135,224,1) 0%, rgba(113,177,210,1) 100%);
+    border-radius: 25px;
+  }
+
   &_wallet {
     border-radius: 10px;
     background-color: $color-bg-secondary;

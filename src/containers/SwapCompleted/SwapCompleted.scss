@@ -42,6 +42,10 @@
     justify-content: center;
   }
 
+  &_transactionHash {
+    color: $color-primary-1;
+  }
+
   &_shareLeft {
     display: flex;
     flex-flow: row nowrap;

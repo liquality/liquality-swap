@@ -3,13 +3,14 @@ import PropTypes from 'prop-types'
 import cryptoassets from '@liquality/cryptoassets'
 import BrandCard from '../../components/BrandCard/BrandCard'
 import ExpirationDetails from '../../components/ExpirationDetails'
-import TimeProgressBar from '../../components/TimeProgressBar/TimeProgressBar'
 import StatusMessage from '../../components/StatusMessage/StatusMessage'
 import { steps } from '../../components/SwapProgressStepper/steps'
 import { getConfirmationEstimate } from '../../utils/networks'
+import moment from 'moment'
 import './Waiting.css'
 
 class Waiting extends Component {
+
   getWaitingStatus () {
     if (this.props.step === steps.AGREEMENT) {
       if (this.props.isPartyB) {
@@ -47,20 +48,6 @@ class Waiting extends Component {
                   <div className="Waiting_whiteBar">
                 <p>Swap {this.props.assets.a.value.toFixed()} {cryptoassets[this.props.assets.a.currency].code} for {this.props.assets.b.value.toFixed()} {cryptoassets[this.props.assets.b.currency].code}</p>
             </div>
-      {/* { props.timer && <svg width='300' viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg' className='Rate_timer'>
-      <g transform='translate(110,110)'>
-        <g transform='rotate(-90)'>
-          <circle r='100' className='Rate_timer_progress' style={{
-            animation: props.timer.current === props.timer.duration ? 'none' : `countdown ${props.timer.duration - 1}s linear 1 forwards`
-          }} />
-          <g className='Rate_timer_pointer'>
-            <circle cx='100' cy='0' r='6' className='Rate_timer_pointer_c' style={{
-              animation: props.timer.current === props.timer.duration ? 'none' : `pointer ${props.timer.duration - 1}s linear 1 forwards`
-            }} />
-          </g>
-        </g>
-      </g>
-    </svg> } */}
                     <div className="StatusMessage_statusMessage">
 
 <StatusMessage

@@ -16,10 +16,11 @@
 
   &_circle {
     margin: 0 auto;
-    margin-top: 25%;
+    margin-top: 20.2%;
+    margin-right: 0.5%;
     display: block;
-    width: 250px;
-    height: 250px;
+    width: 270px;
+    height: 270px;
     margin-bottom: 2px;
     border-radius: 50%;
     padding: 30px 10px;
@@ -43,7 +44,7 @@
     font-weight: bold;
     font-size: $h4-font-size;
     line-height: 1.75;
-    padding-top: 20%;
+    padding-top: 25%;
   }
 
   &_complete &_message {
@@ -105,6 +106,7 @@
     border-radius: 50%;
     background: linear-gradient(#9D4DFA, #1CE5C3, #00a2ff);
     animation: animate 2s linear infinite;
+    animation-delay: -2s;
     span{
       position: absolute;
       width: 100%;

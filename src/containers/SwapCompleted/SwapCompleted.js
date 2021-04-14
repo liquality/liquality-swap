@@ -3,12 +3,11 @@ import CurrencyInputs from '../CurrencyInputs'
 import PropTypes from 'prop-types'
 import Button from '../../components/Button/Button'
 import moment from 'moment'
-import TickIcon from '../../icons/tick.svg'
-import HandshakeIcon from '../../icons/handshake.png'
 import BrandCard from '../../components/BrandCard/BrandCard'
 import { getFundExpiration, getClaimExpiration } from '../../utils/expiration'
 import { shortenTransactionHash, getExplorerLink } from '../../utils/transactions'
 import cryptoassets from '@liquality/cryptoassets'
+import BigNumber from 'bignumber.js'
 
 //Social Icons
 import Facebook from '../../icons/facebookicon.svg'
@@ -37,6 +36,7 @@ class SwapCompleted extends Component {
     const asset = this.props.assets[party].currency
     const explorerLink = tx && getExplorerLink(tx, asset)
     tx.explorerLink = explorerLink
+    const fundHash = this.props.transactions.[party].fund.hash
     return tx
   }
 
@@ -87,19 +87,19 @@ class SwapCompleted extends Component {
         <h1>{this.props.assets.a.value.toFixed()} {sentCurrency.code}</h1>
 
         <h4 className="mt-4">Rate</h4>
-        <h1>1 {sentCurrency.code} = </h1>
+        <h1>1 {sentCurrency.code} = {this.state.transactions.b.value}</h1>
 
         <h4 className="mt-4">Network Fees</h4>
-        <h1></h1>
+        <h1>{this.state.transactions.a.fees}</h1>
       </div>
       <div className="SwapCompleted_bottom px-2 mt-5">
         <div className="SwapCompleted_right">
-          <h4><strong>Partner's {sentCurrency.code} Transaction</strong></h4>
-          <h4><strong>Partner's {claimCurrency.code} Transaction</strong></h4>
+          <h4><strong>Partner's {sentCurrency.code} Transaction:</strong><span className="ml-2 SwapCompleted_transactionHash">{shortenTransactionHash(this.state.transactions.a.hash)}</span></h4>
+          <h4><strong>Partner's {claimCurrency.code} Transaction:</strong><span className="ml-2 SwapCompleted_transactionHash"></span></h4>
         </div>
         <div className="SwapCompleted_left">
-        <h4><strong>Your {sentCurrency.code} Transaction</strong>{claimTransaction}</h4>
-        <h4><strong>Your {claimCurrency.code} Transaction</strong></h4>
+        <h4><strong>Your {sentCurrency.code} Transaction:</strong><span className="ml-2 SwapCompleted_transactionHash">{shortenTransactionHash(this.state.transactions.b.hash)}</span></h4>
+        <h4><strong>Your {claimCurrency.code} Transaction:</strong><span className="ml-2 SwapCompleted_transactionHash"></span></h4>
         </div>
       </div>
       <div className='SwapCompleted_bottomButton mt-5'>
@@ -129,6 +129,10 @@ SwapCompleted.propTypes = {
   retrievedAt: PropTypes.number,
   expiresAt: PropTypes.number,
   fiatRate: PropTypes.number,
+  value: PropTypes.instanceOf(BigNumber),
+  disabled: PropTypes.bool,
+  onChange: PropTypes.func,
+  tabIndex: PropTypes.number,
 }
 
 export default SwapCompleted
