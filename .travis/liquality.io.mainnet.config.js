@@ -19,6 +19,9 @@ export default {
       api: {
         url: 'https://liquality.io/electrs'
       },
+      batchApi: {
+        url: 'https://liquality.io/electrs-batch'
+      },
       feeNumberOfBlocks: 2,
       network: 'bitcoin',
       explorerPath: 'https://blockstream.info/tx/'

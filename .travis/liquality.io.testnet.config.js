@@ -19,6 +19,9 @@ export default {
       api: {
         url: 'https://liquality.io/testnet/electrs'
       },
+      batchApi: {
+        url: 'https://liquality.io/electrs-testnet-batch'
+      },
       feeNumberOfBlocks: 2,
       network: 'bitcoin_testnet',
       explorerPath: 'https://blockstream.info/testnet/tx/'
