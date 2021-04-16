@@ -1,4 +1,4 @@
-@import '../../scss/variables.scss';
+ @import '../../scss/variables.scss';
 
 .ExpirationDetails {
   text-align: left;
@@ -131,6 +131,9 @@
   &_progress {
     background: #D8E2F0;
     height: 3px;
+    position: absolute;
+    border: 1px solid red;
+    width: 100%;
     // margin: 10px 0;
 
     &_fill {

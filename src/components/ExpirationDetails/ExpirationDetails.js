@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import cryptoassets from '@liquality/cryptoassets'
@@ -60,6 +60,7 @@ class ExpirationDetails extends Component {
     const total = this.state.duration
 
     const filled = (((total.asSeconds() - left.asSeconds()) / total.asSeconds()) * 100).toFixed(2)
+    console.log(filled)
 
     return <div className='ExpirationDetails'>
       {/* <img src={ClockIcon} className='ExpirationDetails_clock' alt='Clock Icon' /> */}
@@ -71,9 +72,6 @@ class ExpirationDetails extends Component {
             &nbsp;for {this.props.assets.a.value.toFixed()} {cryptoassets[this.props.assets.a.currency].code}</em>
             &nbsp;Active for {moment.utc(left.asMilliseconds()).format('HH:mm')}hr {this.state.expiration.format('L LT')}
           </div> */}
-        {/* <div className='ExpirationDetails_progress'>
-          <div className='ExpirationDetails_progress_fill' style={{width: `${filled}%`}} />
-        </div> */}
         <div className='ExpirationDetails_transactions'>
           <div className='ExpirationDetails_transaction'>
             <span className='ExpirationDetails_transaction_name'><strong>Your {cryptoassets[this.props.assets.a.currency].code} Transaction:</strong></span>

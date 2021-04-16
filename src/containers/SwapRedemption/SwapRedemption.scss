@@ -7,6 +7,7 @@
   &_bigWrap {
     display: flex;
     flex-direction: column;
+    padding: 0 !important;
   }
 
   &_claimButton {
@@ -30,23 +31,21 @@
   }
 
   &_confetti-wrapper {
-    height: 450px;
-    z-index: 10;
+    height: 500px;
   }
 
-  [className|="confetti"] {
+  [class|="confetti"] {
     position: absolute;
-    min-height: 100vh;
   }
-  $colors: (#d13447, #ffbf00, #263672);
+  $colors: (#9D4DFA, #1CE5C3, #F12274);
   @for $i from 0 through 150 {
     $w: random(8);
-    $l: random(100);
+    $l: random(95);
     .confetti-#{$i} {
       width: #{$w}px;
       height: #{$w*0.4}px;
       background-color: nth($colors, random(3));
-      top: 10%;
+      top: 83%;
       left: unquote($l+"%");
       opacity: random() + 0.5;
       transform: rotate(#{random()*360}deg);
@@ -54,8 +53,8 @@
     }
     @keyframes drop-#{$i} {
       100% {
-        top: 1%;
-        left: unquote($l+random(15)+"%");
+        top: 10.4%;
+        left: unquote($l+random(5)+"%");
       }
     }
   }

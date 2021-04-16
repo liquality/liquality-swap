@@ -31,9 +31,9 @@ class TimeProgressBar extends Component {
     const percentage = (this.state.currentTime - this.props.startTime) / (this.props.endTime - this.props.startTime) * 100
     const timeLeft = this.props.endTime - this.state.currentTime
     const duration = moment.duration(timeLeft)
-    return <div className='progress TimeProgressBar'>
+    return <div className='TimeProgressBar'>
       <div
-        className="progress-bar"
+        className="bar"
         role='progressbar'
         style={{ width: `${percentage}%`, backgroundColor: "#1CE5C3" }}
         aria-valuenow={percentage}

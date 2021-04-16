@@ -51,7 +51,7 @@ class Waiting extends Component {
                     <div className="StatusMessage_statusMessage">
 
 <StatusMessage
-message={`Locking ${cryptoassets[this.props.assets.a.currency].code} and confirming quote`}
+message={`Locking your ${cryptoassets[this.props.assets.a.currency].code} and confirming quote`}
 completedMessage={this.props.quote
 ? `Your ${cryptoassets[this.props.assets.a.currency].code} Transaction and Quote Confirmed`
 : `Your ${cryptoassets[this.props.assets.a.currency].code} Transaction Confirmed`}

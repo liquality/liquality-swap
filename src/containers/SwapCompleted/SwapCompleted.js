@@ -95,11 +95,11 @@ class SwapCompleted extends Component {
       <div className="SwapCompleted_bottom px-2 mt-5">
         <div className="SwapCompleted_right">
           <h4><strong>Partner's {sentCurrency.code} Transaction:</strong><span className="ml-2 SwapCompleted_transactionHash">{shortenTransactionHash(this.state.transactions.a.hash)}</span></h4>
-          <h4><strong>Partner's {claimCurrency.code} Transaction:</strong><span className="ml-2 SwapCompleted_transactionHash"></span></h4>
+          {!this.state.transactions.a.fund.hash ? null : <h4><strong>Partner's {claimCurrency.code} Transaction:</strong><span className="ml-2 SwapCompleted_transactionHash">{shortenTransactionHash(this.state.transactions.a.fund.hash)}</span></h4>}
         </div>
         <div className="SwapCompleted_left">
         <h4><strong>Your {sentCurrency.code} Transaction:</strong><span className="ml-2 SwapCompleted_transactionHash">{shortenTransactionHash(this.state.transactions.b.hash)}</span></h4>
-        <h4><strong>Your {claimCurrency.code} Transaction:</strong><span className="ml-2 SwapCompleted_transactionHash"></span></h4>
+        {!this.state.transactions.b.fund.hash ? null : <h4><strong>Your {claimCurrency.code} Transaction:</strong><span className="ml-2 SwapCompleted_transactionHash">{shortenTransactionHash(this.state.transactions.b.fund.hash)}</span></h4>}
         </div>
       </div>
       <div className='SwapCompleted_bottomButton mt-5'>

@@ -22,7 +22,6 @@ class SwapOfferConfirmation extends Component {
     const assetB = assets[this.props.assets.b.currency]
 
     return <BrandCard className='SwapOfferConfirmation' title='Accept Quote'>
-      <TimeProgressBar startTime={this.props.quote.retrievedAt} endTime={this.props.quote.expiresAt} />
       <div className='SwapOfferConfirmation_terms'>Get {this.props.assets.b.value.toFixed()} {assetB.code} <br />
       for<br />
         {this.props.assets.a.value.toFixed()} {assetA.code}</div>

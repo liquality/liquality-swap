@@ -17,8 +17,7 @@ import SwapRedemption from '../SwapRedemption'
 import SwapCompleted from '../SwapCompleted'
 import SwapRefund from '../SwapRefund'
 import SwapRefunded from '../SwapRefunded'
-import TimeProgressBar from '../../components/TimeProgressBar/TimeProgressBar'
-import TopProgressBar from "../TopProgressBar/index"
+import TopDetails from "../../containers/TopDetails/index"
 import SwapProgressStepper from '../../components/SwapProgressStepper/SwapProgressStepper'
 import { generateLink, APP_BASE_URL } from '../../utils/app-links'
 import config from '../../config'
@@ -115,18 +114,7 @@ class LiqualitySwap extends Component {
     />
   }
 
-  render () {
-    // const timeLeft = this.props.endTime - this.state.currentTime
-    // const duration = moment.duration(timeLeft)
-    // // const left = moment.duration(this.state.expiration.diff(maxNow))
-    // // const maxNow = this.state.now.isAfter(this.state.expiration) ? this.state.expiration : this.state.now
-    // const maxNow = this.state.now.isAfter(this.state.expiration) ? this.state.expiration : this.state.now
-    // const left = moment.duration(this.state.expiration.diff(maxNow))
-    // const passed = moment.duration(maxNow.diff(this.state.start))
-    // const total = this.state.duration
-
-    // const filled = (((total.asSeconds() - left.asSeconds()) / total.asSeconds()) * 100).toFixed(2)
-
+  render () { 
     return <div className='LiqualitySwap'>
       <div className='LiqualitySwap_header'>
         <div className="LiqualitySwap_how">
@@ -135,15 +123,14 @@ class LiqualitySwap extends Component {
           </div>
         <SwapProgressStepper state={this.props.swap.step} />
       </div>
-      <div className='LiqualitySwap_detailsWrap'>
-        {/* <TopProgressBar /> */}
-        <div className='LiqualitySwap_quoteTimer'><TimeProgressBar startTime={this.state.start} endTime={this.state.expiration} /></div> 
+      <div>
+      {this.props.expiration ? <div className="LiqualitySwap_topDetails"><TopDetails /></div> : null }
       </div>
        {/* {this.state.expiration ? <div className='ExpirationDetails_progress'>
           <div className='ExpirationDetails_progress_fill' style={{width: `${filled}%`}} />
         </div>
         : 'null'} */}
-      <div className='LiqualitySwap_main'>
+      <div className='LiqualitySwap_main'> 
       {/* <div className="LiqualitySwap_timeLeft">
         <div className="LiqualitySwap_activeTime">You have 4 hrs 23 min to complete this swap by 10:39pm</div>
       </div> */}

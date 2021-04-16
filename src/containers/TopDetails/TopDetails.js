@@ -6,6 +6,8 @@ import { getFundExpiration, getClaimExpiration } from '../../utils/expiration'
 import { shortenTransactionHash, getExplorerLink } from '../../utils/transactions'
 import TimeProgressBar from '../../components/TimeProgressBar/TimeProgressBar'
 
+import "./TopDetails.css"
+
 class TopDetails extends Component {
     constructor (props) {
         super(props)
@@ -58,20 +60,10 @@ class TopDetails extends Component {
 
         const filled = (((total.asSeconds() - left.asSeconds()) / total.asSeconds()) * 100).toFixed(2)
 
-        return <div className="TopDetails_bigWrap">
-
-            <TimeProgressBar startTime={this.props.start} endTime={this.props.expiration} />
-
-            <div className="TopDetails_progressBar">
+        return <div className="TopDetails">
                 <div className='TopDetails_progress'>
                     <div className='TopDetails_progress_fill' style={{width: `${filled}%`}} />
                 </div>
-            </div>
-
-            <div className="SwapRedemption_whiteBar">
-                <p>Swap {this.props.assets.a.value.toFixed()} {cryptoassets[this.props.assets.a.currency].code} for {this.props.assets.b.value.toFixed()} {cryptoassets[this.props.assets.b.currency].code}</p>
-            </div>
-
         </div>
     }
 }

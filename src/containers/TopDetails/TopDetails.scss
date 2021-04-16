@@ -1,16 +1,15 @@
 .TopDetails {
-    text-align: center;
-    display: flex;
-    flex-flow: column nowrap;
+    z-index: 10;
     width: 100%;
+    padding: 0 !important;
+    margin: 0;
     &_progress {
         background: #D8E2F0;
-        height: 3px;
-        margin: 10px 0;
+        height: 25px;
     
         &_fill {
-          background: green;
-          height: 3px;
+          background: #1CE5C3;
+          height: 25px;
         }
     }
 }

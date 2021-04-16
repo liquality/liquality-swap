@@ -18,6 +18,9 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    padding: 0 !important;
+    margin: 0;
+    width: 100%;
     h2 {
       color: $color-primary-1;
       font-size: $h5-font-size;
@@ -45,9 +48,10 @@
     padding: 20px;
   }
 
-  &_quoteTimer {
-
+  &_topDetails {
+    width: 100%;
   }
+
   &_logo {
     height: 25px;
   }

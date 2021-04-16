@@ -7,7 +7,12 @@
   h2 {
     padding: 10px;
     line-height: 2rem;
-    color: #333;
+    color: $color-text-2;
+  }
+
+  &_divider {
+    border-bottom: 3px solid $color-bg-secondary;
+    margin-bottom: 5%;
   }
 
   &_currencyBar {
