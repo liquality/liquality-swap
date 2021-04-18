@@ -4,7 +4,6 @@ import moment from 'moment'
 import cryptoassets from '@liquality/cryptoassets'
 import { getFundExpiration, getClaimExpiration } from '../../utils/expiration'
 import { shortenTransactionHash, getExplorerLink } from '../../utils/transactions'
-import TimeProgressBar from '../../components/TimeProgressBar/TimeProgressBar'
 
 import "./TopDetails.css"
 
@@ -27,7 +26,7 @@ class TopDetails extends Component {
       getExpirationState () {
         const party = this.props.isPartyB ? 'b' : 'a'
         const expiration = this.props.isClaim ? getClaimExpiration(this.props.expiration, party) : getFundExpiration(this.props.expiration, party)
-    
+     
         return {
           start: expiration.start,
           duration: expiration.duration,
@@ -57,12 +56,14 @@ class TopDetails extends Component {
         const left = moment.duration(this.state.expiration.diff(maxNow))
         const passed = moment.duration(maxNow.diff(this.state.start))
         const total = this.state.duration
-
         const filled = (((total.asSeconds() - left.asSeconds()) / total.asSeconds()) * 100).toFixed(2)
 
         return <div className="TopDetails">
                 <div className='TopDetails_progress'>
                     <div className='TopDetails_progress_fill' style={{width: `${filled}%`}} />
+                </div>
+                <div className="TopDetails_timeLeft">
+                You have {moment.utc(left.asMilliseconds()).format('HH:mm')}hours to complete this swap by {this.state.expiration.format('L LT')}
                 </div>
         </div>
     }

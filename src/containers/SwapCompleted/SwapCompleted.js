@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
-import CurrencyInputs from '../CurrencyInputs'
 import PropTypes from 'prop-types'
 import Button from '../../components/Button/Button'
+import BigNumber from 'bignumber.js'
 import moment from 'moment'
 import BrandCard from '../../components/BrandCard/BrandCard'
 import { getFundExpiration, getClaimExpiration } from '../../utils/expiration'
 import { shortenTransactionHash, getExplorerLink } from '../../utils/transactions'
 import cryptoassets from '@liquality/cryptoassets'
-import BigNumber from 'bignumber.js'
 
 //Social Icons
 import Facebook from '../../icons/facebookicon.svg'
@@ -56,6 +55,11 @@ class SwapCompleted extends Component {
     }
   }
 
+  getFiatValue () {
+    const total = this.props.value.times(BigNumber(this.props.fiatRate)).toFixed(2)
+    return total
+  }
+
   componentDidMount () {
     this.interval = setInterval(this.tick.bind(this), 1000)
   }
@@ -81,7 +85,7 @@ class SwapCompleted extends Component {
       <div className="SwapCompleted_top">
         <h4 className="mt-5">Received</h4>
         <h1>{this.props.assets.b.value.toFixed()} {claimCurrency.code}</h1>
-        <h5></h5>
+        <h5>{this.total}</h5>
 
         <h4 className="mt-4">Sent</h4>
         <h1>{this.props.assets.a.value.toFixed()} {sentCurrency.code}</h1>
@@ -95,11 +99,11 @@ class SwapCompleted extends Component {
       <div className="SwapCompleted_bottom px-2 mt-5">
         <div className="SwapCompleted_right">
           <h4><strong>Partner's {sentCurrency.code} Transaction:</strong><span className="ml-2 SwapCompleted_transactionHash">{shortenTransactionHash(this.state.transactions.a.hash)}</span></h4>
-          {!this.state.transactions.a.fund.hash ? null : <h4><strong>Partner's {claimCurrency.code} Transaction:</strong><span className="ml-2 SwapCompleted_transactionHash">{shortenTransactionHash(this.state.transactions.a.fund.hash)}</span></h4>}
+          <h4><strong>Partner's {claimCurrency.code} Transaction:</strong><span className="ml-2 SwapCompleted_transactionHash">{shortenTransactionHash(this.state.transactions.b.hash)}</span></h4>
         </div>
         <div className="SwapCompleted_left">
         <h4><strong>Your {sentCurrency.code} Transaction:</strong><span className="ml-2 SwapCompleted_transactionHash">{shortenTransactionHash(this.state.transactions.b.hash)}</span></h4>
-        {!this.state.transactions.b.fund.hash ? null : <h4><strong>Your {claimCurrency.code} Transaction:</strong><span className="ml-2 SwapCompleted_transactionHash">{shortenTransactionHash(this.state.transactions.b.fund.hash)}</span></h4>}
+        <h4><strong>Your {claimCurrency.code} Transaction:</strong><span className="ml-2 SwapCompleted_transactionHash">{shortenTransactionHash(this.state.transactions.a.hash)}</span></h4>
         </div>
       </div>
       <div className='SwapCompleted_bottomButton mt-5'>

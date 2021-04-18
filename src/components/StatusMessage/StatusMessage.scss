@@ -7,6 +7,7 @@
   width: 650px;
   margin: 0 auto;
   z-index: 10;
+  font-family: $font-family-base;
 
   &_complete {
     background: none;
@@ -16,11 +17,11 @@
 
   &_circle {
     margin: 0 auto;
-    margin-top: 20.2%;
+    margin-top: 22%;
     margin-right: 0.3%;
     display: block;
-    width: 270px;
-    height: 270px;
+    width: 263px;
+    height: 263px;
     margin-bottom: 2px;
     border-radius: 50%;
     padding: 30px 10px;

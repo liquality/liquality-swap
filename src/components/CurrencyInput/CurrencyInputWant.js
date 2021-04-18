@@ -95,7 +95,7 @@ class CurrencyInputWant extends Component {
     ));
 
     return <div className='CurrencyInputWant'>
-      <div className='CurrencyInputWant_receive'>Receive</div>
+      <div className='CurrencyInputWant_receive'>RECEIVE</div>
       <div className="CurrencyInputWant_inputBigWrap">
       <div className="CurrencyInputWant_DropdownWrap">
       <Dropdown className="CurrencyInputWant_drop">

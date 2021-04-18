@@ -98,7 +98,7 @@ class CurrencyInput extends Component {
 
     return <div className='CurrencyInput'>
       { this.props.fiatRate && !this.props.value.isNaN() && <div className='CurrencyInput_price'>
-        <div className='CurrencyInput_labelSwap'>Send</div><div className='CurrencyInput_priceFiat'>${ this.getFiatValue() } USD</div>
+        <div className='CurrencyInput_labelSwap'>SEND</div><div className='CurrencyInput_priceFiat'>${ this.getFiatValue() } USD</div>
       </div> }
       <div className="CurrencyInput_inputBigWrap">
       <div className="CurrencyInput_DropdownWrap">

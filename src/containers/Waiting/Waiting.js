@@ -48,47 +48,32 @@ class Waiting extends Component {
                   <div className="Waiting_whiteBar">
                 <p>Swap {this.props.assets.a.value.toFixed()} {cryptoassets[this.props.assets.a.currency].code} for {this.props.assets.b.value.toFixed()} {cryptoassets[this.props.assets.b.currency].code}</p>
             </div>
-                    <div className="StatusMessage_statusMessage">
+            <div className="StatusMessage_statusMessage">
 
-<StatusMessage
-message={`Locking your ${cryptoassets[this.props.assets.a.currency].code} and confirming quote`}
-completedMessage={this.props.quote
-? `Your ${cryptoassets[this.props.assets.a.currency].code} Transaction and Quote Confirmed`
-: `Your ${cryptoassets[this.props.assets.a.currency].code} Transaction Confirmed`}
-complete={this.props.transactions.a.initiation.confirmations > 0}
-estimate={getConfirmationEstimate(this.props.assets.a.currency)} />
-{ showPartnerTransactionStatus && <StatusMessage
-message={`Waiting For Trading Partner's ${cryptoassets[this.props.assets.b.currency].code} Transaction`}
-complete={this.props.transactions.b.initiation.confirmations > 0}
-estimate={getConfirmationEstimate(this.props.assets.b.currency)} /> }
-{ showPartnerClaimTransactionStatus && <StatusMessage
-message={`Waiting For Trading Partner's ${cryptoassets[this.props.assets.a.currency].code} Claim Transaction`}
-complete={this.props.transactions.b.claim.hash && this.props.secretParams.secret}
-estimate={getConfirmationEstimate(this.props.assets.a.currency)} /> }
+                <StatusMessage
+                message={`Locking your ${cryptoassets[this.props.assets.a.currency].code} and confirming quote`}
+                completedMessage={this.props.quote
+                ? `Your ${cryptoassets[this.props.assets.a.currency].code} Transaction and Quote Confirmed`
+                : `Your ${cryptoassets[this.props.assets.a.currency].code} Transaction Confirmed`}
+                complete={this.props.transactions.a.initiation.confirmations > 0}
+                estimate={getConfirmationEstimate(this.props.assets.a.currency)} />
+                { showPartnerTransactionStatus && <StatusMessage
+                message={`Waiting For Trading Partner's ${cryptoassets[this.props.assets.b.currency].code} Transaction`}
+                complete={this.props.transactions.b.initiation.confirmations > 0}
+                estimate={getConfirmationEstimate(this.props.assets.b.currency)} /> }
+                { showPartnerClaimTransactionStatus && <StatusMessage
+                message={`Waiting For Trading Partner's ${cryptoassets[this.props.assets.a.currency].code} Claim Transaction`}
+                complete={this.props.transactions.b.claim.hash && this.props.secretParams.secret}
+                estimate={getConfirmationEstimate(this.props.assets.a.currency)} /> }
 
-</div>
-    <div style={{height: "500px"}}>
-              <div className="Waiting_spinningGradient">
-            <span></span>
-            <span></span>
-            <span></span>
-            </div>
-            </div>
-      {/* <StatusMessage
-        message={`Locking ${cryptoassets[this.props.assets.a.currency].code} and confirming quote`}
-        completedMessage={this.props.quote
-          ? `Your ${cryptoassets[this.props.assets.a.currency].code} Transaction and Quote Confirmed`
-          : `Your ${cryptoassets[this.props.assets.a.currency].code} Transaction Confirmed`}
-        complete={this.props.transactions.a.initiation.confirmations > 0}
-        estimate={getConfirmationEstimate(this.props.assets.a.currency)} />
-      { showPartnerTransactionStatus && <StatusMessage
-        message={`Waiting For Trading Partner's ${cryptoassets[this.props.assets.b.currency].code} Transaction`}
-        complete={this.props.transactions.b.initiation.confirmations > 0}
-        estimate={getConfirmationEstimate(this.props.assets.b.currency)} /> }
-      { showPartnerClaimTransactionStatus && <StatusMessage
-        message={`Waiting For Trading Partner's ${cryptoassets[this.props.assets.a.currency].code} Claim Transaction`}
-        complete={this.props.transactions.b.claim.hash && this.props.secretParams.secret}
-        estimate={getConfirmationEstimate(this.props.assets.a.currency)} /> } */}
+                </div>
+                <div style={{height: "500px"}}>
+                  <div className="Waiting_spinningGradient">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                  </div>
+                </div>
       <p className='Waiting_status'>{description}</p>
       <ExpirationDetails isClaim />
     </BrandCard>

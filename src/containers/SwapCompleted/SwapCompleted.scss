@@ -14,6 +14,11 @@
       font-size: 36px;
       color: $color-text-1;
     }
+    h5 {
+      color: $color-text-2;
+      font-weight: bold;
+      text-align: center;
+    }
   }
 
   &_bottom {
@@ -40,6 +45,14 @@
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
+  }
+
+  &_right {
+    padding-right: 2%;
+  }
+
+  &_left{ 
+    padding-left: 2%;
   }
 
   &_transactionHash {

@@ -52,7 +52,7 @@
       animation: drop-#{$i} unquote(4+random()+"s") unquote(random()+"s") infinite;
     }
     @keyframes drop-#{$i} {
-      100% {
+      0% {
         top: 10.4%;
         left: unquote($l+random(5)+"%");
       }

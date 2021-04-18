@@ -223,7 +223,7 @@ class SwapInitiation extends Component {
         { this.props.isPartyB
           ? <ExpirationDetails />
           : <InitiatorExpirationInfo /> }
-        {!errors.initiation && !this.props.isPartyB && <Button wide primary loadingMessage={this.props.loadingMessage} onClick={this.props.createSwap}>{ this.props.agent.markets.length ? 'Accept Quote and Initiate Swap' : 'Initiate Swap' }</Button>}
+        {!errors.initiation && !this.props.isPartyB && <Button wide primary className="SwapInitiation_buttonBottom" loadingMessage={this.props.loadingMessage} onClick={this.props.createSwap}>{ this.props.agent.markets.length ? 'Accept Quote and Initiate Swap' : 'Initiate Swap' }</Button>}
         {!errors.initiation && this.props.isPartyB && <Button wide primary loadingMessage={this.props.loadingMessage} onClick={this.props.confirmSwap}>Confirm Terms</Button>}
         {errors.initiation && <Button primary disabled>{ errors.initiation }</Button>}<br />
         {/* TODO: Do actual resetting of app state instead of refresh. */}

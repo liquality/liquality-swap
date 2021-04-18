@@ -63,15 +63,8 @@ class ExpirationDetails extends Component {
     console.log(filled)
 
     return <div className='ExpirationDetails'>
-      {/* <img src={ClockIcon} className='ExpirationDetails_clock' alt='Clock Icon' /> */}
-      {/* <div className='ExpirationDetails_passed'>{moment.utc(passed.asMilliseconds()).format('HH:mm')}hr</div> */}
       <div className='ExpirationDetails_center'>
         <div className='ExpirationDetails_top'>
-          {/* <div className='ExpirationDetails_terms'>
-            <em>Get {this.props.assets.b.value.toFixed()} {cryptoassets[this.props.assets.b.currency].code}
-            &nbsp;for {this.props.assets.a.value.toFixed()} {cryptoassets[this.props.assets.a.currency].code}</em>
-            &nbsp;Active for {moment.utc(left.asMilliseconds()).format('HH:mm')}hr {this.state.expiration.format('L LT')}
-          </div> */}
         <div className='ExpirationDetails_transactions'>
           <div className='ExpirationDetails_transaction'>
             <span className='ExpirationDetails_transaction_name'><strong>Your {cryptoassets[this.props.assets.a.currency].code} Transaction:</strong></span>
@@ -91,7 +84,6 @@ class ExpirationDetails extends Component {
             <a href='javascript:void(0)' onClick={() => this.props.onCopyClick()}>Swap link<img src={CopyIcon} alt='Copy' /></a>
           </div>
         </div>
-      {/* <div className='ExpirationDetails_left'>{moment.utc(left.asMilliseconds()).format('HH:mm')}hr</div> */}
     </div>
   }
 }
