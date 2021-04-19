@@ -77,7 +77,6 @@ class SwapCompleted extends Component {
 
     const claimCurrency = cryptoassets[this.props.assets.b.currency]
     const sentCurrency = cryptoassets[this.props.assets.a.currency]
-    const claimTransaction = cryptoassets[this.state.transactions.a]
 
     return <div className='SwapCompleted_bigWrap'>
       
@@ -86,16 +85,18 @@ class SwapCompleted extends Component {
       <div className="SwapCompleted_top">
         <h4 className="mt-5">Received</h4>
         <h1>{this.props.assets.b.value.toFixed()} {claimCurrency.code}</h1>
-        <h5>{this.total}</h5>
+        <h5></h5>
 
         <h4 className="mt-4">Sent</h4>
         <h1>{this.props.assets.a.value.toFixed()} {sentCurrency.code}</h1>
 
         <h4 className="mt-4">Rate</h4>
-        <h1>1 {sentCurrency.code} = </h1>
+        <h4>1 {sentCurrency.code} = {this.props.assets.rate.toFixed()} {claimCurrency.code}</h4>
 
         <h4 className="mt-4">Network Fees</h4>
-        <h1></h1>
+        {/* <h3>{sentCurrency.code} {this.state.transactions.a.intiation.fee.toFixed(2)}</h3>
+        <h3>{sentCurrency.code} {this.state.transactions.b.intiation.fee.toFixed(2)}</h3> */}
+
       </div>
       <div className="SwapCompleted_bottom px-2 mt-5">
         <div className="SwapCompleted_right">

@@ -5,7 +5,6 @@ import cryptoassets from '@liquality/cryptoassets'
 import { getFundExpiration, getClaimExpiration } from '../../utils/expiration'
 import { shortenTransactionHash, getExplorerLink } from '../../utils/transactions'
 import withCopyButton from '../withCopyButton'
-import ClockIcon from '../../icons/clock.svg'
 import CopyIcon from '../../icons/copy.svg'
 import './ExpirationDetails.css'
 
@@ -60,8 +59,6 @@ class ExpirationDetails extends Component {
     const total = this.state.duration
 
     const filled = (((total.asSeconds() - left.asSeconds()) / total.asSeconds()) * 100).toFixed(2)
-    console.log(filled)
-
     return <div className='ExpirationDetails'>
       <div className='ExpirationDetails_center'>
         <div className='ExpirationDetails_top'>

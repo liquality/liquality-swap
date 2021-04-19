@@ -168,30 +168,7 @@ class SwapInitiation extends Component {
 
     return <div className='SwapInitiation'>
               <BrandCard className="SwapInitiation_card" title="liquality CROSSCHAIN SWAP">
-                {/* <div className='SwapInitiation_switch'>
-                  <img src={SwapIcon} alt="switch icon for swapping" />
-                </div> */}
             {circle}
-      {/* <div className='SwapInitiation_assets'>
-        <SwapPairPanel
-          haveCurrency={this.props.assets.a.currency}
-          wantCurrency={this.props.assets.b.currency}
-          showCurrencyLabels
-          focusSide={this.props.assetSelector.party && (this.props.assetSelector.party === 'a' ? 'have' : 'want')}
-          onHaveClick={() => this.handlePairPanelAssetClick('a')}
-          onWantClick={() => this.handlePairPanelAssetClick('b')}
-          icon={termsImmutable ? undefined : SwapIcon}
-          iconDisabled={!switchSidesAvailable}
-          onIconClick={() => this.props.switchSides()} />
-        { this.props.assetSelector.open && <div className='SwapInitiation_assetSelector'>
-          <AssetSelector
-            search={this.props.assetSelector.search}
-            assets={selectorAssets}
-            onSelectAsset={asset => this.handleSelectAsset(asset)}
-            onSearchChange={value => this.props.setAssetSelectorSearch(value)}
-            onClose={() => this.props.closeAssetSelector()} />
-        </div> }
-      </div> */}
       <div className='SwapInitiation_top'>
         <CurrencyInputs
           showInputs

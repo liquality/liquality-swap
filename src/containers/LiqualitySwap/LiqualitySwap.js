@@ -126,14 +126,7 @@ class LiqualitySwap extends Component {
       <div>
       {this.props.expiration ? <div className="LiqualitySwap_topDetails"><TopDetails /></div> : null }
       </div>
-       {/* {this.state.expiration ? <div className='ExpirationDetails_progress'>
-          <div className='ExpirationDetails_progress_fill' style={{width: `${filled}%`}} />
-        </div>
-        : 'null'} */}
       <div className='LiqualitySwap_main'> 
-      {/* <div className="LiqualitySwap_timeLeft">
-        <div className="LiqualitySwap_activeTime">You have 4 hrs 23 min to complete this swap by 10:39pm</div>
-      </div> */}
         <div className='LiqualitySwap_wave' />
         <div className="SwapRedemption_whiteBar">
         <p>Swap {this.props.assets.a.value.toFixed()} {cryptoassets[this.props.assets.a.currency].code} for {this.props.assets.b.value.toFixed()} {cryptoassets[this.props.assets.b.currency].code}</p>
