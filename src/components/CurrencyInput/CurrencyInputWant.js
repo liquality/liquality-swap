@@ -100,7 +100,7 @@ class CurrencyInputWant extends Component {
       <div className="CurrencyInputWant_DropdownWrap">
       <Dropdown className="CurrencyInputWant_drop">
         <Dropdown.Toggle as={CustomToggle} id="dropdown-basic" className="CurrencyInputWant_toggler">
-          <img src={assetUtils.getIcon(asset.code)} alt='asset icon' /> <h2>{asset.code}</h2>
+          <img className="CurrencyInputWant_dropItem" src={assetUtils.getIcon(asset.code)} alt='asset icon' /> <h2>{asset.code}</h2>
         </Dropdown.Toggle>
       
         <Dropdown.Menu>

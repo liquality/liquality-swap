@@ -28,6 +28,11 @@
     }
   }
 
+  &_dropItem {
+    height: 32px;
+    width: 32px;
+  }
+
   &_receive {
     color: $color-text-1;
     font-weight: bold;

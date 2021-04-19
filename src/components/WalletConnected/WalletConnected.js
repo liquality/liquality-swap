@@ -15,7 +15,7 @@ const WalletConnected = (props) => {
     <div className="WalletConnected_currencyBar">
       {currency.name}
     </div>
-    <h2><img src={TickIcon} alt='done' />&nbsp;Connected!<br className="my-2"/>Ready to {term} {currency.name}</h2>
+    <h2><img src={TickIcon} alt='done' />&nbsp;Connected!<br className="my-2"/><span className="WalletConnected_subtitle">Ready to {term} {currency.name}</span></h2>
     <div className='WalletConnected_divider'></div>
     <div className='WalletConnected_wallet'>
       <img src={wallets[props.wallet].icon} className='WalletPanel_walletImg' alt={`${wallets[props.wallet].name} Icon`} />

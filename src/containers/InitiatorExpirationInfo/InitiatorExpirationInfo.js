@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { generateExpiration, expirationDurations } from '../../utils/expiration'
 
 import ClockIcon from '../../icons/newWatch.svg'
-import LockIcon from '../../icons/lock.svg'
+import LockIcon from '../../icons/newLock.svg'
 import './InitiatorExpirationInfo.css'
 
 class InitiatorExpirationInfo extends Component {

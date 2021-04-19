@@ -7,12 +7,17 @@
   h2 {
     padding: 10px;
     line-height: 2rem;
-    color: $color-text-2;
+    color: $color-text-1;
   }
 
   &_divider {
     border-bottom: 3px solid $color-bg-secondary;
     margin-bottom: 5%;
+  }
+
+  &_subtitle {
+    font-size: $h3-font-size;
+    color: $color-text-2;
   }
 
   &_currencyBar {

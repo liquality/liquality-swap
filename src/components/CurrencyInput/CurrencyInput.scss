@@ -3,6 +3,11 @@
 
 .CurrencyInput {
 
+  .dropdown-menu > li > a:click {
+    background-image: none;
+    background-color: red;
+  }
+
   margin-top: 10%;
 
   input::-webkit-outer-spin-button,
@@ -53,10 +58,20 @@
     }
   }
 
+  &_dropItem {
+    height: 32px;
+    width: 32px;
+  }
+
   &_drop {
     &:hover {
       cursor: pointer;
     }
+  }
+
+  &_dropMenu {
+    position: absolute;
+    
   }
 
   &_input {

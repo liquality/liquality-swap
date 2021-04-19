@@ -73,6 +73,7 @@ class SwapCompleted extends Component {
   }
 
   render () {
+    console.log(this.props)
 
     const claimCurrency = cryptoassets[this.props.assets.b.currency]
     const sentCurrency = cryptoassets[this.props.assets.a.currency]
@@ -91,19 +92,19 @@ class SwapCompleted extends Component {
         <h1>{this.props.assets.a.value.toFixed()} {sentCurrency.code}</h1>
 
         <h4 className="mt-4">Rate</h4>
-        <h1>1 {sentCurrency.code} = {this.state.transactions.b.value}</h1>
+        <h1>1 {sentCurrency.code} = </h1>
 
         <h4 className="mt-4">Network Fees</h4>
-        <h1>{this.state.transactions.a.fees}</h1>
+        <h1></h1>
       </div>
       <div className="SwapCompleted_bottom px-2 mt-5">
         <div className="SwapCompleted_right">
           <h4><strong>Partner's {sentCurrency.code} Transaction:</strong><span className="ml-2 SwapCompleted_transactionHash">{shortenTransactionHash(this.state.transactions.a.hash)}</span></h4>
-          <h4><strong>Partner's {claimCurrency.code} Transaction:</strong><span className="ml-2 SwapCompleted_transactionHash">{shortenTransactionHash(this.state.transactions.b.hash)}</span></h4>
+          <h4><strong>Partner's {claimCurrency.code} Transaction:</strong><span className="ml-2 SwapCompleted_transactionHash">{shortenTransactionHash(this.state.transactions.a.hash)}</span></h4>
         </div>
         <div className="SwapCompleted_left">
         <h4><strong>Your {sentCurrency.code} Transaction:</strong><span className="ml-2 SwapCompleted_transactionHash">{shortenTransactionHash(this.state.transactions.b.hash)}</span></h4>
-        <h4><strong>Your {claimCurrency.code} Transaction:</strong><span className="ml-2 SwapCompleted_transactionHash">{shortenTransactionHash(this.state.transactions.a.hash)}</span></h4>
+        <h4><strong>Your {claimCurrency.code} Transaction:</strong><span className="ml-2 SwapCompleted_transactionHash">{shortenTransactionHash(this.props.transactions.b.fund.hash)}</span></h4>
         </div>
       </div>
       <div className='SwapCompleted_bottomButton mt-5'>

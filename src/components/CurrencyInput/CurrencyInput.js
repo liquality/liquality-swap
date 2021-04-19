@@ -104,10 +104,10 @@ class CurrencyInput extends Component {
       <div className="CurrencyInput_DropdownWrap">
       <Dropdown className="CurrencyInput_drop">
         <Dropdown.Toggle as={CustomToggle} id="dropdown-basic" className="CurrencyInput_toggler">
-          <img src={assetUtils.getIcon(asset.code)} alt='asset icon' /> <h2>{asset.code}</h2>
+          <img className="CurrencyInput_dropItem" src={assetUtils.getIcon(asset.code)} alt='asset icon' /> <h2>{asset.code}</h2>
         </Dropdown.Toggle>
       
-        <Dropdown.Menu>
+        <Dropdown.Menu className="CurerncyuInput_dropMenu">
           {displayedAssets.map(([id, currency]) =>
           <div key={id} onClick={() => this.props.onSelectAsset(id)}> 
             <Dropdown.Item><img src={assetUtils.getIcon(currency.code)} alt="currency icon/logo" style={{height: "25px", width: "25px", marginRight: "5%"}} /><strong>{currency.code}</strong></Dropdown.Item>

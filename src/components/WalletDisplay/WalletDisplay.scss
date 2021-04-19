@@ -76,6 +76,10 @@
     }
   }
 
+  &_hover:hover {
+    background: white;
+  }
+
   &_errorMessage {
     @include error-message;
   }

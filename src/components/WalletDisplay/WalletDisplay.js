@@ -23,8 +23,8 @@ const WalletDisplay = (props) => {
         alt={wallets[props.type] ? wallets[props.type].name : 'Wallet'} />
       <p className={classNames('WalletDisplay_address', {error: props.addressError})}>{props.address != null ? <p className='WalletDisplay_addressWhole mt-1'><Dot /><span className='WalletDisplay_walletAddressConnected'>{shortenAddress(`${address}`)}</span></p> : null}</p>
       { props.connected
-        ? <Button tabIndex={-1} small secondary className='WalletDisplay_addressButtons' onClick={e => props.onButtonClick(e)}>Change wallet</Button>
-        : <Button tabIndex={-1} small secondaryWallet className='WalletDisplay_addressButtons' onClick={e => props.onButtonClick(e)}>Connect wallet</Button>
+        ? <Button tabIndex={-1} small whiteButton secondary className='WalletDisplay_addressButtons hover' onClick={e => props.onButtonClick(e)}>Change wallet</Button>
+        : <Button tabIndex={-1} small whiteButton secondaryWallet className='WalletDisplay_addressButtons hover' onClick={e => props.onButtonClick(e)}>Connect wallet</Button>
       }
       { props.balance &&
         <div className="WalletDisplay_type">
