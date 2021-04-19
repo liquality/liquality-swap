@@ -25,7 +25,7 @@ class BackupLinkCard extends Component {
   render () {
     return <BrandCard className='BackupLinkCard' title='Copy Backup Link'>
       <h3><img className="pt-2 mr-2" src={WarningIcon} alt='warning' />Save Swap Link!</h3>
-      <p className='BackupLinkCard_description mb-5 mt-3'>If your browser closes you will need this link to claim your funds.<br />Save it where you can retrieve it should the browser close. Additionally, you can bookmark this page.</p>
+      <p className='BackupLinkCard_description mb-5 mt-3 text-center'>If your browser closes you will need this link to claim your funds.<br />Save it where you can retrieve it should the browser close. Additionally, you can bookmark this page.</p>
       {this.state.copied === false ? <p><Button wide secondary onClick={(e) => this.handleClick(e)} icon={CopyIcon}>Copy Link</Button></p> : <p><Button wide secondary icon={CheckIcon}>Copied!</Button></p>}
       <p><Button wide primary className="mb-3" onClick={this.props.onNextClick}>Continue</Button></p>
     </BrandCard>
