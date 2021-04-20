@@ -119,14 +119,14 @@ class LiqualitySwap extends Component {
       <div className='LiqualitySwap_header'>
         <div className="LiqualitySwap_how">
         <a href={APP_BASE_URL}><img className='LiqualitySwap_logo' src={LiqualityLogo} alt='Liquality Logo' /></a>
-          <h2 onClick={() => window.open('https://liquality.io/atomic-swap-interface.html')}>How It Works</h2>
+          <h2 className="LiqualitySwap_howTo"onClick={() => window.open('https://liquality.io/atomic-swap-interface.html')}>How It Works</h2>
           </div>
         <SwapProgressStepper state={this.props.swap.step} />
       </div>
       <div>
-      {this.props.expiration ? <div className="LiqualitySwap_topDetails"><TopDetails /></div> : null }
       </div>
       <div className='LiqualitySwap_main'> 
+      {this.props.expiration ? <div className="LiqualitySwap_topDetails"><TopDetails /></div> : null }
         <div className='LiqualitySwap_wave' />
         <div className="SwapRedemption_whiteBar">
         <p>Swap {this.props.assets.a.value.toFixed()} {cryptoassets[this.props.assets.a.currency].code} for {this.props.assets.b.value.toFixed()} {cryptoassets[this.props.assets.b.currency].code}</p>

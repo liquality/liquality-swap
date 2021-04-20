@@ -1,14 +1,12 @@
 .TopDetails {
-    z-index: 10;
+    z-index: 10 !important;
     width: 100%;
     padding: 0 !important;
     margin: 0;
 
     &_timeLeft {
-      background: rgb(158,72,247);
-      background: linear-gradient(90deg, rgba(158,72,247,1) 0%, rgba(46,206,202,1) 100%);
       text-align: center;
-      padding-top: 2%;
+      padding-top: 1.75%;
       color: white;
     }
 

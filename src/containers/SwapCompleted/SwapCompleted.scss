@@ -17,9 +17,13 @@
     }
     h5 {
       color: $color-text-2;
-      font-weight: bold;
       text-align: center;
     }
+  }
+
+  &_transactionTitle {
+    font-weight: bold;
+    color: $color-text-1;
   }
 
   &_receivedAmount {
@@ -35,6 +39,8 @@
 
   &_rateAmount {
     font-weight: 600;
+    font-size: 24px;
+    text-align: center;
   }
 
   &_confs {
