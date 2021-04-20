@@ -93,8 +93,8 @@ class SwapCompleted extends Component {
         <h4 className="SwapCompleted_rateAmount">1 {sentCurrency.code} = {this.props.assets.rate.toFixed()} {claimCurrency.code}</h4>
 
         <h4 className="mt-4 d-flex justify-content-center">NETWORK FEES</h4>
-        <h3 className="d-flex justify-content-center">{sentCurrency.code} {this.props.transactions.a.initiation.feePrice}</h3>
-        <h3 className="d-flex justify-content-center">{claimCurrency.code} {this.props.transactions.b.claim.feePrice}</h3>
+        <h3 className="d-flex justify-content-center">{sentCurrency.code} {this.props.transactions.a.initiation.feePrice} {cryptoassets[sentCurrency.code].fees.unit}</h3>
+        <h3 className="d-flex justify-content-center">{claimCurrency.code} {this.props.transactions.b.initiation.feePrice} {cryptoassets[claimCurrency.code].fees.unit}</h3>
 
       </div>
       <div className="SwapCompleted_bottom px-2 mt-5">
