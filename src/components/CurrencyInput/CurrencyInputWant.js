@@ -100,7 +100,7 @@ class CurrencyInputWant extends Component {
         {this.state.dropdown === true ? <div className="CurrencyInputWant_dropMenu">
           {displayedAssets.map(([id, currency]) =>
           <div className="CurrencyInputWant_dropdownKey" key={id} onClick={() => this.props.onSelectAsset(id)}> 
-            <div className="CurrencyInputWant_listItem py-1"><img src={assetUtils.getIcon(currency.code)} alt="currency icon/logo" className="CurrencyInputWant_dropdownIcon" /><strong><span className="pt-1 ml-4">{currency.code}</span></strong></div>
+            <div className="CurrencyInputWant_listItem py-1" onClick={this.toggle}><img src={assetUtils.getIcon(currency.code)} alt="currency icon/logo" className="CurrencyInputWant_dropdownIcon" /><strong><span className="pt-1 ml-4">{currency.code}</span></strong></div>
           </div>
           )}
         </div> : null}
