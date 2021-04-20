@@ -35,7 +35,6 @@ class SwapCompleted extends Component {
     const asset = this.props.assets[party].currency
     const explorerLink = tx && getExplorerLink(tx, asset)
     tx.explorerLink = explorerLink
-    const fundHash = this.props.transactions.[party].fund.hash
     return tx
   }
 
@@ -56,7 +55,7 @@ class SwapCompleted extends Component {
   }
 
   getFiatValue () {
-    const total = this.props.value.times(BigNumber(this.props.fiatRate)).toFixed(2)
+    const total = this.props.assets.b.value.times(BigNumber(this.props.fiatRate)).toFixed(2)
     return total
   }
 
@@ -83,29 +82,29 @@ class SwapCompleted extends Component {
       <BrandCard title="Swap Completed">
 
       <div className="SwapCompleted_top">
-        <h4 className="mt-5">Received</h4>
+        <h4 className="mt-5">RECEIVED</h4>
         <h1>{this.props.assets.b.value.toFixed()} {claimCurrency.code}</h1>
-        <h5></h5>
+        <h5>${ this.getFiatValue() } USD</h5>
 
-        <h4 className="mt-4">Sent</h4>
+        <h4 className="mt-4">SENT</h4>
         <h1>{this.props.assets.a.value.toFixed()} {sentCurrency.code}</h1>
 
-        <h4 className="mt-4">Rate</h4>
+        <h4 className="mt-4">RATE</h4>
         <h4>1 {sentCurrency.code} = {this.props.assets.rate.toFixed()} {claimCurrency.code}</h4>
 
-        <h4 className="mt-4">Network Fees</h4>
-        {/* <h3>{sentCurrency.code} {this.state.transactions.a.intiation.fee.toFixed(2)}</h3>
-        <h3>{sentCurrency.code} {this.state.transactions.b.intiation.fee.toFixed(2)}</h3> */}
+        <h4 className="mt-4 d-flex justify-content-center">NETWORK FEES</h4>
+        <h3 className="d-flex justify-content-center">{sentCurrency.code} {this.props.transactions.a.initiation.fee}</h3>
+        <h3 className="d-flex justify-content-center">{claimCurrency.code} {this.props.transactions.b.claim.fee}</h3>
 
       </div>
       <div className="SwapCompleted_bottom px-2 mt-5">
         <div className="SwapCompleted_right">
-          <h4><strong>Partner's {sentCurrency.code} Transaction:</strong><span className="ml-2 SwapCompleted_transactionHash">{shortenTransactionHash(this.state.transactions.a.hash)}</span></h4>
-          <h4><strong>Partner's {claimCurrency.code} Transaction:</strong><span className="ml-2 SwapCompleted_transactionHash"></span></h4>
+          <h4><strong>Partner {sentCurrency.code} Transaction:</strong><span className="SwapCompleted_transactionHash">{shortenTransactionHash(this.props.transactions.a.initiation.hash)}{this.props.transactions.a.initiation.confirmations}</span><span className="SwapCompleted_confs" >{this.props.transactions.a.initiation.confirmations} <span className="SwapCompleted_confText">Confirmations</span></span></h4>
+          {this.props.transactions.b.claim.hash ? <h4><strong>Partner {claimCurrency.code} Transaction:</strong><span className="SwapCompleted_transactionHash">{shortenTransactionHash(this.props.transactions.b.claim.hash)}</span><span className="SwapCompleted_confs" >{this.props.transactions.a.claim.confirmations}</span><span className="SwapCompleted_confText">Confirmations</span></h4> : '' }
         </div>
         <div className="SwapCompleted_left">
-        <h4><strong>Your {sentCurrency.code} Transaction:</strong><span className="ml-2 SwapCompleted_transactionHash">{shortenTransactionHash(this.state.transactions.b.hash)}</span></h4>
-        <h4><strong>Your {claimCurrency.code} Transaction:</strong><span className="ml-2 SwapCompleted_transactionHash"></span></h4>
+        <h4><strong>Your {sentCurrency.code} Transaction:</strong><span className="SwapCompleted_transactionHash">{shortenTransactionHash(this.props.transactions.b.initiation.hash)}</span><span className="SwapCompleted_confs" >{this.props.transactions.b.initiation.confirmations}</span><span className="SwapCompleted_confText">Confirmations</span></h4>
+        {this.props.transactions.a.claim.hash ? <h4><strong>Your {claimCurrency.code} Transaction:</strong><span className="SwapCompleted_transactionHash">{shortenTransactionHash(this.props.transactions.a.claim.hash)}</span><span className="SwapCompleted_confs" >{this.props.transactions.b.claim.confirmations}</span><span className="SwapCompleted_confText">Confirmations</span></h4> : '' }
         </div>
       </div>
       <div className='SwapCompleted_bottomButton mt-5'>

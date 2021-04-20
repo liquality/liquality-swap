@@ -16,7 +16,7 @@ class CurrencyInputWant extends Component {
     super(props)
     this.state = {
       valueString: props.value.toFixed(),
-      show: false
+      dropdown: false
     }
   }
 
@@ -73,44 +73,38 @@ class CurrencyInputWant extends Component {
     return total
   }
 
+  toggle = () => {
+    this.setState(prevState => ({dropdown: !prevState.dropdown}))
+  }
+
+  hide = (id) => {
+    this.props.onSelectAsset(id)
+    this.setState(prevState => ({dropdown: !prevState.dropdown}))
+  }
+
   render () {
     const asset = cryptoassets[this.props.currency]
     const userDefinedAssets = Object.keys(config.assets)
     const displayedAssets = Object.entries(cryptoassets)
       .filter(([id]) => userDefinedAssets.includes(id))
 
-    //DROPDOWN
-    const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-      <h1
-        href=""
-        ref={ref}
-        onClick={(e) => {
-          e.preventDefault();
-          onClick(e);
-        }}
-      >
-        {children}
-        <img src={DropDownTick} alt="drop down tick" className="ml-2" />
-      </h1>
-    ));
-
     return <div className='CurrencyInputWant'>
       <div className='CurrencyInputWant_receive'>RECEIVE</div>
       <div className="CurrencyInputWant_inputBigWrap">
       <div className="CurrencyInputWant_DropdownWrap">
-      <Dropdown className="CurrencyInputWant_drop">
-        <Dropdown.Toggle as={CustomToggle} id="dropdown-basic" className="CurrencyInputWant_toggler">
-          <img className="CurrencyInputWant_dropItem" src={assetUtils.getIcon(asset.code)} alt='asset icon' /> <h2>{asset.code}</h2>
-        </Dropdown.Toggle>
+      <div className="CurrencyInputWant_drop">
+      <div className="CurrencyInputWant_toggler mt-2" onClick={this.toggle}>
+          <img className="CurrencyInputWant_dropItem" src={assetUtils.getIcon(asset.code)} alt='asset icon' /> <h2 className="CurrencyInputWant_dropdownCode">{asset.code}<img src={DropDownTick} alt="dropdowntick" className="ml-2"/></h2>
+        </div>
       
-        <Dropdown.Menu>
+        {this.state.dropdown === true ? <div className="CurrencyInputWant_dropMenu">
           {displayedAssets.map(([id, currency]) =>
-          <div key={id} onClick={() => this.props.onSelectAsset(id)}> 
-            <Dropdown.Item><img src={assetUtils.getIcon(currency.code)} alt="currency icon/logo" style={{height: "25px", width: "25px", marginRight: "5%"}} /><strong>{currency.code}</strong></Dropdown.Item>
+          <div className="CurrencyInputWant_dropdownKey" key={id} onClick={() => this.props.onSelectAsset(id)}> 
+            <div className="CurrencyInputWant_listItem py-1"><img src={assetUtils.getIcon(currency.code)} alt="currency icon/logo" className="CurrencyInputWant_dropdownIcon" /><strong><span className="pt-1 ml-4">{currency.code}</span></strong></div>
           </div>
           )}
-        </Dropdown.Menu>
-      </Dropdown>
+        </div> : null}
+      </div>
       </div>
       </div>
       <div className={classNames('CurrencyInputWant_inputWrapper', { 'disabled': this.props.disabled })}>

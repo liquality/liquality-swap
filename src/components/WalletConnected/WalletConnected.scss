@@ -39,6 +39,12 @@
     h5 {
       padding-top: 7px;
       color: #333;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    p {
+      font-family: $font-family-base;
+      color: $color-text-2;
     }
   }
 }

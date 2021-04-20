@@ -3,11 +3,6 @@
 
 .CurrencyInput {
 
-  .dropdown-menu > li > a:click {
-    background-image: none;
-    background-color: red;
-  }
-
   margin-top: 10%;
 
   input::-webkit-outer-spin-button,
@@ -63,15 +58,48 @@
     width: 32px;
   }
 
+  &_dropdownCode {
+    position: absolute;
+    top: 1.75%;
+    left: 20%;
+  }
+
   &_drop {
     &:hover {
       cursor: pointer;
     }
   }
 
-  &_dropMenu {
+  &_dropdownIcon {
+    height: 18px;
+    width: 18px;
     position: absolute;
-    
+    left: 30%;
+  }
+
+  &_dropdownKey {
+    border-bottom: 1px solid #D9DFE5;
+    &:hover {
+      background-color: #F0F7F9;
+    }
+  }
+
+  &_dropMenu {
+    display: flex;
+    flex-flow: column nowrap;
+    background-color: white;
+    margin-top: 3%;
+    margin-left: 20%;
+    border: 1px solid #D9DFE5;
+    width: 100px;
+  }
+
+  &_listItem {
+    display: flex;
+    justify-content: center;
+    &:hover {
+      opacity: 75%;
+    }
   }
 
   &_input {
@@ -97,9 +125,9 @@
   }
 
   &_labelSwap {
-    color: $color-text-1;
+    color: #3D4767;
     font-weight: bold;
-    font-size: $h4-font-size;
+    font-size: $h5-font-size;
    }
 
   &priceFiat {

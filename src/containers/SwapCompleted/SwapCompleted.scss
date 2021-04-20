@@ -6,7 +6,7 @@
     width: 100%;
     h4 {
       text-align: center;
-      color: $color-text-1;
+      color: #3D4767;
       font-weight: 700;
     }
     h1 {
@@ -21,10 +21,23 @@
     }
   }
 
+  &_confs {
+    color: $color-text-2;
+    padding-left: 2%;
+  }
+
+  &_confText {
+    font-size: $h6-font-size;
+    padding-left: .75%;
+  }
+
   &_bottom {
     display: flex;
     flex-flow: row-reverse nowrap;
     justify-content: space-between;
+    h4 {
+      font-size: $h5-font-size;
+    }
   }
 
   &_bottomButton {
@@ -48,15 +61,19 @@
   }
 
   &_right {
-    padding-right: 2%;
+    padding-right: 3%;
+    width: 100%;
   }
 
   &_left{ 
-    padding-left: 2%;
+    padding-left: 4%;
+    width: 100%;
   }
 
   &_transactionHash {
     color: $color-primary-1;
+    width: 100%;
+    padding-left: 1%;
   }
 
   &_shareLeft {
