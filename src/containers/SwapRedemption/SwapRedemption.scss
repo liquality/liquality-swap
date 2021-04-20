@@ -45,7 +45,7 @@
       width: #{$w}px;
       height: #{$w*0.4}px;
       background-color: nth($colors, random(3));
-      top: 87%;
+      top: 82.5%;
       left: unquote($l+"%");
       opacity: random() + 0.5;
       transform: rotate(#{random()*360}deg);

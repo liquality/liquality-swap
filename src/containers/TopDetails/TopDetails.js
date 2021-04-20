@@ -52,6 +52,8 @@ class TopDetails extends Component {
       }
 
     render () {
+
+      console.log(this.props.quote)
         const maxNow = this.state.now.isAfter(this.state.expiration) ? this.state.expiration : this.state.now
         const left = moment.duration(this.state.expiration.diff(maxNow))
         const passed = moment.duration(maxNow.diff(this.state.start))

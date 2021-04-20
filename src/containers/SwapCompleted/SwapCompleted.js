@@ -72,10 +72,8 @@ class SwapCompleted extends Component {
   }
 
   render () {
+
     console.log(this.props)
-
-    console.log('state', this.state)
-
     const claimCurrency = cryptoassets[this.props.assets.b.currency]
     const sentCurrency = cryptoassets[this.props.assets.a.currency]
 
@@ -92,7 +90,7 @@ class SwapCompleted extends Component {
         <p className="SwapCompleted_sentAmount">{this.props.assets.a.value.toFixed()} {sentCurrency.code}</p>
 
         <h4 className="mt-4">RATE</h4>
-        {/* <h4 className="SwapCompleted_rateAmount">1 {sentCurrency.code} = {this.props.assets.rate.toFixed()} {claimCurrency.code}</h4> */}
+        <h4 className="SwapCompleted_rateAmount">1 {sentCurrency.code} = {this.props.assets.rate.toFixed()} {claimCurrency.code}</h4>
 
         <h4 className="mt-4 d-flex justify-content-center">NETWORK FEES</h4>
         <h3 className="d-flex justify-content-center">{sentCurrency.code} {this.props.transactions.a.initiation.feePrice}</h3>

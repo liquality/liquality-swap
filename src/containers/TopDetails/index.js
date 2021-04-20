@@ -9,6 +9,7 @@ const mapStateToProps = (state, ownProps) => {
     transactions: state.swap.transactions,
     link: state.swap.link,
     step: state.swap.step,
+    quote: state.swap.agent.quote,
     ...ownProps
   }
 }
