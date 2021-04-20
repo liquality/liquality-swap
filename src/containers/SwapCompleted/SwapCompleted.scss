@@ -8,6 +8,7 @@
       text-align: center;
       color: #3D4767;
       font-weight: 700;
+      font-size: $h5-font-size;
     }
     h1 {
       text-align: center;
@@ -19,6 +20,21 @@
       font-weight: bold;
       text-align: center;
     }
+  }
+
+  &_receivedAmount {
+    font-size: $h1-font-size;
+    font-weight: 300;
+  }
+
+  &_sentAmount {
+    font-size: 28px;
+    text-align: center;
+    font-weight: 300;
+  }
+
+  &_rateAmount {
+    font-weight: 600;
   }
 
   &_confs {

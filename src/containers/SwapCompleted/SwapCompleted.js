@@ -83,18 +83,18 @@ class SwapCompleted extends Component {
 
       <div className="SwapCompleted_top">
         <h4 className="mt-5">RECEIVED</h4>
-        <h1>{this.props.assets.b.value.toFixed()} {claimCurrency.code}</h1>
+        <h1 className="SwapCompleted_receivedAmount">{this.props.assets.b.value.toFixed()} {claimCurrency.code}</h1>
         <h5>${ this.getFiatValue() } USD</h5>
 
         <h4 className="mt-4">SENT</h4>
-        <h1>{this.props.assets.a.value.toFixed()} {sentCurrency.code}</h1>
+        <p className="SwapCompleted_sentAmount">{this.props.assets.a.value.toFixed()} {sentCurrency.code}</p>
 
         <h4 className="mt-4">RATE</h4>
-        <h4>1 {sentCurrency.code} = {this.props.assets.rate.toFixed()} {claimCurrency.code}</h4>
+        {/* <h4 className="SwapCompleted_rateAmount">1 {sentCurrency.code} = {this.props.assets.rate.toFixed()} {claimCurrency.code}</h4> */}
 
         <h4 className="mt-4 d-flex justify-content-center">NETWORK FEES</h4>
-        <h3 className="d-flex justify-content-center">{sentCurrency.code} {this.props.transactions.a.initiation.fee}</h3>
-        <h3 className="d-flex justify-content-center">{claimCurrency.code} {this.props.transactions.b.claim.fee}</h3>
+        <h3 className="d-flex justify-content-center">{sentCurrency.code} {this.props.transactions.a.initiation.fee} ${this.props.transactions.a.initiation.feePrice}</h3>
+        <h3 className="d-flex justify-content-center">{claimCurrency.code} {this.props.transactions.b.claim.fee} ${this.props.transactions.b.claim.feePrice}</h3>
 
       </div>
       <div className="SwapCompleted_bottom px-2 mt-5">

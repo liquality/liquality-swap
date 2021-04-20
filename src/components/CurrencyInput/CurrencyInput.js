@@ -17,7 +17,7 @@ class CurrencyInput extends Component {
     super(props)
     this.state = {
       valueString: props.value.toFixed(),
-      dropdown: false,
+      dropdown: false
     }
   }
 

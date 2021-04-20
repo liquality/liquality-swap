@@ -119,7 +119,7 @@ class LiqualitySwap extends Component {
       <div className='LiqualitySwap_header'>
         <div className="LiqualitySwap_how">
         <a href={APP_BASE_URL}><img className='LiqualitySwap_logo' src={LiqualityLogo} alt='Liquality Logo' /></a>
-          <h2>How It Works</h2>
+          <h2 onClick={() => window.open('https://liquality.io/atomic-swap-interface.html')}>How It Works</h2>
           </div>
         <SwapProgressStepper state={this.props.swap.step} />
       </div>
