@@ -29,7 +29,7 @@
   height: 275px;
   border-radius: 50%;
   background: linear-gradient(#9D4DFA, #1CE5C3, #00a2ff);
-  animation: animate 2s linear infinite;
+  animation: animate 1.5s infinite ease-in-out;
   span{
     position: absolute;
     width: 100%;
