@@ -74,10 +74,6 @@ class SwapCompleted extends Component {
   }
 
   render () {
-
-    console.log(this.props)
-    console.log(this.props.fiatRates)
-    console.log(this.props.assets.a.value)
     const claimCurrency = cryptoassets[this.props.assets.b.currency]
     const sentCurrency = cryptoassets[this.props.assets.a.currency]
 
