@@ -155,7 +155,7 @@ LiqualitySwap.propTypes = {
   startTime: PropTypes.number,
   endTime: PropTypes.number,
   duration: PropTypes.number,
-  expiration: PropTypes.number
+  expiration: PropTypes.number,
 }
 
 export default LiqualitySwap

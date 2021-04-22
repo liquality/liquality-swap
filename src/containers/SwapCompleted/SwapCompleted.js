@@ -55,8 +55,9 @@ class SwapCompleted extends Component {
   }
 
   getFiatValue () {
-    const total = this.props.assets.b.value.times(BigNumber(this.props.fiatRate)).toFixed(2)
-    return total
+    const { b: assetB} = this.props.assets
+    const total = this.props.assets.b.value.times(BigNumber(this.props.fiatRates[assetB.currency])).toFixed(2)
+    return isNaN(total) ? '' : total
   }
 
   componentDidMount () {
@@ -74,6 +75,8 @@ class SwapCompleted extends Component {
   render () {
 
     console.log(this.props)
+    console.log(this.props.fiatRates)
+    console.log(this.props.assets.a.value)
     const claimCurrency = cryptoassets[this.props.assets.b.currency]
     const sentCurrency = cryptoassets[this.props.assets.a.currency]
 
@@ -84,13 +87,13 @@ class SwapCompleted extends Component {
       <div className="SwapCompleted_top">
         <h4 className="mt-5">RECEIVED</h4>
         <h1 className="SwapCompleted_receivedAmount">{this.props.assets.b.value.toFixed()} {claimCurrency.code}</h1>
-        <h5>${ this.getFiatValue() } USD</h5>
+        <h5>${this.getFiatValue()} USD</h5>
 
         <h4 className="mt-4">SENT</h4>
         <p className="SwapCompleted_sentAmount">{this.props.assets.a.value.toFixed()} {sentCurrency.code}</p>
 
-        <h4 className="mt-4">RATE</h4>
-        <h4 className="SwapCompleted_rateAmount">1 {sentCurrency.code} = {this.props.assets.rate.toFixed()} {claimCurrency.code}</h4>
+        {this.props.assets.rate && <h4 className="mt-4">RATE</h4>}
+        {this.props.assets.rate && <h4 className="SwapCompleted_rateAmount">1 {sentCurrency.code} = {this.props.assets.rate.toFixed()} {claimCurrency.code}</h4>}
 
         <h4 className="mt-4 d-flex justify-content-center">NETWORK FEES</h4>
         <h3 className="d-flex justify-content-center">{sentCurrency.code} {this.props.transactions.a.initiation.feePrice} {cryptoassets[sentCurrency.code].fees.unit}</h3>
@@ -132,8 +135,9 @@ class SwapCompleted extends Component {
 
 SwapCompleted.propTypes = {
   retrievedAt: PropTypes.number,
+  assets: PropTypes.arrayOf(PropTypes.oneOf(Object.keys(cryptoassets))),
   expiresAt: PropTypes.number,
-  fiatRate: PropTypes.number,
+  fiatRates: PropTypes.number,
   value: PropTypes.instanceOf(BigNumber),
   disabled: PropTypes.bool,
   onChange: PropTypes.func,

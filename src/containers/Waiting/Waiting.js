@@ -6,7 +6,7 @@ import ExpirationDetails from '../../components/ExpirationDetails'
 import StatusMessage from '../../components/StatusMessage/StatusMessage'
 import { steps } from '../../components/SwapProgressStepper/steps'
 import { getConfirmationEstimate } from '../../utils/networks'
-import moment from 'moment'
+import config from "../../config/index"
 import './Waiting.css'
 
 class Waiting extends Component {
@@ -20,10 +20,13 @@ class Waiting extends Component {
         if (!this.props.transactions.b.claim.hash) {
           return ['Confirming Transactions', `When Completed You Can Claim Your ${cryptoassets[this.props.assets.b.currency].code}`]
         }
+        if (!this.props.transactions.b.fund.hash){
+          return ['Confirming Transactions', `When Completed You Can Claim Your ${cryptoassets[this.props.assets.b.currency].code}`]
+        }
       } else {
         if (!this.props.transactions.b.initiation.hash) {
           if (this.props.transactions.a.initiation.confirmations > 0) {
-            return ['Confirming Transactions', `When Completed You Can Claim Your ${cryptoassets[this.props.assets.b.currency].code}`]
+              return ['Confirming Transactions', `When Completed You Can Claim Your ${cryptoassets[this.props.assets.b.currency].code}`]
           } else {
             if (this.props.quote) {
               return ['Confirming Transactions', `Next the trading partner's Transaction will be confirmed`]
@@ -41,6 +44,7 @@ class Waiting extends Component {
   }
 
   render () {
+    const isERC20 = config.assets[this.props.assets.b.currency].type === 'erc20'
     const showPartnerTransactionStatus = !this.props.isPartyB && (this.props.transactions.a.initiation.confirmations > 0 || this.props.transactions.b.initiation.hash)
     const showPartnerClaimTransactionStatus = this.props.isPartyB && (this.props.transactions.a.initiation.confirmations > 0 || this.props.transactions.b.claim.hash)
     const [ title, description ] = this.getWaitingStatus()
@@ -59,7 +63,7 @@ class Waiting extends Component {
                 estimate={getConfirmationEstimate(this.props.assets.a.currency)} />
                 { showPartnerTransactionStatus && <StatusMessage
                 message={`Waiting For Trading Partner's ${cryptoassets[this.props.assets.b.currency].code} Transaction`}
-                complete={this.props.transactions.b.initiation.confirmations > 0}
+                complete={!isERC20 ? this.props.transactions.b.initiation.confirmations > 0 : this.props.transactions.b.initiation.confirmations > 0 && this.props.transactions.b.fund.confirmations > 0}
                 estimate={getConfirmationEstimate(this.props.assets.b.currency)} /> }
                 { showPartnerClaimTransactionStatus && <StatusMessage
                 message={`Waiting For Trading Partner's ${cryptoassets[this.props.assets.a.currency].code} Claim Transaction`}
@@ -74,7 +78,7 @@ class Waiting extends Component {
                         <span></span>
                   </div>
                 </div>
-      <p className='Waiting_status'>{description}</p>
+        {!description ? <p className='Waiting_status'>{`When Completed You Can Claim Your ${cryptoassets[this.props.assets.b.currency].code}`}</p> : <p className='Waiting_status'>{description}</p>}
       <ExpirationDetails isClaim />
     </BrandCard>
   }

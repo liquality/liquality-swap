@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import './StatusMessage.css'
 
 class StatusMessage extends Component {
-  render (props) {
+  render () {
     return (
       <div className={classNames('StatusMessage', {'StatusMessage_complete': this.props.complete})}>
         <div className='StatusMessage_wrapper'>

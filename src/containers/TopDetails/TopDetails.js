@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment'
-import cryptoassets from '@liquality/cryptoassets'
 import { getFundExpiration, getClaimExpiration } from '../../utils/expiration'
-import { shortenTransactionHash, getExplorerLink } from '../../utils/transactions'
+import { getExplorerLink } from '../../utils/transactions'
 
 import "./TopDetails.css"
 
@@ -53,10 +52,12 @@ class TopDetails extends Component {
 
     render () {
 
-      console.log(this.props.quote)
-        const maxNow = this.state.now.isAfter(this.state.expiration) ? this.state.expiration : this.state.now
-        const left = moment.duration(this.state.expiration.diff(maxNow))
-        const passed = moment.duration(maxNow.diff(this.state.start))
+      console.log(this.props, 'TOP DETAILS')
+      console.log(this.props.expiration)
+      
+        const maxNow = this.state.now.isAfter(this.props.expiration) ? this.props.expiration : this.state.now
+        const left = moment.duration(this.props.expiration.diff(maxNow))
+        // const passed = moment.duration(maxNow.diff(this.state.start))
         const total = this.state.duration
         const filled = (((total.asSeconds() - left.asSeconds()) / total.asSeconds()) * 100).toFixed(2)
 
@@ -74,7 +75,7 @@ class TopDetails extends Component {
 TopDetails.propTypes = {
     isClaim: PropTypes.bool,
     startTime: PropTypes.number,
-    endTime: PropTypes.number
+    endTime: PropTypes.number,
   }
   
   export default TopDetails;

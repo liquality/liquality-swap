@@ -8,6 +8,20 @@ import ExpirationDetails from '../../components/ExpirationDetails'
 import './SwapRedemption.css'
 
 class SwapRedemption extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      claimClick: false
+    }
+  }
+
+  handleClick = () => {
+    this.setState({claimClick: true})
+    setTimeout(() => {
+      this.props.redeemSwap()
+    }, 3000);
+  }
+
   render () {
     const errors = getClaimErrors(this.props.transactions, this.props.isPartyB)
     const claimCurrency = cryptoassets[this.props.assets.b.currency]
@@ -20,11 +34,11 @@ class SwapRedemption extends Component {
       </div>
       <div class="SwapRedemption_confetti-wrapper">
           
-      {Array.from({ length: 150 }, (_, i) => (
+      {this.state.claimClick === true ? <div>{Array.from({ length: 150 }, (_, i) => (
           <div key={i} className={`confetti-${i}`}></div>
-      ))}
+      ))}</div> : ''}
             <p>
-              {!errors.claim && <Button className='SwapRedemption_claimButton mt-5' wide primary loadingMessage={this.props.loadingMessage} onClick={this.props.redeemSwap}>Claim {this.props.assets.b.value.toFixed()} {claimCurrency.code}</Button>}
+              {!errors.claim && <Button className='SwapRedemption_claimButton mt-5' wide primary loadingMessage={this.props.loadingMessage} onClick={this.handleClick}>Claim {this.props.assets.b.value.toFixed()} {claimCurrency.code}</Button>}
               {errors.claim && <div className='SwapRedemption_errorMessage'>{errors.claim}</div>}
             </p>
         </div>

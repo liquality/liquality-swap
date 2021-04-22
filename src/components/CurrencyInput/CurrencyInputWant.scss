@@ -55,6 +55,11 @@
     }
   }
 
+  &_labelCode {
+    display: flex;
+    text-align: left;
+  }
+
   &_dropMenu {
     display: flex;
     flex-flow: column nowrap;
