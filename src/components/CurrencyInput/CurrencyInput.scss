@@ -18,7 +18,7 @@
   width: 270px;
 
   &_inputBar {
-    border-bottom: 1px solid #31E4C3;
+    border-bottom: 1px solid $color-primary-2;
     width: 65%;
     position: relative;
     left: 100px;
@@ -40,7 +40,7 @@
   }
   &_DropdownWrap {
     h2 {
-      color: black;
+      color: $color-text-1;
       display: inline;
       padding-top: 5%;
       :hover {
@@ -60,7 +60,7 @@
 
   &_dropdownCode {
     position: absolute;
-    top: 1.75%;
+    top: 1%;
     left: 20%;
   }
 
@@ -87,7 +87,7 @@
   &_dropMenu {
     display: flex;
     flex-flow: column nowrap;
-    background-color: white;
+    background-color: $color-bg-primary;
     margin-top: 3%;
     margin-left: 20%;
     border: 1px solid #D9DFE5;
@@ -122,7 +122,7 @@
   }
 
   &_labelSwap {
-    color: #3D4767;
+    color: $color-text-2;
     font-weight: bold;
     font-size: $h5-font-size;
    }
@@ -141,7 +141,7 @@
     padding-top: 1px;
     font-size: $font-size-sm;
     text-align: right;
-    color: #747E8D;
+    color: $color-text-2;
   }
 
   &_errorMessage {

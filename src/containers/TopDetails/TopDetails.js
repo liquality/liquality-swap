@@ -52,13 +52,16 @@ class TopDetails extends Component {
 
     render () {
 
-      console.log(this.props, 'TOP DETAILS')
-      console.log(this.props.expiration)
+      console.log('STATE', this.state)
+      console.log('PROPS', this.props)
+      console.log('QUOTE', this.props.quote)
+      console.log(this.props.start)
       
         const maxNow = this.state.now.isAfter(this.props.expiration) ? this.props.expiration : this.state.now
         const left = moment.duration(this.props.expiration.diff(maxNow))
         // const passed = moment.duration(maxNow.diff(this.state.start))
-        const total = this.state.duration
+        const total = moment.utc(this.props.quote.expiresAt.asSeconds())
+        console.log('TOTAL', total)
         const filled = (((total.asSeconds() - left.asSeconds()) / total.asSeconds()) * 100).toFixed(2)
 
         return <div className="TopDetails">

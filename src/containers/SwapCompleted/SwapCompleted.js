@@ -7,6 +7,8 @@ import BrandCard from '../../components/BrandCard/BrandCard'
 import { getFundExpiration, getClaimExpiration } from '../../utils/expiration'
 import { shortenTransactionHash, getExplorerLink } from '../../utils/transactions'
 import cryptoassets from '@liquality/cryptoassets'
+import withCopyButton from '../../components/withCopyButton'
+import CopyIcon from '../../icons/copy.svg'
 
 //Social Icons
 import Facebook from '../../icons/facebookicon.svg'
@@ -16,7 +18,6 @@ import Medium from '../../icons/mediumicon.svg'
 import Web from '../../icons/webicon.svg'
 import Github from '../../icons/githubicon.svg'
 
-import config from '../../config'
 import { APP_BASE_URL } from '../../utils/app-links'
 
 import './SwapCompleted.css'
@@ -110,7 +111,10 @@ class SwapCompleted extends Component {
         {this.props.transactions.a.claim.hash ? <h4><strong><span className="SwapCompleted_transactionTitle">Your {claimCurrency.code} Transaction:</span></strong><span className="SwapCompleted_transactionHash">{shortenTransactionHash(this.props.transactions.a.claim.hash)}</span><span className="SwapCompleted_confs" >{this.props.transactions.b.claim.confirmations}</span><span className="SwapCompleted_confText">Confirmations</span></h4> : '' }
         </div>
       </div>
-      <div className='SwapCompleted_bottomButton mt-5'>
+      <div className='SwapCompleted_link mt-2'>
+            <a href='javascript:void(0)' onClick={() => this.props.onCopyClick()}>Swap link<img src={CopyIcon} alt='Copy' /></a>
+      </div>
+      <div className='SwapCompleted_bottomButton mt-2'>
         <Button wide primary onClick={() => window.location.replace(APP_BASE_URL)}>Start another Swap</Button>
       </div>
       <div className="SwapCompleted_shareSection mt-3">
@@ -144,4 +148,4 @@ SwapCompleted.propTypes = {
   tabIndex: PropTypes.number,
 }
 
-export default SwapCompleted
+export default withCopyButton(SwapCompleted)

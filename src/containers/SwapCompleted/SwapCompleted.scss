@@ -26,6 +26,11 @@
     color: $color-text-1;
   }
 
+  &_link {
+    cursor: pointer;
+    padding-left: 4.75%;
+  }
+
   &_receivedAmount {
     font-size: $h1-font-size;
     font-weight: 300;

@@ -6,8 +6,6 @@ import DropDownTick from '../../icons/dropdownTick.svg'
 import * as assetUtils from '../../utils/assets'
 import config from '../../config'
 
-import Dropdown from 'react-bootstrap/Dropdown'
-
 import cryptoassets from '@liquality/cryptoassets'
 import './CurrencyInputWant.css'
 

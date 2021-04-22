@@ -127,18 +127,4 @@
       text-align: left;
     }
   }
-
-  &_progress {
-    background: #D8E2F0;
-    height: 3px;
-    position: absolute;
-    border: 1px solid red;
-    width: 100%;
-    // margin: 10px 0;
-
-    &_fill {
-      background: $color-primary-2;
-      height: 3px;
-    }
-  }
 }

@@ -53,12 +53,6 @@ class ExpirationDetails extends Component {
   }
 
   render () {
-    const maxNow = this.state.now.isAfter(this.state.expiration) ? this.state.expiration : this.state.now
-    const left = moment.duration(this.state.expiration.diff(maxNow))
-    const passed = moment.duration(maxNow.diff(this.state.start))
-    const total = this.state.duration
-
-    const filled = (((total.asSeconds() - left.asSeconds()) / total.asSeconds()) * 100).toFixed(2)
     return <div className='ExpirationDetails'>
       <div className='ExpirationDetails_center'>
         <div className='ExpirationDetails_top'>

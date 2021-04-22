@@ -1,8 +1,9 @@
+@import '../../scss/variables.scss';
+
 .BackupLinkCard {
   text-align: center;
 
   h3 {
-    @import '../../scss/variables.scss';
     font-weight: bold;
     color: $color-text-1;
     padding-top: 35px;
@@ -11,6 +12,14 @@
     img {
       width: 32px;
       margin-bottom: 10px;
+    }
+  }
+
+  &_whiteHover {
+    &:hover {
+      background: $color-bg-primary;
+      border: 1px solid $color-primary-1;
+      color: $color-primary-1;
     }
   }
 

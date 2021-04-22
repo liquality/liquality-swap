@@ -14,7 +14,7 @@
     top: 0%;
     left: 36%;
     border-radius: 25px;
-    background: white;
+    background: $color-bg-primary;
     p {
       font-size: 11px;
       text-align: center;
@@ -33,7 +33,7 @@
     line-height: 2.5em;
     text-transform: uppercase;
     text-align: center;
-    color: #ffffff;
+    color: $color-bg-primary;
     background: $primary;
   }
 }
