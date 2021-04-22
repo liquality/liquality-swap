@@ -60,7 +60,7 @@ class TopDetails extends Component {
         const maxNow = this.state.now.isAfter(this.props.expiration) ? this.props.expiration : this.state.now
         const left = moment.duration(this.props.expiration.diff(maxNow))
         // const passed = moment.duration(maxNow.diff(this.state.start))
-        const total = moment.utc(this.props.quote.expiresAt.asSeconds())
+        const total = this.state.duration
         console.log('TOTAL', total)
         const filled = (((total.asSeconds() - left.asSeconds()) / total.asSeconds()) * 100).toFixed(2)
 
