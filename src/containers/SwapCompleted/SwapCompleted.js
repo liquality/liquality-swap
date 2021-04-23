@@ -77,11 +77,11 @@ class SwapCompleted extends Component {
     const claimCurrency = cryptoassets[this.props.assets.b.currency]
     const sentCurrency = cryptoassets[this.props.assets.a.currency]
 
-    return <div className='SwapCompleted_bigWrap'>
+    return <div className='SwapCompleted'>
       
       <BrandCard title="Swap Completed">
 
-      <div class="SwapCompleted_confetti-wrapper">
+        <div className="SwapCompleted_confetti-wrapper">
           
           <div>{Array.from({ length: 150 }, (_, i) => (
               <div key={i} className={`confetti-${i}`}></div>
@@ -135,7 +135,6 @@ class SwapCompleted extends Component {
             <img className="mr-3" src={Github} alt="github logo" onClick={() => window.open('https://github.com/liquality')} />
         </div>
       </div>
-
     </BrandCard>
     </div>
   }
