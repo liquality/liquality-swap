@@ -10,12 +10,20 @@ import './CurrencyInputs.css'
  
 class CurrencyInputs extends Component {
 
-  handleSelectAssetA (asset) {
-    this.props.setAsset('a', asset)
+  handleSelectAssetA (asset, e) {
+    if(asset === this.props.assets.b.currency) {
+      this.props.onIconClick(e)
+    } else {
+      this.props.setAsset('a', asset)
+    }
   }
 
-  handleSelectAssetB (asset) {
-    this.props.setAsset('b', asset)
+  handleSelectAssetB (asset, e) {
+    if(asset === this.props.assets.a.currency) {
+      this.props.onIconClick(e)
+    } else {
+      this.props.setAsset('b', asset)
+    }
   }
 
   getFiatValue () {

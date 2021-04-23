@@ -17,9 +17,12 @@
 
   &_inputBar {
     border-bottom: 1px solid $color-primary-2;
+    width: 220px;
+    margin-left: 102px;
   }
 
   &_inputWrapper {
+    width: 100%;
     &.disabled {
       border: none;
     }
@@ -55,10 +58,6 @@
     }
   }
 
-  &_listItem {
-    padding-left: 10px;
-  }
-
   &_dropdownIcon {
     height: 18px;
     width: 18px;
@@ -86,6 +85,7 @@
 
   &_listItem {
     display: flex;
+    padding-left: 10px;
     justify-content: center;
   }
 
@@ -94,6 +94,7 @@
     text-align: right;
     font-size: $h2-font-size;
     font-weight: 500;
+    width: 320px;
 
     &.error {
       border: 1px solid $danger;

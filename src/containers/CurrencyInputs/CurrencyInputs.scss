@@ -7,11 +7,13 @@
 
   &_left {
     margin-left: $panel-spacing;
+    margin-top: 20px;
   }
 
   &_right {
     margin-right: $panel-spacing;
     padding-right: 40px;
+    margin-top: 20px;
     .CurrencyInput {
       float: right;
     }
@@ -23,7 +25,7 @@
     left: 0;
     right: 0;
     position: relative;
-    top: 25px;
+    top: 40px;
     z-index: $layer-top;
     text-align: center;
     &:hover {
