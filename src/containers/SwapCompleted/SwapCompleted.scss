@@ -120,6 +120,7 @@
     height: 500px;
     position: absolute;
     width: 100%;
+    z-index: $layer-bottom;
   }
 
   [class|="confetti"] {
@@ -133,7 +134,7 @@
       width: #{$w}px;
       height: #{$w*0.4}px;
       background-color: nth($colors, random(3));
-      top: 600px;
+      top: 690px;
       left: unquote($l+"%");
       opacity: random() + 0.3;
       transform: rotate(#{random()*360}deg);
@@ -141,7 +142,7 @@
     }
     @keyframes drop-#{$i} {
       0% {
-        top: 0;
+        top: 80px;
         left: unquote($l+random(5)+"%");
       }
     }

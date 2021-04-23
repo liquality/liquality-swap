@@ -79,15 +79,15 @@ class SwapCompleted extends Component {
 
     return <div className='SwapCompleted'>
       
-      <BrandCard title="Swap Completed">
-
-        <div className="SwapCompleted_confetti-wrapper">
+      <div className="SwapCompleted_confetti-wrapper">
           
           <div>{Array.from({ length: 150 }, (_, i) => (
               <div key={i} className={`confetti-${i}`}></div>
           ))}</div>
 
-      </div>
+        </div>
+
+      <BrandCard title="Swap Completed">
 
       <div className="SwapCompleted_top">
         <h4 className="mt-5">RECEIVED</h4>
