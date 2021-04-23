@@ -21,6 +21,16 @@
     height: 20px;
   }
 
+  &_emptyAddress {
+    position: relative;
+    top: 25px;
+  }
+
+  &_emptyButton {
+    position: relative;
+    bottom: 100px;
+  }
+
   &_address {
     width: 160px;
     height: 20px;
@@ -31,9 +41,6 @@
     color: $color-text-2;
     &:hover {
       overflow: visible;
-    }
-    p {
-      
     }
 
     &.error {

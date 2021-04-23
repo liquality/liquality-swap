@@ -3,134 +3,138 @@
 
 .CurrencyInput {
 
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-  }
+	input::-webkit-outer-spin-button,
+	input::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+	}
 
-  input[type='number'] {
-    -moz-appearance:textfield;
-  }
+	input[type='number'] {
+		-moz-appearance:textfield;
+	}
 
-  width: 320px;
+	width: 320px;
 
-  &_inputBar {
-    border-bottom: 1px solid $color-primary-2;
-    width: 220px;
-    margin-left: 102px;
-  }
+	&_inputBar {
+		border-bottom: 1px solid $color-primary-2;
+		width: 220px;
+		margin-left: 102px;
+	}
 
-  &_inputWrapper {
-    width: 100%;
-    &.disabled {
-      border: none;
-    }
-  }
-  &_dropdownWrap {
-    position: absolute;
-    z-index: $layer-top;
-    h2 {
-      color: $color-text-1;
-      display: inline;
-      :hover {
-        cursor: pointer;
-      }
-    }
-    &_toggler {
-      display: inline-block;
-      
-    }
-  }
+	&_inputWrapper {
+		width: 100%;
+		&.disabled {
+			border: none;
+		}
+	}
+	&_dropdownWrap {
+		position: absolute;
+		z-index: $layer-top;
+		h2 {
+			color: $color-text-1;
+			display: inline;
+			:hover {
+				cursor: pointer;
+			}
+		}
+		&_toggler {
+			display: inline-block;
+		}
+	}
 
-  &_dropdownCode {
-    position: relative;
-    top: 5px;
-  }
+	&_dropdownCurrencyText {
+		margin-left: 12px;
+	}
 
-  &_dropItem {
-    height: 32px;
-    width: 32px;
-  }
+	&_dropdownCode {
+		position: relative;
+		top: 5px;
+	}
 
-  &_drop {
-    &:hover {
-      cursor: pointer;
-    }
-  }
+	&_dropItem {
+		height: 32px;
+		width: 32px;
+	}
 
-  &_dropdownIcon {
-    height: 18px;
-    width: 18px;
-  }
+	&_drop {
+		&:hover {
+			cursor: pointer;
+		}
+	}
 
-  &_dropdownKey {
-    border-bottom: 1px solid #D9DFE5;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: left;
-    &:hover {
-      background-color: #F0F7F9;
-    }
-  }
+	&_dropdownIcon {
+		height: 18px;
+		width: 18px;
+		margin-left: 5px;
+	}
 
-  &_dropMenu {
-    display: flex;
-    flex-flow: column nowrap;
-    background-color: $color-bg-primary;
-    margin-top: 3px;
-    margin-left: 30px;
-    border: 1px solid #D9DFE5;
-    width: 100px;
-  }
+	&_dropdownKey {
+		border-bottom: 1px solid #D9DFE5;
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: left;
+		&:hover {
+			background-color: #F0F7F9;
+		}
+	}
 
-  &_listItem {
-    display: flex;
-    padding-left: 10px;
-    justify-content: center;
-  }
+	&_dropMenu {
+		display: flex;
+		flex-flow: column nowrap;
+		background-color: $color-bg-primary;
+		margin-top: 3px;
+		margin-left: 37px;
+		border: 1px solid #D9DFE5;
+		width: 100px;
+	}
 
-  &_input {
-    @include blank-input;
-    text-align: right;
-    font-size: $h2-font-size;
-    font-weight: 500;
-    width: 320px;
+	&_listItem {
+		display: flex;
+		padding-left: 10px;
+		justify-content: center;
+	}
 
-    &.error {
-      border: 1px solid $danger;
-    }
-  }
+	&_input {
+		@include blank-input;
+		text-align: right;
+		font-size: $h2-font-size;
+		font-weight: 500;
+		width: 320px;
 
-  &_price {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
+		&.error {
+			border: 1px solid $danger;
+		}
+	}
 
-  &_labelSwap {
-    color: $color-text-2;
-    font-weight: bold;
-    font-size: $h5-font-size;
-   }
+	&_price {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+	}
 
-  &_priceFiat {
-    text-align: right;
-    font-size: $font-size-sm;
-    color: $color-text-2;
-    padding-top: 3px;
-   }
+	&_labelSwap {
+		color: $color-text-2;
+		font-weight: bold;
+		font-size: $h5-font-size;
+	 }
+
+	&_priceFiat {
+		text-align: right;
+		font-size: $font-size-sm;
+		color: $color-text-2;
+		padding-top: 3px;
+	 }
 
 
-  &_label {
-    height: 20px;
-    padding-top: 1px;
-    font-size: $font-size-sm;
-    text-align: right;
-    color: $color-text-2;
-  }
+	&_label {
+		height: 20px;
+		padding-top: 1px;
+		font-size: $font-size-sm;
+		text-align: right;
+		color: $color-text-2;
+	}
 
-  &_errorMessage {
-    @include error-message;
-  }
+	&_errorMessage {
+		@include error-message;
+	}
 }
