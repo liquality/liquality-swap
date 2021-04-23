@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import ExpirationDetails from './ExpirationDetails'
+import TransactionDetails from './TransactionDetails'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -17,4 +17,4 @@ export default connect(
   mapStateToProps,
   {
   }
-)(ExpirationDetails)
+)(TransactionDetails)

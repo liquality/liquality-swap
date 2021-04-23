@@ -111,4 +111,33 @@
     display: flex;
     flex-flow: row nowrap;
   }
+
+  &_confetti-wrapper {
+    height: 500px;
+    z-index: $layer-top;
+  }
+
+  [class|="confetti"] {
+    position: absolute;
+  }
+  $colors: (#9D4DFA, #1CE5C3, #F12274);
+  @for $i from 0 through 150 {
+    $w: random(8);
+    $l: random(95);
+    .confetti-#{$i} {
+      width: #{$w}px;
+      height: #{$w*0.4}px;
+      background-color: nth($colors, random(3));
+      top: 82.5%;
+      left: unquote($l+"%");
+      opacity: random() + 0.5;
+      transform: rotate(#{random()*360}deg);
+      animation: drop-#{$i} unquote(4+random()+"s") unquote(random()+"s") infinite;
+    }
+    @keyframes drop-#{$i} {
+      50% {
+        left: unquote($l+random(5)+"%");
+      }
+    }
+  }
 }

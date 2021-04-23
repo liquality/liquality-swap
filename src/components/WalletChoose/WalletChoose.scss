@@ -1,4 +1,5 @@
 @import '../../scss/variables.scss';
+@import '../../scss/mixins.scss';
 
 .WalletChoose {
   text-align: center;
@@ -10,16 +11,8 @@
   }
 
   &_currencyBar {
-    width: 150px;
-    height: 21px;
-    background: grey;
-    margin: 0 auto;
+    @include currency-bar;
     margin-top: -2%;
-    color: $secondary;
-    background: rgb(123,135,224);
-    background: linear-gradient(90deg, rgba(123,135,224,1) 0%, rgba(113,177,210,1) 100%);
-    border-radius: 25px;
-    font-family: $font-family-base;
   }
 
   h1 {
@@ -58,6 +51,7 @@
     &_image {
       margin-right: 15px;
       width: 20px;
+      font-family: $font-family-base;
     }
   }
 }

@@ -67,7 +67,7 @@ class CurrencyInput extends Component {
     </span>
   }
 
-  toggle = () => {
+  toggleDropdown = () => {
     this.setState(prevState => ({dropdown: !prevState.dropdown}))
   }
 
@@ -84,30 +84,29 @@ class CurrencyInput extends Component {
 
     return <div className='CurrencyInput'>
       { this.props.fiatRate && !this.props.value.isNaN() && <div className='CurrencyInput_price'>
-        <div className='CurrencyInput_labelSwap'>SEND</div><div className='CurrencyInput_priceFiat'>${ this.getFiatValue() } USD</div>
+      <div className='CurrencyInput_labelSwap'>SEND</div><div className='CurrencyInput_priceFiat'>${ this.getFiatValue() } USD</div>
       </div> }
-      <div className="CurrencyInput_inputBigWrap">
-      <div className="CurrencyInput_DropdownWrap">
+      {this.props.isReceive && <div className='CurrencyInput_labelSwap'>RECEIVE</div>}
+      <div className="CurrencyInput_dropdownWrap">
       <div className="CurrencyInput_drop">
-        <div className="CurrencyInput_toggler mt-2" onClick={this.toggle}>
-          <img className="CurrencyInput_dropItem" src={assetUtils.getIcon(asset.code)} alt='asset icon' /> <h2 className="CurrencyInput_dropdownCode">{asset.code}<img src={DropDownTick} alt="dropdowntick" className="ml-2"/></h2>
+        <div className="CurrencyInput_toggler" onClick={this.toggleDropdown}>
+          <img className="CurrencyInput_dropItem" src={assetUtils.getIcon(asset.code)} alt='asset icon' /> <h2 className="CurrencyInput_dropdownCode">{asset.code}<img src={DropDownTick} alt="dropdowntick" className="pl-2"/></h2>
         </div>
       
-        {this.state.dropdown === true ? <div className="CurrencyInput_dropMenu">
+        {this.state.dropdown && <div className="CurrencyInput_dropMenu">
           {displayedAssets.map(([id, currency]) =>
           <div className="CurrencyInput_dropdownKey" key={id} onClick={() => this.props.onSelectAsset(id)}> 
-            <div className="CurrencyInput_listItem py-1" onClick={this.toggle}><img src={assetUtils.getIcon(currency.code)} alt="currency icon/logo"  className="CurrencyInput_dropdownIcon" /><strong><span className="pt-1 ml-4">{currency.code}</span></strong></div>
+            <div className="CurrencyInput_listItem py-1" onClick={this.toggleDropdown}><img src={assetUtils.getIcon(currency.code)} alt="currency icon/logo"  className="CurrencyInput_dropdownIcon" /><strong><span className="pt-1 ml-4">{currency.code}</span></strong></div>
           </div>
           )}
-        </div> : null}
-      </div>
+        </div>}
       </div>
       </div>
       <div className={classNames('CurrencyInput_inputWrapper', { 'disabled': this.props.disabled })}>
         <input type='number' min='0' readOnly={this.props.disabled} value={this.restrictNumber(this.state.valueString)}
           className={classNames('CurrencyInput_input', { 'error': this.props.error })} placeholder='0.00'
           onChange={e => this.onChange(e)} onKeyDown={e => this.preventNegative(e)} tabIndex={this.props.tabIndex} />
-                      <div className='CurrencyInput_inputBar'></div>
+          {this.props.showInputLine && <div className='CurrencyInput_inputBar'></div>}
       </div>
       { this.props.error && <div className={classNames('CurrencyInput_label', { 'CurrencyInput_errorMessage': this.props.error })}>
         { this.props.error }
@@ -125,6 +124,7 @@ CurrencyInput.propTypes = {
   value: PropTypes.instanceOf(BigNumber),
   fiatRate: PropTypes.number,
   disabled: PropTypes.bool,
+  showInputLine: PropTypes.bool,
   onChange: PropTypes.func,
   onSelectAsset: PropTypes.func.isRequired,
   tabIndex: PropTypes.number,

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import cryptoassets from '@liquality/cryptoassets'
 import { getCurrencyInputErrors } from '../../utils/validation'
 import CurrencyInput from '../../components/CurrencyInput/CurrencyInput'
-import CurrencyInputWant from '../../components/CurrencyInput/CurrencyInputWant'
+import BigNumber from 'bignumber.js'
 import SwapIcon from '../../icons/switch.svg'
 import Rate from '../../components/Rate/Rate'
 import './CurrencyInputs.css'
@@ -16,6 +16,11 @@ class CurrencyInputs extends Component {
 
   handleSelectAssetB (asset) {
     this.props.setAsset('b', asset)
+  }
+
+  getFiatValue () {
+    const total = this.props.value.times(BigNumber(this.props.fiatRate)).toFixed(2)
+    return total
   }
 
   render () {
@@ -32,6 +37,7 @@ class CurrencyInputs extends Component {
             currency={assetA.currency}
             onSelectAsset={asset => this.handleSelectAssetA(asset)}
             value={assetA.value}
+            {...{showInputLine: true}}
             {...(this.props.showLeftFiatValue ? {fiatRate: this.props.fiatRates[assetA.currency]} : {})}
             disabled={this.props.leftInputDisabled}
             error={errors.assetA}
@@ -45,7 +51,8 @@ class CurrencyInputs extends Component {
           }
         </div>
         <div className='col CurrencyInputs_right'>
-          { this.props.showInputs && <CurrencyInputWant
+          { this.props.showInputs && <CurrencyInput
+          {...{isReceive: true}}
             currency={assetB.currency}
             onSelectAsset={asset => this.handleSelectAssetB(asset)} 
             value={assetB.value}

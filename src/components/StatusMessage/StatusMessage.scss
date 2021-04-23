@@ -115,18 +115,18 @@
       border-radius: 50%;
       span:nth-child(1) {
         filter: blur(5px);
+      }
+      span:nth-child(2) {
+        filter: blur(10px);
+      }
+      span:nth-child(3) {
+        filter: blur(25px);
+      }
+      span:nth-child(4) {
+      filter: blur(50px);
+      }
     }
-    span:nth-child(2) {
-      filter: blur(10px);
   }
-  span:nth-child(3) {
-    filter: blur(25px);
-  }
-  span:nth-child(4) {
-  filter: blur(50px);
-  }
-    }
-    }
   
   &_spinningGradient:after {
       content: '';
@@ -142,7 +142,7 @@
   }
 
   &_statusMessage {
-    z-index: 10;
+    z-index: $layer-top;
     position: absolute;
     top: 14.70%;
     left: 14.25%;

@@ -2,7 +2,7 @@
 
 .CurrencyInputs {
   position: relative;
-  $panel-spacing: 30px;
+  $panel-spacing: 40px;
   width: 100%;
 
   &_left {
@@ -10,17 +10,22 @@
   }
 
   &_right {
-    margin-right: 1%;
+    margin-right: $panel-spacing;
+    padding-right: 40px;
     .CurrencyInput {
       float: right;
     }
   }
 
   &_switch {
-    position: absolute;
-    left: 47%;
-    z-index: 10;
-    top: 35%;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    position: relative;
+    top: 25px;
+    z-index: $layer-top;
+    text-align: center;
     &:hover {
       cursor: pointer;
     }
@@ -32,6 +37,6 @@
     top: 85.5%;
     left: -1.7%;
     right: 0;
-    z-index: 11;
+    z-index: $layer-top;
   }
 }

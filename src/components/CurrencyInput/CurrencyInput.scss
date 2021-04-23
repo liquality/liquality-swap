@@ -3,8 +3,6 @@
 
 .CurrencyInput {
 
-  margin-top: 10%;
-
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
       -webkit-appearance: none;
@@ -15,34 +13,22 @@
     -moz-appearance:textfield;
   }
 
-  width: 270px;
+  width: 320px;
 
   &_inputBar {
     border-bottom: 1px solid $color-primary-2;
-    width: 65%;
-    position: relative;
-    left: 100px;
   }
 
   &_inputWrapper {
-    padding-bottom: 3px;
-    display: block;
-
     &.disabled {
       border: none;
     }
   }
-
-  &_inputBigWrap {
+  &_dropdownWrap {
     position: absolute;
-    top: 50%;
-    width: 200px;
-  }
-  &_DropdownWrap {
     h2 {
       color: $color-text-1;
       display: inline;
-      padding-top: 5%;
       :hover {
         cursor: pointer;
       }
@@ -53,15 +39,14 @@
     }
   }
 
+  &_dropdownCode {
+    position: relative;
+    top: 5px;
+  }
+
   &_dropItem {
     height: 32px;
     width: 32px;
-  }
-
-  &_dropdownCode {
-    position: absolute;
-    top: 1%;
-    left: 20%;
   }
 
   &_drop {
@@ -70,15 +55,20 @@
     }
   }
 
+  &_listItem {
+    padding-left: 10px;
+  }
+
   &_dropdownIcon {
     height: 18px;
     width: 18px;
-    position: absolute;
-    left: 30%;
   }
 
   &_dropdownKey {
     border-bottom: 1px solid #D9DFE5;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: left;
     &:hover {
       background-color: #F0F7F9;
     }
@@ -88,8 +78,8 @@
     display: flex;
     flex-flow: column nowrap;
     background-color: $color-bg-primary;
-    margin-top: 3%;
-    margin-left: 20%;
+    margin-top: 3px;
+    margin-left: 30px;
     border: 1px solid #D9DFE5;
     width: 100px;
   }
@@ -101,9 +91,6 @@
 
   &_input {
     @include blank-input;
-    display: block;
-    width: 275px;
-    height: 32px;
     text-align: right;
     font-size: $h2-font-size;
     font-weight: 500;
@@ -117,8 +104,6 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 275px;
-    padding-bottom:2%;
   }
 
   &_labelSwap {
@@ -127,12 +112,11 @@
     font-size: $h5-font-size;
    }
 
-  &priceFiat {
+  &_priceFiat {
     text-align: right;
     font-size: $font-size-sm;
     color: $color-text-2;
     padding-top: 3px;
-    border: 1px solid $color-text-1;
    }
 
 

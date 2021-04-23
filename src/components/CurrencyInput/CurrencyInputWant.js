@@ -71,7 +71,7 @@ class CurrencyInputWant extends Component {
     return total
   }
 
-  toggle = () => {
+  toggleDropdown = () => {
     this.setState(prevState => ({dropdown: !prevState.dropdown}))
   }
 
@@ -91,17 +91,17 @@ class CurrencyInputWant extends Component {
       <div className="CurrencyInputWant_inputBigWrap">
       <div className="CurrencyInputWant_DropdownWrap">
       <div className="CurrencyInputWant_drop">
-      <div className="CurrencyInputWant_toggler mt-2" onClick={this.toggle}>
+      <div className="CurrencyInputWant_toggler mt-2" onClick={this.toggleDropdown}>
           <img className="CurrencyInputWant_dropItem" src={assetUtils.getIcon(asset.code)} alt='asset icon' /> <h2 className="CurrencyInputWant_dropdownCode">{asset.code}<img src={DropDownTick} alt="dropdowntick" className="ml-2"/></h2>
         </div>
       
-        {this.state.dropdown === true ? <div className="CurrencyInputWant_dropMenu">
+        {this.state.dropdown && <div className="CurrencyInputWant_dropMenu">
           {displayedAssets.map(([id, currency]) =>
           <div className="CurrencyInputWant_dropdownKey" key={id} onClick={() => this.props.onSelectAsset(id)}> 
-            <div className="CurrencyInputWant_listItem py-1" onClick={this.toggle}><img src={assetUtils.getIcon(currency.code)} alt="currency icon/logo" className="CurrencyInputWant_dropdownIcon" /><strong><span className=" ml-4 CurrencyInputWant_labelCode">{currency.code}</span></strong></div>
+            <div className="CurrencyInputWant_listItem py-1" onClick={this.toggleDropdown}><img src={assetUtils.getIcon(currency.code)} alt="currency icon/logo" className="CurrencyInputWant_dropdownIcon" /><strong><span className=" ml-4 CurrencyInputWant_labelCode">{currency.code}</span></strong></div>
           </div>
           )}
-        </div> : null}
+        </div>}
       </div>
       </div>
       </div>

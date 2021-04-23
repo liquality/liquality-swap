@@ -9,9 +9,6 @@ import './SwapProgressStepper.css'
 class SwapProgressStepper extends Component {
   render () {
     const activeStep = stepData.findIndex(step => step.id === this.props.state)
-    if (activeStep === null) {
-      activeStep = steps.INITIATION
-    }
     const connector = (
       <StepConnector
         classes={{

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import cryptoassets from '@liquality/cryptoassets'
 import BrandCard from '../../components/BrandCard/BrandCard'
-import ExpirationDetails from '../../components/ExpirationDetails'
+import TransactionDetails from '../../components/TransactionDetails'
 import StatusMessage from '../../components/StatusMessage/StatusMessage'
 import { steps } from '../../components/SwapProgressStepper/steps'
 import { getConfirmationEstimate } from '../../utils/networks'
@@ -79,7 +79,7 @@ class Waiting extends Component {
                   </div>
                 </div>
         {!description ? <p className='Waiting_status'>{`When Completed You Can Claim Your ${cryptoassets[this.props.assets.b.currency].code}`}</p> : <p className='Waiting_status'>{description}</p>}
-      <ExpirationDetails isClaim />
+      <TransactionDetails isClaim />
     </BrandCard>
   }
 }

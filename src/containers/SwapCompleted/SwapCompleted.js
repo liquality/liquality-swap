@@ -81,6 +81,14 @@ class SwapCompleted extends Component {
       
       <BrandCard title="Swap Completed">
 
+      <div class="SwapCompleted_confetti-wrapper">
+          
+          <div>{Array.from({ length: 150 }, (_, i) => (
+              <div key={i} className={`confetti-${i}`}></div>
+          ))}</div>
+
+      </div>
+
       <div className="SwapCompleted_top">
         <h4 className="mt-5">RECEIVED</h4>
         <h1 className="SwapCompleted_receivedAmount">{this.props.assets.b.value.toFixed()} {claimCurrency.code}</h1>

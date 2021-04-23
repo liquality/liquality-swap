@@ -6,6 +6,17 @@
   background: none;
 }
 
+@mixin currency-bar {
+  width: 150px;
+  font-family: $font-family-base;
+  height: 21px;
+  margin: 0 auto;
+  color: $secondary;
+  background: rgb(123,135,224);
+  background: linear-gradient(90deg, rgba(123,135,224,1) 0%, rgba(113,177,210,1) 100%);
+  border-radius: 25px;
+}
+
 @mixin error-message {
   height: $font-size-sm;
   color: $danger;

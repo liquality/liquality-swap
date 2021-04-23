@@ -1,4 +1,5 @@
 @import '../../scss/variables.scss';
+@import '../../scss/mixins.scss';
 
 .WalletConnected {
   text-align: center;
@@ -21,15 +22,8 @@
   }
 
   &_currencyBar {
-    width: 150px;
-    font-family: $font-family-base;
-    height: 21px;
-    margin: 0 auto;
+    @include currency-bar;
     margin-top: -5%;
-    color: $secondary;
-    background: rgb(123,135,224);
-    background: linear-gradient(90deg, rgba(123,135,224,1) 0%, rgba(113,177,210,1) 100%);
-    border-radius: 25px;
   }
 
   &_wallet {

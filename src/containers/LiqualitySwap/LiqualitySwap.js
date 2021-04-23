@@ -34,10 +34,6 @@ class LiqualitySwap extends Component {
     this.getBackupLinkCard = this.getBackupLinkCard.bind(this)
     this.getConnectWallet = this.getConnectWallet.bind(this)
     this.state = this.getExpirationState()
-    this.state = {
-      currentTime: Date.now(),
-      step: 'INITIATION'
-    }
   }
 
   getStartingScreen () {
@@ -55,7 +51,7 @@ class LiqualitySwap extends Component {
     return <CounterPartyLinkCard link={link} onNextClick={() => { this.props.history.replace('/waiting') }} />
   }
 
-  getTransaction (party) {
+  getInitiationTransaction (party) {
     const tx = this.props.transactions[party].initiation
     if (!tx.hash) return null
 
@@ -75,8 +71,8 @@ class LiqualitySwap extends Component {
       expiration: expiration.time,
       now: moment(),
       transactions: {
-        a: this.getTransaction('a'),
-        b: this.getTransaction('b')
+        a: this.getInitiationTransaction('a'),
+        b: this.getInitiationTransaction('b')
       }
     }
   }
@@ -117,7 +113,7 @@ class LiqualitySwap extends Component {
   render () { 
     return <div className='LiqualitySwap'>
       <div className='LiqualitySwap_header'>
-        <div className="LiqualitySwap_how">
+        <div className="LiqualitySwap_topBarHeader">
         <a href={APP_BASE_URL}><img className='LiqualitySwap_logo' src={LiqualityLogo} alt='Liquality Logo' /></a>
           <h2 className="LiqualitySwap_howTo"onClick={() => window.open('https://liquality.io/atomic-swap-interface.html')}>How It Works</h2>
           </div>
@@ -149,13 +145,6 @@ class LiqualitySwap extends Component {
       <ErrorModal open={this.props.error} error={this.props.error} onClose={this.props.clearError} />
     </div>
   }
-}
-
-LiqualitySwap.propTypes = {
-  startTime: PropTypes.number,
-  endTime: PropTypes.number,
-  duration: PropTypes.number,
-  expiration: PropTypes.number,
 }
 
 export default LiqualitySwap

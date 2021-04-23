@@ -25,8 +25,8 @@
 
   &_liqualityCircle {
     position: absolute;
-    top: 25%;
-    left: 41%;
+    top: 170px;
+    left: 375px;
     z-index: 10;
     display: block;
     width: 150px;
@@ -41,12 +41,6 @@
       text-align: center;
       margin-top: 4%;
     }
-  }
-
-  &_switch {
-    position: absolute;
-    top: 18%;
-    left: 47.5%;
   }
 
   &_assets {
@@ -70,8 +64,7 @@
   &_top {
     position: relative;
     width: 100%;
-    height: 200px;
-    padding-bottom: 28px;
+    padding-bottom: 75px;
     border-radius: 0 0 $swap-panel-radius $swap-panel-radius;
     z-index: $layer-top;
   }
@@ -128,7 +121,7 @@
     @include error-message;
   }
 
-  .ExpirationDetails {
+  .TransactionDetails {
     margin-bottom: 30px;
   }
 
