@@ -18,13 +18,13 @@ const WalletDisplay = (props) => {
   const error = props.addressError || props.balanceError || props.error
   return <div className={classNames('WalletDisplay', {error: props.error})}>
     <div className='WalletDisplay_wrapper'>
-      <img className='WalletDisplay_icon mt-2'
+      <img className='WalletDisplay_icon mb-1'
         src={wallets[props.type] ? wallets[props.type].icon : WalletIcon}
         alt={wallets[props.type] ? wallets[props.type].name : 'Wallet'} />
-      <p className={classNames('WalletDisplay_address', {error: props.addressError})}>{props.address != null ? <p className='WalletDisplay_addressWhole mt-1'><Dot /><span className='WalletDisplay_walletAddressConnected'>{shortenAddress(`${address}`)}</span></p> : null}</p>
+      <p className={classNames('WalletDisplay_address mt-1', {error: props.addressError})}>{props.address != null ? <p className='WalletDisplay_addressWhole mt-1'><Dot /><span className='WalletDisplay_walletAddressConnected'>{shortenAddress(`${address}`)}</span></p> : null}</p>
       { props.connected
-        ? <Button tabIndex={-1} small secondary className='WalletDisplay_addressButtons' onClick={e => props.onButtonClick(e)}>Change wallet</Button>
-        : <Button tabIndex={-1} small secondaryWallet className='WalletDisplay_addressButtons' onClick={e => props.onButtonClick(e)}>Connect wallet</Button>
+        ? <Button tabIndex={-1} small secondary className='WalletDisplay_addressButtons mb-2' onClick={e => props.onButtonClick(e)}>Change wallet</Button>
+        : <Button tabIndex={-1} small secondaryWallet className='WalletDisplay_addressButtons mb-2' onClick={e => props.onButtonClick(e)}>Connect wallet</Button>
       }
       { props.balance &&
         <div className="WalletDisplay_type">

@@ -6,8 +6,6 @@
   width: 160px;
 
   &_type {
-    position: relative;
-    top: -16px;
     p {
       padding: 0;
       margin: 0;
@@ -21,12 +19,11 @@
 
   &_icon {
     height: 20px;
-    margin-top: 5%;
-    margin-bottom: 5%;
   }
 
   &_address {
     width: 160px;
+    height: 20px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -46,8 +43,6 @@
   }
 
   &_addressButtons {
-    position: relative;
-    top: -25px;
     background: none;
     &:hover {
       background: white;

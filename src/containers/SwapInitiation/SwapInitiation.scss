@@ -25,9 +25,9 @@
 
   &_liqualityCircle {
     position: absolute;
-    top: 170px;
+    top: 192.5px;
     left: 375px;
-    z-index: 10;
+    z-index: $layer-top;
     display: block;
     width: 150px;
     height: 150px;

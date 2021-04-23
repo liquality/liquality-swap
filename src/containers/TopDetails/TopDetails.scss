@@ -1,12 +1,14 @@
+@import '../../scss/variables.scss';
+
 .TopDetails {
-    z-index: 10 !important;
+    z-index: $layer-top !important;
     width: 100%;
     padding: 0 !important;
     margin: 0;
 
     &_timeLeft {
       text-align: center;
-      padding-top: 1.75%;
+      padding-top: 32.5px;
       color: white;
     }
 
@@ -15,7 +17,7 @@
         height: 25px;
     
         &_fill {
-          background: #1CE5C3;
+          background: $color-primary-2;
           height: 25px;
         }
     }

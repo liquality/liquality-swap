@@ -6,7 +6,7 @@
   padding: 7px 20px;
   width: 650px;
   margin: 0 auto;
-  z-index: 10;
+  z-index: $layer-top;
   font-family: $font-family-base;
 
   &_complete {
