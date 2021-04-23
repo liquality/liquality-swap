@@ -39,20 +39,11 @@
     h3 {
       font-size: 12px;
       text-align: center;
-      margin-top: 4%;
+      margin-top: 3px;
     }
   }
 
-  &_assets {
-    position: relative;
-    margin-top: 25%;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
-  }
-
   &_assetSelector {
-    position: absolute;
-    top: 100%;
     padding-top: 20px;
     box-shadow: 0px 2px 14px $color-shadow;
     border-radius: 0 0 $swap-panel-radius $swap-panel-radius;
@@ -62,7 +53,6 @@
   }
   
   &_top {
-    position: relative;
     width: 100%;
     padding-bottom: 75px;
     border-radius: 0 0 $swap-panel-radius $swap-panel-radius;
@@ -76,7 +66,7 @@
   &_bottom {
     position: relative;
     text-align: center;
-    top: -50px;
+    bottom: 50px;
     padding: 1px 30px 20px;
     background: $color-bg-primary;
     z-index: $layer-top;

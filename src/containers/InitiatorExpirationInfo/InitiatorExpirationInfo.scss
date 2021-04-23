@@ -1,6 +1,7 @@
 @import '../../scss/variables.scss';
 
 .InitiatorExpirationInfo {
+  padding-top: 20px;
   p {
     display: flex;
     width: 100%;
@@ -10,10 +11,6 @@
   h5 {
     color: $color-text-1;
     font-weight: bold;
-  }
-
-  &_strayClass {
-    margin-left: 25%;
   }
 
   &_icon {

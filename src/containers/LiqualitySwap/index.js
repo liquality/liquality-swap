@@ -9,16 +9,12 @@ import LiqualitySwap from './LiqualitySwap'
 const mapStateToProps = (state, ownProps) => ({
   swap: state.swap,
   error: state.error,
-  quote: state.swap.agent.quote,
   duration: state.swap.duration,
   expiration: state.swap.expiration,
-  isPartyB: state.swap.isPartyB,
   assets: state.swap.assets,
   transactions: state.swap.transactions,
-  link: state.swap.link,
   step: state.swap.step,
   ...ownProps,
-  fiatRates: state.swap.fiatRates,
 })
 
 export default withRouter(connect(

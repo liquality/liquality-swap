@@ -8,16 +8,19 @@
     display: flex;
     flex-direction: column;
     padding: 0 !important;
-  }
-
-  &_claimButton {
-    position: relative;
-    top: 275px;
+    margin: 0 !important;
   }
 
   &_terms {
     font-size: $h3-font-size;
     margin: 50px 0 60px 0;
+  }
+
+  &_buttonWrap {
+    margin-top: 250px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 
   &_info {

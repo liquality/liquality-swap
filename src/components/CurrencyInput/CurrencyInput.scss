@@ -29,6 +29,7 @@
   }
   &_dropdownWrap {
     position: absolute;
+    z-index: $layer-top;
     h2 {
       color: $color-text-1;
       display: inline;

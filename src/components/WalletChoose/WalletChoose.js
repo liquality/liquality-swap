@@ -16,7 +16,7 @@ const WalletChoose = (props) => {
     <div className="WalletChoose_currencyBar">
       {currency.name}
     </div>
-    <img className='WalletDisplay_icon'
+    <img className='WalletDisplay_icon mt-4 mb-3'
       src={wallets[props.type] ? wallets[props.type].icon : WalletIcon}
       alt={wallets[props.type] ? wallets[props.type].name : 'Wallet'} />
     <h1>{term} {currency.name}</h1>
