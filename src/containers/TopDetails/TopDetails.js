@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import { getFundExpiration, getClaimExpiration } from '../../utils/expiration'
+import { getClaimExpiration } from '../../utils/expiration'
 import { getExplorerLink } from '../../utils/transactions'
 
 import './TopDetails.css'
