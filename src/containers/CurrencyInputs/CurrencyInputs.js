@@ -7,11 +7,10 @@ import BigNumber from 'bignumber.js'
 import SwapIcon from '../../icons/switch.svg'
 import Rate from '../../components/Rate/Rate'
 import './CurrencyInputs.css'
- 
-class CurrencyInputs extends Component {
 
+class CurrencyInputs extends Component {
   handleSelectAssetA (asset, e) {
-    if(asset === this.props.assets.b.currency) {
+    if (asset === this.props.assets.b.currency) {
       this.props.onIconClick(e)
     } else {
       this.props.setAsset('a', asset)
@@ -19,7 +18,7 @@ class CurrencyInputs extends Component {
   }
 
   handleSelectAssetB (asset, e) {
-    if(asset === this.props.assets.a.currency) {
+    if (asset === this.props.assets.a.currency) {
       this.props.onIconClick(e)
     } else {
       this.props.setAsset('b', asset)
@@ -36,9 +35,9 @@ class CurrencyInputs extends Component {
 
     const errors = this.props.showErrors ? getCurrencyInputErrors(this.props.assets, this.props.agent) : {}
     return <div className='CurrencyInputs'>
-          <div className='CurrencyInputs_switch'>
-            <img src={SwapIcon} alt="switch icon for swapping" onClick={e => this.props.onIconClick(e)} />
-          </div>
+      <div className='CurrencyInputs_switch'>
+        <img src={SwapIcon} alt='switch icon for swapping' onClick={e => this.props.onIconClick(e)} />
+      </div>
       <div className='row justify-content-between no-gutters'>
         <div className='col CurrencyInputs_left'>
           { this.props.showInputs && <CurrencyInput
@@ -60,9 +59,9 @@ class CurrencyInputs extends Component {
         </div>
         <div className='col CurrencyInputs_right'>
           { this.props.showInputs && <CurrencyInput
-          {...{isReceive: true}}
+            {...{isReceive: true}}
             currency={assetB.currency}
-            onSelectAsset={asset => this.handleSelectAssetB(asset)} 
+            onSelectAsset={asset => this.handleSelectAssetB(asset)}
             value={assetB.value}
             {...(this.props.showRightFiatValue ? {fiatRate: this.props.fiatRates[assetB.currency]} : {})}
             disabled={this.props.rightInputDisabled}
@@ -121,7 +120,7 @@ CurrencyInputs.propTypes = {
   icon: PropTypes.any,
   iconDisabled: PropTypes.bool,
   onIconClick: PropTypes.func,
-  showCurrencyLabels: PropTypes.bool,
+  showCurrencyLabels: PropTypes.bool
 }
 
 export default CurrencyInputs

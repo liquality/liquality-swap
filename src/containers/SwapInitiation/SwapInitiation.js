@@ -4,7 +4,6 @@ import _ from 'lodash'
 import Button from '../../components/Button/Button'
 import TransactionDetails from '../../components/TransactionDetails'
 import HandshakeIcon from '../../icons/handshake.png'
-import SwapIcon from '../../icons/switch.svg'
 import CounterPartyWallets from '../CounterPartyWallets'
 import CurrencyInputs from '../CurrencyInputs'
 import InitiatorExpirationInfo from '../InitiatorExpirationInfo'
@@ -23,7 +22,7 @@ class SwapInitiation extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      remaining: QUOTE_REFRESH_INTERVAL,
+      remaining: QUOTE_REFRESH_INTERVAL
     }
     this.updateQuoteTimer = _.debounce(this.updateQuoteTimer.bind(this), 800)
   }
@@ -147,67 +146,64 @@ class SwapInitiation extends Component {
     const termsImmutable = !!(this.props.isPartyB || this.props.transactions.a.initiation.hash)
     const counterPartyLocked = !!(this.props.agent.markets.length || termsImmutable)
     const limits = calculateLimits(this.props.agent.markets, assetA.currency, assetB.currency)
-    const selectorAssets = this.getSelectorAssets()
-    const switchSidesAvailable = !config.agents ||
-      this.props.agent.markets.find(market => market.from === assetB.currency && market.to === assetA.currency)
+    this.props.agent.markets.find(market => market.from === assetB.currency && market.to === assetA.currency)
     const showCountdown = this.state.interval
     const isRate = this.state.rating
     let circle
 
-    if(!isRate) {
+    if (!isRate) {
       circle = <div className='SwapInitiation_liqualityCircle'>
-      <h3>Trade With</h3>
-      <div className="SwapInitiation_logo">
-        <img src={Logo} alt="liquality-logo" />
+        <h3>Trade With</h3>
+        <div className='SwapInitiation_logo'>
+          <img src={Logo} alt='liquality-logo' />
+        </div>
       </div>
-    </div>
     } else {
       circle = null
     }
 
     return <div className='SwapInitiation'>
-      <BrandCard className="SwapInitiation_card" title="liquality CROSSCHAIN SWAP">
-            {circle}
-            <div className='SwapInitiation_top'>
-              <CurrencyInputs
-                showInputs
-                onIconClick={() => this.props.switchSides()}
-                leftInputDisabled={termsImmutable}
-                rightInputDisabled={counterPartyLocked}
-                rateDisabled={counterPartyLocked}
-                rateTimer={showCountdown && {
-                  duration: QUOTE_REFRESH_INTERVAL,
-                  current: this.state.remaining
-                }}
-                showRate={showRate}
-                showLeftFiatValue
-                showRightFiatValue={false}
-                rateTitle=''
-                rateStrong
-                leftInputLimits={limits && {
-                  min: limits.min,
-                  max: limits.max
-                }}
-              />
-            </div>
-      <WalletPanel />
-            <div className='SwapInitiation_bottom'>
-              { this.props.isPartyB
-                ? <span className='SwapInitiation_handshake'><img src={HandshakeIcon} alt='Agree' /></span>
-                : !counterPartyLocked && <h5 className='SwapInitiation_counterPartyLabel'>Counter party wallets</h5> }
-              { !counterPartyLocked && <CounterPartyWallets /> }
-              { this.props.isPartyB
-                ? <TransactionDetails />
-                : <InitiatorExpirationInfo /> }
-              {!errors.initiation && !this.props.isPartyB && <Button wide primary className="SwapInitiation_buttonBottom" loadingMessage={this.props.loadingMessage} onClick={this.props.createSwap}>{ this.props.agent.markets.length ? 'Accept Quote and Initiate Swap' : 'Initiate Swap' }</Button>}
-              {!errors.initiation && this.props.isPartyB && <Button wide primary loadingMessage={this.props.loadingMessage} onClick={this.props.confirmSwap}>Confirm Terms</Button>}
-              {errors.initiation && <Button primary disabled>{ errors.initiation }</Button>}<br />
-              {/* TODO: Do actual resetting of app state instead of refresh. */}
-              <Button wide link onClick={() => window.location.replace(APP_BASE_URL)}>{ this.props.isPartyB ? 'Abandon Swap' : 'Cancel' }</Button>
-            </div>
+      <BrandCard className='SwapInitiation_card' title='liquality CROSSCHAIN SWAP'>
+        {circle}
+        <div className='SwapInitiation_top'>
+          <CurrencyInputs
+            showInputs
+            onIconClick={() => this.props.switchSides()}
+            leftInputDisabled={termsImmutable}
+            rightInputDisabled={counterPartyLocked}
+            rateDisabled={counterPartyLocked}
+            rateTimer={showCountdown && {
+              duration: QUOTE_REFRESH_INTERVAL,
+              current: this.state.remaining
+            }}
+            showRate={showRate}
+            showLeftFiatValue
+            showRightFiatValue={false}
+            rateTitle=''
+            rateStrong
+            leftInputLimits={limits && {
+              min: limits.min,
+              max: limits.max
+            }}
+          />
+        </div>
+        <WalletPanel />
+        <div className='SwapInitiation_bottom'>
+          { this.props.isPartyB
+            ? <span className='SwapInitiation_handshake'><img src={HandshakeIcon} alt='Agree' /></span>
+            : !counterPartyLocked && <h5 className='SwapInitiation_counterPartyLabel'>Counter party wallets</h5> }
+          { !counterPartyLocked && <CounterPartyWallets /> }
+          { this.props.isPartyB
+            ? <TransactionDetails />
+            : <InitiatorExpirationInfo /> }
+          {!errors.initiation && !this.props.isPartyB && <Button wide primary className='SwapInitiation_buttonBottom' loadingMessage={this.props.loadingMessage} onClick={this.props.createSwap}>{ this.props.agent.markets.length ? 'Accept Quote and Initiate Swap' : 'Initiate Swap' }</Button>}
+          {!errors.initiation && this.props.isPartyB && <Button wide primary loadingMessage={this.props.loadingMessage} onClick={this.props.confirmSwap}>Confirm Terms</Button>}
+          {errors.initiation && <Button primary disabled>{ errors.initiation }</Button>}<br />
+          {/* TODO: Do actual resetting of app state instead of refresh. */}
+          <Button wide link onClick={() => window.location.replace(APP_BASE_URL)}>{ this.props.isPartyB ? 'Abandon Swap' : 'Cancel' }</Button>
+        </div>
       </BrandCard>
     </div>
-    
   }
 }
 

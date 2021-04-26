@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { Route, Redirect } from 'react-router-dom'
-import PropTypes from 'prop-types';
 
 import moment from 'moment'
 import cryptoassets from '@liquality/cryptoassets'
 import { getFundExpiration, getClaimExpiration } from '../../utils/expiration'
-import { shortenTransactionHash, getExplorerLink } from '../../utils/transactions'
+import { getExplorerLink } from '../../utils/transactions'
 import SwapInitiation from '../SwapInitiation'
 import CounterPartyLinkCard from '../../components/CounterPartyLinkCard/CounterPartyLinkCard'
 import BackupLinkCard from '../../components/BackupLinkCard/BackupLinkCard'
@@ -17,7 +16,7 @@ import SwapRedemption from '../SwapRedemption'
 import SwapCompleted from '../SwapCompleted'
 import SwapRefund from '../SwapRefund'
 import SwapRefunded from '../SwapRefunded'
-import TopDetails from "../../containers/TopDetails/index"
+import TopDetails from '../../containers/TopDetails/index'
 import SwapProgressStepper from '../../components/SwapProgressStepper/SwapProgressStepper'
 import { generateLink, APP_BASE_URL } from '../../utils/app-links'
 import config from '../../config'
@@ -110,23 +109,22 @@ class LiqualitySwap extends Component {
     />
   }
 
-  render () { 
+  render () {
     return <div className='LiqualitySwap'>
       <div className='LiqualitySwap_header'>
-        <div className="LiqualitySwap_topBarHeader">
-        <a href={APP_BASE_URL}><img className='LiqualitySwap_logo' src={LiqualityLogo} alt='Liquality Logo' /></a>
-          <h2 className="LiqualitySwap_howTo"onClick={() => window.open('https://liquality.io/atomic-swap-interface.html')}>How It Works</h2>
-          </div>
+        <div className='LiqualitySwap_topBarHeader'>
+          <a href={APP_BASE_URL}><img className='LiqualitySwap_logo' src={LiqualityLogo} alt='Liquality Logo' /></a>
+          <h2 className='LiqualitySwap_howTo'onClick={() => window.open('https://liquality.io/atomic-swap-interface.html')}>How It Works</h2>
+        </div>
         <SwapProgressStepper state={this.props.swap.step} />
       </div>
-      <div>
-      </div>
-      <div className='LiqualitySwap_main'> 
-      {this.props.expiration ? <div className="LiqualitySwap_topDetails"><TopDetails /></div> : null }
+      <div />
+      <div className='LiqualitySwap_main'>
+        {this.props.expiration ? <div className='LiqualitySwap_topDetails'><TopDetails /></div> : null }
         <div className='LiqualitySwap_wave' />
-        <div className="SwapRedemption_whiteBar">
-        <p>Swap {this.props.assets.a.value.toFixed()} {cryptoassets[this.props.assets.a.currency].code} for {this.props.assets.b.value.toFixed()} {cryptoassets[this.props.assets.b.currency].code}</p>
-      </div>
+        <div className='SwapRedemption_whiteBar'>
+          <p>Swap {this.props.assets.a.value.toFixed()} {cryptoassets[this.props.assets.a.currency].code} for {this.props.assets.b.value.toFixed()} {cryptoassets[this.props.assets.b.currency].code}</p>
+        </div>
         <div className='LiqualitySwap_wrapper'>
           { window.location.hash === '#otcswap' && <Redirect to='/assetSelection' /> }
           <Route exact path='/' render={this.getStartingScreen.bind(this)} />

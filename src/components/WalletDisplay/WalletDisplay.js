@@ -27,7 +27,7 @@ const WalletDisplay = (props) => {
         : <Button tabIndex={-1} small secondaryWallet className='WalletDisplay_addressButtons mb-2' onClick={e => props.onButtonClick(e)}>Connect wallet</Button>
       }
       { props.balance &&
-        <div className="WalletDisplay_type">
+        <div className='WalletDisplay_type'>
           <p>{props.spendable ? 'Spendable' : 'Balance'}</p>
           <p className={classNames('WalletDisplay_balance', {error: props.balanceError})}>{props.balance.toFixed(6)} {currency.code}</p>
         </div>

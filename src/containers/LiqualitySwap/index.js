@@ -14,7 +14,7 @@ const mapStateToProps = (state, ownProps) => ({
   assets: state.swap.assets,
   transactions: state.swap.transactions,
   step: state.swap.step,
-  ...ownProps,
+  ...ownProps
 })
 
 export default withRouter(connect(

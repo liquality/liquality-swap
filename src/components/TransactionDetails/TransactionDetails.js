@@ -1,4 +1,4 @@
- import React, { Component } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import cryptoassets from '@liquality/cryptoassets'
@@ -56,25 +56,25 @@ class TransactionDetails extends Component {
     return <div className='TransactionDetails'>
       <div className='TransactionDetails_center'>
         <div className='TransactionDetails_top'>
-        <div className='TransactionDetails_transactions'>
-          <div className='TransactionDetails_transaction'>
-            <span className='TransactionDetails_transaction_name'><strong>Your {cryptoassets[this.props.assets.a.currency].code} Transaction:</strong></span>
-            { this.state.transactions.a && <a className='TransactionDetails_transaction_link' href={this.state.transactions.a.explorerLink} target='_blank' rel='noopener noreferrer'>{shortenTransactionHash(this.state.transactions.a.hash)}</a> }
-            { this.state.transactions.a && <span className='TransactionDetails_transaction_confirmations'>{this.state.transactions.a.confirmations} Confirmations</span> }
-            { !this.state.transactions.a && <span className='TransactionDetails_transaction_missing'>&mdash;</span> }
+          <div className='TransactionDetails_transactions'>
+            <div className='TransactionDetails_transaction'>
+              <span className='TransactionDetails_transaction_name'><strong>Your {cryptoassets[this.props.assets.a.currency].code} Transaction:</strong></span>
+              { this.state.transactions.a && <a className='TransactionDetails_transaction_link' href={this.state.transactions.a.explorerLink} target='_blank' rel='noopener noreferrer'>{shortenTransactionHash(this.state.transactions.a.hash)}</a> }
+              { this.state.transactions.a && <span className='TransactionDetails_transaction_confirmations'>{this.state.transactions.a.confirmations} Confirmations</span> }
+              { !this.state.transactions.a && <span className='TransactionDetails_transaction_missing'>&mdash;</span> }
+            </div>
+            <div className='TransactionDetails_transaction_right'>
+              <span className='TransactionDetails_transaction_name'><strong>Partner's {cryptoassets[this.props.assets.b.currency].code} Transaction:</strong></span>
+              { this.state.transactions.b && <a className='TransactionDetails_transaction_link' href={this.state.transactions.b.explorerLink} target='_blank' rel='noopener noreferrer'>{shortenTransactionHash(this.state.transactions.b.hash)}</a> }
+              { this.state.transactions.b && <span className='TransactionDetails_transaction_confirmations'>{this.state.transactions.b.confirmations} Confirmations</span> }
+              { !this.state.transactions.b && <span className='TransactionDetails_transaction_missing'>&mdash;</span> }
+            </div>
           </div>
-          <div className='TransactionDetails_transaction_right'>
-            <span className='TransactionDetails_transaction_name'><strong>Partner's {cryptoassets[this.props.assets.b.currency].code} Transaction:</strong></span>
-            { this.state.transactions.b && <a className='TransactionDetails_transaction_link' href={this.state.transactions.b.explorerLink} target='_blank' rel='noopener noreferrer'>{shortenTransactionHash(this.state.transactions.b.hash)}</a> }
-            { this.state.transactions.b && <span className='TransactionDetails_transaction_confirmations'>{this.state.transactions.b.confirmations} Confirmations</span> }
-            { !this.state.transactions.b && <span className='TransactionDetails_transaction_missing'>&mdash;</span> }
-          </div>
+        </div>
+        <div className='TransactionDetails_link'>
+          <a href='javascript:void(0)' onClick={() => this.props.onCopyClick()}>Swap link<img src={CopyIcon} alt='Copy' /></a>
         </div>
       </div>
-      <div className='TransactionDetails_link'>
-            <a href='javascript:void(0)' onClick={() => this.props.onCopyClick()}>Swap link<img src={CopyIcon} alt='Copy' /></a>
-          </div>
-        </div>
     </div>
   }
 }

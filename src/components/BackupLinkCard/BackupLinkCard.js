@@ -14,8 +14,8 @@ class BackupLinkCard extends Component {
     this.handleClick = this.handleClick.bind(this)
   }
 
-  handleClick(e) {
-    e.preventDefault();
+  handleClick (e) {
+    e.preventDefault()
     this.props.onCopyClick()
     this.setState({
       copied: true
@@ -24,15 +24,15 @@ class BackupLinkCard extends Component {
       this.setState({
         copied: false
       })
-    }, 2000);
+    }, 2000)
   }
 
   render () {
     return <BrandCard className='BackupLinkCard' title='Copy Backup Link'>
-      <h3><img className="pt-2 mr-2" src={WarningIcon} alt='warning' />Save Swap Link!</h3>
+      <h3><img className='pt-2 mr-2' src={WarningIcon} alt='warning' />Save Swap Link!</h3>
       <p className='BackupLinkCard_description mb-5 mt-3 text-center'>If your browser closes you will need this link to claim your funds.<br />Save it where you can retrieve it should the browser close. Additionally, you can bookmark this page.</p>
       <p><Button wide secondary onClick={(e) => this.handleClick(e)} icon={this.state.copied ? CheckIcon : CopyIcon}>{this.state.copied === false ? 'Copy Link' : 'Copied!'}</Button></p>
-      <p><Button wide primary className="mb-3" onClick={this.props.onNextClick}>Continue</Button></p>
+      <p><Button wide primary className='mb-3' onClick={this.props.onNextClick}>Continue</Button></p>
     </BrandCard>
   }
 }

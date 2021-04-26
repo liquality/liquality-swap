@@ -68,7 +68,7 @@ function setLocation (swap, currentLocation, dispatch) {
   } else if (swap.step === steps.CLAIMING) {
     dispatch(replace('/redeem'))
   } else if (swap.step === steps.SETTLED) {
-     dispatch(replace('/completed'))
+    dispatch(replace('/completed'))
   }
 }
 
