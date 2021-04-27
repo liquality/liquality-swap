@@ -183,19 +183,18 @@ async function initiateSwap (dispatch, getState) {
 
   const blockNumber = await client.chain.getBlockHeight()
   const fees = await client.chain.getFees()
-  const valueInUnit = cryptoassets[assets.a.currency].currencyToUnit(assets.a.value).toNumber() // TODO: This should be passed as BigNumber
-  const initiateSwapParams = [
-    valueInUnit,
-    canonicalCounterParty.a.address,
-    canonicalWallets.a.addresses[0],
-    secretParams.secretHash,
-    swapExpiration.unix(),
-    fees[config.defaultFee].fee
-  ]
-  if (config.debug) { // TODO: enable debugging universally on all CAL functions (chainClient.js)
-    console.log('Initiating Swap', initiateSwapParams)
+  const valueInUnit = cryptoassets[assets.a.currency].currencyToUnit(assets.a.value)
+  const swapParams = {
+    value: valueInUnit,
+    recipientAddress: canonicalCounterParty.a.address,
+    refundAddress: canonicalWallets.a.addresses[0],
+    secretHash: secretParams.secretHash,
+    expiration: swapExpiration.unix()
   }
-  const initiationTx = await client.swap.initiateSwap(...initiateSwapParams)
+  if (config.debug) { // TODO: enable debugging universally on all CAL functions (chainClient.js)
+    console.log('Initiating Swap', swapParams)
+  }
+  const initiationTx = await client.swap.initiateSwap(swapParams, fees[config.defaultFee].fee)
   if (wallets.a.type === 'metamask') { // TODO: fix properly
     alert('Please do not use the "Speed up" function to bump the priority of the transaction as this is not yet supported.')
   }
@@ -224,7 +223,7 @@ async function fundSwap (dispatch, getState) {
     initiationTransactionReceipt = await client.getMethod('getTransactionReceipt')(transactions.a.initiation.hash)
     await sleep(5000)
   }
-  const initiationSuccessful = initiationTransactionReceipt.contractAddress && initiationTransactionReceipt.status === '1'
+  const initiationSuccessful = initiationTransactionReceipt.contractAddress && initiationTransactionReceipt.status === '0x1'
 
   if (!initiationSuccessful) {
     throw new Error(`ERC20 Swap Initiation Transaction Failed: ${initiationTransactionReceipt.transactionHash}`)
@@ -233,14 +232,17 @@ async function fundSwap (dispatch, getState) {
   const swapExpiration = getFundExpiration(expiration, isPartyB ? 'b' : 'a').time
 
   const fees = await client.chain.getFees()
-  const valueInUnit = cryptoassets[assets.a.currency].currencyToUnit(assets.a.value).toNumber() // TODO: This should be passed as BigNumber
+  const valueInUnit = cryptoassets[assets.a.currency].currencyToUnit(assets.a.value)
+  const swapParams = {
+    value: valueInUnit,
+    recipientAddress: canonicalCounterParty.a.address,
+    refundAddress: canonicalWallets.a.addresses[0],
+    secretHash: secretParams.secretHash,
+    expiration: swapExpiration.unix()
+  }
   const fundSwapParams = [
+    swapParams,
     transactions.a.initiation.hash,
-    valueInUnit,
-    canonicalCounterParty.a.address,
-    canonicalWallets.a.addresses[0],
-    secretParams.secretHash,
-    swapExpiration.unix(),
     fees[config.defaultFee].fee
   ]
   if (config.debug) { // TODO: enable debugging universally on all CAL functions (chainClient.js)
@@ -389,14 +391,17 @@ async function claimSwap (dispatch, getState) {
   const fees = await client.chain.getFees()
   const blockNumber = await client.chain.getBlockHeight()
   const swapExpiration = getClaimExpiration(expiration, isPartyB ? 'b' : 'a').time
-  const valueInUnit = cryptoassets[assets.b.currency].currencyToUnit(assets.b.value).toNumber() // TODO: This should be passed as BigNumber
+  const valueInUnit = cryptoassets[assets.b.currency].currencyToUnit(assets.b.value)
+  const swapParams = {
+    value: valueInUnit,
+    recipientAddress: canonicalWallets.b.addresses[0],
+    refundAddress: canonicalCounterParty.b.address,
+    secretHash: secretParams.secretHash,
+    expiration: swapExpiration.unix()
+  }
   const claimSwapParams = [
+    swapParams,
     transactions.b.initiation.hash,
-    valueInUnit,
-    canonicalWallets.b.addresses[0],
-    canonicalCounterParty.b.address,
-    secretParams.secretHash,
-    swapExpiration.unix(),
     secretParams.secret,
     fees[config.defaultFee].fee
   ]
@@ -444,16 +449,19 @@ function refundSwap () {
 
     const client = getClient(assets.a.currency, wallets.a.type)
     const swapExpiration = getFundExpiration(expiration, isPartyB ? 'b' : 'a').time
-    const valueInUnit = cryptoassets[assets.a.currency].currencyToUnit(assets.a.value).toNumber() // TODO: This should be passed as BigNumber
+    const valueInUnit = cryptoassets[assets.a.currency].currencyToUnit(assets.a.value)
     const fees = await client.chain.getFees()
     const blockNumber = await client.chain.getBlockHeight()
+    const swapParams = {
+      value: valueInUnit,
+      recipientAddress: canonicalCounterParty.a.address,
+      refundAddress: canonicalWallets.a.addresses[0],
+      secretHash: secretParams.secretHash,
+      expiration: swapExpiration.unix()
+    }
     const refundSwapParams = [
+      swapParams,
       transactions.a.initiation.hash,
-      valueInUnit,
-      canonicalCounterParty.a.address,
-      canonicalWallets.a.addresses[0],
-      secretParams.secretHash,
-      swapExpiration.unix(),
       fees[config.defaultFee].fee
     ]
     console.log('Refunding Swap', refundSwapParams)

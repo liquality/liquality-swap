@@ -12,12 +12,15 @@ export default {
         type: 'scraper',
         url: 'https://liquality.io/eth-mainnet-api'
       },
-      network: 'mainnet',
+      network: 'ethereum_mainnet',
       explorerPath: 'https://etherscan.io/tx/0x'
     },
     BTC: {
       api: {
         url: 'https://liquality.io/electrs'
+      },
+      batchApi: {
+        url: 'https://liquality.io/electrs-batch'
       },
       feeNumberOfBlocks: 2,
       network: 'bitcoin',
@@ -44,7 +47,7 @@ export default {
         url: 'https://liquality.io/eth-mainnet-api'
       },
       contractAddress: '0x6b175474e89094c44da98b954eedeac495271d0f',
-      network: 'mainnet',
+      network: 'ethereum_mainnet',
       explorerPath: 'https://etherscan.io/tx/0x'
     },
     USDC: {
@@ -57,7 +60,7 @@ export default {
         url: 'https://liquality.io/eth-mainnet-api'
       },
       contractAddress: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-      network: 'mainnet',
+      network: 'ethereum_mainnet',
       explorerPath: 'https://etherscan.io/tx/0x'
     },
     USDT: {
@@ -70,7 +73,7 @@ export default {
         url: 'https://liquality.io/eth-mainnet-api'
       },
       contractAddress: '0xdac17f958d2ee523a2206206994597c13d831ec7',
-      network: 'mainnet',
+      network: 'ethereum_mainnet',
       explorerPath: 'https://etherscan.io/tx/0x'
     },
     WBTC: {
@@ -83,7 +86,7 @@ export default {
         url: 'https://liquality.io/eth-mainnet-api'
       },
       contractAddress: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
-      network: 'mainnet',
+      network: 'ethereum_mainnet',
       explorerPath: 'https://etherscan.io/tx/0x'
     },
     UNI: {
@@ -96,7 +99,7 @@ export default {
         url: 'https://liquality.io/eth-mainnet-api'
       },
       contractAddress: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
-      network: 'mainnet',
+      network: 'ethereum_mainnet',
       explorerPath: 'https://etherscan.io/tx/0x'
     }
   },

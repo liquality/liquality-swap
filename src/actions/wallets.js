@@ -31,6 +31,8 @@ async function connectToWallet (party, wallet, dispatch, getState) {
   const addressesPerCall = 100
   const unusedAddress = await client.wallet.getUnusedAddress()
   let allAddresses = await client.wallet.getUsedAddresses(addressesPerCall)
+
+  console.log(unusedAddress, allAddresses)
   allAddresses = [ ...new Set([ unusedAddress, ...allAddresses ].map(a => a.address)) ]
   allAddresses = allAddresses.map(currency.formatAddress)
   if (wallets[party].addresses[0] !== null) { // Preserve the preset address for party B
@@ -56,6 +58,7 @@ function waitForWalletInitialization (party, currency, wallet) {
     try {
       await connectToWallet(party, wallet, dispatch, getState)
     } catch (e) {
+      console.log(e)
       walletConnectionError = e
     }
 

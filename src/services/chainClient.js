@@ -1,7 +1,7 @@
 /* global localStorage */
 
 import Client from '@liquality/client'
-import BitcoinEsploraApiProvider from '@liquality/bitcoin-esplora-api-provider'
+import BitcoinEsploraBatchApiProvider from '@liquality/bitcoin-esplora-batch-api-provider'
 import BitcoinEsploraSwapFindProvider from '@liquality/bitcoin-esplora-swap-find-provider'
 import BitcoinRpcProvider from '@liquality/bitcoin-rpc-provider'
 import BitcoinLedgerProvider from '@liquality/bitcoin-ledger-provider'
@@ -22,15 +22,17 @@ import EthereumErc20SwapProvider from '@liquality/ethereum-erc20-swap-provider'
 import EthereumErc20ScraperSwapFindProvider from '@liquality/ethereum-erc20-scraper-swap-find-provider'
 import EthereumWalletApiProvider from '@liquality/ethereum-wallet-api-provider'
 import EthereumRpcFeeProvider from '@liquality/ethereum-rpc-fee-provider'
-import EthereumGasStationFeeProvider from '@liquality/ethereum-gas-station-fee-provider'
+import EthereumGasNowFeeProvider from '@liquality/ethereum-gas-now-fee-provider'
+
+import LedgerTransportWebUSB from '@ledgerhq/hw-transport-webusb'
 
 import config from '../config'
 
 function getBitcoinDataProvider (btcConfig) {
   if (btcConfig.api) {
-    return new BitcoinEsploraApiProvider(btcConfig.api.url, BitcoinNetworks[btcConfig.network], btcConfig.feeNumberOfBlocks)
+    return new BitcoinEsploraBatchApiProvider({ url: btcConfig.api.url, batchUrl: btcConfig.batchApi.url, network: BitcoinNetworks[btcConfig.network], numberOfBlockConfirmation: btcConfig.feeNumberOfBlocks })
   } else if (btcConfig.rpc) {
-    return new BitcoinRpcProvider(btcConfig.rpc.url, btcConfig.rpc.username, btcConfig.rpc.password, btcConfig.feeNumberOfBlocks)
+    return new BitcoinRpcProvider({ uri: btcConfig.rpc.url, username: btcConfig.rpc.username, password: btcConfig.rpc.password, feeBlockConfirmations: btcConfig.feeNumberOfBlocks })
   }
 }
 
@@ -45,28 +47,24 @@ function createBtcClient (asset, wallet) {
     } else if (wallet === 'bitcoin_ledger_nagive_segwit') {
       addressType = 'bech32'
     }
-    const ledger = new BitcoinLedgerProvider(BitcoinNetworks[btcConfig.network], addressType)
-
-    if (window.useWebBle || localStorage.useWebBle) {
-      ledger.useWebBle()
-    }
+    const ledger = new BitcoinLedgerProvider({ Transport: LedgerTransportWebUSB, network: BitcoinNetworks[btcConfig.network], addressType })
     btcClient.addProvider(getBitcoinDataProvider(btcConfig))
     btcClient.addProvider(ledger)
   } else if (wallet === 'bitcoin_node') {
     if (btcConfig.rpc.addressType === 'p2sh-segwit') {
       throw new Error('Wrapped segwit addresses (p2sh-segwit) are currently unsupported.')
     }
-    if (btcConfig.api) btcClient.addProvider(new BitcoinEsploraApiProvider(btcConfig.api.url, BitcoinNetworks[btcConfig.network], btcConfig.feeNumberOfBlocks))
-    btcClient.addProvider(new BitcoinRpcProvider(btcConfig.rpc.url, btcConfig.rpc.username, btcConfig.rpc.password, btcConfig.feeNumberOfBlocks))
-    btcClient.addProvider(new BitcoinNodeWalletProvider(BitcoinNetworks[btcConfig.network], btcConfig.rpc.url, btcConfig.rpc.username, btcConfig.rpc.password, btcConfig.rpc.addressType))
+    if (btcConfig.api) btcClient.addProvider(new BitcoinEsploraBatchApiProvider({ url: btcConfig.api.url, network: BitcoinNetworks[btcConfig.network], numberOfBlockConfirmation: btcConfig.feeNumberOfBlocks }))
+    btcClient.addProvider(new BitcoinRpcProvider({ uri: btcConfig.rpc.url, username: btcConfig.rpc.username, password: btcConfig.rpc.password, feeBlockConfirmations: btcConfig.feeNumberOfBlocks }))
+    btcClient.addProvider(new BitcoinNodeWalletProvider({ network: BitcoinNetworks[btcConfig.network], uri: btcConfig.rpc.url, username: btcConfig.rpc.username, password: btcConfig.rpc.password, addressType: btcConfig.rpc.addressType }))
   } else if (wallet === 'liquality') {
     btcClient.addProvider(getBitcoinDataProvider(btcConfig))
-    btcClient.addProvider(new BitcoinWalletApiProvider(BitcoinNetworks[btcConfig.network], 'bech32'))
+    btcClient.addProvider(new BitcoinWalletApiProvider({ network: BitcoinNetworks[btcConfig.network], addressType: 'bech32' }))
   } else {
     // Verify functions required when wallet not connected
     btcClient.addProvider(getBitcoinDataProvider(btcConfig))
   }
-  btcClient.addProvider(new BitcoinSwapProvider(BitcoinNetworks[btcConfig.network], btcConfig.swapMode))
+  btcClient.addProvider(new BitcoinSwapProvider({ network: BitcoinNetworks[btcConfig.network], mode: btcConfig.swapMode }))
   if (btcConfig.api) btcClient.addProvider(new BitcoinEsploraSwapFindProvider(btcConfig.api.url))
 
   if (BitcoinNetworks[btcConfig.network].isTestnet) btcClient.addProvider(new BitcoinRpcFeeProvider())
@@ -79,13 +77,11 @@ function createEthClient (asset, wallet) {
   const assetConfig = config.assets[asset]
   const isERC20 = assetConfig.type === 'erc20'
   const ethClient = new Client()
-  ethClient.addProvider(new EthereumRpcProvider(
-    assetConfig.rpc.url
-  ))
+  ethClient.addProvider(new EthereumRpcProvider({ uri: assetConfig.rpc.url }))
   if (wallet === 'metamask') {
     ethClient.addProvider(new EthereumWalletApiProvider(window.ethereum, EthereumNetworks[assetConfig.network]))
   } else if (wallet === 'ethereum_ledger') {
-    const ledger = new EthereumLedgerProvider(EthereumNetworks[assetConfig.network])
+    const ledger = new EthereumLedgerProvider({ network: EthereumNetworks[assetConfig.network], Transport: LedgerTransportWebUSB })
 
     if (window.useWebBle || localStorage.useWebBle) {
       ledger.useWebBle()
@@ -107,7 +103,7 @@ function createEthClient (asset, wallet) {
 
   const FeeProvider = EthereumNetworks[assetConfig.network].isTestnet || asset === 'RBTC'
     ? EthereumRpcFeeProvider
-    : EthereumGasStationFeeProvider
+    : EthereumGasNowFeeProvider
 
   ethClient.addProvider(new FeeProvider())
 
