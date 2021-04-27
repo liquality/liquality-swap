@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
-import SwapCompleted from './SwapCompleted'
+import TopDetails from './TopDetails'
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   return {
     expiration: state.swap.expiration,
     isPartyB: state.swap.isPartyB,
@@ -9,10 +9,13 @@ const mapStateToProps = state => {
     transactions: state.swap.transactions,
     link: state.swap.link,
     step: state.swap.step,
-    fiatRates: state.fiat.rates
+    quote: state.swap.agent.quote,
+    ...ownProps
   }
 }
 
 export default connect(
-  mapStateToProps
-)(SwapCompleted)
+  mapStateToProps,
+  {
+  }
+)(TopDetails)

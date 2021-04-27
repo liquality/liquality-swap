@@ -16,8 +16,10 @@ const mapStateToProps = (state, ownProps) => {
 export default connect(
   mapStateToProps,
   {
+    switchSides: swapActions.switchSides,
     onSwitchSides: swapActions.switchSides,
     onAmountChange: assetActions.changeAmount,
-    onRateChange: assetActions.changeRate
+    onRateChange: assetActions.changeRate,
+    setAsset: assetActions.setAsset
   }
 )(CurrencyInputs)

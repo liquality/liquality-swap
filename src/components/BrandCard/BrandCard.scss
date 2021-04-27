@@ -1,10 +1,30 @@
 @import '../../scss/variables.scss';
 
 .BrandCard {
-  padding: 7px 7px 20px 7px;
+  padding: 7px 0 0 0;
   background: $color-bg-primary;
   box-shadow: 0px -2px 14px $color-shadow;
   border-radius: $swap-panel-radius;
+  margin-bottom: 20px;
+
+  &_whiteBar {
+    position: absolute;
+    width: 250px;
+    height: 17px;
+    top: 0%;
+    left: 500px;
+    border-radius: 25px;
+    background: $color-bg-primary;
+    p {
+      font-size: 11px;
+      text-align: center;
+    }
+  }
+
+  &_top {
+    padding: 0 7px 0 7px;
+    z-index: $layer-top;
+  }
 
   &_title {
     display: block;
@@ -13,7 +33,7 @@
     line-height: 2.5em;
     text-transform: uppercase;
     text-align: center;
-    color: #ffffff;
+    color: $color-bg-primary;
     background: $primary;
   }
 }

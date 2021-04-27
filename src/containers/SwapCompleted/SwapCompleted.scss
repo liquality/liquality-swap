@@ -1,81 +1,150 @@
 @import '../../scss/variables.scss';
 
 .SwapCompleted {
-  position: relative;
-  top: -10px;
-  $panel-spacing: 80px;
-
-  .SwapPairPanel {
-    z-index: $layer-top;
-  }
-
+  font-family: $font-family-base;
   &_top {
-    position: absolute;
     width: 100%;
-    top: $panel-spacing;
-    padding: $panel-spacing 0 28px 0;
-    box-shadow: 0px 2px 14px $color-shadow;
-    border-radius: 0 0 $swap-panel-radius $swap-panel-radius;
-    background: $color-bg-primary;
-    z-index: $layer-middle;
-  }
-
-  &_handshake {
-    width: 70px;
-    height: 70px;
-    display: inline-block;
-    position: absolute;
-    background: $color-bg-primary;
-    bottom: -35px;
-    right: -35px;
-    left: -35px;
-    border-radius: 50%;
-    margin: auto;
-    z-index: $layer-middle;
-
-    img {
-      width: 38px;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      margin: auto;
+    h4 {
+      text-align: center;
+      color: #3D4767;
+      font-weight: 700;
+      font-size: $h5-font-size;
+    }
+    h1 {
+      text-align: center;
+      font-size: 36px;
+      color: $color-text-1;
+    }
+    h5 {
+      color: $color-text-2;
+      text-align: center;
     }
   }
 
-  &_label {
-    width: 100%;
-    position: absolute;
-    top: $panel-spacing;
-    text-align: center;
-    color: $primary;
+  &_transactionTitle {
+    font-weight: bold;
+    color: $color-text-1;
   }
 
-  &_subLabel {
-    width: 100%;
-    position: absolute;
-    top: $panel-spacing + 35px;
-    text-align:center;
-    color: $primary;
+  &_link {
+    &:hover {
+      cursor: pointer;
+    }
+    padding-left: 40px;
     z-index: $layer-top;
   }
 
-  &_bottom {
-    position: relative;
+  &_receivedAmount {
+    font-size: $h1-font-size;
+    font-weight: 300;
+  }
+
+  &_sentAmount {
+    font-size: 28px;
     text-align: center;
-    margin-top: 100px;
-    padding: 80px 30px 40px 30px;
-    background: $color-bg-secondary;
-    box-shadow: 0px -2px 14px $color-shadow;
-    border-radius: 0 0 $swap-panel-radius $swap-panel-radius;
+    font-weight: 300;
+  }
+
+  &_rateAmount {
+    font-weight: 600;
+    font-size: 24px;
+    text-align: center;
+  }
+
+  &_confs {
+    color: $color-text-2;
+    padding-left: 5px;
+  }
+
+  &_confText {
+    font-size: $h6-font-size;
+    padding-left: 2px;
+  }
+
+  &_bottom {
+    z-index: $layer-top;
+    display: flex;
+    flex-flow: row-reverse nowrap;
+    justify-content: space-between;
+    h4 {
+      font-size: $h5-font-size;
+    }
+  }
+
+  &_bottomButton {
+      display: flex;
+      justify-content: center;
+  }
+
+  &_shareSection {
+    h3 {
+      font-size: 14px;
+      font-weight: bold;
+    }
+    img {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+  }
+
+  &_right {
+    padding-right: 10px;
+    width: 100%;
+  }
+
+  &_left{ 
+    padding-left: 30px;
+    width: 100%;
+  }
+
+  &_transactionHash {
+    color: $color-primary-1;
+    width: 100%;
+    padding-left: 4px;
+  }
+
+  &_shareLeft {
+    display: flex;
+    flex-flow: row nowrap;
+  }
+  &_shareRight {
+    display: flex;
+    flex-flow: row nowrap;
+  }
+
+  &_confetti-wrapper {
+    height: 500px;
+    position: absolute;
+    width: 100%;
     z-index: $layer-bottom;
   }
-}
 
-.twitter-share-button {
-  display: block;
-  margin-top: 30px;
-  margin-left: auto;
-  margin-right: auto;
+  [class|="confetti"] {
+    position: absolute;
+  }
+  $colors: (#9D4DFA, #1CE5C3, #F12274);
+  @for $i from 0 through 150 {
+    $w: random(8);
+    $l: random(95);
+    .confetti-#{$i} {
+      width: #{$w}px;
+      height: #{$w*0.4}px;
+      background-color: nth($colors, random(3));
+      top: 690px;
+      left: unquote($l+"%");
+      opacity: random() + 0.3;
+      transform: rotate(#{random()*360}deg);
+      animation: drop-#{$i} unquote(4+random()+"s") unquote(random()+"s") infinite;
+    }
+    @keyframes drop-#{$i} {
+      0% {
+        top: 80px;
+        left: unquote($l+random(5)+"%");
+      }
+    }
+  }
 }

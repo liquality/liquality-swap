@@ -1,14 +1,15 @@
-@import '../../scss/variables.scss';
+ @import '../../scss/variables.scss';
 
-.ExpirationDetails {
+.TransactionDetails {
   text-align: left;
   display: flex;
   padding: 14px 30px;
-  height: 90px;
+  padding-bottom: 0;
+  height: 100px;
   margin: 0 auto;
-  background: $color-bg-primary;
-  box-shadow: 0px 2px 14px $color-shadow;
-  border-radius: $swap-panel-radius;
+  background: #F1F4F7;
+  border-bottom-left-radius: 22px;
+  border-bottom-right-radius: 22px;
 
   &_passed, &_left {
     display: flex;
@@ -34,9 +35,15 @@
     flex-direction: column;
   }
 
-  &_top,&_bottom {
+  &_top {
     display: flex;
     justify-content: space-between;
+  }
+  
+  &_bottom {
+    display: flex;
+    justify-content: space-between;
+    background: #F1F4F7;
   }
 
   &_terms {
@@ -50,12 +57,14 @@
 
   &_link {
     cursor: pointer;
+    padding-top: 10px;
     img {
       margin-left: 10px;
     }
   }
 
   &_transactions {
+    width: 100%;
     font-size: 11px;
   }
 
@@ -88,14 +97,34 @@
     }
   }
 
-  &_progress {
-    background: #D8E2F0;
-    height: 3px;
-    margin: 10px 0;
+  &_transaction_right {
+    display: flex;
+    justify-content: flex-end;
 
-    &_fill {
-      background: $color-primary-2;
-      height: 3px;
+    &:nth-child(2) {
+      text-align: right;
+    }
+
+    float: right;
+    width: 50%;
+
+    &_name {
+      padding-left: 25%;
+    }
+
+    &_link {
+      padding-right: 10px;
+    }
+
+    &_confirmations {
+      color: $color-text-2;
+    }
+
+    &_missing {
+      display: inline-block;
+      width: 160px;
+      color: $color-primary-1;
+      text-align: left;
     }
   }
 }

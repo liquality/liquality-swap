@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import Waiting from './Waiting'
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     step: state.swap.step,
     quote: state.swap.agent.quote,

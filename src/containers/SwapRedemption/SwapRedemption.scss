@@ -3,10 +3,23 @@
 
 .SwapRedemption {
   text-align: center;
+  &_bigWrap {
+    display: flex;
+    flex-direction: column;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
 
   &_terms {
     font-size: $h3-font-size;
     margin: 50px 0 60px 0;
+  }
+
+  &_buttonWrap {
+    margin-top: 350px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 
   &_info {
@@ -17,9 +30,5 @@
 
   &_errorMessage {
     @include error-message;
-  }
-
-  .ExpirationDetails {
-    margin-bottom: 30px;
   }
 }

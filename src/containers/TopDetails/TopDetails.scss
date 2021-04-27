@@ -1,0 +1,24 @@
+@import '../../scss/variables.scss';
+
+.TopDetails {
+    z-index: $layer-top !important;
+    width: 100%;
+    padding: 0 !important;
+    margin: 0;
+
+    &_timeLeft {
+      text-align: center;
+      padding-top: 32.5px;
+      color: white;
+    }
+
+    &_progress {
+        background: #D8E2F0;
+        height: 25px;
+    
+        &_fill {
+          background: $color-primary-2;
+          height: 25px;
+        }
+    }
+}

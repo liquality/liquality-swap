@@ -2,14 +2,48 @@
 @import '../../scss/mixins.scss';
 
 .SwapInitiation {
-  &_assets {
-    position: relative;
-    z-index: $layer-popup;
+
+  &_topBar {
+    display: inline-block;
+    width: 100%;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    height: 200px;
+    background: white;
+    border: 2px solid black;
+    font-family: $font-family-base;
+  }
+
+  &_logo {
+    display: flex;
+    justify-content: center;
+  }
+
+  &_buttonBottom {
+    border-radius: 50px;
+  }
+
+  &_liqualityCircle {
+    position: absolute;
+    top: 192.5px;
+    left: 375px;
+    z-index: $layer-top;
+    display: block;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 2px;
+    border-radius: 50%;
+    padding: 30px 10px;
+    background: $color-bg-primary;
+    border: 1px solid #D9DFE5;
+    h3 {
+      font-size: 12px;
+      text-align: center;
+      margin-top: 3px;
+    }
   }
 
   &_assetSelector {
-    position: absolute;
-    top: 100%;
     padding-top: 20px;
     box-shadow: 0px 2px 14px $color-shadow;
     border-radius: 0 0 $swap-panel-radius $swap-panel-radius;
@@ -19,12 +53,9 @@
   }
   
   &_top {
-    position: relative;
     width: 100%;
-    padding-bottom: 28px;
-    box-shadow: 0px 2px 14px $color-shadow;
+    padding-bottom: 75px;
     border-radius: 0 0 $swap-panel-radius $swap-panel-radius;
-    background: $color-bg-primary;
     z-index: $layer-top;
   }
 
@@ -35,11 +66,9 @@
   &_bottom {
     position: relative;
     text-align: center;
-    top: -50px;
+    bottom: 50px;
     padding: 1px 30px 20px;
     background: $color-bg-primary;
-    box-shadow: 0px -2px 14px $color-shadow;
-    border-radius: $swap-panel-radius;
     z-index: $layer-top;
   }
 
@@ -82,7 +111,7 @@
     @include error-message;
   }
 
-  .ExpirationDetails {
+  .TransactionDetails {
     margin-bottom: 30px;
   }
 

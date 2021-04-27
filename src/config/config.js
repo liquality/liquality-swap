@@ -1,7 +1,7 @@
 export default {
   hostName: 'Liquality',
   hostIcon: 'https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png',
-  agents: ['https://liquality.io/swap-testnet-dev/agent'],
+  agents: ['https://liquality.io/swap-testnet/agent'],
   assets: {
     ETH: {
       rpc: {

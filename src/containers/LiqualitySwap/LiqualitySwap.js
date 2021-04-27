@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import { Route, Redirect } from 'react-router-dom'
 
+import moment from 'moment'
+import cryptoassets from '@liquality/cryptoassets'
+import { getFundExpiration, getClaimExpiration } from '../../utils/expiration'
+import { getExplorerLink } from '../../utils/transactions'
 import SwapInitiation from '../SwapInitiation'
 import CounterPartyLinkCard from '../../components/CounterPartyLinkCard/CounterPartyLinkCard'
 import BackupLinkCard from '../../components/BackupLinkCard/BackupLinkCard'
@@ -12,6 +16,7 @@ import SwapRedemption from '../SwapRedemption'
 import SwapCompleted from '../SwapCompleted'
 import SwapRefund from '../SwapRefund'
 import SwapRefunded from '../SwapRefunded'
+import TopDetails from '../../containers/TopDetails/index'
 import SwapProgressStepper from '../../components/SwapProgressStepper/SwapProgressStepper'
 import { generateLink, APP_BASE_URL } from '../../utils/app-links'
 import config from '../../config'
@@ -27,6 +32,7 @@ class LiqualitySwap extends Component {
     this.getCounterPartyLinkCard = this.getCounterPartyLinkCard.bind(this)
     this.getBackupLinkCard = this.getBackupLinkCard.bind(this)
     this.getConnectWallet = this.getConnectWallet.bind(this)
+    this.state = this.getExpirationState()
   }
 
   getStartingScreen () {
@@ -42,6 +48,32 @@ class LiqualitySwap extends Component {
   getCounterPartyLinkCard () {
     const link = generateLink(this.props.swap, true)
     return <CounterPartyLinkCard link={link} onNextClick={() => { this.props.history.replace('/waiting') }} />
+  }
+
+  getInitiationTransaction (party) {
+    const tx = this.props.transactions[party].initiation
+    if (!tx.hash) return null
+
+    const asset = this.props.assets[party].currency
+    const explorerLink = tx && getExplorerLink(tx, asset)
+    tx.explorerLink = explorerLink
+    return tx
+  }
+
+  getExpirationState () {
+    const party = this.props.isPartyB ? 'b' : 'a'
+    const expiration = this.props.isClaim ? getClaimExpiration(this.props.expiration, party) : getFundExpiration(this.props.expiration, party)
+
+    return {
+      start: expiration.start,
+      duration: expiration.duration,
+      expiration: expiration.time,
+      now: moment(),
+      transactions: {
+        a: this.getInitiationTransaction('a'),
+        b: this.getInitiationTransaction('b')
+      }
+    }
   }
 
   getConnectWallet (currentWallet) {
@@ -79,14 +111,20 @@ class LiqualitySwap extends Component {
 
   render () {
     return <div className='LiqualitySwap'>
-      { this.props.swap.assetSelector.open && <div className='LiqualitySwap_blur' /> }
-      <div className='LiqualitySwap_bar' />
       <div className='LiqualitySwap_header'>
-        <a href={APP_BASE_URL}><img className='LiqualitySwap_logo' src={LiqualityLogo} alt='Liquality Logo' /></a>
-        { this.props.swap.step && <SwapProgressStepper state={this.props.swap.step} /> }
+        <div className='LiqualitySwap_topBarHeader'>
+          <a href={APP_BASE_URL}><img className='LiqualitySwap_logo' src={LiqualityLogo} alt='Liquality Logo' /></a>
+          <h2 className='LiqualitySwap_howTo'onClick={() => window.open('https://liquality.io/atomic-swap-interface.html')}>How It Works</h2>
+        </div>
+        <SwapProgressStepper state={this.props.swap.step} />
       </div>
+      <div />
       <div className='LiqualitySwap_main'>
+        {this.props.expiration ? <div className='LiqualitySwap_topDetails'><TopDetails /></div> : null }
         <div className='LiqualitySwap_wave' />
+        <div className='SwapRedemption_whiteBar'>
+          <p>Swap {this.props.assets.a.value.toFixed()} {cryptoassets[this.props.assets.a.currency].code} for {this.props.assets.b.value.toFixed()} {cryptoassets[this.props.assets.b.currency].code}</p>
+        </div>
         <div className='LiqualitySwap_wrapper'>
           { window.location.hash === '#otcswap' && <Redirect to='/assetSelection' /> }
           <Route exact path='/' render={this.getStartingScreen.bind(this)} />
