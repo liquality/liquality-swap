@@ -1,5 +1,5 @@
-import BitcoinNetworks from '@liquality/bitcoin-networks'
-import EthereumNetworks from '@liquality/ethereum-networks'
+import { BitcoinNetworks } from '@liquality/bitcoin-networks'
+import { EthereumNetworks } from '@liquality/ethereum-networks'
 import config from '../config'
 import moment from 'moment'
 
