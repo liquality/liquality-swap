@@ -7,12 +7,12 @@
 
   @include stepper;
 
-  &_label {
+  .SwapProgressStepper_label span {
     font-family: $font-family-base;
   }
 
-  &_labelText {
-    color: red;
+  .SwapProgressStepper_icon_text {
+    font-family: $font-family-base;
   }
 
   .SwapProgressStepper_connector {
@@ -27,6 +27,10 @@
       background-position: bottom;
       background-size: 25px 1px;
       background-repeat: repeat-x;
+    }
+
+    &_label {
+      font-family: $font-family-base;
     }
 
     &_completed, &_active {
