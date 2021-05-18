@@ -100,8 +100,8 @@ class SwapCompleted extends Component {
           {this.props.assets.rate && <h4 className='SwapCompleted_rateAmount'>1 {sentCurrency.code} = {this.props.assets.rate.toFixed()} {claimCurrency.code}</h4>}
 
           <h4 className='mt-4 d-flex justify-content-center'>NETWORK FEES</h4>
-          <h3 className='d-flex justify-content-center'>{sentCurrency.code} {this.props.transactions.a.initiation.feePrice} {cryptoassets[sentCurrency.code].fees.unit}</h3>
-          <h3 className='d-flex justify-content-center'>{claimCurrency.code} {this.props.transactions.b.initiation.feePrice} {cryptoassets[claimCurrency.code].fees.unit}</h3>
+          <h5 className='d-flex justify-content-center'>{sentCurrency.code} {this.props.transactions.a.initiation.feePrice} {cryptoassets[sentCurrency.code].fees.unit}</h5>
+          <h5 className='d-flex justify-content-center'>{claimCurrency.code} {this.props.transactions.b.initiation.feePrice} {cryptoassets[claimCurrency.code].fees.unit}</h5>
 
         </div>
         <div className='SwapCompleted_bottom px-2 mt-5'>
@@ -115,7 +115,7 @@ class SwapCompleted extends Component {
           </div>
         </div>
         <div className='SwapCompleted_link mt-2'>
-          <a href='javascript:void(0)' onClick={() => this.props.onCopyClick()}>Swap link<img src={CopyIcon} alt='Copy' /></a>
+          <a href='javascript:void(0)' onClick={() => this.props.onCopyClick()}>Swap link<img src={CopyIcon} alt='Copy' className="ml-2" /></a>
         </div>
         <div className='SwapCompleted_bottomButton mt-2'>
           <Button wide primary onClick={() => window.location.replace(APP_BASE_URL)}>Start another Swap</Button>

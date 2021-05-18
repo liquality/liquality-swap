@@ -3,8 +3,17 @@
 
 .SwapProgressStepper {
   padding-bottom: 0 !important;
+  font-family: $font-family-base;
 
   @include stepper;
+
+  &_label {
+    font-family: $font-family-base;
+  }
+
+  &_labelText {
+    color: red;
+  }
 
   .SwapProgressStepper_connector {
     left: calc(-50% + 15px);
