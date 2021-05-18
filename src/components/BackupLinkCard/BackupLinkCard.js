@@ -15,10 +15,6 @@ class BackupLinkCard extends Component {
     this.handleClick = this.handleClick.bind(this)
   }
 
-  created() {
-    console.log(this.props)
-  }
-
   handleClick (e) {
     e.preventDefault()
     this.props.onCopyClick()
