@@ -15,6 +15,16 @@
     }
   }
 
+  &_whiteBar {
+    margin: 0 auto;
+    margin-top: -90px;
+    margin-bottom: 50px; 
+    background-color: white;
+    height: 20px;
+    width: 300px;
+    border-radius: 25px;
+  }
+
   &_whiteHover {
     &:hover {
       background: $color-bg-primary;
@@ -24,9 +34,10 @@
   }
 
   &_description {
-    width: 400px;
+    width: 365px;
     text-align: left;
     margin: 0 auto;
+    padding-left: 10px;
   }
 
   &_icon {

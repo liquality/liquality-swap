@@ -3,16 +3,18 @@
 
 .WalletConnected {
   text-align: center;
-  padding: 15px;
+  font-family: $font-family-base;
 
   h2 {
     padding: 10px;
+    margin-top: 10px;
     line-height: 2rem;
     color: $color-text-1;
   }
 
   &_divider {
-    border-bottom: 3px solid $color-bg-secondary;
+    border-bottom: 2px solid $color-bg-secondary;
+    width: 100%;
     margin-bottom: 5%;
   }
 
@@ -23,7 +25,7 @@
 
   &_currencyBar {
     @include currency-bar;
-    margin-top: -5%;
+    margin-top: -7px;
   }
 
   &_wallet {
