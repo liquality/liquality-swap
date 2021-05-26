@@ -106,7 +106,7 @@ export default {
   defaultFee: 'average',
   hostName: 'Liquality',
   hostIcon: 'https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png',
-  agents: ['agent'],
+  agents: ['https://liquality.io/swap/agent'],
   injectScript: `
   function loadScript(src, callback) {
     var s,
