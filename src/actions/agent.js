@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js'
 import _ from 'lodash'
 import { actions as assetActions } from './assets'
 import { actions as counterPartyActions } from './counterparty'
-import cryptoassets from '@liquality/cryptoassets'
+import { assets, unitToCurrency, currencyToUnit } from '@liquality/cryptoassets'
 import config from '../config'
 import { getAgentClient } from '../services/agentClient'
 import { sleep } from '../utils/async'
@@ -38,8 +38,8 @@ function shouldUpdateMarkets (getState) {
 async function getMarkets (agent) {
   const marketInfo = await getAgentClient(agent).getMarketInfo()
   const formattedMarkets = marketInfo.map(m => {
-    const convertedMin = cryptoassets[m.from].unitToCurrency(m.min)
-    const convertedMax = cryptoassets[m.from].unitToCurrency(m.max)
+    const convertedMin = unitToCurrency(assets[m.from], m.min)
+    const convertedMax = unitToCurrency(assets[m.from], m.max)
     return {
       ...m,
       min: convertedMin,
@@ -99,13 +99,13 @@ function retrieveAgentQuote () {
   return async (dispatch, getState) => {
     const { assets: { a: assetA, b: assetB }, agent: { markets } } = getState().swap
     const market = pickMarket(markets, assetA.currency, assetB.currency, assetA.value)
-    const amount = cryptoassets[assetA.currency].currencyToUnit(assetA.value)
+    const amount = currencyToUnit(assets[assetA.currency], assetA.value)
     const quote = await getAgentClient(market.agent).getQuote(assetA.currency, assetB.currency, amount.toNumber()) // TODO: This should be passed as BigNumber
     dispatch(setQuote({...quote, agent: market.agent}))
 
-    dispatch(assetActions.changeAmount('a', cryptoassets[assetA.currency].unitToCurrency(quote.fromAmount)))
-    dispatch(assetActions.changeAmount('b', cryptoassets[assetB.currency].unitToCurrency(quote.toAmount)))
-    dispatch(assetActions.changeAmount('b', cryptoassets[assetB.currency].unitToCurrency(quote.toAmount)))
+    dispatch(assetActions.changeAmount('a', unitToCurrency(assets[assetA.currency], quote.fromAmount)))
+    dispatch(assetActions.changeAmount('b', unitToCurrency(assets[assetB.currency], quote.toAmount)))
+    dispatch(assetActions.changeAmount('b', unitToCurrency(assets[assetB.currency], quote.toAmount)))
 
     dispatch(counterPartyActions.changeCounterPartyAddress('a', quote.fromCounterPartyAddress))
     dispatch(counterPartyActions.changeCounterPartyAddress('b', quote.toCounterPartyAddress))

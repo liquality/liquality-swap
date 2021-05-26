@@ -1,6 +1,6 @@
 import { getClient, getNetworkClient } from '../services/chainClient'
 import { steps } from '../components/SwapProgressStepper/steps'
-import cryptoassets from '@liquality/cryptoassets'
+import { assets as cryptoassets, chains, unitToCurrency } from '@liquality/cryptoassets'
 
 const types = {
   TOGGLE_WALLET_CONNECT: 'TOGGLE_WALLET_CONNECT',
@@ -25,6 +25,7 @@ async function connectToWallet (party, wallet, dispatch, getState) {
   dispatch(startConnecting(party))
   const currencyCode = assets[party].currency
   const currency = cryptoassets[currencyCode]
+  const chain = chains[currency.chain]
   const client = getClient(currencyCode, wallet)
   const networkClient = getNetworkClient(currencyCode, wallet)
 
@@ -32,9 +33,8 @@ async function connectToWallet (party, wallet, dispatch, getState) {
   const unusedAddress = await client.wallet.getUnusedAddress()
   let allAddresses = await client.wallet.getUsedAddresses(addressesPerCall)
 
-  console.log(unusedAddress, allAddresses)
   allAddresses = [ ...new Set([ unusedAddress, ...allAddresses ].map(a => a.address)) ]
-  allAddresses = allAddresses.map(currency.formatAddress)
+  allAddresses = allAddresses.map(address => chain.formatAddress(address))
   if (wallets[party].addresses[0] !== null) { // Preserve the preset address for party B
     const expectedAddress = wallets[party].addresses[0]
     if (allAddresses.includes(expectedAddress)) {
@@ -48,7 +48,7 @@ async function connectToWallet (party, wallet, dispatch, getState) {
   const swapState = getState().swap
   const walletParty = swapState.assets[party].currency === currencyCode ? party : otherParty
   if (swapState.wallets[walletParty].connecting) {
-    dispatch(connectWallet(walletParty, allAddresses, currency.unitToCurrency(balance), currency.unitToCurrency(networkBalance)))
+    dispatch(connectWallet(walletParty, allAddresses, unitToCurrency(currency, balance), unitToCurrency(currency, networkBalance)))
   }
 }
 

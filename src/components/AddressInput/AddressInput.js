@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import cryptoassets from '@liquality/cryptoassets'
+import { assets as cryptoassets, chains } from '@liquality/cryptoassets'
 import * as assetUtils from '../../utils/assets'
 import './AddressInput.css'
 import TickIcon from './tick.svg'
@@ -9,8 +9,9 @@ import ErrorIcon from './error.svg'
 
 const AddressInput = (props) => {
   const currency = cryptoassets[props.currency]
-  const valid = currency.isValidAddress(props.value)
-  const formattedAddress = props.value && currency.isValidAddress(props.value) ? currency.formatAddress(props.value) : props.value
+  const chain = chains[currency.chain]
+  const valid = chain.isValidAddress(props.value)
+  const formattedAddress = props.value && chain.isValidAddress(props.value) ? chain.formatAddress(props.value) : props.value
   return <div className={classNames('AddressInput', { error: props.error })}>
     <div className='AddressInput_wrapper'>
       <div className='AddressInput_box'>

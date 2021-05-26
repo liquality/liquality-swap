@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import BigNumber from 'bignumber.js'
 
-import cryptoassets from '@liquality/cryptoassets'
+import { assets as cryptoassets } from '@liquality/cryptoassets'
 import './Rate.css'
 
 const Rate = (props) => (

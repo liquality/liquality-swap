@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import BrandCard from '../BrandCard/BrandCard'
 import Button from '../Button/Button'
-import cryptoassets from '@liquality/cryptoassets'
+import { assets as cryptoassets } from '@liquality/cryptoassets'
 import withCopyButton from '../withCopyButton'
 import CopyIcon from '../../icons/copy.svg'
 import CheckIcon from '../../icons/checkCopy.svg'

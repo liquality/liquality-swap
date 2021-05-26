@@ -1,6 +1,6 @@
 import { replace } from 'connected-react-router'
 import moment from 'moment'
-import cryptoassets from '@liquality/cryptoassets'
+import { assets as cryptoassets, chains } from '@liquality/cryptoassets'
 import config from '../config'
 import { actions as swapActions } from './swap'
 import { steps } from '../components/SwapProgressStepper/steps'
@@ -29,8 +29,8 @@ function setStep (assets, transactions, isPartyB, isVerified, dispatch) {
   if (transactions.a.initiation.hash && fundComplete) {
     step = steps.AGREEMENT
     if (transactions.b.initiation.hash) {
-      const aMinConfirmations = cryptoassets[assets.a.currency].safeConfirmations
-      const bMinConfirmations = cryptoassets[assets.b.currency].safeConfirmations
+      const aMinConfirmations = chains[cryptoassets[assets.a.currency].chain].safeConfirmations
+      const bMinConfirmations = chains[cryptoassets[assets.b.currency].chain].safeConfirmations
       if (transactions.a.initiation.confirmations >= aMinConfirmations && transactions.b.initiation.confirmations >= bMinConfirmations) {
         if ((transactions.b.claim.hash || !isPartyB) && isVerified) {
           step = steps.CLAIMING

@@ -11,7 +11,7 @@ import { actions as secretActions } from './secretparams'
 import { actions as walletActions } from './wallets'
 import { actions as syncActions } from './sync'
 import { actions as agentActions } from './agent'
-import cryptoassets from '@liquality/cryptoassets'
+import { assets as cryptoassets, currencyToUnit } from '@liquality/cryptoassets'
 import { wallets as walletsConfig } from '../utils/wallets'
 import { getFundExpiration, getClaimExpiration, generateExpiration } from '../utils/expiration'
 import { isInitiateValid } from '../utils/validation'
@@ -183,7 +183,7 @@ async function initiateSwap (dispatch, getState) {
 
   const blockNumber = await client.chain.getBlockHeight()
   const fees = await client.chain.getFees()
-  const valueInUnit = cryptoassets[assets.a.currency].currencyToUnit(assets.a.value)
+  const valueInUnit = currencyToUnit(cryptoassets[assets.a.currency], assets.a.value)
   const swapParams = {
     value: valueInUnit,
     recipientAddress: canonicalCounterParty.a.address,
@@ -232,7 +232,7 @@ async function fundSwap (dispatch, getState) {
   const swapExpiration = getFundExpiration(expiration, isPartyB ? 'b' : 'a').time
 
   const fees = await client.chain.getFees()
-  const valueInUnit = cryptoassets[assets.a.currency].currencyToUnit(assets.a.value)
+  const valueInUnit = currencyToUnit(cryptoassets[assets.a.currency], assets.a.value)
   const swapParams = {
     value: valueInUnit,
     recipientAddress: canonicalCounterParty.a.address,
@@ -391,7 +391,7 @@ async function claimSwap (dispatch, getState) {
   const fees = await client.chain.getFees()
   const blockNumber = await client.chain.getBlockHeight()
   const swapExpiration = getClaimExpiration(expiration, isPartyB ? 'b' : 'a').time
-  const valueInUnit = cryptoassets[assets.b.currency].currencyToUnit(assets.b.value)
+  const valueInUnit = currencyToUnit(cryptoassets[assets.b.currency], assets.b.value)
   const swapParams = {
     value: valueInUnit,
     recipientAddress: canonicalWallets.b.addresses[0],
@@ -449,7 +449,7 @@ function refundSwap () {
 
     const client = getClient(assets.a.currency, wallets.a.type)
     const swapExpiration = getFundExpiration(expiration, isPartyB ? 'b' : 'a').time
-    const valueInUnit = cryptoassets[assets.a.currency].currencyToUnit(assets.a.value)
+    const valueInUnit = currencyToUnit(cryptoassets[assets.a.currency], assets.a.value)
     const fees = await client.chain.getFees()
     const blockNumber = await client.chain.getBlockHeight()
     const swapParams = {

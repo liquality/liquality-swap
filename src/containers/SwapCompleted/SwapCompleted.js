@@ -6,7 +6,7 @@ import moment from 'moment'
 import BrandCard from '../../components/BrandCard/BrandCard'
 import { getFundExpiration, getClaimExpiration } from '../../utils/expiration'
 import { shortenTransactionHash, getExplorerLink } from '../../utils/transactions'
-import cryptoassets from '@liquality/cryptoassets'
+import { assets as cryptoassets, chains } from '@liquality/cryptoassets'
 import withCopyButton from '../../components/withCopyButton'
 import CopyIcon from '../../icons/copy.svg'
 
@@ -100,8 +100,8 @@ class SwapCompleted extends Component {
           {this.props.assets.rate && <h4 className='SwapCompleted_rateAmount'>1 {sentCurrency.code} = {this.props.assets.rate.toFixed()} {claimCurrency.code}</h4>}
 
           <h4 className='mt-4 d-flex justify-content-center'>NETWORK FEES</h4>
-          <h5 className='d-flex justify-content-center'>{sentCurrency.code} {this.props.transactions.a.initiation.feePrice} {cryptoassets[sentCurrency.code].fees.unit}</h5>
-          <h5 className='d-flex justify-content-center'>{claimCurrency.code} {this.props.transactions.b.initiation.feePrice} {cryptoassets[claimCurrency.code].fees.unit}</h5>
+          <h5 className='d-flex justify-content-center'>{sentCurrency.code} {this.props.transactions.a.initiation.feePrice} {chains[sentCurrency.chain].fees.unit}</h5>
+          <h5 className='d-flex justify-content-center'>{claimCurrency.code} {this.props.transactions.b.initiation.feePrice} {chains[claimCurrency.chain].fees.unit}</h5>
 
         </div>
         <div className='SwapCompleted_bottom px-2 mt-5'>

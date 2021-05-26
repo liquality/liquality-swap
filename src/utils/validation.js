@@ -1,5 +1,5 @@
 import moment from 'moment'
-import cryptoassets from '@liquality/cryptoassets'
+import { assets as cryptoassets, chains, unitToCurrency } from '@liquality/cryptoassets'
 import config from '../config'
 import { isEthereumAsset } from './networks'
 import { generateSwapState } from './app-links'
@@ -50,8 +50,8 @@ function getCounterPartyErrors (assets, counterParty) {
   const errors = {}
   const { a: counterPartyA, b: counterPartyB } = counterParty
   const { a: assetA, b: assetB } = assets
-  if (!cryptoassets[assetA.currency].isValidAddress(counterPartyA.address)) errors.counterPartyA = 'Address incomplete'
-  if (!cryptoassets[assetB.currency].isValidAddress(counterPartyB.address)) errors.counterPartyB = 'Address incomplete'
+  if (!chains[cryptoassets[assetA.currency].chain].isValidAddress(counterPartyA.address)) errors.counterPartyA = 'Address incomplete'
+  if (!chains[cryptoassets[assetB.currency].chain].isValidAddress(counterPartyB.address)) errors.counterPartyB = 'Address incomplete'
   return errors
 }
 
@@ -61,7 +61,7 @@ function getInitiationErrors (assets, transactions, expiration, isVerified, isPa
     if (!(isVerified && transactions.b.initiation.hash)) {
       errors.initiation = 'Counterparty hasn\'t initiated'
     }
-    const minConfirmations = cryptoassets[assets.b.currency].safeConfirmations
+    const minConfirmations = chains[cryptoassets[assets.b.currency].chain].safeConfirmations
     if (!(isVerified && transactions.b.initiation.confirmations >= minConfirmations)) {
       errors.initiation = `Counterparty has initiated, awaiting minimum confirmations (${minConfirmations})`
     }
@@ -92,10 +92,10 @@ function getQuoteErrors (swap) {
   if (!swap.agent.quote) {
     errors.quote = 'Quote missing.'
   } else {
-    if (!cryptoassets[assetA.currency].unitToCurrency(swap.agent.quote.fromAmount).eq(assetA.value)) {
+    if (!unitToCurrency(cryptoassets[assetA.currency], swap.agent.quote.fromAmount).eq(assetA.value)) {
       errors.quote = 'Quote fromAmount does not match.'
     }
-    if (!cryptoassets[assetB.currency].unitToCurrency(swap.agent.quote.toAmount).eq(assetB.value)) {
+    if (!unitToCurrency(cryptoassets[assetB.currency], swap.agent.quote.toAmount).eq(assetB.value)) {
       errors.quote = 'Quote toAmount does not match.'
     }
     if (counterPartyA.address !== swap.agent.quote.fromCounterPartyAddress) {

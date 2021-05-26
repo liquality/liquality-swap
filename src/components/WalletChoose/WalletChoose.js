@@ -5,7 +5,7 @@ import Button from '../../components/Button/Button'
 import WalletIcon from '../WalletDisplay/wallet-icon.svg'
 
 import { wallets } from '../../utils/wallets'
-import cryptoassets from '@liquality/cryptoassets'
+import { assets as cryptoassets } from '@liquality/cryptoassets'
 
 import './WalletChoose.css'
 

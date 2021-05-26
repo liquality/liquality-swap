@@ -6,7 +6,7 @@ import DropDownTick from '../../icons/dropdownTick.svg'
 import * as assetUtils from '../../utils/assets'
 import config from '../../config'
 
-import cryptoassets from '@liquality/cryptoassets'
+import { assets as cryptoassets } from '@liquality/cryptoassets'
 import './CurrencyInput.css'
 
 class CurrencyInput extends Component {

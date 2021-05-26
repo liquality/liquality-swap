@@ -1,4 +1,4 @@
-import cryptoassets from '@liquality/cryptoassets'
+import { assets as cryptoassets, chains, currencyToUnit } from '@liquality/cryptoassets'
 import { getClient } from '../services/chainClient'
 import { sleep } from '../utils/async'
 import { actions as secretActions } from './secretparams'
@@ -39,7 +39,7 @@ async function findInitiateSwapTransaction (party, blockNumber, dispatch, getSta
     expiration
   } = getState().swap
   const client = getClient(currency, type)
-  const valueInUnit = cryptoassets[currency].currencyToUnit(value)
+  const valueInUnit = currencyToUnit(cryptoassets[currency], value)
   const swapExpiration = getFundExpiration(expiration, party).time
   const swapParams = {
     value: valueInUnit,
@@ -71,7 +71,7 @@ async function findClaimSwapTransaction (party, blockNumber, dispatch, getState)
   const swapExpiration = getExpirationForParty(expiration, oppositeParty, isPartyB).time
   const recipientAddress = oppositeParty === 'a' ? counterParty[oppositeParty].address : wallets[oppositeParty].addresses[0]
   const refundAddress = oppositeParty === 'a' ? wallets[oppositeParty].addresses[0] : counterParty[oppositeParty].address
-  const valueInUnit = cryptoassets[assets[oppositeParty].currency].currencyToUnit(assets[oppositeParty].value)
+  const valueInUnit = currencyToUnit(cryptoassets[assets[oppositeParty].currency], assets[oppositeParty].value)
   const swapParams = {
     value: valueInUnit,
     recipientAddress,
@@ -105,7 +105,7 @@ async function findRefundSwapTransaction (party, blockNumber, dispatch, getState
   } else {
     swapExpiration = isPartyB ? expiration : getFundExpiration(expiration, 'b').time
   }
-  const valueInUnit = cryptoassets[assets[party].currency].currencyToUnit(assets[party].value)
+  const valueInUnit = currencyToUnit(cryptoassets[assets[party].currency], assets[party].value)
   const swapParams = {
     value: valueInUnit,
     recipientAddress: counterParty[party].address,
@@ -132,7 +132,7 @@ async function verifyInitiateSwapTransaction (dispatch, getState) {
     expiration
   } = getState().swap
   const client = getClient(currency, type)
-  const valueInUnit = cryptoassets[currency].currencyToUnit(value)
+  const valueInUnit = currencyToUnit(cryptoassets[currency], value)
   const swapExpiration = isPartyB ? expiration : getClaimExpiration(expiration, 'a').time
   const swapParams = {
     value: valueInUnit,
@@ -151,7 +151,7 @@ async function verifyInitiateSwapTransaction (dispatch, getState) {
   dispatch)
   if (fundingTransaction === undefined) return
 
-  const fundingConfirmed = fundingTransaction ? fundingTransaction.confirmations >= cryptoassets[currency].safeConfirmations : true
+  const fundingConfirmed = fundingTransaction ? fundingTransaction.confirmations >= chains[cryptoassets[currency].chain].safeConfirmations : true
 
   if (swapVerified && fundingConfirmed) {
     dispatch(transactionActions.setIsVerified(true))

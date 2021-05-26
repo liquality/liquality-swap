@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import BrandCard from '../../components/BrandCard/BrandCard'
 import HexaDisplay from '../../components/HexaDisplay/HexaDisplay'
 import Button from '../../components/Button/Button'
-import cryptoassets from '@liquality/cryptoassets'
+import { assets as cryptoassets } from '@liquality/cryptoassets'
 import { APP_BASE_URL } from '../../utils/app-links'
 
 import './SwapRefunded.css'

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import BrandCard from '../../components/BrandCard/BrandCard'
 import Button from '../../components/Button/Button'
-import cryptoassets from '@liquality/cryptoassets'
+import { assets as cryptoassets } from '@liquality/cryptoassets'
 import './SwapRefund.css'
 
 class SwapRedemption extends Component {

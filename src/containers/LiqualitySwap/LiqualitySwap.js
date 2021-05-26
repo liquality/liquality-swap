@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Route, Redirect } from 'react-router-dom'
 
 import moment from 'moment'
-import cryptoassets from '@liquality/cryptoassets'
+import { assets as cryptoassets } from '@liquality/cryptoassets'
 import { getFundExpiration, getClaimExpiration } from '../../utils/expiration'
 import { getExplorerLink } from '../../utils/transactions'
 import SwapInitiation from '../SwapInitiation'

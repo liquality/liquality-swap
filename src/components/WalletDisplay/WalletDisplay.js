@@ -5,7 +5,7 @@ import BigNumber from 'bignumber.js'
 import Button from '../Button/Button'
 import { shortenAddress } from '../../utils/address'
 
-import cryptoassets from '@liquality/cryptoassets'
+import { assets as cryptoassets, chains } from '@liquality/cryptoassets'
 import { wallets } from '../../utils/wallets'
 import WalletIcon from './wallet-icon.svg'
 import { ReactComponent as Dot } from '../../icons/greenDot.svg'
@@ -14,7 +14,8 @@ import './WalletDisplay.css'
 
 const WalletDisplay = (props) => {
   const currency = cryptoassets[props.currency]
-  const address = props.address && currency.formatAddress(props.address)
+  const chain = chains[currency.chain]
+  const address = props.address && chain.formatAddress(props.address)
   const error = props.addressError || props.balanceError || props.error
   return <div className={classNames('WalletDisplay', {error: props.error})}>
     <div className='WalletDisplay_wrapper'>
