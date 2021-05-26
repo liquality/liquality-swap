@@ -6,7 +6,7 @@ const mapStateToProps = (state) => {
     step: state.swap.step,
     quote: state.swap.agent.quote,
     assets: state.swap.assets,
-    transactions: state.swap.transactions,
+    transactions: state.swap.transactions
   }
 }
 

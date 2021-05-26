@@ -115,7 +115,7 @@ class SwapCompleted extends Component {
           </div>
         </div>
         <div className='SwapCompleted_link mt-2'>
-          <a href='javascript:void(0)' onClick={() => this.props.onCopyClick()}>Swap link<img src={CopyIcon} alt='Copy' className="ml-2" /></a>
+          <a href='javascript:void(0)' onClick={() => this.props.onCopyClick()}>Swap link<img src={CopyIcon} alt='Copy' className='ml-2' /></a>
         </div>
         <div className='SwapCompleted_bottomButton mt-2'>
           <Button wide primary onClick={() => window.location.replace(APP_BASE_URL)}>Start another Swap</Button>
