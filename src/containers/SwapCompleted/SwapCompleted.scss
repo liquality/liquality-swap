@@ -24,6 +24,10 @@
   &_transactionTitle {
     font-weight: bold;
     color: $color-text-1;
+    &::hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
   }
 
   &_link {
