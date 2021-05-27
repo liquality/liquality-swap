@@ -88,14 +88,14 @@ class CurrencyInput extends Component {
       {this.props.isReceive && <div className='CurrencyInput_labelSwap'>RECEIVE</div>}
       <div className='CurrencyInput_dropdownWrap'>
         <div className='CurrencyInput_drop'>
-          <div className='CurrencyInput_toggler' onClick={this.toggleDropdown}>
+          <div className='CurrencyInput_toggler' onClick={() => this.toggleDropdown()}>
             <img className='CurrencyInput_dropItem' src={assetUtils.getIcon(asset.code)} alt='asset icon' /> <h2 className='CurrencyInput_dropdownCode'>{asset.code}<img src={DropDownTick} alt='dropdowntick' className='pl-2' /></h2>
           </div>
 
           {this.state.dropdown && <div className='CurrencyInput_dropMenu'>
             {displayedAssets.map(([id, currency]) =>
               <div className='CurrencyInput_dropdownKey' key={id} onClick={() => this.props.onSelectAsset(id)}>
-                <div className='CurrencyInput_listItem py-1' onClick={this.toggleDropdown}><img src={assetUtils.getIcon(currency.code)} alt='currency icon/logo' className='CurrencyInput_dropdownIcon' /><strong><span className='CurrencyInput_dropdownCurrencyText pt-1'>{currency.code}</span></strong></div>
+                <div className='CurrencyInput_listItem py-1' onClick={() => this.toggleDropdown()}><img src={assetUtils.getIcon(currency.code)} alt='currency icon/logo' className='CurrencyInput_dropdownIcon' /><strong><span className='CurrencyInput_dropdownCurrencyText pt-1'>{currency.code}</span></strong></div>
               </div>
             )}
           </div>}
