@@ -1,7 +1,7 @@
 import pkg from '../../package.json'
 
 const CAL_VERSION = pkg.dependencies['@liquality/client'].replace('^', '').replace('~', '')
-const footerVersion = `${process.env.COMMIT_REF || 'dev'} + CAL ${CAL_VERSION}`
+const footerVersion = `${process.env.REACT_APP_COMMIT_REF || 'dev'} + CAL ${CAL_VERSION}`
 
 export default {
   assets: {
