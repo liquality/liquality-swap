@@ -63,7 +63,6 @@ export default {
       explorerPath: 'https://rinkeby.etherscan.io/tx/0x'
     },
     MATIC: {
-      type: 'erc20',
       rpc: {
         url: 'https://rpc-mumbai.maticvigil.com/'
       },

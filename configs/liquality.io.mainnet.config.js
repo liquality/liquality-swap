@@ -104,7 +104,6 @@ export default {
     }
   },
   MATIC: {
-    type: 'erc20',
     rpc: {
       url: 'https://rpc-mainnet.matic.network/'
     },
