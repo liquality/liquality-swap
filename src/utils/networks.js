@@ -7,7 +7,8 @@ const networksMap = {
   BTC: BitcoinNetworks,
   ETH: EthereumNetworks,
   RBTC: EthereumNetworks,
-  erc20: EthereumNetworks
+  erc20: EthereumNetworks,
+  MATIC: EthereumNetworks
 }
 
 function getNetworkByCurrency (asset) {
@@ -23,7 +24,7 @@ function isEthereumAsset (asset) {
 }
 
 function isEthereumNetwork (asset) {
-  return asset === 'RBTC' || isEthereumAsset(asset)
+  return asset === 'RBTC' || asset === 'MATIC' || isEthereumAsset(asset)
 }
 
 function getConfirmationEstimate (asset) {

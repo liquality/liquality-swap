@@ -112,7 +112,7 @@ function createEthClient (asset, wallet) {
     else ethClient.addProvider(new EthereumScraperSwapFindProvider(assetConfig.api.url))
   }
 
-  const FeeProvider = network.isTestnet || asset === 'RBTC'
+  const FeeProvider = network.isTestnet || asset === 'RBTC' || asset === 'MATIC'
     ? EthereumRpcFeeProvider
     : EthereumGasNowFeeProvider
 
@@ -125,7 +125,8 @@ const clientCreators = {
   BTC: createBtcClient,
   ETH: createEthClient,
   RBTC: createEthClient,
-  erc20: createEthClient
+  erc20: createEthClient,
+  MATIC: createEthClient
 }
 
 const clients = {}
