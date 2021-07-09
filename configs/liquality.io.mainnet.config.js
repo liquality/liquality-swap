@@ -109,6 +109,7 @@ export default {
       url: 'https://rpc-mumbai.maticvigil.com/'
     },
     api: {
+      type: 'scraper',
       url: 'https://liquality.io/polygon-testnet-api'
     },
     network: 'polygon',
