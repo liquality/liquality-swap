@@ -8,7 +8,7 @@ const networksMap = {
   ETH: EthereumNetworks,
   RBTC: EthereumNetworks,
   erc20: EthereumNetworks,
-  polygon: EthereumNetworks
+  MATIC: EthereumNetworks
 }
 
 function getNetworkByCurrency (asset) {

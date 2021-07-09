@@ -5,25 +5,25 @@ export default {
   assets: {
     ETH: {
       rpc: {
-        url: 'https://mainnet.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6'
+        url: 'https://rinkeby.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6'
       },
       api: {
         type: 'scraper',
-        url: 'https://liquality.io/eth-mainnet-api'
+        url: 'https://liquality.io/eth-rinkeby-api'
       },
-      network: 'ethereum_mainnet',
-      explorerPath: 'https://etherscan.io/tx/0x'
+      network: 'rinkeby',
+      explorerPath: 'https://rinkeby.etherscan.io/tx/0x'
     },
     BTC: {
       api: {
-        url: 'https://liquality.io/electrs'
+        url: 'https://liquality.io/testnet/electrs'
       },
       batchApi: {
-        url: 'https://liquality.io/electrs-batch'
+        url: 'https://liquality.io/electrs-testnet-batch'
       },
       feeNumberOfBlocks: 2,
-      network: 'bitcoin',
-      explorerPath: 'https://blockstream.info/tx/'
+      network: 'bitcoin_testnet',
+      explorerPath: 'https://blockstream.info/testnet/tx/'
     },
     RBTC: {
       rpc: {
@@ -63,16 +63,16 @@ export default {
       explorerPath: 'https://rinkeby.etherscan.io/tx/0x'
     },
     MATIC: {
-      type: 'MATIC',
+      type: 'erc20',
       rpc: {
-        url: 'https://rpc-mainnet.matic.network/'
+        url: 'https://rpc-mumbai.maticvigil.com/'
       },
       api: {
         type: 'scraper',
-        url: 'https://liquality.io/polygon-mainnet-api'
+        url: 'https://liquality.io/polygon-testnet-api'
       },
-      network: 'polygon_mainnet',
-      explorerPath: 'https://explorer-mainnet.maticvigil.com/tx/0x'
+      network: 'polygon_testnet',
+      explorerPath: 'https://explorer-mumbai.maticvigil.com/tx/0x'
     },
   },
   debug: true,
