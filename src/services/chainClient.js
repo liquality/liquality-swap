@@ -45,13 +45,6 @@ function getBitcoinLedgerDerivationPath (addressType, network) {
   }
 }
 
-// function createNearClient (asset, wallet) {
-//   const nearConfig = config.assets.nearConfig
-//   const network = 
-
-
-// }
-
 function createBtcClient (asset, wallet) {
   const btcConfig = config.assets.BTC
   const network = BitcoinNetworks[btcConfig.network]
