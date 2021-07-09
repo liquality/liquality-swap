@@ -106,14 +106,14 @@ export default {
   MATIC: {
     type: 'MATIC',
     rpc: {
-      url: 'https://rpc-mumbai.maticvigil.com/'
+      url: 'https://rpc-mainnet.matic.network/'
     },
     api: {
       type: 'scraper',
-      url: 'https://liquality.io/polygon-testnet-api'
+      url: 'https://liquality.io/polygon-mainnet-api'
     },
-    network: 'polygon',
-    explorerPath: 'https://explorer-mumbai.maticvigil.com/tx/0x'
+    network: 'polygon_mainnet',
+    explorerPath: 'https://explorer-mainnet.maticvigil.com/tx/0x'
   },
   defaultFee: 'average',
   hostName: 'Liquality',

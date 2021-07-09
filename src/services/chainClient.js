@@ -128,7 +128,7 @@ const clientCreators = {
   ETH: createEthClient,
   RBTC: createEthClient,
   erc20: createEthClient,
-  polygon: createEthClient
+  MATIC: createEthClient
 }
 
 const clients = {}

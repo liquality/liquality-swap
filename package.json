@@ -24,7 +24,7 @@
     "@liquality/ethereum-gas-now-fee-provider": "^v1.1.1",
     "@liquality/ethereum-js-wallet-provider": "^v1.1.1",
     "@liquality/ethereum-ledger-provider": "^v1.1.1",
-    "@liquality/ethereum-networks": "^v1.1.1",
+    "@liquality/ethereum-networks": "^v1.4.4",
     "@liquality/ethereum-rpc-fee-provider": "^v1.1.1",
     "@liquality/ethereum-rpc-provider": "^v1.1.1",
     "@liquality/ethereum-scraper-swap-find-provider": "^v1.1.1",
