@@ -91,8 +91,6 @@ function createEthClient (asset, wallet) {
   ethClient.addProvider(new EthereumRpcProvider({ uri: assetConfig.rpc.url }))
   if (wallet === 'metamask') {
     ethClient.addProvider(new EthereumWalletApiProvider(window.ethereum, network))
-  } else if (wallet === 'liquality') {
-    ethClient.addProvider(new EthereumWalletApiProvider(window.ethereum, network))
   } else if (wallet === 'ethereum_ledger') {
     const ledger = new EthereumLedgerProvider({ network, Transport: LedgerTransportWebUSB, derivationPath: `m/44'/${network.coinType}'/0'/0/0` })
 
