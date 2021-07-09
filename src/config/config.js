@@ -61,6 +61,17 @@ export default {
       contractAddress: '0xcE2748BE67fB4346654B4500c4BB0642536365FC',
       network: 'rinkeby',
       explorerPath: 'https://rinkeby.etherscan.io/tx/0x'
+    },
+    MATIC: {
+      type: 'MATIC',
+      rpc: {
+        url: 'https://rpc-mumbai.maticvigil.com/'
+      },
+      api: {
+        url: 'https://liquality.io/polygon-testnet-api'
+      },
+      network: 'polygon',
+      explorerPath: 'https://explorer-mumbai.maticvigil.com/tx/0x'
     }
   },
   debug: true,

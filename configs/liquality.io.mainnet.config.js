@@ -103,6 +103,17 @@ export default {
       explorerPath: 'https://etherscan.io/tx/0x'
     }
   },
+  MATIC: {
+    type: 'MATIC',
+    rpc: {
+      url: 'https://rpc-mumbai.maticvigil.com/'
+    },
+    api: {
+      url: 'https://liquality.io/polygon-testnet-api'
+    },
+    network: 'polygon',
+    explorerPath: 'https://explorer-mumbai.maticvigil.com/tx/0x'
+  },
   defaultFee: 'average',
   hostName: 'Liquality',
   hostIcon: 'https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png',
