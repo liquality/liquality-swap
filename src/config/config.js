@@ -3,6 +3,17 @@ export default {
   hostIcon: 'https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png',
   agents: ['https://liquality.io/swap-testnet/agent'],
   assets: {
+    MATIC: {
+      rpc: {
+        url: 'https://rpc-mumbai.maticvigil.com/'
+      },
+      api: {
+        type: 'scraper',
+        url: 'https://liquality.io/polygon-testnet-api'
+      },
+      network: 'polygon_testnet',
+      explorerPath: 'https://explorer-mumbai.maticvigil.com/tx/0x'
+    },
     ETH: {
       rpc: {
         url: 'https://rinkeby.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6'
@@ -61,17 +72,6 @@ export default {
       contractAddress: '0xcE2748BE67fB4346654B4500c4BB0642536365FC',
       network: 'rinkeby',
       explorerPath: 'https://rinkeby.etherscan.io/tx/0x'
-    },
-    MATIC: {
-      rpc: {
-        url: 'https://rpc-mumbai.maticvigil.com/'
-      },
-      api: {
-        type: 'scraper',
-        url: 'https://liquality.io/polygon-testnet-api'
-      },
-      network: 'polygon_testnet',
-      explorerPath: 'https://explorer-mumbai.maticvigil.com/tx/0x'
     },
   },
   debug: true,
