@@ -5,6 +5,17 @@ const footerVersion = `${process.env.REACT_APP_COMMIT_REF || 'dev'} + CAL ${CAL_
 
 export default {
   assets: {
+    MATIC: {
+      rpc: {
+        url: 'https://rpc-mainnet.matic.network/'
+      },
+      api: {
+        type: 'scraper',
+        url: 'https://liquality.io/polygon-mainnet-api'
+      },
+      network: 'polygon_mainnet',
+      explorerPath: 'https://explorer-mainnet.maticvigil.com/tx/0x'
+    },
     ETH: {
       rpc: {
         url: 'https://mainnet.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6'
@@ -103,17 +114,6 @@ export default {
       network: 'ethereum_mainnet',
       explorerPath: 'https://etherscan.io/tx/0x'
     }
-  },
-  MATIC: {
-    rpc: {
-      url: 'https://rpc-mainnet.matic.network/'
-    },
-    api: {
-      type: 'scraper',
-      url: 'https://liquality.io/polygon-mainnet-api'
-    },
-    network: 'polygon_mainnet',
-    explorerPath: 'https://explorer-mainnet.maticvigil.com/tx/0x'
   },
   defaultFee: 'average',
   hostName: 'Liquality',
