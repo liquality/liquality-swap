@@ -73,6 +73,9 @@ export default {
       network: 'rinkeby',
       explorerPath: 'https://rinkeby.etherscan.io/tx/0x'
     },
+    NEAR: {
+      explorerPath: 'https://explorer.testnet.near.org/transactions/'
+    }
   },
   debug: true,
   defaultFee: 'average',

@@ -113,6 +113,9 @@ export default {
       contractAddress: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
       network: 'ethereum_mainnet',
       explorerPath: 'https://etherscan.io/tx/0x'
+    },
+    NEAR: {
+      explorerPath: 'https://explorer.mainnet.near.org/transactions/'
     }
   },
   defaultFee: 'average',
