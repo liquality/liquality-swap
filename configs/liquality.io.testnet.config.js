@@ -74,6 +74,9 @@ export default {
       contractAddress: '0xcE2748BE67fB4346654B4500c4BB0642536365FC',
       network: 'rinkeby',
       explorerPath: 'https://rinkeby.etherscan.io/tx/0x'
+    },
+    NEAR: {
+      explorerPath: 'https://explorer.testnet.near.org/transactions/'
     }
   },
 
