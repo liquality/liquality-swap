@@ -112,11 +112,11 @@ function createEthClient (asset, wallet) {
     else ethClient.addProvider(new EthereumScraperSwapFindProvider(assetConfig.api.url))
   }
 
-  const FeeProvider = network.isTestnet || asset === 'RBTC' || asset === 'MATIC'
-    ? EthereumRpcFeeProvider
-    : EthereumGasNowFeeProvider
+  const feeProvider = !network.isTestnet && asset === 'ETH'
+    ? new EthereumGasNowFeeProvider('https://gasoracle.liquality.io')
+    : new EthereumRpcFeeProvider()
 
-  ethClient.addProvider(new FeeProvider())
+  ethClient.addProvider(feeProvider)
 
   return ethClient
 }
