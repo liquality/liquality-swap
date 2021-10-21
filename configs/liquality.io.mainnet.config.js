@@ -7,14 +7,14 @@ export default {
   assets: {
     MATIC: {
       rpc: {
-        url: 'https://rpc-mainnet.matic.network/'
+        url: 'https://polygon-rpc.com/'
       },
       api: {
         type: 'scraper',
         url: 'https://liquality.io/polygon-mainnet-api'
       },
       network: 'polygon_mainnet',
-      explorerPath: 'https://explorer-mainnet.maticvigil.com/tx/0x'
+      explorerPath: 'https://polygonscan.com/tx/0x'
     },
     ETH: {
       rpc: {
