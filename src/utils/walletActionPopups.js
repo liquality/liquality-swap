@@ -136,12 +136,14 @@ const refundPopups = {
   metamask: {
     ETH: toRefundPopup(ethereumMetamaskPopup),
     RBTC: toRefundPopup(ethereumMetamaskPopup),
+    MATIC: toRefundPopup(ethereumMetamaskPopup),
     erc20: toRefundPopup(ERC20MetamaskPopup)
   },
   default: {
     BTC: toRefundPopup(defaultPopup),
     ETH: toRefundPopup(defaultPopup),
     RBTC: toRefundPopup(defaultPopup),
+    MATIC: toRefundPopup(defaultPopup),
     erc20: toRefundPopup(defaultERC20Popup)
   }
 }
