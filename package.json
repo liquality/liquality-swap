@@ -16,7 +16,7 @@
     "@liquality/bitcoin-wallet-api-provider": "^v1.1.1",
     "@liquality/client": "^v1.1.1",
     "@liquality/crypto": "^v1.1.1",
-    "@liquality/cryptoassets": "^1.1.2",
+    "@liquality/cryptoassets": "^1.5.0",
     "@liquality/errors": "^v1.1.1",
     "@liquality/ethereum-erc20-provider": "^v1.1.1",
     "@liquality/ethereum-erc20-scraper-swap-find-provider": "^v1.1.1",

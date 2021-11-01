@@ -116,6 +116,9 @@ export default {
     },
     NEAR: {
       explorerPath: 'https://explorer.mainnet.near.org/transactions/'
+    },
+    LUNA: {
+      explorerPath: 'https://finder.terra.money/columbus-5/tx/'
     }
   },
   defaultFee: 'average',
