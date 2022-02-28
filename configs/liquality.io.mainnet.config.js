@@ -126,9 +126,6 @@ export default {
     UST: {
       explorerPath: "https://finder.terra.money/columbus-5/tx/",
     },
-    MATIC: {
-      explorerPath: "https://polygonscan.com/tx/0x",
-    },
   },
   defaultFee: "average",
   hostName: "Liquality",
