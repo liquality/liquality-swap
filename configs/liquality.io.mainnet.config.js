@@ -1,130 +1,140 @@
-import pkg from '../../package.json'
+import pkg from "../../package.json";
 
-const CAL_VERSION = pkg.dependencies['@liquality/client'].replace('^', '').replace('~', '')
-const footerVersion = `${process.env.REACT_APP_COMMIT_REF || 'dev'} + CAL ${CAL_VERSION}`
+const CAL_VERSION = pkg.dependencies["@liquality/client"]
+  .replace("^", "")
+  .replace("~", "");
+const footerVersion = `${process.env.REACT_APP_COMMIT_REF ||
+  "dev"} + CAL ${CAL_VERSION}`;
 
 export default {
   assets: {
     MATIC: {
       rpc: {
-        url: 'https://polygon-rpc.com/'
+        url: "https://polygon-rpc.com/",
       },
       api: {
-        type: 'scraper',
-        url: 'https://liquality.io/polygon-mainnet-api'
+        type: "scraper",
+        url: "https://polygon-mainnet-api.liq-chainhub.net",
       },
-      network: 'polygon_mainnet',
-      explorerPath: 'https://polygonscan.com/tx/0x'
+      network: "polygon_mainnet",
+      explorerPath: "https://polygonscan.com/tx/0x",
     },
     ETH: {
       rpc: {
-        url: 'https://mainnet.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6'
+        url: "https://mainnet.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6",
       },
       api: {
-        type: 'scraper',
-        url: 'https://liquality.io/eth-mainnet-api'
+        type: "scraper",
+        url: "https://eth-mainnet-api.liq-chainhub.net",
       },
-      network: 'ethereum_mainnet',
-      explorerPath: 'https://etherscan.io/tx/0x'
+      network: "ethereum_mainnet",
+      explorerPath: "https://etherscan.io/tx/0x",
     },
     BTC: {
       api: {
-        url: 'https://liquality.io/electrs'
+        url: "https://electrs-mainnet-api.liq-chainhub.net",
       },
       batchApi: {
-        url: 'https://liquality.io/electrs-batch'
+        url: "https://electrs-batch-mainnet-api.liq-chainhub.net",
       },
       feeNumberOfBlocks: 2,
-      network: 'bitcoin',
-      explorerPath: 'https://blockstream.info/tx/'
+      network: "bitcoin",
+      explorerPath: "https://blockstream.info/tx/",
     },
     RBTC: {
       rpc: {
-        url: 'https://public-node.rsk.co'
+        url: "https://public-node.rsk.co",
       },
       api: {
-        type: 'scraper',
-        url: 'https://liquality.io/rsk-mainnet-api'
+        type: "scraper",
+        url: "https://rsk-mainnet-api.liq-chainhub.net",
       },
-      network: 'rsk_mainnet',
-      explorerPath: 'https://explorer.rsk.co/tx/0x'
+      network: "rsk_mainnet",
+      explorerPath: "https://explorer.rsk.co/tx/0x",
     },
     DAI: {
-      type: 'erc20',
+      type: "erc20",
       rpc: {
-        url: 'https://mainnet.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6'
+        url: "https://mainnet.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6",
       },
       api: {
-        type: 'scraper',
-        url: 'https://liquality.io/eth-mainnet-api'
+        type: "scraper",
+        url: "https://eth-mainnet-api.liq-chainhub.net",
       },
-      contractAddress: '0x6b175474e89094c44da98b954eedeac495271d0f',
-      network: 'ethereum_mainnet',
-      explorerPath: 'https://etherscan.io/tx/0x'
+      contractAddress: "0x6b175474e89094c44da98b954eedeac495271d0f",
+      network: "ethereum_mainnet",
+      explorerPath: "https://etherscan.io/tx/0x",
     },
     USDC: {
-      type: 'erc20',
+      type: "erc20",
       rpc: {
-        url: 'https://mainnet.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6'
+        url: "https://mainnet.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6",
       },
       api: {
-        type: 'scraper',
-        url: 'https://liquality.io/eth-mainnet-api'
+        type: "scraper",
+        url: "https://eth-mainnet-api.liq-chainhub.net",
       },
-      contractAddress: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-      network: 'ethereum_mainnet',
-      explorerPath: 'https://etherscan.io/tx/0x'
+      contractAddress: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      network: "ethereum_mainnet",
+      explorerPath: "https://etherscan.io/tx/0x",
     },
     USDT: {
-      type: 'erc20',
+      type: "erc20",
       rpc: {
-        url: 'https://mainnet.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6'
+        url: "https://mainnet.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6",
       },
       api: {
-        type: 'scraper',
-        url: 'https://liquality.io/eth-mainnet-api'
+        type: "scraper",
+        url: "https://eth-mainnet-api.liq-chainhub.net",
       },
-      contractAddress: '0xdac17f958d2ee523a2206206994597c13d831ec7',
-      network: 'ethereum_mainnet',
-      explorerPath: 'https://etherscan.io/tx/0x'
+      contractAddress: "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      network: "ethereum_mainnet",
+      explorerPath: "https://etherscan.io/tx/0x",
     },
     WBTC: {
-      type: 'erc20',
+      type: "erc20",
       rpc: {
-        url: 'https://mainnet.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6'
+        url: "https://mainnet.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6",
       },
       api: {
-        type: 'scraper',
-        url: 'https://liquality.io/eth-mainnet-api'
+        type: "scraper",
+        url: "https://eth-mainnet-api.liq-chainhub.net",
       },
-      contractAddress: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
-      network: 'ethereum_mainnet',
-      explorerPath: 'https://etherscan.io/tx/0x'
+      contractAddress: "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+      network: "ethereum_mainnet",
+      explorerPath: "https://etherscan.io/tx/0x",
     },
     UNI: {
-      type: 'erc20',
+      type: "erc20",
       rpc: {
-        url: 'https://mainnet.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6'
+        url: "https://mainnet.infura.io/v3/37efa691ffec4c41a60aa4a69865d8f6",
       },
       api: {
-        type: 'scraper',
-        url: 'https://liquality.io/eth-mainnet-api'
+        type: "scraper",
+        url: "https://eth-mainnet-api.liq-chainhub.net",
       },
-      contractAddress: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
-      network: 'ethereum_mainnet',
-      explorerPath: 'https://etherscan.io/tx/0x'
+      contractAddress: "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+      network: "ethereum_mainnet",
+      explorerPath: "https://etherscan.io/tx/0x",
     },
     NEAR: {
-      explorerPath: 'https://explorer.mainnet.near.org/transactions/'
+      explorerPath: "https://explorer.mainnet.near.org/transactions/",
     },
     LUNA: {
-      explorerPath: 'https://finder.terra.money/columbus-5/tx/'
-    }
+      explorerPath: "https://finder.terra.money/columbus-5/tx/",
+    },
+    UST: {
+      explorerPath: "https://finder.terra.money/columbus-5/tx/",
+    },
+    MATIC: {
+      explorerPath: "https://polygonscan.com/tx/0x",
+    },
   },
-  defaultFee: 'average',
-  hostName: 'Liquality',
-  hostIcon: 'https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png',
-  agents: ['https://liquality.io/swap/agent'],
+  defaultFee: "average",
+  hostName: "Liquality",
+  hostIcon:
+    "https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png",
+  agents: ["https://liquality.io/swap/agent"],
   injectScript: `
   function loadScript(src, callback) {
     var s,
@@ -345,5 +355,5 @@ export default {
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-52D86Z5"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
-  `
-}
+  `,
+};
