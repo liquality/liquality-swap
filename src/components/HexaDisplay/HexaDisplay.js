@@ -16,7 +16,7 @@ class HexaDisplay extends Component {
 
   render () {
     return <span onClick={() => this.onCopyLink.bind(this)()} className='HexaDisplay'>
-      {shortenAddress(this.props.address)}
+      {this.props.shorten ? shortenAddress(this.props.address) : this.props.address}
     </span>
   }
 }
