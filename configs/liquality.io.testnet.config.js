@@ -191,7 +191,7 @@ export default {
     addGA();
     addGTM();
     addIntercom();
-    addSentry();
+    // addSentry();
     addFullStory();
   }
 

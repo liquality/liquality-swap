@@ -258,7 +258,7 @@ export default {
     addGTM();
     addGA();
     addIntercom();
-    addSentry();
+    // addSentry();
     addFullStory();
     addHotJar();
   }
