@@ -125,6 +125,7 @@ const clientCreators = {
   BTC: createBtcClient,
   ETH: createEthClient,
   RBTC: createEthClient,
+  AVAX: createEthClient,
   erc20: createEthClient,
   MATIC: createEthClient
 }

@@ -52,6 +52,17 @@ export default {
       network: "rsk_mainnet",
       explorerPath: "https://explorer.rsk.co/tx/0x",
     },
+    AVAX: {
+      rpc: {
+        url: "https://api.avax.network/ext/bc/C/rpc",
+      },
+      api: {
+        type: "scraper",
+        url: "http://avax-mainnet-api.liq-chainhub.net/",
+      },
+      network: "avax_mainnet",
+      explorerPath: "https://avascan.info/tx/0x",
+    },
     DAI: {
       type: "erc20",
       rpc: {

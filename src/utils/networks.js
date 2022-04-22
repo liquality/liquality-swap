@@ -7,6 +7,7 @@ const networksMap = {
   BTC: BitcoinNetworks,
   ETH: EthereumNetworks,
   RBTC: EthereumNetworks,
+  AVAX: EthereumNetworks,
   erc20: EthereumNetworks,
   MATIC: EthereumNetworks
 }
@@ -24,7 +25,7 @@ function isEthereumAsset (asset) {
 }
 
 function isEthereumNetwork (asset) {
-  return asset === 'RBTC' || asset === 'MATIC' || isEthereumAsset(asset)
+  return asset === 'RBTC' || asset === 'MATIC' || asset === 'AVAX' || isEthereumAsset(asset)
 }
 
 function getConfirmationEstimate (asset) {

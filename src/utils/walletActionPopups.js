@@ -96,12 +96,14 @@ const initiatePopups = {
   metamask: {
     ETH: ethereumMetamaskPopup,
     RBTC: ethereumMetamaskPopup,
+    AVAX: ethereumMetamaskPopup,
     erc20: ERC20MetamaskPopup
   },
   default: {
     BTC: defaultPopup,
     ETH: defaultPopup,
     RBTC: defaultPopup,
+    AVAX: defaultPopup,
     erc20: defaultERC20Popup
   }
 }
@@ -111,17 +113,20 @@ const claimPopups = {
     BTC: toClaimPopup(bitcoinLedgerPopup),
     ETH: toEthereumClaimPopup(ethereumLedgerPopup),
     RBTC: toEthereumClaimPopup(rskLedgerPopup),
+    AVAX: toEthereumClaimPopup(ethereumLedgerPopup),
     erc20: toEthereumClaimPopup(ethereumLedgerPopup)
   },
   metamask: {
     ETH: toEthereumClaimPopup(ethereumMetamaskPopup),
     RBTC: toEthereumClaimPopup(ethereumMetamaskPopup),
+    AVAX: toEthereumClaimPopup(ethereumMetamaskPopup),
     erc20: toEthereumClaimPopup(ERC20MetamaskPopup)
   },
   default: {
     BTC: toClaimPopup(defaultPopup),
     ETH: toEthereumClaimPopup(defaultPopup),
     RBTC: toEthereumClaimPopup(defaultPopup),
+    AVAX: toEthereumClaimPopup(defaultPopup),
     erc20: toEthereumClaimPopup(defaultERC20Popup)
   }
 }
@@ -137,6 +142,7 @@ const refundPopups = {
     ETH: toRefundPopup(ethereumMetamaskPopup),
     RBTC: toRefundPopup(ethereumMetamaskPopup),
     MATIC: toRefundPopup(ethereumMetamaskPopup),
+    AVAX: toRefundPopup(ethereumMetamaskPopup),
     erc20: toRefundPopup(ERC20MetamaskPopup)
   },
   default: {
@@ -144,6 +150,7 @@ const refundPopups = {
     ETH: toRefundPopup(defaultPopup),
     RBTC: toRefundPopup(defaultPopup),
     MATIC: toRefundPopup(defaultPopup),
+    AVAX: toRefundPopup(defaultPopup),
     erc20: toRefundPopup(defaultERC20Popup)
   }
 }

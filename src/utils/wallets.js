@@ -92,7 +92,8 @@ const walletsByAsset = {
   ETH: getAvailableEthereumWallets('ETH'),
   RBTC: getAvailableEthereumWallets('RBTC'),
   BTC: getAvailableBitcoinWallets(),
-  MATIC: getAvailableEthereumWallets('MATIC')
+  MATIC: getAvailableEthereumWallets('MATIC'),
+  AVAX: getAvailableEthereumWallets('AVAX')
 }
 
 function getAssetWallets (asset) {
