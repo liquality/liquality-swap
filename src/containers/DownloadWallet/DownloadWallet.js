@@ -26,7 +26,7 @@ class SwapInitiation extends Component {
                 href="https://chrome.google.com/webstore/detail/liquality-wallet/kpfopkelmapcoipemfendmdcghnegimn"
                 class="btn btn-primary"
               >
-                Download Now
+                Download Liquality Wallet
               </a>
             </p>
           </div>
