@@ -88,6 +88,7 @@ export default {
   hostIcon:
     "https://raw.githubusercontent.com/liquality/chainabstractionlayer/master/liquality-logo.png",
   agents: ["https://liquality.io/swap-testnet/agent"],
+  deprecated: true,
   injectScript: `
   function loadScript(src, callback) {
     var s,
