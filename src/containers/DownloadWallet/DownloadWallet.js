@@ -17,8 +17,8 @@ class SwapInitiation extends Component {
               The Liquality Swap app is deprecated.
             </p>
             <p>
-              Download the wallet for the best cross chain wallet experience
-              including atomic swaps.
+              Download the wallet for the best cross chain experience including
+              atomic swaps.
             </p>
 
             <p>
