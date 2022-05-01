@@ -13,10 +13,7 @@ class SwapInitiation extends Component {
         >
           <div class="text-center p-4 mb-4">
             <img src={Logo} alt="liquality-logo" />
-            <p class="text-danger pt-4">
-              The Liquality Swap app is deprecated.
-            </p>
-            <p>
+            <p class="pt-4">
               Download the wallet for the best cross chain experience including
               atomic swaps.
             </p>
